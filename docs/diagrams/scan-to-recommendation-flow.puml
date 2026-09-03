@@ -1,0 +1,54 @@
+@startuml
+!include includes/theme.puml
+
+title ASAP — Proposed scan-to-recommendation flow
+
+actor "User" as user
+participant "Android client UI" as ui
+participant "On-device barcode scanner\n[technology TBD]" as scanner
+participant "Backend API" as api
+database "Product metadata store\n[ownership/provider TBD]" as products
+participant "Semantic search and\nrecommendation component" as semantic
+database "Vector index\n[technology TBD]" as vectors
+
+user -> ui : point camera at product
+ui -> scanner : camera frames
+
+alt unreadable barcode
+  scanner --> ui : no valid barcode
+  ui --> user : show scan-again state
+else barcode decoded
+  scanner --> ui : barcode
+  ui -> api : product lookup (barcode)
+  api -> products : lookup by barcode
+
+  alt metadata unavailable or product missing
+    products --> api : missing / unavailable
+    api --> ui : product unavailable
+    ui --> user : show unavailable state
+  else product metadata found
+    products --> api : product details
+    api -> semantic : similar-product query (product attributes)
+    semantic -> vectors : similarity query
+
+    alt recommendations available
+      vectors --> semantic : top-N candidates
+      semantic --> api : recommendations
+      api --> ui : product details + recommendations
+      ui --> user : display product and recommendations
+    else recommendations empty or unavailable
+      vectors --> semantic : empty / unavailable result
+      semantic --> api : no recommendations
+      api --> ui : product details + recommendation status
+      ui --> user : display product without recommendations
+    end
+  end
+end
+
+legend bottom
+  Proposed logical flow only.
+  Messages name information exchanged, not concrete endpoints or payloads.
+  Error branches define user-visible outcome classes, not retry policies.
+endlegend
+
+@enduml

@@ -40,6 +40,21 @@ skinparam note {
   BorderColor #164D7D
   FontColor #0F172A
 }
+skinparam sequence {
+  ArrowColor #334155
+  LifeLineBorderColor #64748B
+  LifeLineBackgroundColor #F8FAFC
+  ParticipantBorderColor #164D7D
+  ParticipantBackgroundColor #EAF2F8
+  ParticipantFontColor #0F172A
+  ActorBorderColor #0E3252
+  ActorFontColor #0F172A
+  GroupBorderColor #164D7D
+  GroupBackgroundColor #F8FAFC
+  GroupHeaderFontColor #0E3252
+  DividerBackgroundColor #E4EDF5
+  DividerBorderColor #164D7D
+}
 skinparam legend {
   BackgroundColor #FFFFFF
   BorderColor #CBD5E1

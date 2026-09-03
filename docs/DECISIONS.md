@@ -55,3 +55,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** T-001/S2 translated the proposal into a maintainable logical component view without selecting unresolved implementation technologies.
 - **Decision:** Accept `docs/diagrams/component-architecture.puml` and its PNG render as the canonical proposed component architecture.
 - **Consequence:** Future design changes must update the PlantUML source, render, architecture documentation, report, presentation, plan state, and handoff wherever affected. The view remains design intent, not evidence of implemented software.
+
+## D-008 — Proposed scan-to-recommendation flow
+
+- **Status:** Accepted
+- **Date:** 2026-09-03
+- **Context:** T-001/S3 documents the intended end-to-end exchange and important user-visible outcome classes without inventing unselected API or recovery details.
+- **Decision:** Accept `docs/diagrams/scan-to-recommendation-flow.puml` and its PNG render as the canonical proposed scan-to-recommendation flow.
+- **Consequence:** The flow distinguishes unreadable barcode, unavailable/missing metadata, and empty/unavailable recommendations. Concrete endpoints, payloads, retries, frameworks, and timing guarantees remain undecided.

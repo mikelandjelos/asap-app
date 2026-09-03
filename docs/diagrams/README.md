@@ -1,6 +1,6 @@
 # Diagram contract
 
-Status: T-001/S1 specification and S2 component diagram accepted by the user on 2026-09-03. The S3 flow diagram does not exist yet.
+Status: T-001/S1 specification, S2 component diagram, and S3 flow diagram accepted by the user on 2026-09-03. Formal report/presentation integration remains pending under S4.
 
 ## Purpose and audiences
 

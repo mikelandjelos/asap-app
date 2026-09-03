@@ -5,7 +5,7 @@ This file records the active and recent task plans. The approval protocol is man
 ## T-001 — Add canonical PlantUML architecture and data-flow sources
 
 - **TODO source:** “Dodati izvorne PlantUML dijagrame arhitekture i tokova podataka.”
-- **Status:** Plan approved; S1 and S2 accepted; S3 awaiting explicit execution approval
+- **Status:** Plan approved; S1–S3 accepted; S4 awaiting explicit execution approval
 - **Approval evidence:** The user explicitly authorized “S1” on 2026-09-03.
 - **Goal:** Replace the current image-only architectural knowledge with maintainable, version-controlled PlantUML sources without claiming that the proposed architecture has been implemented.
 
@@ -38,8 +38,10 @@ This file records the active and recent task plans. The approval protocol is man
 - Add a PlantUML diagram for the path from camera/barcode acquisition through metadata lookup, semantic retrieval, and recommendation display.
 - Show relevant failure/empty-result boundaries only if included in the approved S1 contract.
 - Synchronize `docs/ARCHITECTURE.md`, `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md` with the new source and its still-proposed status.
-- **Evidence:** versioned `.puml` source that parses and renders successfully.
-- **Status:** Proposed; prerequisite S2 accepted; awaiting separate explicit approval of S3.
+- **Evidence:** versioned `scan-to-recommendation-flow.puml` and 1306×1038 PNG; successful syntax checks and renders for both canonical sources; visual inspection of both outputs; regenerated component PNG after the shared theme extension; synchronized operational docs.
+- **Approval evidence:** The user explicitly instructed “yup, execute” for S3 on 2026-09-03.
+- **Acceptance evidence:** The user explicitly responded “looks solid” on 2026-09-03.
+- **Status:** Accepted.
 
 #### T-001/S4 — Validate and integrate the diagrams
 
@@ -47,7 +49,7 @@ This file records the active and recent task plans. The approval protocol is man
 - Link or embed appropriate outputs in `docs/ARCHITECTURE.md`, the report, and the presentation without overstating implementation status.
 - Synchronize the formal report and presentation, then finalize task-level state in `TODO.md`, `docs/PROJECT_STATUS.md`, `docs/DECISIONS.md` if needed, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md`. This does not replace the per-subtask documentation updates required in S1–S3.
 - **Evidence:** successful renders, successful LaTeX builds, and consistent documentation references.
-- **Status:** Proposed; blocked by acceptance of S3 and explicit approval of S4.
+- **Status:** Proposed; prerequisite S3 accepted; awaiting separate explicit approval of S4.
 
 ### Task-level acceptance criteria
 

@@ -18,7 +18,8 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - Root-level LaTeX ignores and cross-session operating instructions.
 - An accepted canonical diagram specification in `docs/diagrams/README.md`.
 - An accepted proposed logical component architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and a verified PNG render. It documents intended structure and does not represent implemented software.
-- No end-to-end PlantUML flow diagram exists yet; that remains T-001/S3.
+- An accepted proposed end-to-end scan-to-recommendation sequence/data-flow diagram in `docs/diagrams/scan-to-recommendation-flow.puml` with a verified PNG render. It includes success and high-level unavailable/empty outcomes without prescribing concrete APIs or retry policies.
+- Canonical diagram integration into the formal report and presentation remains pending under T-001/S4.
 
 ## Verified document builds
 
