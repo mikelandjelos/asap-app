@@ -1,0 +1,162 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \setmainfont{Latin Modern Roman}
+\fi
+\usepackage[provide=*,serbian-latin]{babel}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\IfFileExists{report/assets/asap-architecture.png}{%
+  \newcommand{\reportassetpath}{report/assets/}%
+}{%
+  \newcommand{\reportassetpath}{assets/}%
+}
+\hypersetup{
+  pdftitle={ASAP -- Projektovanje i implementacija AI MVP},
+  pdfauthor={Mihajlo Madić 2119}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.7em}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=0.4em,topsep=0.4em}
+
+\newcommand{\placeholder}[1]{%
+  \par\noindent\fbox{\parbox{0.95\linewidth}{\textit{Za dopunu: #1}}}\par
+}
+
+\title{Projektovanje i implementacija AI MVP\\[0.4em]
+  \large Automatska Semantička Analiza Proizvoda (ASAP)}
+\author{Mihajlo Madić, 2119\\
+  MAS Računarstvo i informatika\\
+  Veštačka inteligencija i mašinsko učenje}
+\date{Inteligentni sistemi\\2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Izveštaj 1: Predlog projekta}
+
+\subsection{Osnovne informacije}
+
+\begin{tabular}{>{\bfseries}p{0.28\linewidth}p{0.65\linewidth}}
+Akronim & ASAP \\
+Naziv rešenja & Automatska Semantička Analiza Proizvoda \\
+Tim & Mihajlo Madić 2119 (MAS Veštačka inteligencija i mašinsko učenje) \\
+\end{tabular}
+
+\subsection{Kratak opis}
+
+Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvodima, koja koristi duboko učenje za prepoznavanje proizvoda u realnom vremenu i semantičke vektorske reprezentacije (engl. \textit{embeddings}) za generisanje personalizovanih preporuka i analitike zasnovane na semantičkoj sličnosti među proizvodima.
+
+\subsection{Planirane AI tehnologije}
+
+\begin{enumerate}
+  \item \textbf{CNN (Computer Vision)} --- lokalizacija i dekodiranje barkodova proizvoda. Lagan model biće smešten na mobilnom uređaju i koristiće se za akviziciju vrednosti skeniranih barkodova.
+
+  \item \textbf{Semantički embedding vektori (NLP)} --- generisanje vektorskih reprezentacija proizvoda u specijalizovanom servisu, na osnovu naziva, opisa, kategorije i drugih atributa prikupljenih preko eksternih API-ja.
+
+  \item \textbf{Semantička pretraga} --- pronalaženje top-N najsličnijih proizvoda primenom metrika poput kosinusne sličnosti, uz opcionu MMR diversifikaciju radi izbegavanja redundantnih preporuka.
+
+  \item \textbf{Personalizovane preporuke} --- formiranje vektorske reprezentacije korisnika kao centroida istorije skeniranih ili pregledanih proizvoda i generisanje preporuka na osnovu tog profila.
+
+  \item \textbf{Personalna analitika (opciono)} --- klasterizacija proizvoda ili korisničkih interakcija i redukcija dimenzionalnosti pomoću PCA radi jednostavne vizuelne analitike u aplikaciji.
+\end{enumerate}
+
+\newpage
+
+\subsection{Početna arhitektura}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{\reportassetpath asap-architecture.png}
+\caption{Početni koncept komponenti sistema; biće preciziran tokom faze projektovanja.}
+\end{figure}
+
+\clearpage
+\section{Izveštaj 2: Definisanje problema}
+
+Ovaj deo se dopunjava tokom faze definisanja problema.
+
+\subsection{Predlog rešenja}
+\placeholder{promotivni opis rešenja do približno 150 reči}
+
+\subsection{Ciljna grupa}
+\placeholder{očekivani korisnici, inovativnost i razlika u odnosu na druga rešenja, do približno 300 reči}
+
+\subsubsection{Korisnici}
+\placeholder{primarne i sekundarne korisničke grupe}
+
+\subsubsection{Glavne konkurentske prednosti}
+\placeholder{prednosti u odnosu na postojeća rešenja}
+
+\subsection{Detaljan opis rešenja}
+\placeholder{koncept, osnovne funkcionalnosti i ograničenja}
+
+\subsubsection{Osnovne funkcionalnosti}
+\placeholder{funkcionalnosti nezavisne od AI komponenti}
+
+\subsubsection{AI zasnovane funkcionalnosti}
+\placeholder{funkcionalnosti zasnovane na računarskom vidu, embedding vektorima i preporukama}
+
+\section{Izveštaj 3: Izbor tehnologija i skupova podataka}
+
+Ovaj deo se dopunjava posle tehničkih eksperimenata i potvrde arhitekture.
+
+\subsection{Tehnologije}
+\placeholder{mobilna platforma, programski jezik, backend, skladište podataka i alati}
+
+\subsection{AI tehnologije}
+\placeholder{izabrani modeli, biblioteke, vektorska baza i metrike evaluacije}
+
+\subsection{Skup podataka}
+\placeholder{izvori podataka o proizvodima, licenca, obim, atributi i priprema podataka}
+
+\section{Izveštaj 4: Razvoj MVP-a i dorade}
+
+Prethodni delovi izveštaja dopunjavaju se u skladu sa odlukama i izmenama tokom razvoja.
+
+\subsection{Odluke koje se odnose na prethodne faze}
+\placeholder{promene zahteva, arhitekture, tehnologija ili skupa podataka i razlozi za njih}
+
+\subsection{Prezentacija MVP-a nastavniku i drugim timovima}
+
+\begin{tabular}{>{\bfseries}p{0.22\linewidth}p{0.7\linewidth}}
+Datum & \textit{nije održana} \\
+Komentari & \textit{za dopunu posle prezentacije} \\
+\end{tabular}
+
+\subsection{Korekcije i dorade}
+\placeholder{povratne informacije, prioriteti i sprovedene izmene}
+
+\subsection{Prezentacija konačne verzije MVP-a}
+
+\begin{tabular}{>{\bfseries}p{0.22\linewidth}p{0.7\linewidth}}
+Datum & \textit{nije održana} \\
+Komentari & \textit{za dopunu posle prezentacije} \\
+\end{tabular}
+
+\section{Izveštaj 5: Testiranje sa potencijalnim korisnicima}
+
+U ovoj fazi MVP se, u dogovoru sa nastavnikom, predstavlja potencijalnim korisnicima.
+
+\begin{tabular}{>{\bfseries}p{0.28\linewidth}p{0.64\linewidth}}
+Datum prezentacije & \textit{nije održana} \\
+Podaci o korisniku & \textit{za dopunu} \\
+Komentari & \textit{za dopunu} \\
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,137 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{wolverine}
+\IfFileExists{presentation/theme/mihajlo-elfak-logos.sty}{%
+  \input{presentation/theme/mihajlo-elfak-logos.sty}%
+}{%
+  \input{theme/mihajlo-elfak-logos.sty}%
+}
+\usepackage{fontspec}
+\setsansfont{Latin Modern Sans}
+\usepackage[provide=*,serbian-latin]{babel}
+
+\title{Projektovanje i implementacija AI MVP}
+\subtitle[ASAP]{Automatska Semantička Analiza Proizvoda}
+\author[Mihajlo Madić 2119]{Mihajlo Madić 2119}
+\institute[Inteligentni sistemi]{Inteligentni sistemi}
+\date{2026}
+
+\newcommand{\planned}{\textcolor{gray}{\footnotesize Planirano --- dopuniti tokom razvoja}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Problem i ideja}
+  \begin{itemize}
+    \item Podaci o proizvodima su rasuti, a korisniku su potrebni odmah, u trenutku kupovine.
+    \item ASAP povezuje skenirani barkod sa metapodacima proizvoda.
+    \item Semantičke reprezentacije omogućavaju pretragu sličnih proizvoda i personalizovane preporuke.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Planirane AI funkcionalnosti}
+  \begin{enumerate}
+    \item lokalno prepoznavanje i dekodiranje barkoda;
+    \item embedding reprezentacije proizvoda;
+    \item top-N semantička pretraga kosinusnom sličnošću;
+    \item opcioni MMR za raznovrsnije rezultate;
+    \item korisnički profil kao centroid prethodnih interakcija;
+    \item opciona klasterizacija i PCA vizuelna analitika.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Početni tok sistema}
+  \centering
+  \begin{columns}[T,onlytextwidth]
+    \column{0.30\textwidth}
+      \begin{block}{Mobilna aplikacija}
+        Kamera $\rightarrow$ barkod\\[0.4em]
+        Prikaz proizvoda i preporuka
+      \end{block}
+    \column{0.05\textwidth}
+      \centering\vspace{1.4cm}$\Longleftrightarrow$
+    \column{0.30\textwidth}
+      \begin{block}{Backend}
+        API servis\\[0.4em]
+        Semantička pretraga i preporuke
+      \end{block}
+    \column{0.05\textwidth}
+      \centering\vspace{1.4cm}$\Longleftrightarrow$
+    \column{0.30\textwidth}
+      \begin{block}{Podaci}
+        Metapodaci proizvoda\\[0.4em]
+        Vektorski indeks
+      \end{block}
+  \end{columns}
+\end{frame}
+
+\section{Definisanje problema}
+
+\begin{frame}{Ciljni korisnici i konkurentska prednost}
+  \planned
+  \begin{itemize}
+    \item Ko su primarni korisnici?
+    \item Koji problem rešavaju danas i kojim alternativama?
+    \item Po čemu je ASAP merljivo bolji ili jednostavniji?
+  \end{itemize}
+\end{frame}
+
+\section{Tehnologije i podaci}
+
+\begin{frame}{Izabrane tehnologije}
+  \planned
+  \begin{itemize}
+    \item mobilna platforma i programski jezik;
+    \item backend i skladište podataka;
+    \item ML Kit i model za embedding reprezentacije;
+    \item vektorski indeks i izvori podataka o proizvodima.
+  \end{itemize}
+\end{frame}
+
+\section{Implementacija}
+
+\begin{frame}{MVP demonstracija}
+  \planned
+  \begin{enumerate}
+    \item skeniranje barkoda;
+    \item pribavljanje podataka o proizvodu;
+    \item prikaz semantički sličnih proizvoda;
+    \item personalizovana preporuka.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Odluke, problemi i korekcije}
+  \planned
+  \begin{itemize}
+    \item ključne tehničke odluke i kompromisi;
+    \item povratne informacije sa MVP prezentacije;
+    \item izmene sprovedene nakon prezentacije.
+  \end{itemize}
+\end{frame}
+
+\section{Evaluacija}
+
+\begin{frame}{Rezultati testiranja}
+  \planned
+  \begin{itemize}
+    \item uspešnost i vreme skeniranja;
+    \item kvalitet semantičke pretrage i preporuka;
+    \item povratne informacije potencijalnih korisnika;
+    \item ograničenja i sledeći koraci.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Zaključak}
+  \planned
+  \begin{itemize}
+    \item ostvarene funkcionalnosti u odnosu na plan;
+    \item najvažniji rezultat projekta;
+    \item mogući pravci daljeg razvoja.
+  \end{itemize}
+\end{frame}
+
+\end{document}

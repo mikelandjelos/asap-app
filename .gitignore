@@ -1,1 +1,37 @@
 meditations/*
+
+# LaTeX intermediate files; keep generated PDFs available.
+build/*
+!build/*.pdf
+
+# TeX/LaTeX auxiliary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# Temporary files produced by common LaTeX editors
+*.bak
+*.sav
+*.swp
+*~

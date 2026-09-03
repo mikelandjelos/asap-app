@@ -1,0 +1,77 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{mihajlo-elfak-logos.sty}[2026/06/12 ELFak corner logos for Beamer]
+
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+
+\IfFileExists{presentation/theme/mihajlo-elfak-university-logo.png}{%
+  \newcommand{\mihajloelfakassetpath}{presentation/theme/}%
+}{%
+  \newcommand{\mihajloelfakassetpath}{theme/}%
+}
+
+\definecolor{ElfakPrimary}{HTML}{164D7D}
+\definecolor{ElfakPrimaryDark}{HTML}{0E3252}
+\definecolor{ElfakPrimaryLight}{HTML}{2F75B5}
+\definecolor{ElfakAccent}{HTML}{A51003}
+\definecolor{ElfakAccentDark}{HTML}{730B02}
+\definecolor{ElfakLight}{HTML}{E4EDF5}
+
+\setbeamercolor{structure}{fg=ElfakPrimary}
+\setbeamercolor{title}{fg=white,bg=ElfakPrimary}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{frametitle}{fg=white,bg=ElfakPrimary}
+\setbeamercolor{palette primary}{fg=white,bg=ElfakPrimary}
+\setbeamercolor{palette secondary}{fg=white,bg=ElfakPrimaryDark}
+\setbeamercolor{palette tertiary}{fg=white,bg=ElfakAccent}
+\setbeamercolor{palette quaternary}{fg=white,bg=ElfakAccentDark}
+\setbeamercolor{block title}{fg=white,bg=ElfakPrimary}
+\setbeamercolor{block body}{fg=black,bg=ElfakLight}
+\setbeamercolor{alerted text}{fg=ElfakAccent}
+\setbeamercolor{itemize item}{fg=ElfakAccent}
+\setbeamercolor{itemize subitem}{fg=ElfakPrimary}
+\setbeamercolor{enumerate item}{fg=ElfakAccent}
+\setbeamercolor{author in head/foot}{fg=white,bg=ElfakPrimaryDark}
+\setbeamercolor{title in head/foot}{fg=white,bg=ElfakPrimary}
+\setbeamercolor{date in head/foot}{fg=white,bg=ElfakPrimaryLight}
+
+\newcommand{\mihajloelfaklogos}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt,xshift=0.08cm,yshift=-0.05cm]
+      at (current page.north west)
+      {\includegraphics[width=0.95cm]{\mihajloelfakassetpath mihajlo-elfak-university-logo.png}};
+    \node[anchor=north east,inner sep=0pt,xshift=-0.10cm,yshift=-0.06cm]
+      at (current page.north east)
+      {\includegraphics[width=0.82cm]{\mihajloelfakassetpath mihajlo-elfak-faculty-logo.png}};
+  \end{tikzpicture}%
+}
+
+\AddToHook{shipout/foreground}{%
+  \ifnum\insertframenumber=1
+    \mihajloelfaklogos
+  \fi
+}
+
+\setbeamertemplate{footline}{%
+  \ifnum\insertframenumber>1
+    \leavevmode%
+    \hbox{%
+      \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.5ex,dp=1.1ex,leftskip=.8em]{author in head/foot}%
+        \usebeamerfont{author in head/foot}%
+        \usebeamercolor[fg]{author in head/foot}%
+        \NoHyper\insertshortauthor\endNoHyper
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.44\paperwidth,ht=2.5ex,dp=1.1ex,center]{title in head/foot}%
+        \usebeamerfont{title in head/foot}%
+        \usebeamercolor[fg]{title in head/foot}%
+        \NoHyper\insertshortsubtitle\endNoHyper
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.5ex,dp=1.1ex,rightskip=.8em plus1fil]{date in head/foot}%
+        \usebeamerfont{date in head/foot}%
+        \usebeamercolor[fg]{date in head/foot}%
+        \NoHyper\insertshortinstitute\endNoHyper\hspace{1em}%
+        \insertframenumber/\inserttotalframenumber
+      \end{beamercolorbox}%
+    }%
+  \fi
+}
