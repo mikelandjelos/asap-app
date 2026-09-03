@@ -1,6 +1,6 @@
 # Diagram contract
 
-Status: T-001/S1 specification, S2 component diagram, and S3 flow diagram accepted by the user on 2026-09-03. Formal report/presentation integration remains pending under S4.
+Status: T-001 and all four subtasks were accepted by the user; the canonical sources, render variants, and formal-deliverable integrations are complete.
 
 ## Purpose and audiences
 
@@ -58,12 +58,21 @@ docs/diagrams/
 ├── scan-to-recommendation-flow.puml
 └── rendered/
     ├── component-architecture.png
-    └── scan-to-recommendation-flow.png
+    ├── scan-to-recommendation-flow.png
+    └── sr/
+        ├── component-architecture.png
+        ├── scan-to-recommendation-flow.png
+        └── presentation/
+            ├── component-architecture.png
+            └── scan-to-recommendation-flow.png
 ```
 
 - `.puml` files are canonical and must be reviewed as source.
 - `includes/theme.puml` contains shared deterministic styling only; it must not contain architectural elements.
 - PNG renders are committed because pdfLaTeX, the report, and the presentation need portable raster assets.
+- Default renders use English canonical terminology for technical review. `SERBIAN` renders use Serbian Latin for formal deliverables.
+- `PRESENTATION` renders remove secondary diagram furniture to remain legible on a 16:9 slide; they do not change components, participants, messages, or outcomes.
+- All variants come from the same two canonical `.puml` sources. Do not duplicate architecture structure to localize or simplify a render.
 - Rendered files must be regenerated whenever their source or shared theme changes.
 - Diagram filenames remain stable so documentation references do not require churn.
 
@@ -86,9 +95,13 @@ From the repository root, future diagram subtasks must use:
 env -u DISPLAY plantuml -checkonly docs/diagrams/*.puml
 env -u DISPLAY plantuml -charset UTF-8 -tpng \
   -o rendered docs/diagrams/*.puml
+env -u DISPLAY plantuml -DSERBIAN -charset UTF-8 -tpng \
+  -o rendered/sr docs/diagrams/*.puml
+env -u DISPLAY plantuml -DSERBIAN -DPRESENTATION -charset UTF-8 -tpng \
+  -o rendered/sr/presentation docs/diagrams/*.puml
 ```
 
-S2 and S3 must verify their individual source. S4 must verify both sources, regenerate both PNGs, and compile the report and presentation after integration.
+Run the syntax check for each enabled variant when conditional content changes. S2 and S3 verify their individual source. S4 verifies all variants, regenerates every PNG, and compiles the report and presentation after integration.
 
 ## Explicitly unresolved
 

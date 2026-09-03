@@ -63,3 +63,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** T-001/S3 documents the intended end-to-end exchange and important user-visible outcome classes without inventing unselected API or recovery details.
 - **Decision:** Accept `docs/diagrams/scan-to-recommendation-flow.puml` and its PNG render as the canonical proposed scan-to-recommendation flow.
 - **Consequence:** The flow distinguishes unreadable barcode, unavailable/missing metadata, and empty/unavailable recommendations. Concrete endpoints, payloads, retries, frameworks, and timing guarantees remain undecided.
+
+## D-009 — Localized diagram variants share canonical sources
+
+- **Status:** Accepted
+- **Date:** 2026-09-04
+- **Context:** The same proposed architecture must support English technical review and readable Serbian report and presentation outputs without creating divergent diagram definitions.
+- **Decision:** Generate English technical, Serbian formal, and compact Serbian presentation renders from the same two canonical PlantUML sources through render-time flags.
+- **Consequence:** Localization and presentation simplification may change labels and secondary diagram furniture only. Components, participants, messages, and outcomes must remain structurally consistent across variants.

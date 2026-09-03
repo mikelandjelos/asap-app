@@ -5,7 +5,7 @@ This file records the active and recent task plans. The approval protocol is man
 ## T-001 — Add canonical PlantUML architecture and data-flow sources
 
 - **TODO source:** “Dodati izvorne PlantUML dijagrame arhitekture i tokova podataka.”
-- **Status:** Plan approved; S1–S3 accepted; S4 awaiting explicit execution approval
+- **Status:** Accepted and complete
 - **Approval evidence:** The user explicitly authorized “S1” on 2026-09-03.
 - **Goal:** Replace the current image-only architectural knowledge with maintainable, version-controlled PlantUML sources without claiming that the proposed architecture has been implemented.
 
@@ -48,8 +48,10 @@ This file records the active and recent task plans. The approval protocol is man
 - Render both sources using a documented reproducible command.
 - Link or embed appropriate outputs in `docs/ARCHITECTURE.md`, the report, and the presentation without overstating implementation status.
 - Synchronize the formal report and presentation, then finalize task-level state in `TODO.md`, `docs/PROJECT_STATUS.md`, `docs/DECISIONS.md` if needed, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md`. This does not replace the per-subtask documentation updates required in S1–S3.
-- **Evidence:** successful renders, successful LaTeX builds, and consistent documentation references.
-- **Status:** Proposed; prerequisite S3 accepted; awaiting separate explicit approval of S4.
+- **Evidence:** both canonical sources produce English technical, Serbian formal, and compact Serbian presentation renders; all variants pass headless PlantUML checks; the 8-page report builds with pdfLaTeX and LuaLaTeX; the 11-slide presentation builds with LuaLaTeX; integrated pages/slides were visually inspected; operational and formal documentation references are synchronized.
+- **Approval evidence:** The user explicitly responded “approved, execute” for S4.
+- **Acceptance evidence:** The user explicitly responded “accepted, LGTM!” on 2026-09-04, accepting S4 and closing T-001.
+- **Status:** Accepted.
 
 ### Task-level acceptance criteria
 
@@ -58,6 +60,8 @@ This file records the active and recent task plans. The approval protocol is man
 - Diagrams agree with the current proposal or explicitly expose unresolved differences.
 - Formal and operational documentation consistently labels the architecture as proposed.
 - The user explicitly accepts T-001 before any later TODO task is planned or executed.
+
+All acceptance criteria were verified and T-001 was explicitly accepted on 2026-09-04.
 
 ### Out of scope
 

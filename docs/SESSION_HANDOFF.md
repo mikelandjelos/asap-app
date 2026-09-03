@@ -1,9 +1,15 @@
 # Session handoff
 
-Last updated: 2026-09-03
+Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User accepted T-001/S4 and closed T-001 with “accepted, LGTM!” on 2026-09-04.
+- Marked the canonical PlantUML TODO complete and recorded accepted localization decision D-009.
+- Executed only approved T-001/S4: parameterized both canonical sources to generate English technical, Serbian formal, and compact Serbian presentation renders without duplicating architecture structure.
+- Replaced the historical report image with the canonical Serbian component view, added the scan-to-recommendation view, and added both compact views to the Beamer deck.
+- Kept unresolved scanner technology explicit in both formal deliverables rather than treating CNN, TFLite, or ML Kit as selected.
+- Verified all PlantUML variants, built the 8-page report with pdfLaTeX and LuaLaTeX, built the 11-slide presentation with LuaLaTeX, and visually inspected the integrated pages and slides.
 - User accepted T-001/S3 on 2026-09-03; synchronized its accepted status and recorded decision D-008.
 - Executed only approved T-001/S3: added the canonical proposed scan-to-recommendation sequence/data-flow source and a visually inspected 1306×1038 PNG render.
 - Added sequence-diagram styling to the shared theme, regenerated the component PNG, and revalidated both canonical PlantUML sources.
@@ -35,9 +41,7 @@ Last updated: 2026-09-03
 
 ## Suggested next session
 
-The next proposed subtask is T-001/S4: integrate the accepted canonical diagrams into operational architecture documentation and the formal report/presentation, then verify all outputs and prepare T-001 for task-level acceptance.
-
-S4 is not yet authorized. Obtain separate explicit approval before modifying the formal report or presentation.
+The first pending product task is selecting Java or Kotlin for the Android client and documenting the decision. Obtain explicit user approval to formulate its task/subtask plan before planning or implementation.
 
 ## Blockers
 

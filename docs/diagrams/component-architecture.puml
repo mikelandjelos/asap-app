@@ -1,43 +1,113 @@
 @startuml
 !include includes/theme.puml
 
-title ASAP — Proposed component architecture
+!ifdef SERBIAN
+  !define DIAGRAM_TITLE ASAP — Planirana arhitektura komponenti
+  !define USER_LABEL Korisnik
+  !define CLIENT_LABEL Mobilna Android aplikacija
+  !define UI_LABEL Korisnički interfejs
+  !define SCANNER_LABEL Lokalni skener barkoda\n[tehnologija nije izabrana]
+  !define BACKEND_LABEL Granica backend sistema\n[topologija nije izabrana]
+  !define API_LABEL Backend API
+  !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
+  !define PRODUCTS_LABEL Skladište metapodataka o proizvodima\n[vlasništvo/izvor nisu izabrani]
+  !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
+  !define EXTERNAL_LABEL Eksterni izvor podataka o proizvodima\n[opciono / nije izabran]
+  !define FLOW_USER skeniranje proizvoda / prikaz rezultata
+  !define FLOW_FRAMES tok frejmova kamere
+  !define FLOW_BARCODE barkod
+  !define FLOW_LOOKUP pretraga po barkodu
+  !define FLOW_DETAILS podaci o proizvodu
+  !define FLOW_ATTRIBUTES atributi proizvoda
+  !define FLOW_RECOMMENDATIONS preporuke
+  !define FLOW_SIMILARITY upit sličnosti
+  !define FLOW_CANDIDATES top-N kandidata
+  !define FLOW_RESULT podaci o proizvodu + preporuke
+  !define FLOW_EXTERNAL pribavljanje ili uvoz metapodataka [nije izabrano]
+  !define LEGEND_NOTATION Oznaka
+  !define LEGEND_MEANING Značenje
+  !define LEGEND_SOLID Puna strelica
+  !define LEGEND_SOLID_MEANING Planirani tok informacija tokom rada
+  !define LEGEND_DASHED Isprekidana strelica
+  !define LEGEND_DASHED_MEANING Opciono ili nerazrešeno povezivanje
+  !define LEGEND_TBD [nije izabrano]
+  !define LEGEND_TBD_MEANING Eksplicitno otvorena projektna odluka
+  !define LEGEND_BOUNDARIES Granice
+  !define LEGEND_BOUNDARIES_MEANING Logičke; nisu dokaz implementacije
+!else
+  !define DIAGRAM_TITLE ASAP — Proposed component architecture
+  !define USER_LABEL User
+  !define CLIENT_LABEL Android client
+  !define UI_LABEL User interface
+  !define SCANNER_LABEL On-device barcode scanner\n[technology TBD]
+  !define BACKEND_LABEL Backend boundary\n[topology TBD]
+  !define API_LABEL Backend API
+  !define SEMANTIC_LABEL Semantic search and\nrecommendation component
+  !define PRODUCTS_LABEL Product metadata store\n[ownership/provider TBD]
+  !define VECTORS_LABEL Vector index\n[technology TBD]
+  !define EXTERNAL_LABEL External product metadata source\n[optional / TBD]
+  !define FLOW_USER scan product / view results
+  !define FLOW_FRAMES camera frames
+  !define FLOW_BARCODE barcode
+  !define FLOW_LOOKUP lookup by barcode
+  !define FLOW_DETAILS product details
+  !define FLOW_ATTRIBUTES product attributes
+  !define FLOW_RECOMMENDATIONS recommendations
+  !define FLOW_SIMILARITY similarity query
+  !define FLOW_CANDIDATES top-N candidates
+  !define FLOW_RESULT product details + recommendations
+  !define FLOW_EXTERNAL metadata ingestion or lookup [TBD]
+  !define LEGEND_NOTATION Notation
+  !define LEGEND_MEANING Meaning
+  !define LEGEND_SOLID Solid arrow
+  !define LEGEND_SOLID_MEANING Planned runtime information flow
+  !define LEGEND_DASHED Dashed arrow
+  !define LEGEND_DASHED_MEANING Optional/unresolved integration
+  !define LEGEND_TBD [TBD]
+  !define LEGEND_TBD_MEANING Explicitly undecided design point
+  !define LEGEND_BOUNDARIES Boundaries
+  !define LEGEND_BOUNDARIES_MEANING Logical only; not deployment evidence
+!endif
+
+title DIAGRAM_TITLE
 top to bottom direction
 
-actor "User" as user
+actor "USER_LABEL" as user
 
-package "Android client" as android #EAF2F8 {
-  component "User interface" as ui
-  component "On-device barcode scanner\n[technology TBD]" as scanner
+package "CLIENT_LABEL" as android #EAF2F8 {
+  component "UI_LABEL" as ui
+  component "SCANNER_LABEL" as scanner
 }
 
-package "Backend boundary\n[topology TBD]" as backend #EEF6EE {
-  component "Backend API" as api
-  component "Semantic search and\nrecommendation component" as semantic
+package "BACKEND_LABEL" as backend #EEF6EE {
+  component "API_LABEL" as api
+  component "SEMANTIC_LABEL" as semantic
 }
 
-database "Product metadata store\n[ownership/provider TBD]" as products
-database "Vector index\n[technology TBD]" as vectors
-cloud "External product metadata source\n[optional / TBD]" as external
+database "PRODUCTS_LABEL" as products
+database "VECTORS_LABEL" as vectors
+cloud "EXTERNAL_LABEL" as external
 
-user -down-> ui : scan product / view results
-ui -right-> scanner : camera frames
-scanner -down-> api : barcode
-api -down-> products : lookup by barcode
-products -up-> api : product details
-api -right-> semantic : product attributes
-semantic -left-> api : recommendations
-semantic -down-> vectors : similarity query
-vectors -up-> semantic : top-N candidates
-api -up-> ui : product details + recommendations
-external .left.> products : metadata ingestion or lookup [TBD]
+user -down-> ui : FLOW_USER
+ui -right-> scanner : FLOW_FRAMES
+scanner -down-> api : FLOW_BARCODE
+api -down-> products : FLOW_LOOKUP
+products -up-> api : FLOW_DETAILS
+api -right-> semantic : FLOW_ATTRIBUTES
+semantic -left-> api : FLOW_RECOMMENDATIONS
+semantic -down-> vectors : FLOW_SIMILARITY
+vectors -up-> semantic : FLOW_CANDIDATES
+api -up-> ui : FLOW_RESULT
+external .left.> products : FLOW_EXTERNAL
 
-legend bottom
-  |= Notation |= Meaning |
-  | Solid arrow | Planned runtime information flow |
-  | Dashed arrow | Optional/unresolved integration |
-  | [TBD] | Explicitly undecided design point |
-  | Boundaries | Logical only; not deployment evidence |
-endlegend
+!ifndef PRESENTATION
+  legend bottom
+    |= LEGEND_NOTATION |= LEGEND_MEANING |
+    | LEGEND_SOLID | LEGEND_SOLID_MEANING |
+    | LEGEND_DASHED | LEGEND_DASHED_MEANING |
+    | LEGEND_TBD | LEGEND_TBD_MEANING |
+    | LEGEND_BOUNDARIES | LEGEND_BOUNDARIES_MEANING |
+  endlegend
+!endif
 
 @enduml

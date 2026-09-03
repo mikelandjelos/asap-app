@@ -16,10 +16,10 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
-\IfFileExists{report/assets/asap-architecture.png}{%
-  \newcommand{\reportassetpath}{report/assets/}%
+\IfFileExists{docs/diagrams/rendered/sr/component-architecture.png}{%
+  \newcommand{\diagramassetpath}{docs/diagrams/rendered/sr/}%
 }{%
-  \newcommand{\reportassetpath}{assets/}%
+  \newcommand{\diagramassetpath}{../docs/diagrams/rendered/sr/}%
 }
 \hypersetup{
   pdftitle={ASAP -- Projektovanje i implementacija AI MVP},
@@ -76,14 +76,25 @@ Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvod
   \item \textbf{Personalna analitika (opciono)} --- klasterizacija proizvoda ili korisničkih interakcija i redukcija dimenzionalnosti pomoću PCA radi jednostavne vizuelne analitike u aplikaciji.
 \end{enumerate}
 
+Konkretna tehnologija lokalnog skenera barkoda još nije izabrana. Oznake CNN, TFLite i ML Kit iz početnih materijala predstavljaju kandidate koje treba proveriti u narednoj fazi, a ne potvrđenu implementacionu odluku.
+
 \newpage
 
 \subsection{Početna arhitektura}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{\reportassetpath asap-architecture.png}
-\caption{Početni koncept komponenti sistema; biće preciziran tokom faze projektovanja.}
+\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{\diagramassetpath component-architecture.png}
+\caption{Prihvaćena planirana logička arhitektura komponenti. Otvorene tehnološke odluke su eksplicitno označene i dijagram ne predstavlja dokaz implementacije.}
+\end{figure}
+
+\clearpage
+\subsection{Planirani tok od skeniranja do preporuke}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{\diagramassetpath scan-to-recommendation-flow.png}
+\caption{Planirani tok uspešnog zahteva i osnovnih ishoda kada barkod, metapodaci ili preporuke nisu dostupni.}
 \end{figure}
 
 \clearpage

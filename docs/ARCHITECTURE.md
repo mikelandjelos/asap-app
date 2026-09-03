@@ -2,7 +2,7 @@
 
 Status: initial hypothesis from the project proposal; not yet validated by implementation.
 
-The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml) and a [PNG render](diagrams/rendered/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml) and a [PNG render](diagrams/rendered/scan-to-recommendation-flow.png). Formal report and presentation integration remains pending under T-001/S4.
+The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml), an [English technical render](diagrams/rendered/component-architecture.png), and a [Serbian formal render](diagrams/rendered/sr/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml), an [English technical render](diagrams/rendered/scan-to-recommendation-flow.png), and a [Serbian formal render](diagrams/rendered/sr/scan-to-recommendation-flow.png). Serbian presentation variants are accepted integrations of those same canonical sources.
 
 ## Intended components
 
@@ -37,4 +37,4 @@ The proposal represents a user as the centroid of embeddings associated with sca
 - Is an exact vector search sufficient for MVP scale, or is an ANN index justified?
 - What data may be retained for personalization, and how is user consent handled?
 
-The current image in `report/assets/asap-architecture.png` is the source proposal diagram. Canonical PlantUML sources remain a TODO item.
+The historical image in `report/assets/asap-architecture.png` remains source material from the initial DOCX. The canonical PlantUML views now replace it in formal deliverables; all views still describe proposed, not implemented, behavior.

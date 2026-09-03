@@ -10,6 +10,11 @@
 \usepackage{fontspec}
 \setsansfont{Latin Modern Sans}
 \usepackage[provide=*,serbian-latin]{babel}
+\IfFileExists{docs/diagrams/rendered/sr/presentation/component-architecture.png}{%
+  \newcommand{\diagramassetpath}{docs/diagrams/rendered/sr/presentation/}%
+}{%
+  \newcommand{\diagramassetpath}{../docs/diagrams/rendered/sr/presentation/}%
+}
 
 \title{Projektovanje i implementacija AI MVP}
 \subtitle[ASAP]{Automatska Semantička Analiza Proizvoda}
@@ -44,29 +49,14 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Početni tok sistema}
+\begin{frame}
   \centering
-  \begin{columns}[T,onlytextwidth]
-    \column{0.30\textwidth}
-      \begin{block}{Mobilna aplikacija}
-        Kamera $\rightarrow$ barkod\\[0.4em]
-        Prikaz proizvoda i preporuka
-      \end{block}
-    \column{0.05\textwidth}
-      \centering\vspace{1.4cm}$\Longleftrightarrow$
-    \column{0.30\textwidth}
-      \begin{block}{Backend}
-        API servis\\[0.4em]
-        Semantička pretraga i preporuke
-      \end{block}
-    \column{0.05\textwidth}
-      \centering\vspace{1.4cm}$\Longleftrightarrow$
-    \column{0.30\textwidth}
-      \begin{block}{Podaci}
-        Metapodaci proizvoda\\[0.4em]
-        Vektorski indeks
-      \end{block}
-  \end{columns}
+  \includegraphics[width=\textwidth,height=0.90\textheight,keepaspectratio]{\diagramassetpath component-architecture.png}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \includegraphics[width=\textwidth,height=0.90\textheight,keepaspectratio]{\diagramassetpath scan-to-recommendation-flow.png}
 \end{frame}
 
 \section{Definisanje problema}
@@ -87,7 +77,7 @@
   \begin{itemize}
     \item mobilna platforma i programski jezik;
     \item backend i skladište podataka;
-    \item ML Kit i model za embedding reprezentacije;
+    \item biblioteka/model za skeniranje barkoda i model za embedding reprezentacije;
     \item vektorski indeks i izvori podataka o proizvodima.
   \end{itemize}
 \end{frame}

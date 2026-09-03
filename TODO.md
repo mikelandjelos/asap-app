@@ -11,7 +11,7 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 - [x] Koristiti Mermaid za jednostavnije dijagrame pogodne za Markdown dokumentaciju.
 - [x] Inicijalizovati `AGENTS.md` i operativnu dokumentaciju za rad kroz nezavisne sesije.
 - [x] Definisati izvore istine, pravila predaje konteksta i kriterijum završetka zadatka.
-- [ ] Dodati izvorne PlantUML dijagrame arhitekture i tokova podataka.
+- [x] Dodati izvorne PlantUML dijagrame arhitekture i tokova podataka.
 - [ ] (Kontinualno) Dopunjavati status, odluke, predaju sesije, izveštaj, slučajeve upotrebe, dijagrame i prezentaciju posle svake značajne promene.
 
 ## 1. Razvojno okruženje

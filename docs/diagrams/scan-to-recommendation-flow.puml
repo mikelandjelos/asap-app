@@ -1,54 +1,140 @@
 @startuml
 !include includes/theme.puml
 
-title ASAP — Proposed scan-to-recommendation flow
+!ifdef SERBIAN
+  !define DIAGRAM_TITLE ASAP — Planirani tok od skeniranja do preporuke
+  !define USER_LABEL Korisnik
+  !define UI_LABEL Interfejs mobilne Android aplikacije
+  !define SCANNER_LABEL Lokalni skener barkoda\n[tehnologija nije izabrana]
+  !define API_LABEL Backend API
+  !define PRODUCTS_LABEL Skladište metapodataka o proizvodima\n[vlasništvo/izvor nisu izabrani]
+  !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
+  !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
+  !define MSG_POINT_CAMERA usmerava kameru ka proizvodu
+  !define MSG_FRAMES tok frejmova kamere
+  !define ALT_UNREADABLE barkod nije čitljiv
+  !define MSG_NO_BARCODE nema validnog barkoda
+  !define MSG_SCAN_AGAIN prikazuje zahtev za ponovno skeniranje
+  !define ELSE_DECODED barkod je očitan
+  !define MSG_BARCODE barkod
+  !define MSG_PRODUCT_LOOKUP zahtev za proizvod (barkod)
+  !define MSG_LOOKUP pretraga po barkodu
+  !define ALT_METADATA_FAIL metapodaci nisu dostupni ili proizvod ne postoji
+  !define MSG_MISSING nedostaje / nije dostupno
+  !define MSG_PRODUCT_UNAVAILABLE proizvod nije dostupan
+  !define MSG_UNAVAILABLE_STATE prikazuje da proizvod nije dostupan
+  !define ELSE_METADATA_FOUND podaci o proizvodu su pronađeni
+  !define MSG_DETAILS podaci o proizvodu
+  !define MSG_SIMILAR_QUERY upit za slične proizvode (atributi proizvoda)
+  !define MSG_SIMILARITY upit sličnosti
+  !define ALT_RECOMMENDATIONS preporuke su dostupne
+  !define MSG_CANDIDATES top-N kandidata
+  !define MSG_RECOMMENDATIONS preporuke
+  !define MSG_DETAILS_RECOMMENDATIONS podaci o proizvodu + preporuke
+  !define MSG_DISPLAY_RECOMMENDATIONS prikazuje proizvod i preporuke
+  !define ELSE_NO_RECOMMENDATIONS preporuke su prazne ili nisu dostupne
+  !define MSG_EMPTY_RESULT prazan / nedostupan rezultat
+  !define MSG_NO_RECOMMENDATIONS nema preporuka
+  !define MSG_DETAILS_STATUS podaci o proizvodu + status preporuka
+  !define MSG_DISPLAY_WITHOUT prikazuje proizvod bez preporuka
+  !define LEGEND_LINE_1 Samo planirani logički tok.
+  !define LEGEND_LINE_2 Poruke opisuju razmenjene podatke, a ne konkretne krajnje tačke ili strukture podataka.
+  !define LEGEND_LINE_3 Grane grešaka opisuju ishode vidljive korisniku, a ne politiku ponovnih pokušaja.
+!else
+  !define DIAGRAM_TITLE ASAP — Proposed scan-to-recommendation flow
+  !define USER_LABEL User
+  !define UI_LABEL Android client UI
+  !define SCANNER_LABEL On-device barcode scanner\n[technology TBD]
+  !define API_LABEL Backend API
+  !define PRODUCTS_LABEL Product metadata store\n[ownership/provider TBD]
+  !define SEMANTIC_LABEL Semantic search and\nrecommendation component
+  !define VECTORS_LABEL Vector index\n[technology TBD]
+  !define MSG_POINT_CAMERA point camera at product
+  !define MSG_FRAMES camera frames
+  !define ALT_UNREADABLE unreadable barcode
+  !define MSG_NO_BARCODE no valid barcode
+  !define MSG_SCAN_AGAIN show scan-again state
+  !define ELSE_DECODED barcode decoded
+  !define MSG_BARCODE barcode
+  !define MSG_PRODUCT_LOOKUP product lookup (barcode)
+  !define MSG_LOOKUP lookup by barcode
+  !define ALT_METADATA_FAIL metadata unavailable or product missing
+  !define MSG_MISSING missing / unavailable
+  !define MSG_PRODUCT_UNAVAILABLE product unavailable
+  !define MSG_UNAVAILABLE_STATE show unavailable state
+  !define ELSE_METADATA_FOUND product metadata found
+  !define MSG_DETAILS product details
+  !define MSG_SIMILAR_QUERY similar-product query (product attributes)
+  !define MSG_SIMILARITY similarity query
+  !define ALT_RECOMMENDATIONS recommendations available
+  !define MSG_CANDIDATES top-N candidates
+  !define MSG_RECOMMENDATIONS recommendations
+  !define MSG_DETAILS_RECOMMENDATIONS product details + recommendations
+  !define MSG_DISPLAY_RECOMMENDATIONS display product and recommendations
+  !define ELSE_NO_RECOMMENDATIONS recommendations empty or unavailable
+  !define MSG_EMPTY_RESULT empty / unavailable result
+  !define MSG_NO_RECOMMENDATIONS no recommendations
+  !define MSG_DETAILS_STATUS product details + recommendation status
+  !define MSG_DISPLAY_WITHOUT display product without recommendations
+  !define LEGEND_LINE_1 Proposed logical flow only.
+  !define LEGEND_LINE_2 Messages name information exchanged, not concrete endpoints or payloads.
+  !define LEGEND_LINE_3 Error branches define user-visible outcome classes, not retry policies.
+!endif
 
-actor "User" as user
-participant "Android client UI" as ui
-participant "On-device barcode scanner\n[technology TBD]" as scanner
-participant "Backend API" as api
-database "Product metadata store\n[ownership/provider TBD]" as products
-participant "Semantic search and\nrecommendation component" as semantic
-database "Vector index\n[technology TBD]" as vectors
+title DIAGRAM_TITLE
 
-user -> ui : point camera at product
-ui -> scanner : camera frames
+!ifdef PRESENTATION
+  hide footbox
+!endif
 
-alt unreadable barcode
-  scanner --> ui : no valid barcode
-  ui --> user : show scan-again state
-else barcode decoded
-  scanner --> ui : barcode
-  ui -> api : product lookup (barcode)
-  api -> products : lookup by barcode
+actor "USER_LABEL" as user
+participant "UI_LABEL" as ui
+participant "SCANNER_LABEL" as scanner
+participant "API_LABEL" as api
+database "PRODUCTS_LABEL" as products
+participant "SEMANTIC_LABEL" as semantic
+database "VECTORS_LABEL" as vectors
 
-  alt metadata unavailable or product missing
-    products --> api : missing / unavailable
-    api --> ui : product unavailable
-    ui --> user : show unavailable state
-  else product metadata found
-    products --> api : product details
-    api -> semantic : similar-product query (product attributes)
-    semantic -> vectors : similarity query
+user -> ui : MSG_POINT_CAMERA
+ui -> scanner : MSG_FRAMES
 
-    alt recommendations available
-      vectors --> semantic : top-N candidates
-      semantic --> api : recommendations
-      api --> ui : product details + recommendations
-      ui --> user : display product and recommendations
-    else recommendations empty or unavailable
-      vectors --> semantic : empty / unavailable result
-      semantic --> api : no recommendations
-      api --> ui : product details + recommendation status
-      ui --> user : display product without recommendations
+alt ALT_UNREADABLE
+  scanner --> ui : MSG_NO_BARCODE
+  ui --> user : MSG_SCAN_AGAIN
+else ELSE_DECODED
+  scanner --> ui : MSG_BARCODE
+  ui -> api : MSG_PRODUCT_LOOKUP
+  api -> products : MSG_LOOKUP
+
+  alt ALT_METADATA_FAIL
+    products --> api : MSG_MISSING
+    api --> ui : MSG_PRODUCT_UNAVAILABLE
+    ui --> user : MSG_UNAVAILABLE_STATE
+  else ELSE_METADATA_FOUND
+    products --> api : MSG_DETAILS
+    api -> semantic : MSG_SIMILAR_QUERY
+    semantic -> vectors : MSG_SIMILARITY
+
+    alt ALT_RECOMMENDATIONS
+      vectors --> semantic : MSG_CANDIDATES
+      semantic --> api : MSG_RECOMMENDATIONS
+      api --> ui : MSG_DETAILS_RECOMMENDATIONS
+      ui --> user : MSG_DISPLAY_RECOMMENDATIONS
+    else ELSE_NO_RECOMMENDATIONS
+      vectors --> semantic : MSG_EMPTY_RESULT
+      semantic --> api : MSG_NO_RECOMMENDATIONS
+      api --> ui : MSG_DETAILS_STATUS
+      ui --> user : MSG_DISPLAY_WITHOUT
     end
   end
 end
 
-legend bottom
-  Proposed logical flow only.
-  Messages name information exchanged, not concrete endpoints or payloads.
-  Error branches define user-visible outcome classes, not retry policies.
-endlegend
+!ifndef PRESENTATION
+  legend bottom
+    LEGEND_LINE_1
+    LEGEND_LINE_2
+    LEGEND_LINE_3
+  endlegend
+!endif
 
 @enduml
