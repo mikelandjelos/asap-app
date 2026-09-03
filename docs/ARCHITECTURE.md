@@ -2,7 +2,7 @@
 
 Status: initial hypothesis from the project proposal; not yet validated by implementation.
 
-The accepted terminology, boundaries, required views, and future PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). Canonical `.puml` sources do not exist yet.
+The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml) and a [PNG render](diagrams/rendered/component-architecture.png). The end-to-end flow source remains pending under S3.
 
 ## Intended components
 

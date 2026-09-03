@@ -47,3 +47,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** T-001 requires maintainable architecture and flow diagrams that remain honest about the absence of implementation and unresolved technology choices.
 - **Decision:** Use the two-view PlantUML contract, canonical terminology, boundaries, headless rendering commands, and stable source/render layout defined in `docs/diagrams/README.md`.
 - **Consequence:** S2 and S3 must implement that contract without choosing unresolved technologies. PNG renders are portable deliverables, while `.puml` files remain canonical.
+
+## D-007 — Proposed logical component view
+
+- **Status:** Accepted
+- **Date:** 2026-09-03
+- **Context:** T-001/S2 translated the proposal into a maintainable logical component view without selecting unresolved implementation technologies.
+- **Decision:** Accept `docs/diagrams/component-architecture.puml` and its PNG render as the canonical proposed component architecture.
+- **Consequence:** Future design changes must update the PlantUML source, render, architecture documentation, report, presentation, plan state, and handoff wherever affected. The view remains design intent, not evidence of implemented software.

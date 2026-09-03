@@ -1,0 +1,47 @@
+' Shared deterministic styling for ASAP PlantUML diagrams.
+' This file contains presentation rules only; architecture belongs in diagram sources.
+
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundCorner 8
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 13
+skinparam ArrowColor #334155
+skinparam ArrowFontColor #0F172A
+skinparam ArrowThickness 1.2
+skinparam componentStyle rectangle
+skinparam component {
+  BackgroundColor #F8FAFC
+  BorderColor #164D7D
+  FontColor #0F172A
+}
+skinparam package {
+  BackgroundColor #F8FAFC
+  BorderColor #164D7D
+  FontColor #0E3252
+  FontStyle bold
+}
+skinparam database {
+  BackgroundColor #FFF8E1
+  BorderColor #A51003
+  FontColor #0F172A
+}
+skinparam cloud {
+  BackgroundColor #F3F4F6
+  BorderColor #64748B
+  FontColor #334155
+}
+skinparam actor {
+  BorderColor #0E3252
+  FontColor #0F172A
+}
+skinparam note {
+  BackgroundColor #E4EDF5
+  BorderColor #164D7D
+  FontColor #0F172A
+}
+skinparam legend {
+  BackgroundColor #FFFFFF
+  BorderColor #CBD5E1
+  FontColor #334155
+}

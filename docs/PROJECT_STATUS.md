@@ -16,7 +16,9 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - The presentation contains proposal content and explicitly marked placeholders for design, implementation, and evaluation results.
 - Bundled presentation theme assets under `presentation/theme/`.
 - Root-level LaTeX ignores and cross-session operating instructions.
-- An accepted canonical diagram specification in `docs/diagrams/README.md`; it reconciles terminology and file layout but contains no `.puml` implementation yet.
+- An accepted canonical diagram specification in `docs/diagrams/README.md`.
+- An accepted proposed logical component architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and a verified PNG render. It documents intended structure and does not represent implemented software.
+- No end-to-end PlantUML flow diagram exists yet; that remains T-001/S3.
 
 ## Verified document builds
 

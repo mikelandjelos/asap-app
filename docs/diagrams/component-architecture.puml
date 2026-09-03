@@ -1,0 +1,43 @@
+@startuml
+!include includes/theme.puml
+
+title ASAP — Proposed component architecture
+top to bottom direction
+
+actor "User" as user
+
+package "Android client" as android #EAF2F8 {
+  component "User interface" as ui
+  component "On-device barcode scanner\n[technology TBD]" as scanner
+}
+
+package "Backend boundary\n[topology TBD]" as backend #EEF6EE {
+  component "Backend API" as api
+  component "Semantic search and\nrecommendation component" as semantic
+}
+
+database "Product metadata store\n[ownership/provider TBD]" as products
+database "Vector index\n[technology TBD]" as vectors
+cloud "External product metadata source\n[optional / TBD]" as external
+
+user -down-> ui : scan product / view results
+ui -right-> scanner : camera frames
+scanner -down-> api : barcode
+api -down-> products : lookup by barcode
+products -up-> api : product details
+api -right-> semantic : product attributes
+semantic -left-> api : recommendations
+semantic -down-> vectors : similarity query
+vectors -up-> semantic : top-N candidates
+api -up-> ui : product details + recommendations
+external .left.> products : metadata ingestion or lookup [TBD]
+
+legend bottom
+  |= Notation |= Meaning |
+  | Solid arrow | Planned runtime information flow |
+  | Dashed arrow | Optional/unresolved integration |
+  | [TBD] | Explicitly undecided design point |
+  | Boundaries | Logical only; not deployment evidence |
+endlegend
+
+@enduml

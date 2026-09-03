@@ -1,6 +1,6 @@
 # Diagram contract
 
-Status: T-001/S1 specification accepted by the user on 2026-09-03. No canonical PlantUML diagram source has been implemented yet.
+Status: T-001/S1 specification and S2 component diagram accepted by the user on 2026-09-03. The S3 flow diagram does not exist yet.
 
 ## Purpose and audiences
 

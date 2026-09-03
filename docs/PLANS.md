@@ -5,7 +5,7 @@ This file records the active and recent task plans. The approval protocol is man
 ## T-001 — Add canonical PlantUML architecture and data-flow sources
 
 - **TODO source:** “Dodati izvorne PlantUML dijagrame arhitekture i tokova podataka.”
-- **Status:** Plan approved; S1 accepted; S2 awaiting explicit execution approval
+- **Status:** Plan approved; S1 and S2 accepted; S3 awaiting explicit execution approval
 - **Approval evidence:** The user explicitly authorized “S1” on 2026-09-03.
 - **Goal:** Replace the current image-only architectural knowledge with maintainable, version-controlled PlantUML sources without claiming that the proposed architecture has been implemented.
 
@@ -28,8 +28,10 @@ This file records the active and recent task plans. The approval protocol is man
 - Generate `docs/diagrams/rendered/component-architecture.png` from the canonical source and visually inspect it for legibility.
 - Synchronize `docs/ARCHITECTURE.md`, `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md` with the new source and its still-proposed status.
 - Do not create the scan-to-recommendation flow or integrate the component render into the formal report/presentation; those belong to S3 and S4.
-- **Evidence:** versioned theme/source/PNG; successful PlantUML syntax check and render; visual inspection; synchronized operational docs.
-- **Status:** Proposed; prerequisite S1 accepted; awaiting separate explicit approval of S2.
+- **Evidence:** versioned `includes/theme.puml`, `component-architecture.puml`, and `rendered/component-architecture.png`; successful PlantUML syntax check and render; visual inspection at 892×667; synchronized operational docs.
+- **Approval evidence:** The user explicitly instructed “execute S2” on 2026-09-03.
+- **Acceptance evidence:** The user explicitly responded “great, accepted” on 2026-09-03.
+- **Status:** Accepted.
 
 #### T-001/S3 — Create the end-to-end data-flow source
 
@@ -37,7 +39,7 @@ This file records the active and recent task plans. The approval protocol is man
 - Show relevant failure/empty-result boundaries only if included in the approved S1 contract.
 - Synchronize `docs/ARCHITECTURE.md`, `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md` with the new source and its still-proposed status.
 - **Evidence:** versioned `.puml` source that parses and renders successfully.
-- **Status:** Proposed; blocked by acceptance of S2 and explicit approval of S3.
+- **Status:** Proposed; prerequisite S2 accepted; awaiting separate explicit approval of S3.
 
 #### T-001/S4 — Validate and integrate the diagrams
 

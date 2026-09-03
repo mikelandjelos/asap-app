@@ -4,6 +4,10 @@ Last updated: 2026-09-03
 
 ## Completed in the latest documentation session
 
+- User accepted T-001/S2 on 2026-09-03; synchronized its accepted status and recorded decision D-007.
+- Committed the accepted planning/S1 baseline as `9ea0267` (`Add planning workflow and diagram contract`) before S2, as requested.
+- Executed only approved T-001/S2: added shared PlantUML styling, canonical proposed component source, and a visually inspected 892×667 PNG render.
+- Verified `component-architecture.puml` with headless PlantUML syntax checking and rendering; no flow source or formal-deliverable integration was created.
 - User accepted T-001/S1 on 2026-09-03; synchronized its accepted status and recorded decision D-006.
 - Executed only approved subtask T-001/S1: defined the diagram contract, canonical terminology, view boundaries, stable file layout, and reproducible PlantUML commands in `docs/diagrams/README.md`.
 - Verified local diagram tooling: PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 work when invoked with `env -u DISPLAY`.
@@ -27,9 +31,9 @@ Last updated: 2026-09-03
 
 ## Suggested next session
 
-The next proposed subtask is T-001/S2: create the component architecture PlantUML source and shared deterministic theme under the accepted diagram contract.
+The next proposed subtask is T-001/S3: create and render the end-to-end scan-to-recommendation flow under the accepted diagram contract.
 
-S2 is not yet authorized. Obtain separate explicit approval for T-001/S2 before creating any `.puml` source.
+S3 is not yet authorized. Obtain separate explicit approval before creating `scan-to-recommendation-flow.puml` or its PNG render.
 
 ## Blockers
 
