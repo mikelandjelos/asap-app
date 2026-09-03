@@ -16,10 +16,10 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 
 ## 1. Razvojno okruženje
 
-- [ ] Izabrati Java ili Kotlin kao jezik mobilne aplikacije i dokumentovati odluku.
+- [x] Izabrati Java ili Kotlin kao jezik mobilne aplikacije i dokumentovati odluku.
 - [ ] Instalirati i proveriti JDK/JVM, Android Studio i Android SDK.
 - [ ] Izdvojiti potrebne biblioteke i njihove verzije.
-- [ ] Napraviti mali tehnički eksperiment sa Google ML Kit Barcode Scanning bibliotekom.
+- [ ] Napraviti mali tehnički eksperiment sa Google Code Scanner API-jem iz ML Kit ponude.
 - [ ] Definisati ponovljiv lokalni postupak za pokretanje, testiranje i izgradnju projekta.
 
 ## 2. Arhitektura i izvori podataka

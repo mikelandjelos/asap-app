@@ -4,11 +4,14 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User accepted T-002/S1 and closed T-002 with “accepted, cool!” on 2026-09-04.
+- User accepted Java + XML Views + Google Code Scanner as the fastest initial Android MVP baseline and explicitly authorized T-002/S1 on 2026-09-04.
+- Synchronized the accepted baseline across the task tracker, decision log, status, architecture, diagrams, report, presentation, plan, and handoff; no Android project or dependency was created.
+- Regenerated and visually inspected all canonical diagram variants, compiled the 8-page report with pdfLaTeX and LuaLaTeX, compiled the 11-slide presentation with LuaLaTeX, and found no document warnings or missing Serbian glyphs.
 - User accepted T-001/S4 and closed T-001 with “accepted, LGTM!” on 2026-09-04.
 - Marked the canonical PlantUML TODO complete and recorded accepted localization decision D-009.
 - Executed only approved T-001/S4: parameterized both canonical sources to generate English technical, Serbian formal, and compact Serbian presentation renders without duplicating architecture structure.
 - Replaced the historical report image with the canonical Serbian component view, added the scan-to-recommendation view, and added both compact views to the Beamer deck.
-- Kept unresolved scanner technology explicit in both formal deliverables rather than treating CNN, TFLite, or ML Kit as selected.
 - Verified all PlantUML variants, built the 8-page report with pdfLaTeX and LuaLaTeX, built the 11-slide presentation with LuaLaTeX, and visually inspected the integrated pages and slides.
 - User accepted T-001/S3 on 2026-09-03; synchronized its accepted status and recorded decision D-008.
 - Executed only approved T-001/S3: added the canonical proposed scan-to-recommendation sequence/data-flow source and a visually inspected 1306×1038 PNG render.
@@ -41,7 +44,7 @@ Last updated: 2026-09-04
 
 ## Suggested next session
 
-The first pending product task is selecting Java or Kotlin for the Android client and documenting the decision. Obtain explicit user approval to formulate its task/subtask plan before planning or implementation.
+The first pending task is installing and verifying the JDK/JVM, Android Studio, and Android SDK. Obtain explicit user approval to formulate its task/subtask plan before planning or implementation.
 
 ## Blockers
 

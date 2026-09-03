@@ -4,9 +4,9 @@
 !ifdef SERBIAN
   !define DIAGRAM_TITLE ASAP — Planirana arhitektura komponenti
   !define USER_LABEL Korisnik
-  !define CLIENT_LABEL Mobilna Android aplikacija
+  !define CLIENT_LABEL Mobilna Android aplikacija\n[Java + XML Views]
   !define UI_LABEL Korisnički interfejs
-  !define SCANNER_LABEL Lokalni skener barkoda\n[tehnologija nije izabrana]
+  !define SCANNER_LABEL Google Code Scanner\n[početni MVP]
   !define BACKEND_LABEL Granica backend sistema\n[topologija nije izabrana]
   !define API_LABEL Backend API
   !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
@@ -14,8 +14,8 @@
   !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
   !define EXTERNAL_LABEL Eksterni izvor podataka o proizvodima\n[opciono / nije izabran]
   !define FLOW_USER skeniranje proizvoda / prikaz rezultata
-  !define FLOW_FRAMES tok frejmova kamere
-  !define FLOW_BARCODE barkod
+  !define FLOW_FRAMES pokretanje skeniranja
+  !define FLOW_BARCODE očitani barkod
   !define FLOW_LOOKUP pretraga po barkodu
   !define FLOW_DETAILS podaci o proizvodu
   !define FLOW_ATTRIBUTES atributi proizvoda
@@ -37,9 +37,9 @@
 !else
   !define DIAGRAM_TITLE ASAP — Proposed component architecture
   !define USER_LABEL User
-  !define CLIENT_LABEL Android client
+  !define CLIENT_LABEL Android client\n[Java + XML Views]
   !define UI_LABEL User interface
-  !define SCANNER_LABEL On-device barcode scanner\n[technology TBD]
+  !define SCANNER_LABEL Google Code Scanner\n[initial MVP]
   !define BACKEND_LABEL Backend boundary\n[topology TBD]
   !define API_LABEL Backend API
   !define SEMANTIC_LABEL Semantic search and\nrecommendation component
@@ -47,8 +47,8 @@
   !define VECTORS_LABEL Vector index\n[technology TBD]
   !define EXTERNAL_LABEL External product metadata source\n[optional / TBD]
   !define FLOW_USER scan product / view results
-  !define FLOW_FRAMES camera frames
-  !define FLOW_BARCODE barcode
+  !define FLOW_FRAMES launch scan
+  !define FLOW_BARCODE decoded barcode
   !define FLOW_LOOKUP lookup by barcode
   !define FLOW_DETAILS product details
   !define FLOW_ATTRIBUTES product attributes
@@ -90,7 +90,8 @@ cloud "EXTERNAL_LABEL" as external
 
 user -down-> ui : FLOW_USER
 ui -right-> scanner : FLOW_FRAMES
-scanner -down-> api : FLOW_BARCODE
+scanner -left-> ui : FLOW_BARCODE
+ui -down-> api : FLOW_LOOKUP
 api -down-> products : FLOW_LOOKUP
 products -up-> api : FLOW_DETAILS
 api -right-> semantic : FLOW_ATTRIBUTES

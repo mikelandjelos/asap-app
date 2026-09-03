@@ -4,14 +4,14 @@
 !ifdef SERBIAN
   !define DIAGRAM_TITLE ASAP — Planirani tok od skeniranja do preporuke
   !define USER_LABEL Korisnik
-  !define UI_LABEL Interfejs mobilne Android aplikacije
-  !define SCANNER_LABEL Lokalni skener barkoda\n[tehnologija nije izabrana]
+  !define UI_LABEL Interfejs mobilne Android aplikacije\n[Java + XML Views]
+  !define SCANNER_LABEL Google Code Scanner\n[početni MVP]
   !define API_LABEL Backend API
   !define PRODUCTS_LABEL Skladište metapodataka o proizvodima\n[vlasništvo/izvor nisu izabrani]
   !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
   !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
-  !define MSG_POINT_CAMERA usmerava kameru ka proizvodu
-  !define MSG_FRAMES tok frejmova kamere
+  !define MSG_POINT_CAMERA pokreće skeniranje proizvoda
+  !define MSG_FRAMES pokreće interfejs skenera
   !define ALT_UNREADABLE barkod nije čitljiv
   !define MSG_NO_BARCODE nema validnog barkoda
   !define MSG_SCAN_AGAIN prikazuje zahtev za ponovno skeniranje
@@ -43,14 +43,14 @@
 !else
   !define DIAGRAM_TITLE ASAP — Proposed scan-to-recommendation flow
   !define USER_LABEL User
-  !define UI_LABEL Android client UI
-  !define SCANNER_LABEL On-device barcode scanner\n[technology TBD]
+  !define UI_LABEL Android client UI\n[Java + XML Views]
+  !define SCANNER_LABEL Google Code Scanner\n[initial MVP]
   !define API_LABEL Backend API
   !define PRODUCTS_LABEL Product metadata store\n[ownership/provider TBD]
   !define SEMANTIC_LABEL Semantic search and\nrecommendation component
   !define VECTORS_LABEL Vector index\n[technology TBD]
-  !define MSG_POINT_CAMERA point camera at product
-  !define MSG_FRAMES camera frames
+  !define MSG_POINT_CAMERA start product scan
+  !define MSG_FRAMES launch scanner UI
   !define ALT_UNREADABLE unreadable barcode
   !define MSG_NO_BARCODE no valid barcode
   !define MSG_SCAN_AGAIN show scan-again state

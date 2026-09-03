@@ -60,12 +60,12 @@ Tim & Mihajlo Madić 2119 (MAS Veštačka inteligencija i mašinsko učenje) \\
 
 \subsection{Kratak opis}
 
-Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvodima, koja koristi duboko učenje za prepoznavanje proizvoda u realnom vremenu i semantičke vektorske reprezentacije (engl. \textit{embeddings}) za generisanje personalizovanih preporuka i analitike zasnovane na semantičkoj sličnosti među proizvodima.
+Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvodima, koja koristi lokalno očitavanje barkoda i semantičke vektorske reprezentacije (engl. \textit{embeddings}) za generisanje personalizovanih preporuka i analitike zasnovane na semantičkoj sličnosti među proizvodima.
 
 \subsection{Planirane AI tehnologije}
 
 \begin{enumerate}
-  \item \textbf{CNN (Computer Vision)} --- lokalizacija i dekodiranje barkodova proizvoda. Lagan model biće smešten na mobilnom uređaju i koristiće se za akviziciju vrednosti skeniranih barkodova.
+  \item \textbf{Google Code Scanner (računarski vid)} --- lokalno očitavanje i dekodiranje barkodova proizvoda kroz gotovo korisničko iskustvo skeniranja koje obezbeđuju Google Play servisi.
 
   \item \textbf{Semantički embedding vektori (NLP)} --- generisanje vektorskih reprezentacija proizvoda u specijalizovanom servisu, na osnovu naziva, opisa, kategorije i drugih atributa prikupljenih preko eksternih API-ja.
 
@@ -76,7 +76,7 @@ Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvod
   \item \textbf{Personalna analitika (opciono)} --- klasterizacija proizvoda ili korisničkih interakcija i redukcija dimenzionalnosti pomoću PCA radi jednostavne vizuelne analitike u aplikaciji.
 \end{enumerate}
 
-Konkretna tehnologija lokalnog skenera barkoda još nije izabrana. Oznake CNN, TFLite i ML Kit iz početnih materijala predstavljaju kandidate koje treba proveriti u narednoj fazi, a ne potvrđenu implementacionu odluku.
+Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code Scanner, jer predstavljaju najkraći put do funkcionalne verzije uz potpuno prilagodljiv ostatak korisničkog interfejsa. Direktni ML Kit Barcode Scanning sa CameraX bibliotekom ostaje moguća kasnija zamena samo ako bude potreban prilagođen prikaz kamere, preklopi ili kontinualno skeniranje. Oznake CNN i TFLite iz početnih materijala više ne predstavljaju planiranu implementaciju skenera.
 
 \newpage
 
@@ -128,10 +128,12 @@ Ovaj deo se dopunjava tokom faze definisanja problema.
 Ovaj deo se dopunjava posle tehničkih eksperimenata i potvrde arhitekture.
 
 \subsection{Tehnologije}
-\placeholder{mobilna platforma, programski jezik, backend, skladište podataka i alati}
+
+Za Android klijent izabrani su Java i XML zasnovani Android Views. Tačne verzije SDK-a, struktura projekta, backend, skladište podataka i prateći alati biće određeni nakon provere razvojnog okruženja.
 
 \subsection{AI tehnologije}
-\placeholder{izabrani modeli, biblioteke, vektorska baza i metrike evaluacije}
+
+Za početno očitavanje barkoda izabran je Google Code Scanner. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.
 
 \subsection{Skup podataka}
 \placeholder{izvori podataka o proizvodima, licenca, obim, atributi i priprema podataka}

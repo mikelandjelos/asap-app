@@ -8,7 +8,8 @@ The accepted terminology, boundaries, required views, and PlantUML file layout a
 
 ```mermaid
 flowchart LR
-    Camera[Camera and barcode scanning] --> Mobile[Android client]
+    Mobile[Android client] -->|launch scan| Scanner[Google Code Scanner]
+    Scanner -->|decoded barcode| Mobile
     Mobile --> API[Backend API]
     API --> Products[(Product metadata)]
     API --> Recommender[Semantic search and recommendations]
@@ -17,7 +18,7 @@ flowchart LR
     API --> Mobile
 ```
 
-- **Android client:** captures camera frames, decodes a barcode locally, and displays product data and recommendations.
+- **Android client:** uses custom Java/XML screens, launches Google Code Scanner, receives the decoded barcode, and displays product data and recommendations.
 - **Backend API:** coordinates metadata lookup, application-facing responses, and the recommendation service.
 - **Product store:** maps barcodes to product metadata such as name, description, and category.
 - **Semantic service:** produces or retrieves embeddings, performs cosine-similarity top-N search, and may apply MMR diversification.
@@ -29,8 +30,8 @@ The proposal represents a user as the centroid of embeddings associated with sca
 
 ## Open architecture questions
 
-- Which work must run on-device, and which work requires a backend?
-- Is barcode scanning implemented directly with ML Kit rather than a separately trained CNN?
+- Which work beyond barcode scanning must run on-device, and which work requires a backend?
+- Does later UX testing justify replacing Google Code Scanner with direct ML Kit Barcode Scanning and CameraX for a custom scanning camera experience?
 - Is the backend a modular monolith for the MVP or multiple deployable services?
 - Which external product API and fallback dataset satisfy coverage, reliability, and licensing needs?
 - Which embedding model supports Serbian and the expected product languages?

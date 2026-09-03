@@ -19,7 +19,7 @@ Every diagram must visibly use the phrase **Proposed architecture** or **Planira
 - **Source:** `component-architecture.puml`
 - **Notation:** PlantUML component diagram.
 - **Purpose:** show logical system boundaries, responsibilities, dependencies, and data stores.
-- **Required elements:** Android client, on-device barcode scanner, backend API, semantic search and recommendation component, product metadata store, and vector index.
+- **Required elements:** Android client, Google Code Scanner integration, backend API, semantic search and recommendation component, product metadata store, and vector index.
 - **Boundary rule:** this is a logical component view, not a deployment view. It must not imply separate deployable services, protocols, frameworks, databases, or cloud providers that have not been selected.
 - **Optional/planned behavior:** personalization may appear only as a clearly marked planned extension; its internal design is out of scope for T-001.
 
@@ -38,8 +38,8 @@ PlantUML identifiers and operational documentation use the English canonical ter
 
 | Canonical term | Serbian deliverable label | Existing-source variants | Contract note |
 | --- | --- | --- | --- |
-| Android client | Mobilna aplikacija | Mobile application | Platform intent is Android; language and SDK remain undecided. |
-| On-device barcode scanner | Lokalni skener barkoda | Kamera/skeniranje; Detekcija/čitanje barkoda (TFLite); CNN | Do not claim TFLite, CNN, or ML Kit as selected implementation. Use “technology TBD” where needed. |
+| Android client | Mobilna aplikacija | Mobile application | Java application code and XML Views are accepted; SDK levels and project structure remain undecided. |
+| Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
 | Backend API | Backend API / API servis | Backend; API service | Do not imply framework, protocol, or deployment topology. |
 | Product metadata store | Skladište metapodataka o proizvodima | Baza proizvoda; barcode → metadata | External provider versus owned database remains undecided. |
 | Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | Embedding model, MMR use, and service boundary remain undecided. |
@@ -105,8 +105,8 @@ Run the syntax check for each enabled variant when conditional content changes. 
 
 ## Explicitly unresolved
 
-- Java versus Kotlin and the Android SDK baseline.
-- ML Kit versus another barcode-scanning implementation.
+- Android SDK levels, dependency versions, and project structure.
+- Whether UX evidence later justifies upgrading from Google Code Scanner to direct ML Kit Barcode Scanning with CameraX.
 - Backend topology, framework, transport, and deployment environment.
 - Product metadata provider, ownership, caching, and fallback dataset.
 - Embedding model, vector-index technology, exact/ANN search, and MMR use.

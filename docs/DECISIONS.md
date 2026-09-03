@@ -71,3 +71,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The same proposed architecture must support English technical review and readable Serbian report and presentation outputs without creating divergent diagram definitions.
 - **Decision:** Generate English technical, Serbian formal, and compact Serbian presentation renders from the same two canonical PlantUML sources through render-time flags.
 - **Consequence:** Localization and presentation simplification may change labels and secondary diagram furniture only. Components, participants, messages, and outcomes must remain structurally consistent across variants.
+
+## D-010 — Android MVP starts with Java, XML Views, and Google Code Scanner
+
+- **Status:** Accepted
+- **Date:** 2026-09-04
+- **Context:** The primary goal is the fastest route to a working MVP. The developer already knows Java, while the initial barcode flow does not require a custom camera interface.
+- **Decision:** Use Java for Android application code, XML-based Android Views for the customizable application UI, and Google Code Scanner for the initial barcode-scanning implementation.
+- **Consequence:** Google Code Scanner owns only the launched scanning experience; the rest of the ASAP interface remains custom. Direct ML Kit Barcode Scanning with CameraX is the upgrade path if custom preview, overlays, or continuous scanning become necessary. Exact SDK levels, dependency versions, and project structure remain undecided.

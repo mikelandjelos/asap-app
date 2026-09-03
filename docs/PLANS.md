@@ -69,3 +69,30 @@ All acceptance criteria were verified and T-001 was explicitly accepted on 2026-
 - Selecting backend frameworks, external APIs, datasets, embedding models, or vector databases.
 - Scaffolding application code.
 - Treating a diagram element as evidence of implementation.
+
+## T-002 — Select and document the Android MVP technology baseline
+
+- **TODO source:** “Izabrati Java ili Kotlin kao jezik mobilne aplikacije i dokumentovati odluku.”
+- **Status:** Accepted and complete
+- **Goal:** Establish the lowest-risk Android UI and barcode-scanning direction for a fast MVP without prematurely fixing SDK versions or project structure.
+
+### T-002/S1 — Synchronize the accepted baseline
+
+- Record Java for application code, XML-based Android Views for the custom application UI, and Google Code Scanner for the initial barcode-scanning implementation.
+- Preserve direct ML Kit Barcode Scanning with CameraX as an upgrade path if a custom scanning camera experience becomes necessary.
+- Update the TODO, decision log, project status, architecture, canonical diagrams and renders, report, presentation, plan, and session handoff.
+- Keep exact SDK levels, dependency versions, project structure, and backend technologies unresolved.
+- Verify all diagram variants, compile the report with pdfLaTeX and LuaLaTeX, compile the presentation with LuaLaTeX, and check the resulting text and document consistency.
+- **Approval evidence:** The user explicitly accepted “Java + XML + Google Code Scanner” and then instructed “execute” on 2026-09-04.
+- **Evidence:** accepted baseline recorded as D-010 and synchronized across all named documents; all six diagram variants passed headless PlantUML checks and were regenerated; Serbian component and presentation-flow renders were visually inspected; the 8-page report built with pdfLaTeX and LuaLaTeX; the 11-slide presentation built with LuaLaTeX; updated report and technology slide were visually inspected; logs contain no LaTeX warnings, layout warnings, or missing-character warnings; extracted PDF text preserves Serbian Latin and the accepted technology names.
+- **Acceptance evidence:** The user explicitly responded “accepted, cool!” on 2026-09-04, accepting S1 and closing T-002.
+- **Status:** Accepted.
+
+### Acceptance criteria
+
+- All documentation distinguishes the accepted initial scanner from the optional custom-scanner upgrade path.
+- No document still describes the mobile language or initial scanner technology as undecided.
+- No Android source project, SDK level, dependency version, or backend technology is introduced by this documentation-only subtask.
+- The user explicitly accepts T-002/S1 before the development-environment task is planned.
+
+All acceptance criteria were verified and T-002 was explicitly accepted on 2026-09-04.

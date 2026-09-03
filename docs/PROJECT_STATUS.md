@@ -21,6 +21,8 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - An accepted proposed end-to-end scan-to-recommendation sequence/data-flow diagram in `docs/diagrams/scan-to-recommendation-flow.puml` with a verified PNG render. It includes success and high-level unavailable/empty outcomes without prescribing concrete APIs or retry policies.
 - English technical, Serbian formal, and compact Serbian presentation renders are generated from the same two canonical PlantUML sources.
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
+- The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. This is a design decision; no Android project has been created yet.
+- Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
 ## Verified document builds
 
@@ -32,7 +34,6 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 
 ## Immediate product decisions still open
 
-- Java versus Kotlin for the Android client.
 - Exact Android project structure and minimum supported SDK.
 - Backend language/framework and service boundaries.
 - Product metadata API and fallback dataset.
