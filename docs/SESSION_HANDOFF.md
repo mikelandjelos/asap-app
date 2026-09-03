@@ -4,6 +4,8 @@ Last updated: 2026-09-03
 
 ## Completed in the latest documentation session
 
+- Added mandatory task-plan and per-subtask approval gates at the user's request.
+- Added `docs/PLANS.md` to persist proposed plans and approval state across sessions.
 - Initialized the cross-session documentation hub and root `AGENTS.md` instructions.
 - Established sources of truth, definition of done, and documentation synchronization rules.
 - Recorded the decisions already supported by the handwritten notes and repository setup.
@@ -19,12 +21,9 @@ Last updated: 2026-09-03
 
 ## Suggested next session
 
-Start Phase 1 with a bounded decision spike:
+Review and iterate on proposed plan T-001 in `docs/PLANS.md`. It is the first unchecked non-recurring TODO item: canonical PlantUML architecture and data-flow sources.
 
-1. Compare Kotlin and Java against Android/ML Kit needs.
-2. Record the selected language in `docs/DECISIONS.md` and the report's technology section.
-3. Confirm the local JDK, Android SDK, and build-tool versions.
-4. Update `TODO.md`, project status, and this handoff with evidence.
+No T-001 implementation is authorized yet. After the user explicitly approves the overall plan, obtain explicit approval for T-001/S1 before executing only that subtask.
 
 ## Blockers
 

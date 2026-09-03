@@ -6,6 +6,7 @@ This directory contains the operational documentation needed to continue the pro
 | --- | --- |
 | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | Current, evidence-based repository state |
 | [`WORKFLOW.md`](WORKFLOW.md) | Session workflow, definition of done, and build commands |
+| [`PLANS.md`](PLANS.md) | Proposed/approved task plans and subtask approval state |
 | [`DECISIONS.md`](DECISIONS.md) | Lightweight decision log |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Current architecture hypothesis and unresolved questions |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |

@@ -31,3 +31,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** Work is expected to continue across interchangeable sessions.
 - **Decision:** Treat TODO, current status, decisions, and handoff updates as part of the definition of done for meaningful changes.
 - **Consequence:** A task is not complete if the repository state cannot be reconstructed from its documentation.
+
+## D-005 — Work advances through explicit task and subtask approval gates
+
+- **Status:** Accepted
+- **Date:** 2026-09-03
+- **Context:** The user wants to review and iterate on plans and retain control over every transition in the work sequence.
+- **Decision:** Plan every reasonable task decomposition before implementation. Execute only one explicitly approved subtask at a time, stop after reporting its evidence, and require explicit approval before the next subtask or task.
+- **Consequence:** Overall plan approval freezes the agreed direction but does not authorize all subtasks. Verification and documentation updates belong to the active subtask; material scope expansion requires replanning.
