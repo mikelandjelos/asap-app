@@ -2,6 +2,8 @@
 
 Status: initial hypothesis from the project proposal; not yet validated by implementation.
 
+The accepted terminology, boundaries, required views, and future PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). Canonical `.puml` sources do not exist yet.
+
 ## Intended components
 
 ```mermaid

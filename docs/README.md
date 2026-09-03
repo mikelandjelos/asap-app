@@ -9,10 +9,11 @@ This directory contains the operational documentation needed to continue the pro
 | [`PLANS.md`](PLANS.md) | Proposed/approved task plans and subtask approval state |
 | [`DECISIONS.md`](DECISIONS.md) | Lightweight decision log |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Current architecture hypothesis and unresolved questions |
+| [`diagrams/README.md`](diagrams/README.md) | Proposed canonical diagram contract and file layout |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |
 
 Repository-level agent behavior is defined in [`../AGENTS.md`](../AGENTS.md). Product milestones live in [`../TODO.md`](../TODO.md). The formal deliverables remain the Serbian LaTeX report and Beamer presentation.
 
 ## Maintenance rule
 
-Documentation changes are part of implementation, not a later cleanup task. Update the relevant files in the same change that alters code, architecture, technology choices, data sources, results, or priorities.
+Documentation changes are part of implementation, not a later cleanup task. Implementation, verification, and affected documentation form one atomic subtask. Update the relevant files in the same change that alters code, architecture, technology choices, data sources, results, or priorities. If documented state is stale, reconcile it before starting new implementation.

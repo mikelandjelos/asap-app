@@ -26,6 +26,15 @@ Inspect the working tree before editing. Existing changes belong to the user unl
 
 When these disagree, do not silently choose one. Verify the repository, correct stale documentation, and record any real decision that resolves the discrepancy.
 
+## Documentation consistency invariant
+
+- Documentation must never knowingly lag behind implementation.
+- Treat implementation, verification, and all affected documentation updates as one atomic subtask. Do not report the subtask complete while any affected TODO, status, plan, decision, architecture, handoff, report, or presentation content is stale.
+- Update documentation during the active subtask, not as deferred cleanup and not only at the end of the parent task.
+- Before editing implementation, identify which documentation surfaces the subtask can affect. Include them in the approved subtask scope and acceptance evidence.
+- If a session is interrupted or stale documentation is discovered, reconcile documented state with repository evidence before any new implementation work.
+- When implementation evidence and documentation conflict, implemented reality wins provisionally; immediately correct the documentation and record any resulting decision or follow-up task.
+
 ## Mandatory approval gates
 
 - Every non-trivial task must have a written plan with reasonable subtasks, acceptance evidence, and verification before implementation begins.
@@ -34,7 +43,7 @@ When these disagree, do not silently choose one. Verify the repository, correct 
 - Approval of the overall task plan does not implicitly approve every subtask. Obtain explicit approval before starting each subtask.
 - After completing a subtask, report its changes and verification, then stop. Do not begin the next subtask until the user explicitly approves it.
 - After completing the final subtask, present task-level evidence and ask the user to accept/close the task. Do not select, plan, or execute the next task without explicit user approval.
-- Necessary verification and documentation synchronization are part of the active subtask. A material scope change or newly discovered task requires a revised plan and approval.
+- Necessary verification and documentation synchronization are inseparable parts of the active subtask. A material scope change or newly discovered task requires a revised plan and approval.
 - If approval is ambiguous, treat it as no approval and ask one concise clarifying question.
 
 ## Working rules
@@ -48,9 +57,9 @@ When these disagree, do not silently choose one. Verify the repository, correct 
 - Keep formal report and presentation content in Serbian Latin. Operational developer documentation may remain in English.
 - Preserve source files; generated LaTeX auxiliaries are ignored. Commit PDFs only when they are intentional deliverables.
 
-## Finish every meaningful session
+## Finish every approved subtask
 
-In the same change as the implementation:
+Before reporting the subtask complete, in the same change as the implementation:
 
 1. Update completed or newly discovered tasks in `TODO.md`.
 2. Update `docs/PROJECT_STATUS.md` if repository capabilities changed.

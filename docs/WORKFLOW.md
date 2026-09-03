@@ -4,11 +4,11 @@
 
 1. **Orient:** read the files listed in `AGENTS.md` and inspect the working tree.
 2. **Select:** identify the first pending task in `TODO.md`, unless the user explicitly chooses another task.
-3. **Plan:** divide the task into reasonable subtasks; define deliverables, acceptance evidence, verification, dependencies, and exclusions in `docs/PLANS.md`.
+3. **Plan:** divide the task into reasonable subtasks; define deliverables, acceptance evidence, verification, affected documentation, dependencies, and exclusions in `docs/PLANS.md`.
 4. **Review:** iterate on the plan with the user. Do not implement anything while the plan is merely proposed.
 5. **Approve:** record explicit task-plan approval. Obtain separate explicit approval for the first subtask before executing it.
 6. **Execute one subtask:** keep changes within the approved scope.
-7. **Verify and synchronize:** perform the subtask's checks and update relevant documentation as part of that same subtask.
+7. **Verify and synchronize:** perform the subtask's checks and update every affected documentation surface as part of that same atomic subtask.
 8. **Stop:** report evidence and wait for explicit approval before starting the next subtask.
 9. **Close:** after the final subtask, ask the user to accept the task before considering any subsequent TODO item.
 
@@ -22,13 +22,21 @@
 
 Do not infer approval from silence, general encouragement, or approval of a different task/subtask.
 
+## No-documentation-lag invariant
+
+- No implementation subtask is complete while its documentation is stale.
+- Documentation synchronization happens per subtask, not only at task closure.
+- Each plan must list affected documentation before implementation is approved.
+- If work is interrupted between implementation and documentation, the next action is reconciliation; new implementation remains blocked.
+- Use repository evidence to correct stale claims immediately. Never preserve a known inaccuracy merely because it was previously documented.
+
 ## Definition of done
 
 A task may be checked off only when:
 
 - the requested artifact or behavior exists in the repository;
 - relevant verification passes;
-- the current-state documentation does not overstate what was built;
+- every affected documentation surface exactly reflects what was built, including limitations and unimplemented behavior;
 - new architectural or technology decisions are recorded;
 - the next session can understand remaining work without relying on chat history.
 

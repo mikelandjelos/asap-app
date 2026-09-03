@@ -16,12 +16,14 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - The presentation contains proposal content and explicitly marked placeholders for design, implementation, and evaluation results.
 - Bundled presentation theme assets under `presentation/theme/`.
 - Root-level LaTeX ignores and cross-session operating instructions.
+- An accepted canonical diagram specification in `docs/diagrams/README.md`; it reconciles terminology and file layout but contains no `.puml` implementation yet.
 
 ## Verified document builds
 
 - `report/report.tex` compiles with both pdfLaTeX and LuaLaTeX, from the repository root or the `report/` directory.
 - `presentation/asap-presentation.tex` compiles with LuaLaTeX, from the repository root or the `presentation/` directory.
 - Serbian Latin glyphs render correctly with the engine-aware font setup.
+- PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 are available in the current environment when PlantUML is invoked headlessly with `env -u DISPLAY`.
 
 ## Immediate product decisions still open
 
