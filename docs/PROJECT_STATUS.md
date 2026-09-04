@@ -50,7 +50,8 @@ Last verified: 2026-09-04 under T-003/S3.
 
 ## Immediate product decisions still open
 
-- Exact Android project structure and minimum supported SDK.
+- T-004/S1 proposes an Android 16/API 36, `minSdk 23`, AGP 9.3.2/Gradle 9.5.0, Java 17-on-JDK-21 baseline with Code Scanner 16.1.0 and a minimal AndroidX Views/test set. These are researched candidates, not accepted decisions; see `docs/ANDROID_BASELINE.md`.
+- Exact Android project structure remains open.
 - Backend language/framework and service boundaries.
 - Product metadata API and fallback dataset.
 - Embedding model and vector-index implementation.

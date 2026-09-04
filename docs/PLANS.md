@@ -158,3 +158,44 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 - Choosing backend, product-data, embedding, or vector-index technologies.
 
 All acceptance criteria were verified and T-003 was explicitly accepted on 2026-09-04.
+
+## T-004 — Select the minimal Android PoC build and dependency baseline
+
+- **TODO source:** “Izdvojiti potrebne biblioteke i njihove verzije.”
+- **Status:** Plan approved; T-004/S1 accepted; T-004/S2 awaiting separate execution approval
+- **Plan approval evidence:** The user responded “cool, let's go” to the proposed two-subtask plan on 2026-09-04.
+- **Goal:** Select an exact, minimal, mutually compatible build and dependency baseline for the Java/XML Google Code Scanner PoC without creating or resolving an Android project.
+
+### Approved subtasks
+
+#### T-004/S1 — Research compatibility and candidates
+
+- Use current primary documentation to determine compatible SDK, AGP, Gradle, JDK, Google Code Scanner, essential AndroidX Views, and minimal test versions.
+- Compare stable and newest-toolchain options, record scanner delivery constraints, and exclude unrelated implementation dependencies.
+- Produce a recommendation for explicit review; do not install SDK packages, create build files, resolve artifacts, or accept a version decision on the user's behalf.
+- Update `docs/ANDROID_BASELINE.md`, the documentation hub, `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md`. Formal deliverables remain unchanged because candidates are not accepted decisions.
+- **Approval evidence:** The user explicitly instructed “execute s1” on 2026-09-04.
+- **Evidence:** Official sources support the recommended candidate of stable Android 16 `compileSdk`/`targetSdk 36`, `minSdk 23`, Java source/target 17, Gradle runtime JDK 21, patched AGP 9.3.2 with Gradle 9.5.0, Build Tools 36.0.0, Google Code Scanner 16.1.0, AppCompat 1.8.0, ConstraintLayout 2.2.2, JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0. The documented alternatives are the just-released AGP 9.4.0/Gradle 9.6.0 pair, preview API 37, optional maintenance-mode Material Views 1.14.0, and deferred direct ML Kit/CameraX.
+- **Acceptance evidence:** The user explicitly stated “I accept your proposal” on 2026-09-04.
+- **Status:** Accepted.
+
+#### T-004/S2 — Record the accepted baseline
+
+- Resolve the five decision points in `docs/ANDROID_BASELINE.md` from explicit user feedback and freeze exact accepted versions.
+- Record the durable choice and compatibility rationale in `docs/DECISIONS.md`, then synchronize TODO, project status, workflow, plan, handoff, report, and presentation wherever the accepted baseline changes a formal claim.
+- Do not scaffold a Gradle project, install Platform/Build Tools 36, download dependencies, or implement the scanner.
+
+### Task-level acceptance criteria
+
+- Every required build/runtime/dependency coordinate is exact and mutually compatible.
+- Required, optional, deferred, and rejected dependencies are clearly distinguished.
+- Dynamic dependency selectors are prohibited and repository requirements are documented.
+- The scanner's Google Play services delivery and first-use limitation are explicit.
+- S1 and S2 are separately approved and accepted, and T-004 is explicitly accepted before project scaffolding is planned.
+
+### Out of scope
+
+- SDK/package installation or dependency resolution.
+- Gradle wrapper and Android project creation.
+- Android manifest, resources, Java source, tests, or scanner implementation.
+- Backend, product-data, recommendation, or other mobile feature dependencies.
