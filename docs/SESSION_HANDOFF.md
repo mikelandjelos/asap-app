@@ -4,6 +4,12 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User accepted T-003/S2 with “LGTM!” on 2026-09-04.
+- Executed only approved T-003/S2: retained system OpenJDK 21, installed verified official Android Studio Quail 4 (2026.1.4), and installed the core Android 37 SDK toolchain under user-scoped paths.
+- Verified Android CLI 1.0.16261425, Command-line Tools 23.0, Platform Tools 37.0.1, Android Platform 37.0 revision 2, Build Tools 37.0.0, ADB, AAPT2, Studio's bundled OpenJDK 25.0.3, and all command symlinks.
+- Added reproducible Android environment commands to `docs/WORKFLOW.md`; no emulator, AVD, application project, or dependency was created.
+- Excluded Android Studio and Gradle machine-local state from version control.
+- Synchronized the formal technology sections, rebuilt the 8-page report with pdfLaTeX and LuaLaTeX and the 11-slide presentation with LuaLaTeX, found no warnings or missing glyphs, and visually inspected both changed pages.
 - User accepted the completed T-003/S1 audit with “approved!” on 2026-09-04.
 - Executed only approved T-003/S1 as a read-only audit: verified Ubuntu 24.04.4 and OpenJDK/JDK/`javac` 21.0.12, found no discoverable Android Studio or Android SDK tooling, and changed no host configuration.
 - Confirmed ample disk and AMD-V support, but no KVM packages or `/dev/kvm`; visible RAM is below the current Android Studio plus Emulator minimum, so the proposed runtime path prefers a physical Play-enabled Android device.
@@ -48,8 +54,8 @@ Last updated: 2026-09-04
 
 ## Suggested next session
 
-T-003/S1 is accepted. Obtain separate explicit approval before executing T-003/S2 installation and configuration.
+T-003/S2 is accepted. The next subtask is T-003/S3: verify one runtime target, preferably a physical Play-enabled Android device through `adb`. Obtain separate explicit approval before executing it.
 
 ## Blockers
 
-PlantUML must currently be invoked with `env -u DISPLAY` in this environment to avoid an inaccessible X11 display. Android Studio and SDK tooling are not discoverable. Emulator acceleration is unavailable because KVM packages and `/dev/kvm` are absent; a physical device is the preferred first runtime target.
+PlantUML must currently be invoked with `env -u DISPLAY` in this environment to avoid an inaccessible X11 display. Emulator acceleration remains unavailable because KVM packages and `/dev/kvm` are absent; a physical device is the preferred first runtime target.

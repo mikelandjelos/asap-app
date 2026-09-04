@@ -35,3 +35,9 @@ build/*
 *.sav
 *.swp
 *~
+
+# Android Studio / Gradle local state
+.idea/
+*.iml
+.gradle/
+local.properties

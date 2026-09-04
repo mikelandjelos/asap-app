@@ -32,19 +32,19 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 are available in the current environment when PlantUML is invoked headlessly with `env -u DISPLAY`.
 - The integrated report is 8 pages and the integrated presentation is 11 slides; their diagram pages/slides were visually inspected.
 
-## Development environment audit
+## Android development environment
 
-Last audited: 2026-09-04 under T-003/S1. No installation or configuration was performed.
+Last verified: 2026-09-04 under T-003/S2.
 
 - Host: Ubuntu 24.04.4 LTS, x86_64, Linux 7.0.0-30-generic.
-- Java: Ubuntu OpenJDK 21.0.12 JDK/JRE and `javac` are installed and selected through system alternatives. This is already new enough for the currently documented Android Gradle Plugin requirement of JDK 17 or later; the future project should still use Android Studio's project-local Gradle JDK convention.
-- Missing or undiscovered: Android Studio, standalone Gradle, Android SDK directories, `sdkmanager`, `avdmanager`, `adb`, and `emulator`.
-- Environment variables: `JAVA_HOME`, `ANDROID_HOME`, and `ANDROID_SDK_ROOT` are unset. This is not yet treated as a defect because no SDK or Android project exists.
-- Runtime capacity: the Ryzen 7 5800H exposes AMD-V, but KVM packages, `/dev/kvm`, and `kvm` group membership are absent. Emulator acceleration is therefore not currently usable from this environment.
-- Resources: approximately 13 GiB RAM is visible with about 2.7 GiB available during the audit; approximately 533 GiB disk space is free. Disk capacity is sufficient, while a physical device is preferable to an emulator for the first camera/barcode PoC.
-- Official references checked for the audit: [Android Studio installation and current Linux requirements](https://developer.android.com/studio/install), [Java versions in Android builds](https://developer.android.com/build/jdks), and [Linux emulator/KVM acceleration](https://developer.android.com/studio/run/emulator-acceleration).
-
-The proposed next setup keeps OpenJDK 21, installs the current stable official Android Studio distribution and its recommended SDK/platform tools, and defers emulator/KVM work unless a physical device is unavailable. These installation actions require separate T-003/S2 approval.
+- System Java: Ubuntu OpenJDK 21.0.12 JDK/JRE and `javac`, selected through system alternatives and retained unchanged.
+- IDE: Android Studio Quail 4 (2026.1.4), build `AI-261.26222.65.2614.16204760`, installed at `/home/mih/.local/opt/android-studio`. Its bundled JetBrains Runtime is OpenJDK 25.0.3.
+- SDK root: `/home/mih/Android/Sdk` with Android CLI 1.0.16261425, Command-line Tools 23.0, Platform Tools 37.0.1, Android Platform 37.0 revision 2, and Build Tools 37.0.0.
+- User commands: `studio`, `android`, `sdkmanager`, `avdmanager`, `adb`, and `fastboot` resolve through symlinks in `/home/mih/.local/bin`, which is already on `PATH`.
+- `JAVA_HOME`, `ANDROID_HOME`, and `ANDROID_SDK_ROOT` remain unset deliberately. The IDE uses its bundled runtime, the SDK occupies Android Studio's default Linux path, and reproducible CLI checks pass the SDK root explicitly.
+- No standalone Gradle installation is required before a project exists; the future Android project will own its Gradle Wrapper and project-local Gradle JDK selection.
+- No emulator, system image, AVD, or runtime target was added. AMD-V is available, but KVM is not currently installed or exposed; T-003/S3 retains the physical-device-first recommendation.
+- Official references: [Android Studio download and license](https://developer.android.com/studio), [Android Studio installation](https://developer.android.com/studio/install), [Java versions in Android builds](https://developer.android.com/build/jdks), and [Linux emulator/KVM acceleration](https://developer.android.com/studio/run/emulator-acceleration).
 
 ## Immediate product decisions still open
 

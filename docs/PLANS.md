@@ -100,7 +100,7 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 ## T-003 — Install and verify the Android development environment
 
 - **TODO source:** “Instalirati i proveriti JDK/JVM, Android Studio i Android SDK.”
-- **Status:** Plan approved; T-003/S1 accepted; T-003/S2 awaiting separate execution approval
+- **Status:** Plan approved; T-003/S1–S2 accepted; T-003/S3 awaiting separate execution approval
 - **Approval evidence:** The user responded “cool, do it” to the proposed T-003 plan on 2026-09-04. Per the mandatory separate subtask gate, this approves the plan but does not yet authorize S1 execution.
 - **Goal:** Establish a known, reproducible Android workstation baseline suitable for the later Java/XML Google Code Scanner PoC, without scaffolding application code or selecting unrelated libraries.
 
@@ -125,6 +125,10 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 - Use stable official distribution channels and record exact versions and resolved paths. Any network download, privileged package operation, license acceptance, or write outside the repository requires its normal explicit permission.
 - Verify the installed commands independently; do not create the ASAP Android project, choose application dependencies, or implement the scanner.
 - Update `docs/PROJECT_STATUS.md`, `docs/DECISIONS.md` if a durable version/distribution choice is made, `docs/PLANS.md`, `docs/WORKFLOW.md`, and `docs/SESSION_HANDOFF.md`.
+- **Approval evidence:** The user explicitly instructed “execute s2” on 2026-09-04 and explicitly allowed the official downloads, user-scoped installation, SDK license acceptance, and command symlinks through the required permission prompts.
+- **Evidence:** Google Android Studio Quail 4 archive size and SHA-256 matched the official publication before extraction; Android Studio 2026.1.4 build `AI-261.26222.65.2614.16204760` installed under `/home/mih/.local/opt/android-studio` and reports its version through `studio --version`; system OpenJDK/`javac` 21.0.12 remained unchanged while Studio's bundled runtime reports OpenJDK 25.0.3; Google command-line tools archive matched its official size and SHA-256, then Command-line Tools were updated to 23.0; Android CLI 1.0.16261425, Platform Tools 37.0.1, Android Platform 37.0 revision 2, and Build Tools 37.0.0 were installed under `/home/mih/Android/Sdk`; `studio`, `android`, `sdkmanager`, `avdmanager`, `adb`, `fastboot` resolve through verified symlinks in `/home/mih/.local/bin`; the new Android CLI lists every installed package with metrics disabled; report and presentation technology sections were synchronized, rebuilt without warnings, and visually inspected; the verified temporary archives were removed after installation; no emulator, AVD, Gradle project, application dependency, or ASAP source was created.
+- **Acceptance evidence:** The user explicitly responded “LGTM!” on 2026-09-04.
+- **Status:** Accepted.
 
 #### T-003/S3 — Verify a usable Android runtime target
 

@@ -60,6 +60,27 @@ lualatex -interaction=nonstopmode -halt-on-error \
 
 The report also supports LuaLaTeX. Two passes are used so tables of contents, references, and Beamer frame totals settle correctly.
 
+## Android workstation
+
+The verified user-scoped installation uses:
+
+- Android Studio: `/home/mih/.local/opt/android-studio`
+- Android SDK: `/home/mih/Android/Sdk`
+- command symlinks: `/home/mih/.local/bin`
+
+No global Android environment variable is required. Use the explicit SDK root for reproducible package queries, and disable Android CLI metrics in scripted checks:
+
+```sh
+java -version
+javac -version
+studio --version
+android --no-metrics --version
+android --no-metrics --sdk=/home/mih/Android/Sdk sdk list
+adb version
+```
+
+`sdkmanager` remains available for compatibility but reports itself deprecated; prefer the `android sdk` commands. Do not install standalone Gradle globally: the future project must commit and use its Gradle Wrapper. Emulator/AVD commands are intentionally absent until T-003/S3 establishes a runtime target.
+
 ## Documentation synchronization guide
 
 | Change | Also update |

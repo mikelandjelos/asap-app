@@ -79,3 +79,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The primary goal is the fastest route to a working MVP. The developer already knows Java, while the initial barcode flow does not require a custom camera interface.
 - **Decision:** Use Java for Android application code, XML-based Android Views for the customizable application UI, and Google Code Scanner for the initial barcode-scanning implementation.
 - **Consequence:** Google Code Scanner owns only the launched scanning experience; the rest of the ASAP interface remains custom. Direct ML Kit Barcode Scanning with CameraX is the upgrade path if custom preview, overlays, or continuous scanning become necessary. Exact SDK levels, dependency versions, and project structure remain undecided.
+
+## D-011 — Android tooling is installed user-locally from official distributions
+
+- **Status:** Accepted
+- **Date:** 2026-09-04
+- **Context:** The host already has a suitable system JDK, while Android Studio and the Android SDK were absent. The setup should avoid unnecessary system-package changes and remain easy to inspect.
+- **Decision:** Retain Ubuntu OpenJDK 21 and install Google's verified stable Android Studio and SDK distributions under the user's home directory. Expose stable commands through `/home/mih/.local/bin` instead of editing shell startup files.
+- **Consequence:** Android Studio uses its bundled runtime, SDK commands use `/home/mih/Android/Sdk`, and future projects must carry their own Gradle Wrapper and Gradle JDK configuration. Installed SDK packages do not yet fix the application's `compileSdk`, `targetSdk`, `minSdk`, or dependency versions.
