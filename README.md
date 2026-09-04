@@ -2,7 +2,7 @@
 
 **Automatska Semantička Analiza Proizvoda** je planirani mobilni AI MVP za prepoznavanje proizvoda pomoću barkoda, semantičku pretragu i personalizovane preporuke.
 
-Projekat je trenutno u fazi predloga i pripreme: aplikativni kod još nije implementiran. Početni predlog projekta nalazi se u [LaTeX izveštaju](report/report.tex), plan rada u [TODO listi](TODO.md), a prezentacija koja će se dopunjavati tokom razvoja u [Beamer izvoru](presentation/asap-presentation.tex).
+Projekat je trenutno u fazi predloga i pripreme: aplikativni kod još nije implementiran. Android razvojno okruženje je postavljeno, a fizički Android 16 uređaj sa Google Play servisima i potrebnim kamerama verifikovan je preko ADB-a. Početni predlog projekta nalazi se u [LaTeX izveštaju](report/report.tex), plan rada u [TODO listi](TODO.md), a prezentacija koja će se dopunjavati tokom razvoja u [Beamer izvoru](presentation/asap-presentation.tex).
 
 Operativna dokumentacija za nastavak rada kroz nezavisne sesije počinje u [`docs/README.md`](docs/README.md). Pravila za agente nalaze se u [`AGENTS.md`](AGENTS.md), a trenutno stanje projekta u [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md).
 

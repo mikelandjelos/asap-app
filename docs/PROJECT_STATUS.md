@@ -34,7 +34,7 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 
 ## Android development environment
 
-Last verified: 2026-09-04 under T-003/S2.
+Last verified: 2026-09-04 under T-003/S3.
 
 - Host: Ubuntu 24.04.4 LTS, x86_64, Linux 7.0.0-30-generic.
 - System Java: Ubuntu OpenJDK 21.0.12 JDK/JRE and `javac`, selected through system alternatives and retained unchanged.
@@ -43,7 +43,9 @@ Last verified: 2026-09-04 under T-003/S2.
 - User commands: `studio`, `android`, `sdkmanager`, `avdmanager`, `adb`, and `fastboot` resolve through symlinks in `/home/mih/.local/bin`, which is already on `PATH`.
 - `JAVA_HOME`, `ANDROID_HOME`, and `ANDROID_SDK_ROOT` remain unset deliberately. The IDE uses its bundled runtime, the SDK occupies Android Studio's default Linux path, and reproducible CLI checks pass the SDK root explicitly.
 - No standalone Gradle installation is required before a project exists; the future Android project will own its Gradle Wrapper and project-local Gradle JDK selection.
-- No emulator, system image, AVD, or runtime target was added. AMD-V is available, but KVM is not currently installed or exposed; T-003/S3 retains the physical-device-first recommendation.
+- Runtime target: an authorized Samsung SM-A566B physical device running Android 16/API 36 on `arm64-v8a`, with the 2026-04-05 security patch. Enabled Google Play services 26.32.34 and rear/front camera, autofocus, and flash capabilities were verified through ADB.
+- No emulator, system image, or AVD was added. Physical-device use requires USB debugging, normal file-transfer mode, an unlocked screen during first connection, and acceptance of the host RSA key. USB tethering does not expose the required ADB interface in this setup. No device serial number is recorded.
+- T-003 is accepted and complete; actual barcode scanning remains unverified until the separately planned application PoC exists.
 - Official references: [Android Studio download and license](https://developer.android.com/studio), [Android Studio installation](https://developer.android.com/studio/install), [Java versions in Android builds](https://developer.android.com/build/jdks), and [Linux emulator/KVM acceleration](https://developer.android.com/studio/run/emulator-acceleration).
 
 ## Immediate product decisions still open

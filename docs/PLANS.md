@@ -100,7 +100,7 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 ## T-003 — Install and verify the Android development environment
 
 - **TODO source:** “Instalirati i proveriti JDK/JVM, Android Studio i Android SDK.”
-- **Status:** Plan approved; T-003/S1–S2 accepted; T-003/S3 awaiting separate execution approval
+- **Status:** Accepted and complete
 - **Approval evidence:** The user responded “cool, do it” to the proposed T-003 plan on 2026-09-04. Per the mandatory separate subtask gate, this approves the plan but does not yet authorize S1 execution.
 - **Goal:** Establish a known, reproducible Android workstation baseline suitable for the later Java/XML Google Code Scanner PoC, without scaffolding application code or selecting unrelated libraries.
 
@@ -136,6 +136,10 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 - Verify `adb` discovery and basic device metadata. Do not install an ASAP application because no Android project exists yet.
 - Document the repeatable environment and device checks, known limitations for camera/barcode testing, and any remaining manual Android Studio step.
 - Update `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, `docs/WORKFLOW.md`, and `docs/SESSION_HANDOFF.md`; update the report or presentation only if the verified environment changes a formal project claim.
+- **Approval evidence:** The user explicitly instructed “execute the s3” after connecting a phone on 2026-09-04.
+- **Evidence:** After disabling USB tethering, enabling USB debugging, selecting normal file-transfer mode, and accepting the device-side RSA prompt, `adb devices -l` and `adb get-state` reported an authorized Samsung SM-A566B physical device. It runs Android 16/API 36 on `arm64-v8a`, reports the 2026-04-05 security patch, has enabled Google Play services 26.32.34, and declares rear/front camera, autofocus, and flash features. Repeatable checks were added to `docs/WORKFLOW.md`; the report and presentation were synchronized. No application was installed and no device serial number is persisted in the repository.
+- **Acceptance evidence:** The user explicitly responded “lgtm! whats next?” on 2026-09-04, accepting S3 and requesting progression beyond T-003.
+- **Status:** Accepted.
 
 ### Task-level acceptance criteria
 
@@ -152,3 +156,5 @@ All acceptance criteria were verified and T-002 was explicitly accepted on 2026-
 - Selecting or adding Google Code Scanner and other application dependency versions.
 - Implementing barcode scanning or any ASAP UI.
 - Choosing backend, product-data, embedding, or vector-index technologies.
+
+All acceptance criteria were verified and T-003 was explicitly accepted on 2026-09-04.

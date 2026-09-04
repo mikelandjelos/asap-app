@@ -79,7 +79,24 @@ android --no-metrics --sdk=/home/mih/Android/Sdk sdk list
 adb version
 ```
 
-`sdkmanager` remains available for compatibility but reports itself deprecated; prefer the `android sdk` commands. Do not install standalone Gradle globally: the future project must commit and use its Gradle Wrapper. Emulator/AVD commands are intentionally absent until T-003/S3 establishes a runtime target.
+`sdkmanager` remains available for compatibility but reports itself deprecated; prefer the `android sdk` commands. Do not install standalone Gradle globally: the future project must commit and use its Gradle Wrapper.
+
+### Physical Android runtime
+
+The verified runtime is a Samsung SM-A566B physical device running Android 16/API 36. On first connection, unlock the phone, enable Developer options and USB debugging, select File transfer / Android Auto rather than USB tethering, and accept the host RSA prompt. Verify the connection and required MVP capabilities without persisting the device serial number:
+
+```sh
+adb devices -l
+adb get-state
+adb shell getprop ro.build.version.release
+adb shell getprop ro.build.version.sdk
+adb shell getprop ro.product.model
+adb shell pm path com.google.android.gms
+adb shell dumpsys package com.google.android.gms | rg -m 1 'versionName='
+adb shell pm list features | rg 'camera|autofocus|flash'
+```
+
+The verified device has enabled Google Play services and declares rear/front camera, autofocus, and flash features, making it a suitable target for the planned Google Code Scanner experiment. ADB visibility verifies deployment readiness and declared hardware capabilities; actual scanning behavior remains unverified until the application PoC exists. No emulator/AVD is currently configured.
 
 ## Documentation synchronization guide
 

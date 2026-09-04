@@ -4,6 +4,10 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User explicitly authorized T-003/S3 on 2026-09-04 after connecting a physical phone.
+- User accepted T-003/S3 and completion of T-003 with “lgtm! whats next?” on 2026-09-04.
+- T-003/S3 verified an authorized Samsung SM-A566B running Android 16/API 36 through ADB; enabled Google Play services 26.32.34 and rear/front camera, autofocus, and flash features were verified. No application was installed and no device serial number was recorded.
+- Added repeatable physical-device setup and verification commands to `docs/WORKFLOW.md`; USB tethering must remain off for this wired ADB setup.
 - User accepted T-003/S2 with “LGTM!” on 2026-09-04.
 - Executed only approved T-003/S2: retained system OpenJDK 21, installed verified official Android Studio Quail 4 (2026.1.4), and installed the core Android 37 SDK toolchain under user-scoped paths.
 - Verified Android CLI 1.0.16261425, Command-line Tools 23.0, Platform Tools 37.0.1, Android Platform 37.0 revision 2, Build Tools 37.0.0, ADB, AAPT2, Studio's bundled OpenJDK 25.0.3, and all command symlinks.
@@ -54,7 +58,7 @@ Last updated: 2026-09-04
 
 ## Suggested next session
 
-T-003/S2 is accepted. The next subtask is T-003/S3: verify one runtime target, preferably a physical Play-enabled Android device through `adb`. Obtain separate explicit approval before executing it.
+T-003 is accepted and complete. Formulate and iterate the next task plan for selecting the minimal Android PoC SDK/build/dependency baseline; do not execute it without plan approval followed by separate subtask approval.
 
 ## Blockers
 
