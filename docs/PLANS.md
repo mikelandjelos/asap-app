@@ -162,7 +162,7 @@ All acceptance criteria were verified and T-003 was explicitly accepted on 2026-
 ## T-004 — Select the minimal Android PoC build and dependency baseline
 
 - **TODO source:** “Izdvojiti potrebne biblioteke i njihove verzije.”
-- **Status:** Plan approved; T-004/S1 accepted; T-004/S2 awaiting separate execution approval
+- **Status:** Accepted and complete
 - **Plan approval evidence:** The user responded “cool, let's go” to the proposed two-subtask plan on 2026-09-04.
 - **Goal:** Select an exact, minimal, mutually compatible build and dependency baseline for the Java/XML Google Code Scanner PoC without creating or resolving an Android project.
 
@@ -184,6 +184,10 @@ All acceptance criteria were verified and T-003 was explicitly accepted on 2026-
 - Resolve the five decision points in `docs/ANDROID_BASELINE.md` from explicit user feedback and freeze exact accepted versions.
 - Record the durable choice and compatibility rationale in `docs/DECISIONS.md`, then synchronize TODO, project status, workflow, plan, handoff, report, and presentation wherever the accepted baseline changes a formal claim.
 - Do not scaffold a Gradle project, install Platform/Build Tools 36, download dependencies, or implement the scanner.
+- **Approval evidence:** The user explicitly instructed “execute s2” on 2026-09-04.
+- **Evidence:** The five accepted S1 recommendations were frozen in `docs/ANDROID_BASELINE.md` and recorded as D-012. Operational status/workflow, README, report, presentation, plan, and handoff were synchronized. The formal PDFs were rebuilt and inspected. No SDK package, Gradle distribution, Maven artifact, project, manifest, resource, source file, or test was created or downloaded.
+- **Acceptance evidence:** The user explicitly instructed “good, commit; what's next” on 2026-09-04.
+- **Status:** Accepted.
 
 ### Task-level acceptance criteria
 
@@ -199,3 +203,5 @@ All acceptance criteria were verified and T-003 was explicitly accepted on 2026-
 - Gradle wrapper and Android project creation.
 - Android manifest, resources, Java source, tests, or scanner implementation.
 - Backend, product-data, recommendation, or other mobile feature dependencies.
+
+All acceptance criteria were verified and T-004 was explicitly accepted on 2026-09-04.

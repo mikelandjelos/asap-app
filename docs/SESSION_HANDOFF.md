@@ -4,8 +4,11 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User explicitly authorized T-004/S2 on 2026-09-04.
+- User accepted T-004/S2 and completion of T-004 with “good, commit; what's next” on 2026-09-04.
+- T-004/S2 froze the accepted Android PoC baseline in `docs/ANDROID_BASELINE.md` and D-012, then synchronized operational and formal documentation. No package, project, or dependency was downloaded.
 - User approved the T-004 plan and explicitly authorized only T-004/S1 on 2026-09-04.
-- User accepted T-004/S1 and its recommended candidate matrix on 2026-09-04. No SDK package, dependency, or project was created or downloaded; the versions remain unfrozen until separately approved T-004/S2 records them as durable decisions.
+- User accepted T-004/S1 and its recommended candidate matrix on 2026-09-04. No SDK package, dependency, or project was created or downloaded at that checkpoint; the subsequently authorized S2 has now recorded the versions as durable decisions.
 - User explicitly authorized T-003/S3 on 2026-09-04 after connecting a physical phone.
 - User accepted T-003/S3 and completion of T-003 with “lgtm! whats next?” on 2026-09-04.
 - T-003/S3 verified an authorized Samsung SM-A566B running Android 16/API 36 through ADB; enabled Google Play services 26.32.34 and rear/front camera, autofocus, and flash features were verified. No application was installed and no device serial number was recorded.
@@ -60,7 +63,7 @@ Last updated: 2026-09-04
 
 ## Suggested next session
 
-T-004/S1 is accepted. Obtain separate explicit approval before executing T-004/S2, which will freeze the accepted baseline and synchronize all affected formal and operational documentation without downloading dependencies or creating a project.
+T-004 is accepted and complete. Formulate and iterate the next task plan for scaffolding and validating the minimal Android Google Code Scanner PoC; do not execute it without plan approval followed by separate subtask approval.
 
 ## Blockers
 

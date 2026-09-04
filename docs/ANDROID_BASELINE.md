@@ -1,12 +1,12 @@
-# Android PoC baseline candidates
+# Accepted Android PoC baseline
 
-Status: T-004/S1 research accepted; the candidate versions remain unfrozen until T-004/S2.
+Status: Accepted and frozen under completed T-004.
 
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 
-## Recommended minimal baseline
+## Frozen minimal baseline
 
-| Concern | Candidate | Reason |
+| Concern | Accepted version | Reason |
 | --- | --- | --- |
 | Android Gradle Plugin | `9.3.2` | Stable patched 9.3 line, supported by Android Studio Quail 4, supports API 37, and avoids adopting AGP 9.4 immediately after release. |
 | Gradle Wrapper | `9.5.0` | Required/default Gradle version for AGP 9.3. |
@@ -30,7 +30,7 @@ Repositories should be limited initially to `google()` and `mavenCentral()`, wit
 - Restrict accepted barcode formats in the PoC when the target product formats are known; this may improve scanning speed.
 - Direct ML Kit Barcode Scanning (`com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1`) and CameraX are explicitly excluded from the initial dependency set. They remain an upgrade path for a custom preview, overlays, or continuous scanning.
 
-## Alternatives and trade-offs
+## Deferred alternatives and trade-offs
 
 ### Latest toolchain: AGP 9.4.0 and Gradle 9.6.0
 
@@ -44,9 +44,9 @@ Platform and Build Tools 37 are already installed, and AGP 9.3/9.4 support API 3
 
 `com.google.android.material:material:1.14.0` is the current stable Views library and now requires `minSdk 23`, but Google placed it in maintenance mode after moving new Material development to Compose. It is optional: add it only when the first custom ASAP screen needs a Material widget or theme that AppCompat and XML layouts do not provide. This preserves the accepted Java/XML direction without adding an unnecessary initial dependency.
 
-## S2 decision points
+## Accepted S2 decisions
 
-T-004/S2 should explicitly accept or revise:
+T-004/S2 freezes the following choices from the accepted S1 recommendation:
 
 1. AGP 9.3.2 + Gradle 9.5.0 versus AGP 9.4.0 + Gradle 9.6.0.
 2. Stable `compileSdk`/`targetSdk 36`, `minSdk 23`, and Java source/target 17 with Gradle on JDK 21.
@@ -54,7 +54,7 @@ T-004/S2 should explicitly accept or revise:
 4. The minimal JUnit/Espresso test baseline.
 5. Deferring Material Views, direct ML Kit Barcode Scanning, and CameraX.
 
-S2 records accepted choices only. Project scaffolding, SDK installation, dependency resolution, and application implementation remain out of scope.
+Project scaffolding, SDK installation, dependency resolution, and application implementation remain out of scope. The accepted baseline does not claim that these artifacts are installed or resolved.
 
 ## Official sources
 

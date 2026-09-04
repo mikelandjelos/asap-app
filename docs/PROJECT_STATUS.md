@@ -22,6 +22,8 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - English technical, Serbian formal, and compact Serbian presentation renders are generated from the same two canonical PlantUML sources.
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
 - The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. This is a design decision; no Android project has been created yet.
+- The accepted PoC build/dependency baseline is documented in `docs/ANDROID_BASELINE.md`: Android 16/API 36, `minSdk 23`, AGP 9.3.2/Gradle 9.5.0, Java 17 source/target with Gradle on JDK 21, Code Scanner 16.1.0, AppCompat 1.8.0, ConstraintLayout 2.2.2, and the minimal JUnit/AndroidX test set. These versions are selected but not yet installed or resolved as a project.
+- T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
 ## Verified document builds
@@ -50,7 +52,6 @@ Last verified: 2026-09-04 under T-003/S3.
 
 ## Immediate product decisions still open
 
-- T-004/S1 proposes an Android 16/API 36, `minSdk 23`, AGP 9.3.2/Gradle 9.5.0, Java 17-on-JDK-21 baseline with Code Scanner 16.1.0 and a minimal AndroidX Views/test set. These are researched candidates, not accepted decisions; see `docs/ANDROID_BASELINE.md`.
 - Exact Android project structure remains open.
 - Backend language/framework and service boundaries.
 - Product metadata API and fallback dataset.

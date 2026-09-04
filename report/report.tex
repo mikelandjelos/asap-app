@@ -78,8 +78,6 @@ Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvod
 
 Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code Scanner, jer predstavljaju najkraći put do funkcionalne verzije uz potpuno prilagodljiv ostatak korisničkog interfejsa. Direktni ML Kit Barcode Scanning sa CameraX bibliotekom ostaje moguća kasnija zamena samo ako bude potreban prilagođen prikaz kamere, preklopi ili kontinualno skeniranje. Oznake CNN i TFLite iz početnih materijala više ne predstavljaju planiranu implementaciju skenera.
 
-{\small Razvojno okruženje i fizički cilj su provereni: OpenJDK 21, Android Studio Quail 4, Android SDK 37 i Samsung SM-A566B (Android 16/API 36) sa Google Play servisima i potrebnim kamerama. Spremnost za instalaciju potvrđena je preko ADB-a; skeniranje čeka aplikativni PoC.\par}
-
 \newpage
 
 \subsection{Početna arhitektura}
@@ -131,11 +129,11 @@ Ovaj deo se dopunjava posle tehničkih eksperimenata i potvrde arhitekture.
 
 \subsection{Tehnologije}
 
-Za Android klijent izabrani su Java i XML zasnovani Android Views. Razvojno okruženje čine OpenJDK 21, Android Studio Quail 4 (2026.1.4), Android SDK Platform 37.0, Platform Tools 37.0.1 i Build Tools 37.0.0. Struktura projekta, Gradle konfiguracija, minimalna i ciljna verzija Androida, backend i skladište podataka još nisu određeni.
+Za Android klijent izabrani su Java i XML zasnovani Android Views. Razvojno okruženje čine OpenJDK 21, Android Studio Quail 4 (2026.1.4) i Platform Tools 37.0.1. Prihvaćeni build baseline koristi Java 17, AGP 9.3.2, Gradle Wrapper 9.5.0, \texttt{compileSdk}/\texttt{targetSdk 36}, \texttt{minSdk 23} i Build Tools 36.0.0. Za UI su izabrani AppCompat 1.8.0 i ConstraintLayout 2.2.2, dok struktura projekta, backend i skladište podataka još nisu određeni. SDK Platform 36, Build Tools 36.0.0 i projektne zavisnosti još nisu instalirani.
 
 \subsection{AI tehnologije}
 
-Za početno očitavanje barkoda izabran je Google Code Scanner. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.
+Za početno očitavanje barkoda izabran je Google Code Scanner 16.1.0, koji skeniranje delegira Google Play servisima bez dozvole aplikacije za kameru. Njegov modul se isporučuje odvojeno, pa PoC mora obraditi prvo preuzimanje ili nedostupnost modula. Direktni ML Kit Barcode Scanning i CameraX su odloženi. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.
 
 \subsection{Skup podataka}
 \placeholder{izvori podataka o proizvodima, licenca, obim, atributi i priprema podataka}

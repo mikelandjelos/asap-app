@@ -98,6 +98,14 @@ adb shell pm list features | rg 'camera|autofocus|flash'
 
 The verified device has enabled Google Play services and declares rear/front camera, autofocus, and flash features, making it a suitable target for the planned Google Code Scanner experiment. ADB visibility verifies deployment readiness and declared hardware capabilities; actual scanning behavior remains unverified until the application PoC exists. No emulator/AVD is currently configured.
 
+### Accepted PoC build baseline
+
+The future project must use the exact baseline in `docs/ANDROID_BASELINE.md`: AGP 9.3.2, Gradle Wrapper 9.5.0, Gradle on OpenJDK 21, Java source/target 17, `compileSdk 36`, `targetSdk 36`, `minSdk 23`, and Build Tools 36.0.0. Configure only `google()` and `mavenCentral()` repositories and never use dynamic dependency versions.
+
+Required production coordinates are Code Scanner 16.1.0, AppCompat 1.8.0, and ConstraintLayout 2.2.2. The initial tests use JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0. Material Views, direct ML Kit Barcode Scanning, and CameraX remain deferred.
+
+This section specifies the accepted target state, not installed project state. Platform 36, Build Tools 36.0.0, the Gradle Wrapper, and all Maven artifacts must wait for a separately approved setup/scaffolding task.
+
 ## Documentation synchronization guide
 
 | Change | Also update |
