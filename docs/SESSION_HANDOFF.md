@@ -4,6 +4,10 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User accepted the completed T-003/S1 audit with “approved!” on 2026-09-04.
+- Executed only approved T-003/S1 as a read-only audit: verified Ubuntu 24.04.4 and OpenJDK/JDK/`javac` 21.0.12, found no discoverable Android Studio or Android SDK tooling, and changed no host configuration.
+- Confirmed ample disk and AMD-V support, but no KVM packages or `/dev/kvm`; visible RAM is below the current Android Studio plus Emulator minimum, so the proposed runtime path prefers a physical Play-enabled Android device.
+- Documented the exact S2 gap list: retain OpenJDK 21, install the current stable official Android Studio build and its recommended SDK/platform tools, and defer emulator/KVM setup unless needed.
 - User accepted T-002/S1 and closed T-002 with “accepted, cool!” on 2026-09-04.
 - User accepted Java + XML Views + Google Code Scanner as the fastest initial Android MVP baseline and explicitly authorized T-002/S1 on 2026-09-04.
 - Synchronized the accepted baseline across the task tracker, decision log, status, architecture, diagrams, report, presentation, plan, and handoff; no Android project or dependency was created.
@@ -44,8 +48,8 @@ Last updated: 2026-09-04
 
 ## Suggested next session
 
-The first pending task is installing and verifying the JDK/JVM, Android Studio, and Android SDK. Obtain explicit user approval to formulate its task/subtask plan before planning or implementation.
+T-003/S1 is accepted. Obtain separate explicit approval before executing T-003/S2 installation and configuration.
 
 ## Blockers
 
-PlantUML must currently be invoked with `env -u DISPLAY` in this environment to avoid an inaccessible X11 display. Android tooling availability has not yet been verified.
+PlantUML must currently be invoked with `env -u DISPLAY` in this environment to avoid an inaccessible X11 display. Android Studio and SDK tooling are not discoverable. Emulator acceleration is unavailable because KVM packages and `/dev/kvm` are absent; a physical device is the preferred first runtime target.

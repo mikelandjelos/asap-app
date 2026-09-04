@@ -96,3 +96,55 @@ All acceptance criteria were verified and T-001 was explicitly accepted on 2026-
 - The user explicitly accepts T-002/S1 before the development-environment task is planned.
 
 All acceptance criteria were verified and T-002 was explicitly accepted on 2026-09-04.
+
+## T-003 — Install and verify the Android development environment
+
+- **TODO source:** “Instalirati i proveriti JDK/JVM, Android Studio i Android SDK.”
+- **Status:** Plan approved; T-003/S1 accepted; T-003/S2 awaiting separate execution approval
+- **Approval evidence:** The user responded “cool, do it” to the proposed T-003 plan on 2026-09-04. Per the mandatory separate subtask gate, this approves the plan but does not yet authorize S1 execution.
+- **Goal:** Establish a known, reproducible Android workstation baseline suitable for the later Java/XML Google Code Scanner PoC, without scaffolding application code or selecting unrelated libraries.
+
+### Proposed subtasks
+
+#### T-003/S1 — Audit the existing toolchain
+
+- Perform a read-only inventory of the operating system, JDK/JVM and compiler, Android Studio, Android SDK locations, command-line tools, platform tools, installed SDK platforms/build tools, emulator/AVD support, and connected devices.
+- Distinguish tools that are installed and usable from tools that are missing, present only on `PATH`, or configured inconsistently.
+- Produce an exact gap list and proposed installation/configuration actions for S2; do not install, update, accept licenses, launch a GUI, or create an AVD.
+- Update `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, and `docs/SESSION_HANDOFF.md` with observed evidence and remaining gaps.
+- **Approval evidence:** The user explicitly instructed “execute s1” on 2026-09-04.
+- **Evidence:** Ubuntu 24.04.4 LTS x86_64 identified; OpenJDK/JRE/JDK and `javac` 21.0.12 verified through system alternatives; Android Studio, Gradle, Android SDK directories, `sdkmanager`, `avdmanager`, `adb`, and `emulator` were not discoverable through `PATH`, package records, desktop entries, or common installation locations; `JAVA_HOME`, `ANDROID_HOME`, and `ANDROID_SDK_ROOT` are unset; AMD-V is exposed on all 16 logical CPUs, but KVM packages and `/dev/kvm` are absent and the user is not in a `kvm` group; approximately 13 GiB RAM and 533 GiB free disk were observed; no runtime target can be queried without `adb`.
+- **Proposed S2 gap actions:** retain the working system OpenJDK 21; install the current stable Android Studio from Google's official Linux distribution; use its setup flow to install the SDK command-line tools, platform tools, and recommended current platform/build tools; record the installed versions and SDK path; defer emulator packages and KVM setup unless the user wants an emulator after the physical-device-first recommendation is reviewed.
+- **Runtime recommendation for S3:** prefer a physical Android device with Google Play services because it directly exercises the camera and Google Code Scanner, avoids the currently unavailable KVM path, and fits the host's below-current-minimum visible RAM for Studio plus Emulator. An emulator remains optional after KVM access and memory pressure are reassessed.
+- **Acceptance evidence:** The user explicitly responded “approved!” on 2026-09-04.
+- **Status:** Accepted.
+
+#### T-003/S2 — Fill approved toolchain gaps
+
+- Install or configure only the missing components identified and accepted after S1: a suitable JDK, Android Studio, Android SDK command-line/platform tools, an Android platform, and matching build tools.
+- Use stable official distribution channels and record exact versions and resolved paths. Any network download, privileged package operation, license acceptance, or write outside the repository requires its normal explicit permission.
+- Verify the installed commands independently; do not create the ASAP Android project, choose application dependencies, or implement the scanner.
+- Update `docs/PROJECT_STATUS.md`, `docs/DECISIONS.md` if a durable version/distribution choice is made, `docs/PLANS.md`, `docs/WORKFLOW.md`, and `docs/SESSION_HANDOFF.md`.
+
+#### T-003/S3 — Verify a usable Android runtime target
+
+- Establish one verified deployment target using either an existing compatible physical Android device or an approved emulator/AVD with Google Play services.
+- Verify `adb` discovery and basic device metadata. Do not install an ASAP application because no Android project exists yet.
+- Document the repeatable environment and device checks, known limitations for camera/barcode testing, and any remaining manual Android Studio step.
+- Update `docs/PROJECT_STATUS.md`, `docs/PLANS.md`, `docs/WORKFLOW.md`, and `docs/SESSION_HANDOFF.md`; update the report or presentation only if the verified environment changes a formal project claim.
+
+### Task-level acceptance criteria
+
+- A suitable JDK/JVM and Java compiler are installed and their versions are documented.
+- Android Studio and the Android SDK/tooling are installed, locatable, and versioned.
+- Required platform and build-tool packages for the future PoC are present without yet creating the application project.
+- At least one Android runtime target is visible through `adb`, or an explicit user-accepted limitation is recorded.
+- Reproducible verification commands and environment-specific caveats are documented.
+- Each subtask is explicitly approved and accepted before the next begins; T-003 is explicitly accepted before planning the dependency-selection task.
+
+### Out of scope
+
+- Creating Gradle or Android application source files.
+- Selecting or adding Google Code Scanner and other application dependency versions.
+- Implementing barcode scanning or any ASAP UI.
+- Choosing backend, product-data, embedding, or vector-index technologies.
