@@ -4,7 +4,7 @@ Last verified: 2026-09-04
 
 ## Current phase
 
-ASAP is in proposal and repository-preparation phase. There is no mobile application, backend, recommendation service, dataset pipeline, or automated test suite yet.
+ASAP is in early Android technical-PoC implementation. A buildable Java/XML application shell and one local configuration test exist; barcode scanning, backend, recommendation service, dataset pipeline, and end-to-end tests do not yet exist.
 
 ## Available artifacts
 
@@ -21,8 +21,10 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 - An accepted proposed end-to-end scan-to-recommendation sequence/data-flow diagram in `docs/diagrams/scan-to-recommendation-flow.puml` with a verified PNG render. It includes success and high-level unavailable/empty outcomes without prescribing concrete APIs or retry policies.
 - English technical, Serbian formal, and compact Serbian presentation renders are generated from the same two canonical PlantUML sources.
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
-- The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. This is a design decision; no Android project has been created yet.
-- The accepted PoC build/dependency baseline is documented in `docs/ANDROID_BASELINE.md`: Android 16/API 36, `minSdk 23`, AGP 9.3.2/Gradle 9.5.0, Java 17 source/target with Gradle on JDK 21, Code Scanner 16.1.0, AppCompat 1.8.0, ConstraintLayout 2.2.2, and the minimal JUnit/AndroidX test set. These versions are selected but not yet installed or resolved as a project.
+- The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. The Java/XML shell is implemented; scanner integration remains pending.
+- The accepted baseline in `docs/ANDROID_BASELINE.md` is partially realized: Android Platform 36, Build Tools 36.0.0, checksum-pinned Gradle Wrapper 9.5.0, AGP 9.3.2, AppCompat 1.8.0, ConstraintLayout 2.2.2, and the minimal JUnit/AndroidX test graph are installed or resolved. Google Code Scanner remains intentionally absent until T-005/S2.
+- The Android project lives in `android/` with one `app` module, namespace/application ID `rs.ac.ni.elfak.asap`, a Java `MainActivity`, one XML shell screen, and a vector launcher icon. It requests no camera permission and has not been installed on a device.
+- T-005/S1 is accepted; scanner implementation remains gated behind separate T-005/S2 approval.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -36,15 +38,15 @@ ASAP is in proposal and repository-preparation phase. There is no mobile applica
 
 ## Android development environment
 
-Last verified: 2026-09-04 under T-003/S3.
+Last verified: 2026-09-04 under T-005/S1.
 
 - Host: Ubuntu 24.04.4 LTS, x86_64, Linux 7.0.0-30-generic.
 - System Java: Ubuntu OpenJDK 21.0.12 JDK/JRE and `javac`, selected through system alternatives and retained unchanged.
 - IDE: Android Studio Quail 4 (2026.1.4), build `AI-261.26222.65.2614.16204760`, installed at `/home/mih/.local/opt/android-studio`. Its bundled JetBrains Runtime is OpenJDK 25.0.3.
-- SDK root: `/home/mih/Android/Sdk` with Android CLI 1.0.16261425, Command-line Tools 23.0, Platform Tools 37.0.1, Android Platform 37.0 revision 2, and Build Tools 37.0.0.
+- SDK root: `/home/mih/Android/Sdk` with Android CLI 1.0.16261425, Command-line Tools 23.0, Platform Tools 37.0.1, Android Platforms 36 revision 2 and 37.0 revision 2, and Build Tools 36.0.0 and 37.0.0.
 - User commands: `studio`, `android`, `sdkmanager`, `avdmanager`, `adb`, and `fastboot` resolve through symlinks in `/home/mih/.local/bin`, which is already on `PATH`.
 - `JAVA_HOME`, `ANDROID_HOME`, and `ANDROID_SDK_ROOT` remain unset deliberately. The IDE uses its bundled runtime, the SDK occupies Android Studio's default Linux path, and reproducible CLI checks pass the SDK root explicitly.
-- No standalone Gradle installation is required before a project exists; the future Android project will own its Gradle Wrapper and project-local Gradle JDK selection.
+- No standalone Gradle installation is used. The project owns a checksum-pinned Gradle 9.5.0 Wrapper and builds through the system OpenJDK 21 runtime with Java 17 source/target compatibility.
 - Runtime target: an authorized Samsung SM-A566B physical device running Android 16/API 36 on `arm64-v8a`, with the 2026-04-05 security patch. Enabled Google Play services 26.32.34 and rear/front camera, autofocus, and flash capabilities were verified through ADB.
 - No emulator, system image, or AVD was added. Physical-device use requires USB debugging, normal file-transfer mode, an unlocked screen during first connection, and acceptance of the host RSA key. USB tethering does not expose the required ADB interface in this setup. No device serial number is recorded.
 - T-003 is accepted and complete; actual barcode scanning remains unverified until the separately planned application PoC exists.
@@ -52,7 +54,7 @@ Last verified: 2026-09-04 under T-003/S3.
 
 ## Immediate product decisions still open
 
-- Exact Android project structure remains open.
+- Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Backend language/framework and service boundaries.
 - Product metadata API and fallback dataset.
 - Embedding model and vector-index implementation.

@@ -4,6 +4,10 @@ Last updated: 2026-09-04
 
 ## Completed in the latest documentation session
 
+- User approved the T-005 plan and explicitly authorized only T-005/S1 on 2026-09-04.
+- T-005/S1 installed stable Platform 36 and Build Tools 36.0.0, created the single-module Java/XML shell under `android/`, generated a checksum-pinned Gradle 9.5.0 Wrapper, and resolved only the accepted S1 UI/test dependencies. The temporary verified Gradle distribution was removed.
+- User accepted T-005/S1 with “accepted! whats next?” on 2026-09-04.
+- The shell's unit test, lint, and debug assembly pass; lint has zero findings. APK metadata is application ID `rs.ac.ni.elfak.asap`, min SDK 23, and target SDK 36; no camera permission or scanner dependency exists and nothing was installed on the phone.
 - User explicitly authorized T-004/S2 on 2026-09-04.
 - User accepted T-004/S2 and completion of T-004 with “good, commit; what's next” on 2026-09-04.
 - T-004/S2 froze the accepted Android PoC baseline in `docs/ANDROID_BASELINE.md` and D-012, then synchronized operational and formal documentation. No package, project, or dependency was downloaded.
@@ -58,12 +62,12 @@ Last updated: 2026-09-04
 
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
-- No application code or data pipeline exists.
+- A buildable Android Java/XML shell and one local unit test exist; scanner behavior and the data pipeline do not.
 - Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
 
 ## Suggested next session
 
-T-004 is accepted and complete. Formulate and iterate the next task plan for scaffolding and validating the minimal Android Google Code Scanner PoC; do not execute it without plan approval followed by separate subtask approval.
+T-005/S1 is accepted. The next subtask is T-005/S2: implement the Google Code Scanner slice without installing it on the phone. Obtain separate explicit approval before execution.
 
 ## Blockers
 

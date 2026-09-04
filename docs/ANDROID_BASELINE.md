@@ -2,6 +2,8 @@
 
 Status: Accepted and frozen under completed T-004.
 
+Implementation status: T-005/S1 installed Platform 36 and Build Tools 36.0.0 and realized the wrapper, AGP, AppCompat, ConstraintLayout, and test portions of this baseline. Google Code Scanner remains pending T-005/S2.
+
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 
 ## Frozen minimal baseline
@@ -54,7 +56,7 @@ T-004/S2 freezes the following choices from the accepted S1 recommendation:
 4. The minimal JUnit/Espresso test baseline.
 5. Deferring Material Views, direct ML Kit Barcode Scanning, and CameraX.
 
-Project scaffolding, SDK installation, dependency resolution, and application implementation remain out of scope. The accepted baseline does not claim that these artifacts are installed or resolved.
+These decisions were made before implementation. Their current realization is tracked in `docs/PROJECT_STATUS.md`; scanner implementation remains outside this baseline document.
 
 ## Official sources
 

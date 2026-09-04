@@ -86,7 +86,7 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Date:** 2026-09-04
 - **Context:** The host already has a suitable system JDK, while Android Studio and the Android SDK were absent. The setup should avoid unnecessary system-package changes and remain easy to inspect.
 - **Decision:** Retain Ubuntu OpenJDK 21 and install Google's verified stable Android Studio and SDK distributions under the user's home directory. Expose stable commands through `/home/mih/.local/bin` instead of editing shell startup files.
-- **Consequence:** Android Studio uses its bundled runtime, SDK commands use `/home/mih/Android/Sdk`, and future projects must carry their own Gradle Wrapper and Gradle JDK configuration. Installed SDK packages do not yet fix the application's `compileSdk`, `targetSdk`, `minSdk`, or dependency versions.
+- **Consequence:** Android Studio uses its bundled runtime, SDK commands use `/home/mih/Android/Sdk`, and Android projects carry their own Gradle Wrapper and Gradle JDK configuration. Application SDK levels and dependency versions are governed separately by D-012.
 
 ## D-012 — Android PoC uses a stable Android 16 build and minimal dependency baseline
 
@@ -94,4 +94,12 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Date:** 2026-09-04
 - **Context:** T-004 researched a minimal mutually compatible baseline for the fastest Java/XML Google Code Scanner PoC. The workstation currently has API 37 tooling, but Android 17 remains a preview target and the verified phone runs stable Android 16/API 36.
 - **Decision:** Use AGP 9.3.2 with Gradle Wrapper 9.5.0; run Gradle on OpenJDK 21 while compiling Java source/target 17; set `compileSdk 36`, `targetSdk 36`, `minSdk 23`, and Build Tools 36.0.0. Use exact production dependencies Google Code Scanner 16.1.0, AppCompat 1.8.0, and ConstraintLayout 2.2.2, plus JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0 for the initial test baseline. Limit repositories to `google()` and `mavenCentral()` and prohibit dynamic version selectors.
-- **Consequence:** A later separately approved setup task must install Android Platform 36 and Build Tools 36.0.0, create the Gradle Wrapper/project, and resolve dependencies. Material Views 1.14.0 is deferred unless a concrete widget/theme requires it; Android 17/API 37, AGP 9.4/Gradle 9.6, direct ML Kit Barcode Scanning 18.3.1, and CameraX are not part of the initial PoC.
+- **Consequence:** T-005/S1 installed Android Platform 36 and Build Tools 36.0.0, created the wrapper/project, and resolved the S1 dependencies. Material Views 1.14.0 is deferred unless a concrete widget/theme requires it; Android 17/API 37, AGP 9.4/Gradle 9.6, direct ML Kit Barcode Scanning 18.3.1, and CameraX are not part of the initial PoC.
+
+## D-013 — Android PoC uses a repository-contained single application module
+
+- **Status:** Accepted
+- **Date:** 2026-09-04
+- **Context:** T-005/S1 needs a minimal shell that can grow into the scanner experiment without turning the documentation repository root into a Gradle project.
+- **Decision:** Place a Groovy-DSL Android project in `android/`, with one `app` module and namespace/application ID `rs.ac.ni.elfak.asap`. Commit the checksum-pinned Gradle Wrapper and keep generated builds, local SDK paths, and Gradle caches ignored.
+- **Consequence:** The PoC has one launcher activity and XML screen. New modules or a different application ID require an explicit later decision; scanner integration remains T-005/S2.

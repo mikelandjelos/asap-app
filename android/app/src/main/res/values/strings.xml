@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ASAP</string>
+    <string name="scanner_placeholder">Osnovna Android aplikacija je spremna. Skeniranje barkoda biće dodato u sledećem odobrenom podzadatku.</string>
+</resources>

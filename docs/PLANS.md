@@ -205,3 +205,51 @@ All acceptance criteria were verified and T-003 was explicitly accepted on 2026-
 - Backend, product-data, recommendation, or other mobile feature dependencies.
 
 All acceptance criteria were verified and T-004 was explicitly accepted on 2026-09-04.
+
+## T-005 — Build and validate the Google Code Scanner technical PoC
+
+- **TODO sources:** “Napraviti mali tehnički eksperiment sa Google Code Scanner API-jem iz ML Kit ponude” and “Definisati ponovljiv lokalni postupak za pokretanje, testiranje i izgradnju projekta.”
+- **Status:** Plan approved; T-005/S1 accepted; T-005/S2 awaiting separate execution approval; T-005/S3 not started
+- **Plan approval evidence:** The user instructed “execute s1” after receiving the complete three-subtask plan on 2026-09-04; this explicitly authorizes S1 and accepts its stated structure.
+- **Goal:** Establish, implement, and physically validate the smallest maintainable Java/XML Google Code Scanner experiment before any backend or recommendation work.
+
+### Approved subtasks
+
+#### T-005/S1 — Scaffold the Android client shell
+
+- Install only Android Platform 36 and Build Tools 36.0.0 from the official SDK catalog.
+- Create a single-module Groovy Gradle project in `android/` using namespace/application ID `rs.ac.ni.elfak.asap`, the accepted wrapper/toolchain, Java 17, XML Views, AppCompat, ConstraintLayout, and test baseline.
+- Provide a launcher shell and placeholder state, but do not add the scanner dependency, scanner metadata, camera permission, or phone installation.
+- Resolve dependencies; verify wrapper checksums, build, unit tests, lint, APK metadata, permissions, and absence of scanner dependencies.
+- Synchronize README, architecture, decisions, status, workflow, plan, handoff, report, and presentation.
+- **Approval evidence:** The user explicitly instructed “execute s1” on 2026-09-04.
+- **Evidence:** Official `platforms/android-36` revision 2 and `build-tools/36.0.0` were installed. The official Gradle 9.5.0 archive matched published SHA-256 `553c78f50dafcd54d65b9a444649057857469edf836431389695608536d6b746`; its generated wrapper JAR matched published SHA-256 `497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7`, and the temporary archive/extraction were removed. The wrapper resolved AGP 9.3.2 and the accepted AppCompat/ConstraintLayout/test graph. `testDebugUnitTest`, `lintDebug`, and `assembleDebug` pass; lint reports zero findings and the single JUnit test passes. APK inspection reports application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, and no camera permission. No scanner artifact is in the debug runtime graph, and no APK was installed.
+- **Acceptance evidence:** The user explicitly responded “accepted! whats next?” on 2026-09-04.
+- **Status:** Accepted.
+
+#### T-005/S2 — Implement the scanner slice
+
+- Add Google Code Scanner 16.1.0 and install-time `barcode_ui` module metadata without adding camera permission.
+- Replace the placeholder with a custom XML screen containing scan action, status, and decoded result.
+- Configure EAN-13, EAN-8, UPC-A, and UPC-E; handle success, cancellation, module/download unavailability, and general failure without product lookup.
+- Add proportional unit tests, run build/lint/tests, and synchronize all affected documentation. Do not install the APK on the phone.
+
+#### T-005/S3 — Validate on the physical phone
+
+- Install and launch the debug APK on the verified Samsung device only after explicit approval.
+- With user participation, verify scanner-module delivery, a real product barcode, cancellation, and feasible failure behavior.
+- Record reproducible build/install/run commands and actual results; synchronize formal deliverables and stop for acceptance.
+
+### Task-level acceptance criteria
+
+- The committed wrapper reproduces a warning-free build, test, lint, and APK assembly from the repository.
+- The custom shell launches Google Code Scanner without an application camera permission and reports user-visible outcomes.
+- A real barcode scan is demonstrated on the verified physical device, with limitations recorded honestly.
+- Documentation and formal deliverables distinguish implemented evidence from planned backend/recommendation behavior.
+- Every subtask and T-005 itself is separately accepted before proceeding.
+
+### Out of scope
+
+- Product metadata lookup, network/API clients, persistence, backend, embeddings, or recommendations.
+- Production UI polish, authentication, analytics, publication, signing, or release distribution.
+- CameraX and direct ML Kit Barcode Scanning.
