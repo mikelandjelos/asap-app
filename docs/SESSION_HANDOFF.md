@@ -4,6 +4,10 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- User explicitly accepted T-006/S1 and authorized T-006/S2 with “accepted - commit and start s2” on 2026-09-05.
+- User approved the two-subtask T-006 plan and explicitly authorized only T-006/S1 with “let's go - do the s1” on 2026-09-05.
+- T-006/S1 created the accepted `docs/MVP_SCOPE.md` contract with the minimum user journey, mandatory 80-point P0 core, committed 15-point extended MVP for history-based recommendation, final 5-point broader evaluation increment, required behavior, non-goals, assumptions/dependencies, six thin delivery iterations, exit evidence, and change control. A bounded last-K history is the baseline candidate, but the exact method remains open.
+- T-006/S1 verification passes: `git diff --check`, path checks for the linked scope/architecture/formal sources, a two-pass 8-page pdfLaTeX report build, and a two-pass 13-slide LuaLaTeX presentation build. Both logs have no LaTeX warnings, overflow/underflow warnings, missing characters, or undefined references; the changed scope page and slide were visually inspected.
 - User explicitly accepted and closed T-005 on 2026-09-05 after reviewing the task-level evidence.
 - User explicitly accepted T-005/S3 on 2026-09-05. ADB reauthorization succeeded, the S2 debug APK was installed on the verified Samsung phone, and `MainActivity` was confirmed as the top resumed activity.
 - The user reported two successful real-product scans with decoded values returned to ASAP and confirmed the intended cancellation status. This confirms the scanner module is usable, but not whether it was newly downloaded or already present. Failure handling is implemented and locally tested; physical failure injection was not attempted.
@@ -70,12 +74,13 @@ Last updated: 2026-09-05
 
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
+- The accepted MVP scope and iteration contract exists in `docs/MVP_SCOPE.md`; T-006/S2 architecture work is authorized.
 - A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
 - Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
 
 ## Suggested next session
 
-T-005 is accepted and closed. The first pending non-continuous TODO item is to refine the architecture of the mobile client, backend API, recommendation service, and data stores. Plan it before implementation.
+Execute only the authorized T-006/S2 architecture contract, synchronize all affected documentation and formal deliverables, then stop for user acceptance.
 
 ## Blockers
 

@@ -103,3 +103,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** T-005/S1 needs a minimal shell that can grow into the scanner experiment without turning the documentation repository root into a Gradle project.
 - **Decision:** Place a Groovy-DSL Android project in `android/`, with one `app` module and namespace/application ID `rs.ac.ni.elfak.asap`. Commit the checksum-pinned Gradle Wrapper and keep generated builds, local SDK paths, and Gradle caches ignored.
 - **Consequence:** The PoC has one launcher activity and XML screen. New modules or a different application ID require an explicit later decision; scanner integration remains T-005/S2.
+
+## D-014 — MVP delivery has core, extended, and full-scope checkpoints
+
+- **Status:** Accepted
+- **Date:** 2026-09-05
+- **Context:** The fastest useful MVP must remain small without dropping history-based recommendation from the intended project.
+- **Decision:** Treat the complete scan-to-semantic-similarity path as the mandatory 80-point core MVP, history-based personalized ranking as the committed 15-point extended MVP, and broader evaluation/feedback as the final 5 points. Use bounded recent history as the baseline personalization concept, but defer the exact window, weighting, aggregation, and retention choices until they can be evaluated.
+- **Consequence:** Core-MVP acceptance does not close the personalization scope. The extended MVP must demonstrate that controlled history changes ranking and must preserve an explicit generic cold-start fallback.

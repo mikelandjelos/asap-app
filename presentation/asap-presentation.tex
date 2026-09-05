@@ -44,8 +44,30 @@
     \item embedding reprezentacije proizvoda;
     \item top-N semantička pretraga kosinusnom sličnošću;
     \item opcioni MMR za raznovrsnije rezultate;
-    \item korisnički profil kao centroid prethodnih interakcija;
+    \item preporuka iz ograničene istorije; tačan model profila bira se naknadno;
     \item opciona klasterizacija i PCA vizuelna analitika.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Granica operativnog MVP-a}
+  \begin{itemize}
+    \item P0 jezgro (80): skeniranje, metapodaci sa rezervnim izvorom, detalji proizvoda, top-N semantička sličnost i ponovljiva demonstracija;
+    \item svih 80 P0 poena čine jedan obavezni tok --- nisu proizvoljno zamenljivi;
+    \item prošireni MVP, P1 (15): obavezna preporuka iz ograničene nedavne istorije, uz eksplicitno cold-start stanje;
+    \item tačan broj interakcija i način ponderisanja/agregacije biraju se naknadno;
+    \item P2 (5): šira evaluacija i povratne informacije;
+    \item van MVP-a: nalozi, objavljivanje, prilagođena kamera, MMR, klasterizacija, PCA i produkciono skaliranje.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Plan tankih iteracija}
+  \begin{enumerate}
+    \item \textbf{I0:} skener --- implementiran i fizički potvrđen;
+    \item \textbf{I1:} deterministički vertikalni tok sa kontrolisanim podacima;
+    \item \textbf{I2:} stvarni metapodaci proizvoda i rezervni izvor;
+    \item \textbf{I3:} embedding reprezentacije i top-N semantička sličnost;
+    \item \textbf{I4:} prošireni MVP --- preporuka iz istorije i cold-start stanje;
+    \item \textbf{I5:} stabilizacija, evaluacija i demonstracija.
   \end{enumerate}
 \end{frame}
 

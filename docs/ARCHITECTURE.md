@@ -4,6 +4,8 @@ Status: proposed system architecture with a device-validated Android scanner sli
 
 The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml), an [English technical render](diagrams/rendered/component-architecture.png), and a [Serbian formal render](diagrams/rendered/sr/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml), an [English technical render](diagrams/rendered/scan-to-recommendation-flow.png), and a [Serbian formal render](diagrams/rendered/sr/scan-to-recommendation-flow.png). Serbian presentation variants are accepted integrations of those same canonical sources.
 
+The proposed operational boundary and thin delivery order are defined in [`MVP_SCOPE.md`](MVP_SCOPE.md). T-006/S1 fixes what the system must demonstrate; T-006/S2 still needs to assign concrete logical/deployment ownership without selecting implementation products.
+
 ## Implemented Android slice
 
 - A single Gradle application module lives under `android/app` with namespace and application ID `rs.ac.ni.elfak.asap`.
@@ -37,7 +39,7 @@ flowchart LR
 
 ## Planned personalization
 
-The proposal represents a user as the centroid of embeddings associated with scanned or viewed products. This is not implemented and still requires decisions about event weighting, recency, cold-start behavior, privacy, and evaluation.
+History-based personalization is a committed extended-MVP capability after the complete P0 scan-to-similar-products path. A bounded last-K interaction history is the baseline candidate; the original centroid proposal, recency weighting, or another measurable aggregation method may be selected later. This is not implemented and still requires decisions about the exact window, event weighting, cold-start behavior, privacy, and evaluation. Generic semantic similarity and personalized ranking must remain separately labelled.
 
 ## Open architecture questions
 

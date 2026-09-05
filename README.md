@@ -13,7 +13,7 @@ ANDROID_HOME=/home/mih/Android/Sdk ./gradlew testDebugUnitTest lintDebug assembl
 
 Ekran nudi akciju skeniranja, status i očitanu vrednost. Tehnički PoC skenera je fizički potvrđen; brojevi skeniranih barkodova nisu sačuvani u repozitorijumu.
 
-Operativna dokumentacija za nastavak rada kroz nezavisne sesije počinje u [`docs/README.md`](docs/README.md). Pravila za agente nalaze se u [`AGENTS.md`](AGENTS.md), a trenutno stanje projekta u [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md).
+Operativna dokumentacija za nastavak rada kroz nezavisne sesije počinje u [`docs/README.md`](docs/README.md). Pravila za agente nalaze se u [`AGENTS.md`](AGENTS.md), trenutno stanje projekta u [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md), a prihvaćena granica operativnog MVP-a i plan iteracija u [`docs/MVP_SCOPE.md`](docs/MVP_SCOPE.md).
 
 ## Dokumentacija
 

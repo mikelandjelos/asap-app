@@ -263,3 +263,46 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 - CameraX and direct ML Kit Barcode Scanning.
 
 All acceptance criteria were verified and T-005 was explicitly accepted and closed by the user on 2026-09-05.
+
+## T-006 — Define the MVP boundary and concrete system architecture
+
+- **TODO sources:** “Precizirati arhitekturu mobilne aplikacije, API servisa, servisa preporuka i skladišta podataka” and “Definisati granice MVP-a i plan implementacije po iteracijama.”
+- **Status:** Plan approved; T-006/S1 accepted; T-006/S2 authorized and in progress
+- **Plan approval evidence:** The user responded “let's go - do the s1” after reviewing the two-subtask proposal on 2026-09-05; this approves the recorded plan and explicitly authorizes S1 only.
+- **Goal:** Freeze a small, testable MVP contract and the logical/deployment boundaries needed to implement it without prematurely selecting product-data providers, backend libraries, embedding models, or storage products.
+
+### Proposed subtasks
+
+#### T-006/S1 — Define the MVP scope and iteration contract
+
+- Reconcile the initial proposal with the validated scanner PoC and list the minimum user-visible journey, required capabilities, explicit non-goals, assumptions, and external dependencies.
+- Divide delivery into thin end-to-end iterations with concrete entry/exit evidence, keeping the fastest useful MVP and the approximate 80% project target distinct.
+- Resolve scope ambiguities in review with the user; do not choose backend frameworks, external product APIs, datasets, embedding models, or database products.
+- Synchronize TODO, plan, project status, architecture narrative, handoff, report, and presentation.
+- **Approval evidence:** The user explicitly instructed “do the s1” on 2026-09-05.
+- **Evidence:** `docs/MVP_SCOPE.md` defines the minimum scan-to-similar-products journey, a non-interchangeable 80-point P0 core, a committed 15-point extended MVP based on bounded interaction history, and 5 points of broader evaluation. It records required behavior, non-goals, assumptions, external dependencies, six thin iterations, exit evidence, and change control while leaving the exact history window and ranking method open. Operational and formal documents distinguish the validated scanner foundation from all planned downstream behavior. No code, dependency, provider, model, framework, schema, or storage product was introduced.
+- **Acceptance evidence:** The user explicitly responded “accepted - commit and start s2” on 2026-09-05.
+- **Status:** Accepted.
+
+#### T-006/S2 — Define and visualize the concrete architecture contract
+
+- **Approval evidence:** After accepting S1, the user explicitly instructed “start s2” on 2026-09-05.
+- Specify mobile, backend API, product-metadata adapter/store, semantic recommendation component, and vector-index responsibilities; define deployment boundaries, ownership, major data exchanges, and failure boundaries.
+- Decide the MVP topology at the architecture level, including whether recommendation logic is part of one backend deployment or a separately deployed service, without selecting implementation libraries or vendor products reserved for later tasks.
+- Update both canonical PlantUML diagrams and every localized render so implemented scanner behavior and planned downstream behavior remain visibly distinct.
+- Synchronize TODO, decisions, architecture, status, plan, handoff, report, and presentation; validate all diagram variants and compile/visually inspect both formal deliverables.
+
+### Proposed task-level acceptance criteria
+
+- The MVP has an explicit included/deferred/out-of-scope contract and ordered thin delivery iterations.
+- Every planned component has one clear responsibility, owner of persistent data, primary inputs/outputs, and user-visible failure responsibility.
+- Canonical diagrams, technical documentation, report, and presentation agree and distinguish the validated scanner slice from planned downstream components.
+- No application/backend scaffold, dependency, API provider, dataset, model, or storage product is introduced.
+- The plan and each subtask are separately approved and accepted before advancing.
+
+### Proposed exclusions
+
+- Creating the backend project or changing Android implementation.
+- Selecting concrete product-data APIs or fallback datasets.
+- Selecting backend framework/library versions, embedding models, vector databases, or cloud vendors.
+- Defining final endpoint schemas, authentication, production deployment, or operational scaling.

@@ -9,6 +9,7 @@ This directory contains the operational documentation needed to continue the pro
 | [`PLANS.md`](PLANS.md) | Proposed/approved task plans and subtask approval state |
 | [`DECISIONS.md`](DECISIONS.md) | Lightweight decision log |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Current architecture hypothesis and unresolved questions |
+| [`MVP_SCOPE.md`](MVP_SCOPE.md) | Accepted operational MVP boundary, scorecard, and thin delivery iterations |
 | [`ANDROID_BASELINE.md`](ANDROID_BASELINE.md) | Researched Android PoC build/dependency candidates and acceptance points |
 | [`diagrams/README.md`](diagrams/README.md) | Proposed canonical diagram contract and file layout |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |

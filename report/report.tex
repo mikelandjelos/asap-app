@@ -71,7 +71,7 @@ Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvod
 
   \item \textbf{Semantička pretraga} --- pronalaženje top-N najsličnijih proizvoda primenom metrika poput kosinusne sličnosti, uz opcionu MMR diversifikaciju radi izbegavanja redundantnih preporuka.
 
-  \item \textbf{Personalizovane preporuke} --- formiranje vektorske reprezentacije korisnika kao centroida istorije skeniranih ili pregledanih proizvoda i generisanje preporuka na osnovu tog profila.
+  \item \textbf{Personalizovane preporuke} --- formiranje profila iz ograničene istorije skeniranih ili pregledanih proizvoda; centroid je početni kandidat, dok će tačan način agregacije biti izabran naknadno.
 
   \item \textbf{Personalna analitika (opciono)} --- klasterizacija proizvoda ili korisničkih interakcija i redukcija dimenzionalnosti pomoću PCA radi jednostavne vizuelne analitike u aplikaciji.
 \end{enumerate}
@@ -115,13 +115,20 @@ Ovaj deo se dopunjava tokom faze definisanja problema.
 \placeholder{prednosti u odnosu na postojeća rešenja}
 
 \subsection{Detaljan opis rešenja}
-\placeholder{koncept, osnovne funkcionalnosti i ograničenja}
+
+Radna granica operativnog MVP-a obuhvata celovit tok u kome korisnik skenira podržani EAN/UPC barkod, dobija proverljive metapodatke o proizvodu i rangiranu top-N listu semantički sličnih proizvoda. Kontrolisani rezervni skup podataka mora da omogući demonstraciju i kada eksterni izvor nije dostupan. Rezultati semantičke sličnosti ne smeju biti predstavljeni kao personalizovane preporuke. Preporuka na osnovu ograničene nedavne istorije interakcija obavezan je deo proširenog MVP-a, posle funkcionalnog osnovnog toka; tačna dužina istorije, ponderisanje i način agregacije biće izabrani naknadno na osnovu provere.
+
+Cilj od približno 80\% nije proizvoljan broj funkcionalnosti. Obavezno jezgro čine skeniranje (15 poena), razrešavanje metapodataka sa rezervnim izvorom (20), prikaz proizvoda i jasnih stanja nedostupnosti (10), top-N semantička sličnost (20) i ponovljiva integracija, testiranje i demonstracija (15). Prošireni MVP obavezno dodaje personalizaciju na osnovu istorije (15), do ukupno 95 poena, dok šira evaluacija i povratne informacije čine završnih 5 poena.
 
 \subsubsection{Osnovne funkcionalnosti}
-\placeholder{funkcionalnosti nezavisne od AI komponenti}
+
+Osnovne funkcionalnosti su pokretanje i otkazivanje skeniranja, slanje barkoda backend granici, prikaz normalizovanih podataka o poznatom proizvodu i eksplicitna stanja za nepoznat proizvod, nedostupan izvor, prazan rezultat i grešku koja dozvoljava ponovni pokušaj. Autentikacija, objavljivanje aplikacije, kupovina, poređenje cena, administracija kataloga i produkciono hostovanje nisu deo operativnog MVP-a.
 
 \subsubsection{AI zasnovane funkcionalnosti}
-\placeholder{funkcionalnosti zasnovane na računarskom vidu, embedding vektorima i preporukama}
+
+Potvrđeni Google Code Scanner predstavlja početnu komponentu računarskog vida. Planirano AI jezgro generiše ili učitava embedding reprezentacije proizvoda i vraća top-N rezultate semantičke sličnosti. Prošireni MVP zatim obavezno uvodi preporuke zasnovane na ograničenoj istoriji i eksplicitno cold-start stanje; poslednjih K interakcija predstavlja početnog kandidata, ali algoritam još nije izabran. MMR, klasterizacija i PCA ostaju van granice MVP-a.
+
+Razvoj je podeljen na tanke iteracije: potvrđeni skener; deterministički vertikalni tok sa kontrolisanim podacima; stvarno razrešavanje proizvoda; semantička sličnost; osnovna personalizacija; zatim stabilizacija, evaluacija i prezentacija. Svaka iteracija mora da završi proverljivim ponašanjem, testovima i ažuriranom dokumentacijom.
 
 \section{Izveštaj 3: Izbor tehnologija i skupova podataka}
 
