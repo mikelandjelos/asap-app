@@ -1,9 +1,14 @@
 # Session handoff
 
-Last updated: 2026-09-04
+Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- User explicitly authorized T-005/S2 with “execute s2” on 2026-09-04 and continued the interrupted verification on 2026-09-05.
+- T-005/S2 integrated Google Code Scanner 16.1.0 and `barcode_ui`, configured auto-zoom plus EAN-13/EAN-8/UPC-A/UPC-E, and replaced the placeholder with a custom scan/status/result screen.
+- Success, empty value, cancellation, module/download unavailability, and general failure have user-visible outcomes. No product lookup, backend behavior, phone installation, or runtime claim was added.
+- Seven local tests, lint with zero findings, and debug assembly pass. APK inspection confirms min SDK 23, target SDK 36, `barcode_ui`, and no camera permission; the dependency contributes internet and network-state permissions.
+- User accepted T-005/S2 and explicitly authorized T-005/S3 on 2026-09-05.
 - User approved the T-005 plan and explicitly authorized only T-005/S1 on 2026-09-04.
 - T-005/S1 installed stable Platform 36 and Build Tools 36.0.0, created the single-module Java/XML shell under `android/`, generated a checksum-pinned Gradle 9.5.0 Wrapper, and resolved only the accepted S1 UI/test dependencies. The temporary verified Gradle distribution was removed.
 - User accepted T-005/S1 with “accepted! whats next?” on 2026-09-04.
@@ -62,12 +67,12 @@ Last updated: 2026-09-04
 
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
-- A buildable Android Java/XML shell and one local unit test exist; scanner behavior and the data pipeline do not.
+- A buildable Android Java/XML scanner slice and seven local unit tests exist. Physical scanner behavior and the data pipeline remain unverified/unimplemented respectively.
 - Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
 
 ## Suggested next session
 
-T-005/S1 is accepted. The next subtask is T-005/S2: implement the Google Code Scanner slice without installing it on the phone. Obtain separate explicit approval before execution.
+T-005/S2 is accepted and T-005/S3 is approved. Install and validate the scanner on the verified physical phone, record actual results, and stop for acceptance.
 
 ## Blockers
 

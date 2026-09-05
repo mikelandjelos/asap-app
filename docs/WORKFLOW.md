@@ -96,7 +96,7 @@ adb shell dumpsys package com.google.android.gms | rg -m 1 'versionName='
 adb shell pm list features | rg 'camera|autofocus|flash'
 ```
 
-The verified device has enabled Google Play services and declares rear/front camera, autofocus, and flash features, making it a suitable target for the planned Google Code Scanner experiment. ADB visibility verifies deployment readiness and declared hardware capabilities; actual scanning behavior remains unverified until the application PoC exists. No emulator/AVD is currently configured.
+The verified device has enabled Google Play services and declares rear/front camera, autofocus, and flash features, making it a suitable target for the implemented Google Code Scanner experiment. ADB visibility verifies deployment readiness and declared hardware capabilities; actual scanning behavior remains unverified until separately approved T-005/S3. No emulator/AVD is currently configured.
 
 ### Accepted PoC build baseline
 
@@ -104,7 +104,7 @@ The Android project uses the exact baseline in `docs/ANDROID_BASELINE.md`: AGP 9
 
 Required production coordinates are Code Scanner 16.1.0, AppCompat 1.8.0, and ConstraintLayout 2.2.2. The initial tests use JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0. Material Views, direct ML Kit Barcode Scanning, and CameraX remain deferred.
 
-Platform 36, Build Tools 36.0.0, the Gradle Wrapper, and the S1 UI/test dependencies are installed or resolved. Google Code Scanner remains unresolved until T-005/S2.
+Platform 36, Build Tools 36.0.0, the Gradle Wrapper, all accepted UI/test dependencies, and Google Code Scanner 16.1.0 are installed or resolved.
 
 ### Android shell build
 
@@ -117,7 +117,7 @@ ANDROID_HOME=/home/mih/Android/Sdk ./gradlew clean testDebugUnitTest lintDebug a
 
 The debug APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`; all generated build output and machine-local configuration are ignored. The committed Gradle distribution checksum is `553c78f50dafcd54d65b9a444649057857469edf836431389695608536d6b746`, and the wrapper JAR checksum is `497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7`.
 
-For S1, unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, and no application camera permission. Do not install it on a device until T-005/S3 is approved.
+For S2, seven unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The scanner dependency contributes internet and network-state permissions for its unbundled Google Play services flow. Do not install it on a device until T-005/S3 is approved.
 
 ## Documentation synchronization guide
 

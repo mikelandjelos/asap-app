@@ -1,17 +1,19 @@
 # Architecture
 
-Status: proposed system architecture with one implemented Android shell slice; scanner, backend, data, and recommendation boundaries remain unvalidated.
+Status: proposed system architecture with an implemented but not yet device-validated Android scanner slice; backend, data, and recommendation boundaries remain unvalidated.
 
 The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml), an [English technical render](diagrams/rendered/component-architecture.png), and a [Serbian formal render](diagrams/rendered/sr/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml), an [English technical render](diagrams/rendered/scan-to-recommendation-flow.png), and a [Serbian formal render](diagrams/rendered/sr/scan-to-recommendation-flow.png). Serbian presentation variants are accepted integrations of those same canonical sources.
 
 ## Implemented Android slice
 
 - A single Gradle application module lives under `android/app` with namespace and application ID `rs.ac.ni.elfak.asap`.
-- `MainActivity` is Java 17 code and renders one XML `ConstraintLayout` screen through AppCompat.
-- The shell has a launcher manifest and vector icon, but no camera permission, scanner dependency, scanner metadata, networking, persistence, backend integration, or recommendation behavior.
-- The checksum-pinned Gradle 9.5.0 Wrapper builds the API 36 shell with AGP 9.3.2. Local unit tests and Android lint pass.
+- `MainActivity` is Java 17 code and renders a custom XML `ConstraintLayout` screen through AppCompat, with a scan action, current status, and decoded result.
+- Google Code Scanner 16.1.0 is configured for EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The activity handles decoded, cancelled, empty-value, module/download-unavailable, and general-failure outcomes.
+- The manifest requests install-time delivery of the unbundled `barcode_ui` module. The application declares no camera permission; Google Play services owns the camera experience. The merged dependency manifest adds internet and network-state permissions used by the scanner stack.
+- There is no product lookup, application network client, persistence, backend integration, or recommendation behavior.
+- The checksum-pinned Gradle 9.5.0 Wrapper builds the API 36 client with AGP 9.3.2. Seven local unit tests and Android lint pass.
 
-This slice establishes build structure only. It does not yet validate any scan-to-recommendation interaction in the proposed diagrams.
+This slice implements the Android-to-scanner launch and decoded-value boundary shown in the proposed diagrams. It has not been installed or exercised on a physical device, so runtime scanner-module delivery, cancellation, and real-barcode success remain unvalidated until T-005/S3.
 
 ## Intended components
 
@@ -47,4 +49,4 @@ The proposal represents a user as the centroid of embeddings associated with sca
 - Is an exact vector search sufficient for MVP scale, or is an ANN index justified?
 - What data may be retained for personalization, and how is user consent handled?
 
-The historical image in `report/assets/asap-architecture.png` remains source material from the initial DOCX. The canonical PlantUML views now replace it in formal deliverables; except for the Android shell explicitly listed above, they still describe proposed rather than implemented behavior.
+The historical image in `report/assets/asap-architecture.png` remains source material from the initial DOCX. The canonical PlantUML views now replace it in formal deliverables; except for the Android scanner slice explicitly listed above, they still describe proposed rather than implemented behavior.

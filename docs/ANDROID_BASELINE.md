@@ -2,7 +2,7 @@
 
 Status: Accepted and frozen under completed T-004.
 
-Implementation status: T-005/S1 installed Platform 36 and Build Tools 36.0.0 and realized the wrapper, AGP, AppCompat, ConstraintLayout, and test portions of this baseline. Google Code Scanner remains pending T-005/S2.
+Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. Physical-device validation remains pending T-005/S3.
 
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 
@@ -56,7 +56,7 @@ T-004/S2 freezes the following choices from the accepted S1 recommendation:
 4. The minimal JUnit/Espresso test baseline.
 5. Deferring Material Views, direct ML Kit Barcode Scanning, and CameraX.
 
-These decisions were made before implementation. Their current realization is tracked in `docs/PROJECT_STATUS.md`; scanner implementation remains outside this baseline document.
+These decisions were made before implementation. Their current realization is tracked in `docs/PROJECT_STATUS.md`; scanner runtime validation remains outside this baseline document.
 
 ## Official sources
 

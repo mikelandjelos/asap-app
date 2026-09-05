@@ -74,8 +74,8 @@
 
 \begin{frame}{Izabrane tehnologije}
   \begin{itemize}
-    \item Android shell: Java/XML modul \texttt{android/app}; build, test i lint prolaze;
-    \item početno skeniranje: Google Code Scanner 16.1.0;
+    \item Android klijent: Java/XML modul \texttt{android/app}; build, sedam testova i lint prolaze;
+    \item skeniranje: Google Code Scanner 16.1.0, EAN/UPC, bez dozvole aplikacije za kameru;
     \item build: AGP 9.3.2, Gradle 9.5.0, Java 17, API 36 i \texttt{minSdk 23};
     \item UI: AppCompat 1.8.0 i ConstraintLayout 2.2.2;
     \item test uređaj: Samsung SM-A566B, Android 16/API 36, Google Play servisi i potrebne kamere verifikovani preko ADB-a;
@@ -86,14 +86,13 @@
 
 \section{Implementacija}
 
-\begin{frame}{MVP demonstracija}
-  \planned
-  \begin{enumerate}
-    \item skeniranje barkoda;
-    \item pribavljanje podataka o proizvodu;
-    \item prikaz semantički sličnih proizvoda;
-    \item personalizovana preporuka.
-  \end{enumerate}
+\begin{frame}{Trenutno stanje implementacije}
+  \begin{itemize}
+    \item implementiran prilagođeni ekran za pokretanje skenera, status i rezultat;
+    \item obrađeni uspeh, otkazivanje, nedostupan modul i opšta greška;
+    \item \textcolor{gray}{fizička provera skeniranja predstoji u sledećem podzadatku;}
+    \item \textcolor{gray}{pribavljanje podataka, semantička pretraga i preporuke su planirani.}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Odluke, problemi i korekcije}

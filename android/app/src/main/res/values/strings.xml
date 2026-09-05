@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ASAP</string>
-    <string name="scanner_placeholder">Osnovna Android aplikacija je spremna. Skeniranje barkoda biće dodato u sledećem odobrenom podzadatku.</string>
+    <string name="scan_ready">Skener je spreman za EAN i UPC barkodove.</string>
+    <string name="scan_action">Skeniraj barkod</string>
+    <string name="scan_in_progress">Skener je pokrenut…</string>
+    <string name="scan_success">Barkod je uspešno očitan.</string>
+    <string name="scan_empty">Barkod je očitan bez tekstualne vrednosti.</string>
+    <string name="scan_cancelled">Skeniranje je otkazano.</string>
+    <string name="scan_module_unavailable">Modul skenera trenutno nije dostupan ili ne može da se preuzme. Proverite Google Play usluge, slobodan prostor i internet vezu, pa pokušajte ponovo.</string>
+    <string name="scan_failed">Skeniranje nije uspelo. Pokušajte ponovo.</string>
+    <string name="scan_result_label">Očitana vrednost</string>
+    <string name="scan_no_result">Još nema očitanog barkoda.</string>
+    <string name="scan_no_value">Nema dostupne vrednosti.</string>
 </resources>

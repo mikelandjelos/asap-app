@@ -209,7 +209,7 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 ## T-005 — Build and validate the Google Code Scanner technical PoC
 
 - **TODO sources:** “Napraviti mali tehnički eksperiment sa Google Code Scanner API-jem iz ML Kit ponude” and “Definisati ponovljiv lokalni postupak za pokretanje, testiranje i izgradnju projekta.”
-- **Status:** Plan approved; T-005/S1 accepted; T-005/S2 awaiting separate execution approval; T-005/S3 not started
+- **Status:** Plan approved; T-005/S1 and T-005/S2 accepted; T-005/S3 approved for execution
 - **Plan approval evidence:** The user instructed “execute s1” after receiving the complete three-subtask plan on 2026-09-04; this explicitly authorizes S1 and accepts its stated structure.
 - **Goal:** Establish, implement, and physically validate the smallest maintainable Java/XML Google Code Scanner experiment before any backend or recommendation work.
 
@@ -233,12 +233,18 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 - Replace the placeholder with a custom XML screen containing scan action, status, and decoded result.
 - Configure EAN-13, EAN-8, UPC-A, and UPC-E; handle success, cancellation, module/download unavailability, and general failure without product lookup.
 - Add proportional unit tests, run build/lint/tests, and synchronize all affected documentation. Do not install the APK on the phone.
+- **Approval evidence:** The user explicitly instructed “execute s2” on 2026-09-04 and instructed “continue” after the interrupted verification on 2026-09-05.
+- **Evidence:** The app resolves `play-services-code-scanner:16.1.0`; its merged manifest contains `com.google.mlkit.vision.DEPENDENCIES=barcode_ui`, min SDK 23, target SDK 36, and no camera permission. The custom Java/XML screen launches an auto-zoom scanner restricted to EAN-13, EAN-8, UPC-A, and UPC-E and presents success, empty value, cancellation, module/download unavailability, and general failure without product lookup. Seven local JUnit tests pass, lint reports zero findings, and debug assembly succeeds. The APK was not installed or run.
+- **Acceptance evidence:** The user explicitly responded “I accept it” on 2026-09-05.
+- **Status:** Accepted.
 
 #### T-005/S3 — Validate on the physical phone
 
 - Install and launch the debug APK on the verified Samsung device only after explicit approval.
 - With user participation, verify scanner-module delivery, a real product barcode, cancellation, and feasible failure behavior.
 - Record reproducible build/install/run commands and actual results; synchronize formal deliverables and stop for acceptance.
+- **Approval evidence:** After accepting S2, the user explicitly instructed “you can execute s3” on 2026-09-05.
+- **Status:** Approved for execution.
 
 ### Task-level acceptance criteria
 
