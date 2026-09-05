@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "fixtureSet": "asap-i1-fixtures-v1",
+  "restriction": "LOCAL_TEST_AND_DEMO_ONLY",
+  "products": [
+    {
+      "id": "fixture:oat-drink",
+      "barcode": { "value": "2000000000015", "format": "EAN_13" },
+      "name": "ASAP ovseni napitak",
+      "brand": "ASAP Demo",
+      "category": "Biljni napici",
+      "description": "Kontrolisani proizvod za I1 demonstraciju.",
+      "tags": ["ovseni", "napitak", "demo"],
+      "recommendationBehavior": {
+        "status": "RESULTS",
+        "productIds": ["fixture:almond-drink", "fixture:soy-drink"]
+      }
+    },
+    {
+      "id": "fixture:almond-drink",
+      "barcode": { "value": "2000000000022", "format": "EAN_13" },
+      "name": "ASAP bademov napitak",
+      "brand": "ASAP Demo",
+      "category": "Biljni napici",
+      "description": "Kontrolisani proizvod za determinističko rangiranje.",
+      "tags": ["bademov", "napitak", "demo"],
+      "recommendationBehavior": {
+        "status": "RESULTS",
+        "productIds": ["fixture:oat-drink", "fixture:soy-drink"]
+      }
+    },
+    {
+      "id": "fixture:soy-drink",
+      "barcode": { "value": "2000000000039", "format": "EAN_13" },
+      "name": "ASAP sojin napitak",
+      "brand": "ASAP Demo",
+      "category": "Biljni napici",
+      "description": "Kontrolisani proizvod za determinističko rangiranje.",
+      "tags": ["sojin", "napitak", "demo"],
+      "recommendationBehavior": {
+        "status": "RESULTS",
+        "productIds": ["fixture:oat-drink", "fixture:almond-drink"]
+      }
+    },
+    {
+      "id": "fixture:empty-results",
+      "barcode": { "value": "2000000000046", "format": "EAN_13" },
+      "name": "ASAP proizvod bez rezultata",
+      "brand": "ASAP Demo",
+      "category": "Kontrolisani scenariji",
+      "description": "Poznat proizvod sa praznim determinističkim rezultatom.",
+      "tags": ["prazno", "demo"],
+      "recommendationBehavior": { "status": "EMPTY", "productIds": [] }
+    },
+    {
+      "id": "fixture:recommendations-unavailable",
+      "barcode": { "value": "2000000000053", "format": "EAN_13" },
+      "name": "ASAP proizvod sa nedostupnim rezultatima",
+      "brand": "ASAP Demo",
+      "category": "Kontrolisani scenariji",
+      "description": "Poznat proizvod za proveru delimičnog uspeha.",
+      "tags": ["nedostupno", "demo"],
+      "recommendationBehavior": { "status": "UNAVAILABLE", "productIds": [] }
+    }
+  ],
+  "productUnavailableBarcodes": [
+    { "value": "2000000000985", "format": "EAN_13" }
+  ],
+  "documentedUnknownBarcodes": [
+    { "value": "2000000000992", "format": "EAN_13" }
+  ]
+}

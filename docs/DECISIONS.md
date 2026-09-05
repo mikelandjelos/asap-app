@@ -127,3 +127,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** T-007 needs the fastest maintainable path to a tested deterministic REST/JSON slice, the developer knows Java, and OpenJDK 21 is already installed.
 - **Decision:** Use OpenJDK 21, Spring Boot 4.1.1 with `spring-boot-starter-webmvc`, and Maven 3.9.16 through Maven Wrapper 3.3.3. Place one Maven project under `backend/` with group `rs.ac.ni.elfak.asap`, artifact `asap-backend`, and base package `rs.ac.ni.elfak.asap.backend`. Use Maven Central, Spring-managed transitive versions, and the minimal dependency policy in `docs/BACKEND_BASELINE.md`.
 - **Consequence:** T-007/S2 may define the wire contract without scaffolding. T-007/S3 will create the project and download the accepted build/runtime/test graph. Javalin and Quarkus remain deferred, as do persistence, Actuator, Lombok, Spring Modulith, Spring AI, external-provider, and vector-store dependencies.
+
+## D-017 — Deterministic I1 uses an explicit scan-query contract and controlled barcodes
+
+- **Status:** Accepted
+- **Date:** 2026-09-05
+- **Context:** The first vertical slice must prove Android-to-backend behavior reproducibly without making claims about live metadata, semantic similarity, or personalization.
+- **Decision:** Use `POST /api/v1/scan-queries` with scanner-provided barcode value/format, exact GS1 validation, independent product and recommendation outcomes, and RFC 9457 request errors. Use the versioned local fixture set and restricted-circulation EAN-13 codes in `docs/fixtures/`. Every known-product recommendation outcome is marked `DETERMINISTIC_FIXTURE` and `placeholder: true`, carries no AI score, and requires an explicit non-AI demo label.
+- **Consequence:** S3 must implement all nine contract cases while preserving known-product details when recommendation results are empty or unavailable. Fixture codes may never be sent to an external product provider. History, providers, embeddings, vector search, scores, and Android integration remain deferred.

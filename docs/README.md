@@ -11,7 +11,8 @@ This directory contains the operational documentation needed to continue the pro
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Current architecture hypothesis and unresolved questions |
 | [`MVP_SCOPE.md`](MVP_SCOPE.md) | Accepted operational MVP boundary, scorecard, and thin delivery iterations |
 | [`ANDROID_BASELINE.md`](ANDROID_BASELINE.md) | Researched Android PoC build/dependency candidates and acceptance points |
-| [`BACKEND_BASELINE.md`](BACKEND_BASELINE.md) | Proposed T-007/S1 backend runtime, framework, build, and dependency baseline |
+| [`BACKEND_BASELINE.md`](BACKEND_BASELINE.md) | Accepted T-007/S1 backend runtime, framework, build, and dependency baseline |
+| [`I1_CONTRACT.md`](I1_CONTRACT.md) | Accepted T-007/S2 HTTP/JSON contract, fixture scenarios, and acceptance cases |
 | [`diagrams/README.md`](diagrams/README.md) | Proposed canonical diagram contract and file layout |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |
 

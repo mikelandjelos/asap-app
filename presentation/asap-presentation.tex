@@ -92,6 +92,18 @@
   \includegraphics[width=\textwidth,height=0.90\textheight,keepaspectratio]{\diagramassetpath scan-to-recommendation-flow.png}
 \end{frame}
 
+\begin{frame}{Deterministički I1 ugovor}
+  \textcolor{gray}{\footnotesize T-007/S2 prihvaćen --- implementacija sledi u S3}
+  \begin{itemize}
+    \item \texttt{POST /api/v1/scan-queries}: format i vrednost EAN/UPC barkoda;
+    \item odvojeni ishodi proizvoda i rezultata čuvaju delimičan uspeh;
+    \item kontrolisani rezultati nose \texttt{DETERMINISTIC\_FIXTURE}, bez AI skora;
+    \item UI mora prikazati: „Deterministički demo rezultat --- nije AI preporuka”;
+    \item validna stanja nepoznato/nedostupno vraćaju domenski ishod; neispravan zahtev koristi RFC 9457;
+    \item lokalni EAN-13 demo kod: \texttt{2000000000015}; nema eksternog izvora.
+  \end{itemize}
+\end{frame}
+
 \section{Definisanje problema}
 
 \begin{frame}{Ciljni korisnici i konkurentska prednost}

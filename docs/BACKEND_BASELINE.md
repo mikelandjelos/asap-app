@@ -39,7 +39,7 @@ Spring Boot is the shortest maintainable path here because the user already know
 
 ## Deferred downloads and verification
 
-S1 performs no download and creates no backend project. If this baseline is accepted, T-007/S3—not S2—will be authorized to add the wrapper and resolve:
+S1 performed no download and created no backend project. Only a later explicit T-007/S3 authorization—not S2 acceptance—may add the wrapper and resolve:
 
 - the checksum-pinned Apache Maven 3.9.16 binary distribution used by Maven Wrapper 3.3.3;
 - the Spring Boot 4.1.1 parent/plugin metadata and the accepted direct dependencies;

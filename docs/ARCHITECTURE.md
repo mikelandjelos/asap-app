@@ -48,7 +48,7 @@ The diagrams mark only scanner integration as implemented. All arrows beyond the
 
 ## Runtime contract
 
-The application-facing exchange remains conceptual until a later data-model/API task:
+The accepted application-facing exchange remains conceptual at the architecture level:
 
 - Request information: one decoded supported barcode plus optional bounded recent product references.
 - Product outcome: exactly one of `known` (normalized product and provenance), `unknown`, or `unavailable`.
@@ -56,7 +56,15 @@ The application-facing exchange remains conceptual until a later data-model/API 
 - Partial-success rule: an empty or unavailable recommendation result must not discard known product details.
 - History rule: absent or insufficient history yields explicitly labelled generic semantic similarity. The Android application records only confirmed known-product interactions.
 
-No endpoint path, wire format, class, status code, retry schedule, or timing guarantee is selected here.
+T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.md`](I1_CONTRACT.md):
+
+- `POST /api/v1/scan-queries` accepts one scanner-provided EAN/UPC value and format; optional history remains deferred.
+- Valid queries return HTTP `200` with independent `product` and `recommendations` outcomes. Product status is `KNOWN`, `UNKNOWN`, or `UNAVAILABLE`; recommendation status is `RESULTS`, `EMPTY`, `UNAVAILABLE`, or `NOT_APPLICABLE`.
+- Every I1 recommendation for a known product uses mode `DETERMINISTIC_FIXTURE` and `placeholder: true`; it carries no score and must be shown as a non-AI demo result.
+- Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
+- Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
+
+Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. No I1 contract behavior was implemented at the S2 checkpoint.
 
 ## Failure boundaries
 
@@ -87,7 +95,7 @@ A last-K window is the simplest candidate. K, event types, recency weighting, ce
 
 ## Still open
 
-- Transport, hosting, and concrete module/package layout within the accepted Java 21/Spring Boot 4.1.1/Maven baseline.
+- Hosting and concrete module/package layout within the accepted Java 21/Spring Boot 4.1.1/Maven baseline.
 - Product API/provider, controlled fallback dataset, license, normalization fields, provenance representation, and caching policy.
 - Product, interaction, and recommendation schemas and validation limits.
 - Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.

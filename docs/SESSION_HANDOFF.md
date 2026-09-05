@@ -4,10 +4,15 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- The user explicitly accepted T-007/S2, authorized its commit, and authorized T-007/S3 with “accepted! great, you can commit this phase, and start the next one” on 2026-09-05. D-017 now freezes the I1 contract/fixtures; S3 may implement them, while S4 remains unauthorized.
+- T-007/S2 is accepted. `docs/I1_CONTRACT.md` defines the frozen versioned operation, exact validation and outcome invariants, RFC 9457 errors, deterministic-placeholder labelling, explicit deferrals, and nine S3/S4 acceptance cases.
+- `docs/fixtures/i1-products.json` contains five fictional products plus controlled product-unavailable and unknown keys. All seven EAN-13 values have valid modulo-10 digits and use restricted-circulation prefix 200; they are local-only and must never reach an external provider.
+- `docs/fixtures/i1-known-product-ean13.svg` encodes the primary `2000000000015` happy-path fixture in a 95-module EAN-13 pattern with quiet zones for later physical-phone scanning. No application code or dependency was created/downloaded.
+- T-007/S2 verification passes: `jq` structure checks, unique/count checks, modulo-10 validation of all seven EAN-13 values, independent comparison of the SVG against the expected 95-module encoding, `git diff --check`, path checks, two-pass pdfLaTeX and LuaLaTeX builds of the 9-page report, and a two-pass LuaLaTeX build of the 15-slide presentation. Logs have no warnings or missing glyphs; extracted text is correct, and the changed report page, contract slide, and barcode render were visually inspected without clipping. Physical barcode decoding remains the explicit S4 case I1-C09.
 - The user explicitly accepted T-007/S1 and authorized T-007/S2 with “accepted! continue w s2” on 2026-09-05. D-016 and `docs/BACKEND_BASELINE.md` now freeze the Java 21/Spring Boot 4.1.1/Maven Wrapper baseline; it remains unimplemented until S3.
 - The user approved the four-subtask T-007 plan and explicitly authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
-- T-007/S1 is executed and awaiting acceptance. Official-source comparison recommends Java 21, Spring Boot 4.1.1 with `spring-boot-starter-webmvc`, Maven 3.9.16 through Maven Wrapper 3.3.3, and one `backend/` Maven project; exact policy, alternatives, exclusions, and S3 downloads are in `docs/BACKEND_BASELINE.md`.
-- Reverified installed OpenJDK/Javac 21.0.12 and absence of global Maven/Gradle. S1 created no backend scaffold and downloaded no dependency; endpoint/schema/fixture work remains S2 and is not authorized.
+- T-007/S1 is accepted. Its official-source comparison selected Java 21, Spring Boot 4.1.1 with `spring-boot-starter-webmvc`, Maven 3.9.16 through Maven Wrapper 3.3.3, and one `backend/` Maven project; exact policy, alternatives, exclusions, and S3 downloads are in `docs/BACKEND_BASELINE.md`.
+- At the S1 checkpoint, OpenJDK/Javac 21.0.12 and the absence of global Maven/Gradle were reverified; no backend scaffold or dependency was added. The later S2 authorization produced only the design artifacts listed above.
 - T-007/S1 verification passes: `git diff --check`, documentation path checks, two-pass pdfLaTeX and LuaLaTeX builds of the 9-page report, and a two-pass LuaLaTeX build of the 14-slide presentation. Logs contain no warnings or missing glyphs; extracted Serbian Latin/version text is correct, and the changed report page and technology slide were visually inspected without clipping.
 - User explicitly accepted and closed T-006 and authorized its commit with “I accept you can commit” on 2026-09-05.
 - User explicitly accepted T-006/S2 with “I accept this” on 2026-09-05; both T-006 subtasks are accepted.
@@ -85,11 +90,11 @@ Last updated: 2026-09-05
 - Formal report and presentation sources compile.
 - The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
 - A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
-- The backend baseline is accepted. T-007/S2 contract/fixture design is active; product-data providers, models, storage products, and S3/S4 implementation remain open.
+- The backend baseline and I1 contract/fixtures are accepted. T-007/S3 implementation is active; product-data providers, models, storage products, and S4 integration remain open.
 
 ## Suggested next session
 
-Complete only the approved T-007/S2 contract and deterministic-fixture design, then stop for user acceptance. Do not begin S3.
+Complete only the approved T-007/S3 fixture-backed backend implementation and synchronized documentation, then stop for user acceptance. Do not begin S4.
 
 ## Blockers
 

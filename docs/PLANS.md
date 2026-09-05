@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1 accepted; S2 approved and executing; S3–S4 not approved
+- **Status:** Plan approved; S1–S2 accepted; S3 approved and executing; S4 not approved
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -336,16 +336,19 @@ The user explicitly accepted T-007/S1 with “accepted! continue w s2” on 2026
 
 #### T-007/S2 — Define the I1 contract and deterministic fixtures
 
-- **Status:** Approved; executing
+- **Status:** Accepted
 
 - Define the minimum application-facing request and response shapes for known, unknown, and unavailable product outcomes plus independently classified placeholder-recommendation outcomes.
 - Define normalized fixture products and a reproducible scannable test barcode without presenting fixture rankings as semantic or personalized results.
 - Define validation limits, provenance labels, and acceptance tests at the contract level.
 - Synchronize TODO, plan, status, architecture, handoff, report, and presentation; do not scaffold or download implementation dependencies.
+- **Evidence:** `docs/I1_CONTRACT.md` proposes one versioned JSON operation, independent product/recommendation outcome unions, RFC 9457 request errors, exact barcode validation, provenance and placeholder rules, nine acceptance cases, and explicit deferrals. `docs/fixtures/i1-products.json` defines five fictional known products plus controlled unavailable/unknown lookup keys using valid restricted-circulation EAN-13 values. `docs/fixtures/i1-known-product-ean13.svg` is a reproducible 95-module barcode for the primary phone path. `jq` validates the JSON structure; an independent modulo-10 check validates all seven fixture values; an independent encoder comparison validates the SVG's exact 95-module EAN-13 pattern. `git diff --check` and path checks pass. The 9-page report builds twice with pdfLaTeX and LuaLaTeX, and the 15-slide presentation builds twice with LuaLaTeX; logs contain no warnings or missing glyphs, extracted Serbian text is correct, and the changed report page, contract slide, and barcode render were visually inspected without clipping. No backend or Android code, dependency, provider, model, or storage product was added.
+
+The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! great, you can commit this phase, and start the next one” on 2026-09-05.
 
 #### T-007/S3 — Implement the fixture-backed backend slice
 
-- **Status:** Not approved
+- **Status:** Approved; executing
 
 - Scaffold one backend modular-monolith project using the accepted S1 baseline.
 - Implement the S2 contract through internal API/product-resolution/recommendation boundaries using deterministic in-memory or packaged fixture data.
