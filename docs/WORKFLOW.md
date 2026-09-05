@@ -117,7 +117,20 @@ ANDROID_HOME=/home/mih/Android/Sdk ./gradlew clean testDebugUnitTest lintDebug a
 
 The debug APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`; all generated build output and machine-local configuration are ignored. The committed Gradle distribution checksum is `553c78f50dafcd54d65b9a444649057857469edf836431389695608536d6b746`, and the wrapper JAR checksum is `497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7`.
 
-For S2, seven unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The scanner dependency contributes internet and network-state permissions for its unbundled Google Play services flow. Do not install it on a device until T-005/S3 is approved.
+For S2, seven unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The scanner dependency contributes internet and network-state permissions for its unbundled Google Play services flow.
+
+### Scanner PoC installation and launch
+
+T-005/S3 was approved and began on 2026-09-05. With the authorized phone connected and unlocked, the reproducible installation and launch commands are:
+
+```sh
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+adb shell am force-stop rs.ac.ni.elfak.asap
+adb shell monkey -p rs.ac.ni.elfak.asap -c android.intent.category.LAUNCHER 1
+adb shell pidof rs.ac.ni.elfak.asap
+```
+
+The streamed debug installation succeeded and the launcher activity became the top resumed activity on the verified Samsung device. The user confirmed two successful real-product scans, correct decoded-value display, and the intended cancellation status after closing the scanner. This proves the scanner module was usable, although the run does not reveal whether it was newly downloaded or already present. Module/download and general failure handlers are locally tested; physical failure injection was not attempted because it would require altering an otherwise valid device environment. No barcode values or device identifier are retained in project documentation.
 
 ## Documentation synchronization guide
 

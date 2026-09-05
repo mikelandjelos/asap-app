@@ -4,7 +4,7 @@ Last verified: 2026-09-05
 
 ## Current phase
 
-ASAP is in early Android technical-PoC implementation. A buildable Java/XML Google Code Scanner slice and seven local unit tests exist. The scanner has not yet been run on a physical device; backend, recommendation service, dataset pipeline, and end-to-end tests do not exist.
+ASAP is in early Android technical-PoC implementation. A buildable Java/XML Google Code Scanner slice and seven local unit tests exist. Its debug APK is installed on the verified physical phone, where two real-product scans successfully returned decoded values and cancellation produced the intended status. Backend, recommendation service, dataset pipeline, and end-to-end tests do not exist.
 
 ## Available artifacts
 
@@ -25,8 +25,10 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - The baseline in `docs/ANDROID_BASELINE.md` is realized through T-005/S2: Android Platform 36, Build Tools 36.0.0, checksum-pinned Gradle Wrapper 9.5.0, AGP 9.3.2, AppCompat 1.8.0, ConstraintLayout 2.2.2, Google Code Scanner 16.1.0, and the JUnit/AndroidX test graph are installed or resolved.
 - The Android project lives in `android/` with one `app` module, namespace/application ID `rs.ac.ni.elfak.asap`, a Java `MainActivity`, one custom XML scanner screen, helper logic covered by local tests, and a vector launcher icon.
 - The scanner is restricted to EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The UI reports success, empty value, cancellation, module/download unavailability, and general failure; it performs no product lookup.
-- The source manifest includes install-time `barcode_ui` metadata and declares no camera permission. The merged scanner dependency adds internet and network-state permissions. The APK has not been installed on a device.
-- T-005/S1 and T-005/S2 are accepted; T-005/S3 is approved for physical-device validation.
+- The source manifest includes install-time `barcode_ui` metadata and declares no camera permission. The merged scanner dependency adds internet and network-state permissions.
+- The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
+- Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
+- T-005/S1, T-005/S2, and T-005/S3 are accepted; T-005 awaits separate explicit closure.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 

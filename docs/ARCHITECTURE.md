@@ -1,6 +1,6 @@
 # Architecture
 
-Status: proposed system architecture with an implemented but not yet device-validated Android scanner slice; backend, data, and recommendation boundaries remain unvalidated.
+Status: proposed system architecture with a device-validated Android scanner slice; backend, data, and recommendation boundaries remain unvalidated.
 
 The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml), an [English technical render](diagrams/rendered/component-architecture.png), and a [Serbian formal render](diagrams/rendered/sr/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml), an [English technical render](diagrams/rendered/scan-to-recommendation-flow.png), and a [Serbian formal render](diagrams/rendered/sr/scan-to-recommendation-flow.png). Serbian presentation variants are accepted integrations of those same canonical sources.
 
@@ -13,7 +13,7 @@ The accepted terminology, boundaries, required views, and PlantUML file layout a
 - There is no product lookup, application network client, persistence, backend integration, or recommendation behavior.
 - The checksum-pinned Gradle 9.5.0 Wrapper builds the API 36 client with AGP 9.3.2. Seven local unit tests and Android lint pass.
 
-This slice implements the Android-to-scanner launch and decoded-value boundary shown in the proposed diagrams. It has not been installed or exercised on a physical device, so runtime scanner-module delivery, cancellation, and real-barcode success remain unvalidated until T-005/S3.
+This slice implements the Android-to-scanner launch and decoded-value boundary shown in the proposed diagrams. The debug APK is installed, its launcher activity is verified, and the user confirmed two successful real-product scans whose decoded values returned to the custom screen plus a cancellation that produced the intended status. The scanner module is therefore available and usable on the test phone; whether it was newly downloaded or already present is not observable from this run. Module/download and general failures have implemented and unit-tested handling, but were not deliberately induced on the physical phone.
 
 ## Intended components
 

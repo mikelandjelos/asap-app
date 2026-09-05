@@ -4,6 +4,8 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- User explicitly accepted T-005/S3 on 2026-09-05. ADB reauthorization succeeded, the S2 debug APK was installed on the verified Samsung phone, and `MainActivity` was confirmed as the top resumed activity.
+- The user reported two successful real-product scans with decoded values returned to ASAP and confirmed the intended cancellation status. This confirms the scanner module is usable, but not whether it was newly downloaded or already present. Failure handling is implemented and locally tested; physical failure injection was not attempted.
 - User explicitly authorized T-005/S2 with “execute s2” on 2026-09-04 and continued the interrupted verification on 2026-09-05.
 - T-005/S2 integrated Google Code Scanner 16.1.0 and `barcode_ui`, configured auto-zoom plus EAN-13/EAN-8/UPC-A/UPC-E, and replaced the placeholder with a custom scan/status/result screen.
 - Success, empty value, cancellation, module/download unavailability, and general failure have user-visible outcomes. No product lookup, backend behavior, phone installation, or runtime claim was added.
@@ -67,12 +69,12 @@ Last updated: 2026-09-05
 
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
-- A buildable Android Java/XML scanner slice and seven local unit tests exist. Physical scanner behavior and the data pipeline remain unverified/unimplemented respectively.
+- A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
 - Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
 
 ## Suggested next session
 
-T-005/S2 is accepted and T-005/S3 is approved. Install and validate the scanner on the verified physical phone, record actual results, and stop for acceptance.
+All T-005 subtasks are accepted. Present the task-level evidence and obtain explicit T-005 closure before selecting or planning any later TODO task.
 
 ## Blockers
 

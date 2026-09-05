@@ -209,7 +209,7 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 ## T-005 — Build and validate the Google Code Scanner technical PoC
 
 - **TODO sources:** “Napraviti mali tehnički eksperiment sa Google Code Scanner API-jem iz ML Kit ponude” and “Definisati ponovljiv lokalni postupak za pokretanje, testiranje i izgradnju projekta.”
-- **Status:** Plan approved; T-005/S1 and T-005/S2 accepted; T-005/S3 approved for execution
+- **Status:** All subtasks accepted; T-005 awaiting explicit closure
 - **Plan approval evidence:** The user instructed “execute s1” after receiving the complete three-subtask plan on 2026-09-04; this explicitly authorizes S1 and accepts its stated structure.
 - **Goal:** Establish, implement, and physically validate the smallest maintainable Java/XML Google Code Scanner experiment before any backend or recommendation work.
 
@@ -244,7 +244,9 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 - With user participation, verify scanner-module delivery, a real product barcode, cancellation, and feasible failure behavior.
 - Record reproducible build/install/run commands and actual results; synchronize formal deliverables and stop for acceptance.
 - **Approval evidence:** After accepting S2, the user explicitly instructed “you can execute s3” on 2026-09-05.
-- **Status:** Approved for execution.
+- **Evidence:** ADB reauthorization succeeded for the previously verified Samsung SM-A566B running Android 16/API 36 with Google Play services 26.32.34. `adb install -r` installed version code 1 successfully, the launcher was started, and `MainActivity` was confirmed as the top resumed activity. The user reported two successful real-product scans with decoded values returned to ASAP and confirmed that closing the scanner produced the intended cancellation status. This confirms that the scanner module is available and usable; whether Google Play services downloaded it during this run or it was already present is not observable. Module/download and general failure branches are implemented and unit-tested, but destructive or environment-altering failure injection was not justified. No device identifier or barcode value is recorded.
+- **Acceptance evidence:** The user explicitly responded “I explicitly accept s3!” on 2026-09-05.
+- **Status:** Accepted.
 
 ### Task-level acceptance criteria
 
