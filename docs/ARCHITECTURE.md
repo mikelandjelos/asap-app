@@ -2,6 +2,8 @@
 
 Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner slice is implemented and device-validated. Every other component described below remains planned.
 
+T-007/S1 selects Java 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one project under `backend/`. This accepted technical baseline is not implemented until T-007/S3; the deployment and ownership boundaries below remain unchanged.
+
 The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
 
 ## Selected MVP topology
@@ -85,7 +87,7 @@ A last-K window is the simplest candidate. K, event types, recency weighting, ce
 
 ## Still open
 
-- Backend language/framework, transport, hosting, and concrete module/package layout.
+- Transport, hosting, and concrete module/package layout within the accepted Java 21/Spring Boot 4.1.1/Maven baseline.
 - Product API/provider, controlled fallback dataset, license, normalization fields, provenance representation, and caching policy.
 - Product, interaction, and recommendation schemas and validation limits.
 - Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.

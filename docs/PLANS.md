@@ -295,7 +295,7 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 - **Acceptance evidence:** The user explicitly responded “I accept this” on 2026-09-05.
 - **Status:** Accepted.
 
-### Proposed task-level acceptance criteria
+### Approved task-level acceptance criteria
 
 - The MVP has an explicit included/deferred/out-of-scope contract and ordered thin delivery iterations.
 - Every planned component has one clear responsibility, owner of persistent data, primary inputs/outputs, and user-visible failure responsibility.
@@ -303,7 +303,7 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 - No application/backend scaffold, dependency, API provider, dataset, model, or storage product is introduced.
 - The plan and each subtask are separately approved and accepted before advancing.
 
-### Proposed exclusions
+### Approved exclusions
 
 - Creating the backend project or changing Android implementation.
 - Selecting concrete product-data APIs or fallback datasets.
@@ -311,3 +311,67 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 - Defining final endpoint schemas, authentication, production deployment, or operational scaling.
 
 All task-level acceptance criteria were verified and the user explicitly accepted and closed T-006 with “I accept you can commit” on 2026-09-05.
+
+## T-007 — Deliver the deterministic I1 vertical slice
+
+- **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
+- **Status:** Plan approved; S1 accepted; S2 approved and executing; S3–S4 not approved
+- **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
+
+The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
+
+### Approved subtasks
+
+#### T-007/S1 — Select the backend technical baseline
+
+- **Status:** Accepted
+
+- Compare a small set of current backend candidates against the accepted modular-monolith boundary, local development constraints, Java familiarity, testability, Android integration, and fastest-MVP goal.
+- Recommend exact runtime, framework/build-tool baseline, project location, and dependency policy; identify downloads that S3 would require.
+- Record candidate evidence and tradeoffs without scaffolding a backend, downloading dependencies, choosing data providers/models/storage, or changing Android code.
+- Synchronize plan, status, handoff, architecture, and relevant proposed technology text in the report/presentation.
+- **Evidence:** `docs/BACKEND_BASELINE.md` compares Spring Boot 4.1.1, Javalin 7.2.3, and Quarkus 3.33 LTS using official sources and recommends Java 21, Spring Boot 4.1.1 with the Servlet MVC starter, Maven 3.9.16 through Wrapper 3.3.3, a single `backend/` Maven module, exact coordinates, a minimal dependency policy, exclusions, and the downloads deferred to S3. The installed JDK/Javac 21.0.12 were reverified; neither Maven nor Gradle is globally installed. `git diff --check` and documentation path checks pass; the synchronized 9-page report builds twice with pdfLaTeX and LuaLaTeX, and the 14-slide presentation builds twice with LuaLaTeX. Logs contain no warnings or missing glyphs, extracted text preserves Serbian Latin and version names, and the changed report page and technology slide were visually inspected without clipping. No backend scaffold, dependency, provider, model, storage product, endpoint contract, or Android change was introduced.
+
+The user explicitly accepted T-007/S1 with “accepted! continue w s2” on 2026-09-05.
+
+#### T-007/S2 — Define the I1 contract and deterministic fixtures
+
+- **Status:** Approved; executing
+
+- Define the minimum application-facing request and response shapes for known, unknown, and unavailable product outcomes plus independently classified placeholder-recommendation outcomes.
+- Define normalized fixture products and a reproducible scannable test barcode without presenting fixture rankings as semantic or personalized results.
+- Define validation limits, provenance labels, and acceptance tests at the contract level.
+- Synchronize TODO, plan, status, architecture, handoff, report, and presentation; do not scaffold or download implementation dependencies.
+
+#### T-007/S3 — Implement the fixture-backed backend slice
+
+- **Status:** Not approved
+
+- Scaffold one backend modular-monolith project using the accepted S1 baseline.
+- Implement the S2 contract through internal API/product-resolution/recommendation boundaries using deterministic in-memory or packaged fixture data.
+- Add automated tests for known, unknown, unavailable, placeholder-result, empty-result, and partial-success behavior.
+- Synchronize build instructions and every affected operational/formal document; do not add external providers, embeddings, vector databases, or Android networking.
+
+#### T-007/S4 — Connect Android and validate the vertical slice
+
+- **Status:** Not approved
+
+- Add the Android API-client boundary and custom product/result UI while preserving the accepted Google Code Scanner integration.
+- Exercise a controlled barcode from the physical phone through the backend to product details and a clearly labelled deterministic placeholder list.
+- Verify unknown-product and feasible backend-unavailable/empty-result behavior with automated checks and a reproducible phone demonstration.
+- Synchronize TODO, architecture, status, plan, handoff, report, and presentation, then stop for subtask and task-level acceptance.
+
+### Approved task-level acceptance criteria
+
+- One reproducible command sequence builds and tests both projects.
+- A controlled barcode scan on the phone reaches the backend and displays fixture product details plus a clearly labelled deterministic placeholder list.
+- Unknown product, backend unavailability, and empty recommendation outcomes remain distinguishable; recommendation failure does not hide known product data.
+- Tests enforce the accepted I1 contract, and all documentation/formal deliverables distinguish deterministic scaffolding from semantic or personalized recommendations.
+- No external product API, embedding model, vector-storage product, authentication system, or durable interaction history is introduced.
+
+### Approved exclusions
+
+- Live metadata lookup or catalog ingestion.
+- Embedding generation, cosine similarity, MMR, vector indexing, or history-based personalization.
+- Production hosting, authentication, accounts, analytics, or final UI polish.
+- Changing the accepted scanner technology or architecture topology.

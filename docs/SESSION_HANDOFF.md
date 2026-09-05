@@ -4,6 +4,11 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- The user explicitly accepted T-007/S1 and authorized T-007/S2 with “accepted! continue w s2” on 2026-09-05. D-016 and `docs/BACKEND_BASELINE.md` now freeze the Java 21/Spring Boot 4.1.1/Maven Wrapper baseline; it remains unimplemented until S3.
+- The user approved the four-subtask T-007 plan and explicitly authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
+- T-007/S1 is executed and awaiting acceptance. Official-source comparison recommends Java 21, Spring Boot 4.1.1 with `spring-boot-starter-webmvc`, Maven 3.9.16 through Maven Wrapper 3.3.3, and one `backend/` Maven project; exact policy, alternatives, exclusions, and S3 downloads are in `docs/BACKEND_BASELINE.md`.
+- Reverified installed OpenJDK/Javac 21.0.12 and absence of global Maven/Gradle. S1 created no backend scaffold and downloaded no dependency; endpoint/schema/fixture work remains S2 and is not authorized.
+- T-007/S1 verification passes: `git diff --check`, documentation path checks, two-pass pdfLaTeX and LuaLaTeX builds of the 9-page report, and a two-pass LuaLaTeX build of the 14-slide presentation. Logs contain no warnings or missing glyphs; extracted Serbian Latin/version text is correct, and the changed report page and technology slide were visually inspected without clipping.
 - User explicitly accepted and closed T-006 and authorized its commit with “I accept you can commit” on 2026-09-05.
 - User explicitly accepted T-006/S2 with “I accept this” on 2026-09-05; both T-006 subtasks are accepted.
 - T-006/S2 defines the accepted Android deployment plus one backend modular monolith; bounded history is device-owned request context, product/vector stores have explicit backend module owners, and product/recommendation failures remain independent. Both canonical diagrams and all localized renders were updated; no application code or concrete technology/provider/schema was added.
@@ -80,11 +85,11 @@ Last updated: 2026-09-05
 - Formal report and presentation sources compile.
 - The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
 - A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
-- Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
+- The backend baseline is accepted. T-007/S2 contract/fixture design is active; product-data providers, models, storage products, and S3/S4 implementation remain open.
 
 ## Suggested next session
 
-Select the next unchecked item from `TODO.md` and record a proposed task/subtask plan before implementation.
+Complete only the approved T-007/S2 contract and deterministic-fixture design, then stop for user acceptance. Do not begin S3.
 
 ## Blockers
 

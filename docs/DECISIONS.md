@@ -119,3 +119,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The MVP needs explicit deployment, data-ownership, and failure boundaries without incurring premature distributed-system or account-management work.
 - **Decision:** Deploy one Android application and one backend modular monolith. Keep API coordination, product resolution, and recommendation as internal backend modules. Store bounded interaction history on the device and supply it only as optional request context; do not retain a central user profile. Give the product-resolution module ownership of the normalized catalog and the recommendation module ownership of the vector index as logical stores.
 - **Consequence:** The first backend implementation remains operationally simple while module boundaries permit later extraction if evidence justifies it. Product and recommendation outcomes stay independent, generic similarity is the cold-start fallback, and provider, framework, schema, model, physical storage, and retention details remain later decisions.
+
+## D-016 — Backend baseline uses Java 21, Spring Boot MVC, and Maven Wrapper
+
+- **Status:** Accepted
+- **Date:** 2026-09-05
+- **Context:** T-007 needs the fastest maintainable path to a tested deterministic REST/JSON slice, the developer knows Java, and OpenJDK 21 is already installed.
+- **Decision:** Use OpenJDK 21, Spring Boot 4.1.1 with `spring-boot-starter-webmvc`, and Maven 3.9.16 through Maven Wrapper 3.3.3. Place one Maven project under `backend/` with group `rs.ac.ni.elfak.asap`, artifact `asap-backend`, and base package `rs.ac.ni.elfak.asap.backend`. Use Maven Central, Spring-managed transitive versions, and the minimal dependency policy in `docs/BACKEND_BASELINE.md`.
+- **Consequence:** T-007/S2 may define the wire contract without scaffolding. T-007/S3 will create the project and download the accepted build/runtime/test graph. Javalin and Quarkus remain deferred, as do persistence, Actuator, Lombok, Spring Modulith, Spring AI, external-provider, and vector-store dependencies.
