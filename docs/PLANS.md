@@ -209,7 +209,7 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 ## T-005 — Build and validate the Google Code Scanner technical PoC
 
 - **TODO sources:** “Napraviti mali tehnički eksperiment sa Google Code Scanner API-jem iz ML Kit ponude” and “Definisati ponovljiv lokalni postupak za pokretanje, testiranje i izgradnju projekta.”
-- **Status:** All subtasks accepted; T-005 awaiting explicit closure
+- **Status:** Accepted and closed
 - **Plan approval evidence:** The user instructed “execute s1” after receiving the complete three-subtask plan on 2026-09-04; this explicitly authorizes S1 and accepts its stated structure.
 - **Goal:** Establish, implement, and physically validate the smallest maintainable Java/XML Google Code Scanner experiment before any backend or recommendation work.
 
@@ -261,3 +261,5 @@ All acceptance criteria were verified and T-004 was explicitly accepted on 2026-
 - Product metadata lookup, network/API clients, persistence, backend, embeddings, or recommendations.
 - Production UI polish, authentication, analytics, publication, signing, or release distribution.
 - CameraX and direct ML Kit Barcode Scanning.
+
+All acceptance criteria were verified and T-005 was explicitly accepted and closed by the user on 2026-09-05.

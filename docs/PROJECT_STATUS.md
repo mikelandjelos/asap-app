@@ -28,7 +28,7 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - The source manifest includes install-time `barcode_ui` metadata and declares no camera permission. The merged scanner dependency adds internet and network-state permissions.
 - The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
 - Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
-- T-005/S1, T-005/S2, and T-005/S3 are accepted; T-005 awaits separate explicit closure.
+- T-005 and all three of its subtasks are accepted and closed.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 

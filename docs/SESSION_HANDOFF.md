@@ -4,6 +4,7 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- User explicitly accepted and closed T-005 on 2026-09-05 after reviewing the task-level evidence.
 - User explicitly accepted T-005/S3 on 2026-09-05. ADB reauthorization succeeded, the S2 debug APK was installed on the verified Samsung phone, and `MainActivity` was confirmed as the top resumed activity.
 - The user reported two successful real-product scans with decoded values returned to ASAP and confirmed the intended cancellation status. This confirms the scanner module is usable, but not whether it was newly downloaded or already present. Failure handling is implemented and locally tested; physical failure injection was not attempted.
 - User explicitly authorized T-005/S2 with “execute s2” on 2026-09-04 and continued the interrupted verification on 2026-09-05.
@@ -74,7 +75,7 @@ Last updated: 2026-09-05
 
 ## Suggested next session
 
-All T-005 subtasks are accepted. Present the task-level evidence and obtain explicit T-005 closure before selecting or planning any later TODO task.
+T-005 is accepted and closed. The first pending non-continuous TODO item is to refine the architecture of the mobile client, backend API, recommendation service, and data stores. Plan it before implementation.
 
 ## Blockers
 
