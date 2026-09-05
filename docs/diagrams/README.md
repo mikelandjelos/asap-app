@@ -1,6 +1,6 @@
 # Diagram contract
 
-Status: T-001 and all four subtasks were accepted by the user; the canonical sources, render variants, and formal-deliverable integrations are complete.
+Status: T-001's diagram contract and the T-006/S2 concrete MVP-topology refinement are accepted.
 
 ## Purpose and audiences
 
@@ -19,17 +19,17 @@ Every diagram must visibly use the phrase **Proposed architecture** or **Planira
 - **Source:** `component-architecture.puml`
 - **Notation:** PlantUML component diagram.
 - **Purpose:** show logical system boundaries, responsibilities, dependencies, and data stores.
-- **Required elements:** Android client, Google Code Scanner integration, backend API, semantic search and recommendation component, product metadata store, and vector index.
-- **Boundary rule:** this is a logical component view, not a deployment view. It must not imply separate deployable services, protocols, frameworks, databases, or cloud providers that have not been selected.
-- **Optional/planned behavior:** personalization may appear only as a clearly marked planned extension; its internal design is out of scope for T-001.
+- **Required elements:** Android application boundary, Google Code Scanner integration, local bounded history, one backend deployment with API/product-resolution/recommendation modules, normalized product catalog, vector index, controlled fallback dataset, and external product source boundary.
+- **Boundary rule:** combine logical ownership with the two selected deployment boundaries: one Android application and one backend modular monolith. Logical stores do not imply separate database products, and no protocol, framework, vendor, or hosting platform is selected.
+- **Planned behavior:** history-based personalization is a committed extended-MVP capability. The diagram locates history on the device but does not select K, persistence APIs, weighting, profile aggregation, or retention duration.
 
 ### Scan-to-recommendation flow
 
 - **Source:** `scan-to-recommendation-flow.puml`
 - **Notation:** PlantUML sequence diagram with data labels.
 - **Purpose:** trace the end-to-end exchange from barcode capture to product details and recommendations.
-- **Success path:** capture/decode barcode, request product metadata, retrieve metadata, request semantically similar products, query the vector index, and return product details plus recommendations to the user interface.
-- **Outcome boundaries:** include high-level alternatives for an unreadable barcode, unavailable/missing product metadata, and empty/unavailable recommendations. Do not prescribe retries, error types, or recovery algorithms before those decisions are made.
+- **Success path:** capture/decode barcode, read optional bounded local history, resolve normalized product metadata, request generic or personalized ranking, query the vector index, return product details plus a separately classified recommendation outcome, and record a known interaction locally.
+- **Outcome boundaries:** distinguish scan cancellation/unreadable input, backend/API unavailability, unknown product, temporarily unavailable resolution, personalized results, generic cold-start results, and empty/unavailable recommendations. Do not prescribe retries, error types, or recovery algorithms before those decisions are made.
 - **Boundary rule:** show exchanged information and responsibility, not classes, endpoints, payload schemas, or timing guarantees that do not exist yet.
 
 ## Canonical terminology
@@ -38,12 +38,14 @@ PlantUML identifiers and operational documentation use the English canonical ter
 
 | Canonical term | Serbian deliverable label | Existing-source variants | Contract note |
 | --- | --- | --- | --- |
-| Android client | Mobilna aplikacija | Mobile application | Java application code and XML Views are accepted; SDK levels and project structure remain undecided. |
+| Android client | Mobilna aplikacija | Mobile application | Java/XML application exists; only the scanner slice is implemented. |
 | Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
-| Backend API | Backend API / API servis | Backend; API service | Do not imply framework, protocol, or deployment topology. |
-| Product metadata store | Skladište metapodataka o proizvodima | Baza proizvoda; barcode → metadata | External provider versus owned database remains undecided. |
-| Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | Embedding model, MMR use, and service boundary remain undecided. |
-| Vector index | Vektorski indeks | Embeddings store | Exact versus approximate search and storage technology remain undecided. |
+| Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Owned by the Android application; exact retention and representation remain undecided. |
+| Backend API | Backend API / API servis | Backend; API service | Application-facing module inside one planned backend deployment; framework and transport remain undecided. |
+| Product resolution | Razrešavanje proizvoda | Metadata adapter | Owns lookup, fallback selection, normalization, provenance, and product outcome classification. |
+| Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | Backend-owned logical catalog; storage product and external provider remain undecided. |
+| Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | Internal backend module; embedding model, exact ranking method, and MMR remain undecided. |
+| Vector index | Vektorski indeks | Embeddings store | Owned by the recommendation module; exact versus approximate search and storage technology remain undecided. |
 | Product details | Podaci o proizvodu | Product; metadata | Concrete fields and schema remain undecided. |
 | Recommendations | Preporuke | Top-N similar products | Ranking, personalization, and fallback behavior remain undecided. |
 
@@ -71,7 +73,7 @@ docs/diagrams/
 - `includes/theme.puml` contains shared deterministic styling only; it must not contain architectural elements.
 - PNG renders are committed because pdfLaTeX, the report, and the presentation need portable raster assets.
 - Default renders use English canonical terminology for technical review. `SERBIAN` renders use Serbian Latin for formal deliverables.
-- `PRESENTATION` renders remove secondary diagram furniture to remain legible on a 16:9 slide; they do not change components, participants, messages, or outcomes.
+- `PRESENTATION` renders remove secondary furniture and may collapse repeated response messages or nested branch detail to remain legible on a 16:9 slide. They retain every component/participant, responsibility, and named outcome class.
 - All variants come from the same two canonical `.puml` sources. Do not duplicate architecture structure to localize or simplify a render.
 - Rendered files must be regenerated whenever their source or shared theme changes.
 - Diagram filenames remain stable so documentation references do not require churn.
@@ -80,7 +82,7 @@ docs/diagrams/
 
 - Use UTF-8 source and Serbian Latin text only where a deliverable-facing label needs it.
 - Keep colors and layout deterministic through the shared theme include.
-- Visually distinguish client, backend, external dependency, and data-store boundaries.
+- Visually distinguish device/application, single backend deployment, external dependency, and data-store boundaries.
 - Add a legend only when notation is not self-explanatory.
 - Avoid decorative icons, vendor branding, speculative technology badges, and implementation-status colors.
 - Prefer readable labels over dense detail; move unresolved detail into documentation questions.
@@ -103,14 +105,22 @@ env -u DISPLAY plantuml -DSERBIAN -DPRESENTATION -charset UTF-8 -tpng \
 
 Run the syntax check for each enabled variant when conditional content changes. S2 and S3 verify their individual source. S4 verifies all variants, regenerates every PNG, and compiles the report and presentation after integration.
 
+## Resolved by T-006/S2
+
+- Android and backend are separate deployment boundaries.
+- The MVP backend is one deployable modular monolith; product resolution and recommendation are internal modules, not separately operated services.
+- Bounded interaction history is owned and retained by the Android application and is supplied only as optional request context; the backend does not own a durable user profile in this architecture.
+- The backend owns the normalized product catalog and vector index as distinct logical stores. Their physical storage products may later be shared or separate.
+- Product resolution owns external-provider/fallback handling and provenance. Recommendation failure is independent of product resolution, so known product details remain displayable.
+
 ## Explicitly unresolved
 
 - Android SDK levels, dependency versions, and project structure.
 - Whether UX evidence later justifies upgrading from Google Code Scanner to direct ML Kit Barcode Scanning with CameraX.
-- Backend topology, framework, transport, and deployment environment.
-- Product metadata provider, ownership, caching, and fallback dataset.
+- Backend framework, transport, and deployment environment.
+- Product metadata provider, catalog storage product, caching policy, and fallback dataset.
 - Embedding model, vector-index technology, exact/ANN search, and MMR use.
-- Personalization event model, privacy policy, and cold-start behavior.
+- Personalization event model, K/window, weighting, aggregation, retention duration, and consent wording. Generic cold-start behavior itself is required.
 - Concrete API payloads, persistence schemas, retry policies, and service-level targets.
 
 Resolving any of these requires its own approved task or subtask and a recorded decision.

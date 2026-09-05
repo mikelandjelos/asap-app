@@ -4,6 +4,10 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- User explicitly accepted and closed T-006 and authorized its commit with “I accept you can commit” on 2026-09-05.
+- User explicitly accepted T-006/S2 with “I accept this” on 2026-09-05; both T-006 subtasks are accepted.
+- T-006/S2 defines the accepted Android deployment plus one backend modular monolith; bounded history is device-owned request context, product/vector stores have explicit backend module owners, and product/recommendation failures remain independent. Both canonical diagrams and all localized renders were updated; no application code or concrete technology/provider/schema was added.
+- T-006/S2 verification passes for all three PlantUML variants, two-pass pdfLaTeX and LuaLaTeX report builds, and a two-pass LuaLaTeX presentation build. The report remains 8 pages, the presentation is 14 slides, relevant logs contain no document warnings or missing glyphs, and both diagram pages plus all three changed architecture/diagram slides were visually inspected without clipping.
 - User explicitly accepted T-006/S1 and authorized T-006/S2 with “accepted - commit and start s2” on 2026-09-05.
 - User approved the two-subtask T-006 plan and explicitly authorized only T-006/S1 with “let's go - do the s1” on 2026-09-05.
 - T-006/S1 created the accepted `docs/MVP_SCOPE.md` contract with the minimum user journey, mandatory 80-point P0 core, committed 15-point extended MVP for history-based recommendation, final 5-point broader evaluation increment, required behavior, non-goals, assumptions/dependencies, six thin delivery iterations, exit evidence, and change control. A bounded last-K history is the baseline candidate, but the exact method remains open.
@@ -74,13 +78,13 @@ Last updated: 2026-09-05
 
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
-- The accepted MVP scope and iteration contract exists in `docs/MVP_SCOPE.md`; T-006/S2 architecture work is authorized.
+- The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
 - A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
 - Product and technology decisions listed in `docs/PROJECT_STATUS.md` remain open.
 
 ## Suggested next session
 
-Execute only the authorized T-006/S2 architecture contract, synchronize all affected documentation and formal deliverables, then stop for user acceptance.
+Select the next unchecked item from `TODO.md` and record a proposed task/subtask plan before implementation.
 
 ## Blockers
 

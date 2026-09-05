@@ -267,7 +267,7 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 ## T-006 — Define the MVP boundary and concrete system architecture
 
 - **TODO sources:** “Precizirati arhitekturu mobilne aplikacije, API servisa, servisa preporuka i skladišta podataka” and “Definisati granice MVP-a i plan implementacije po iteracijama.”
-- **Status:** Plan approved; T-006/S1 accepted; T-006/S2 authorized and in progress
+- **Status:** Accepted and closed
 - **Plan approval evidence:** The user responded “let's go - do the s1” after reviewing the two-subtask proposal on 2026-09-05; this approves the recorded plan and explicitly authorizes S1 only.
 - **Goal:** Freeze a small, testable MVP contract and the logical/deployment boundaries needed to implement it without prematurely selecting product-data providers, backend libraries, embedding models, or storage products.
 
@@ -291,6 +291,9 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 - Decide the MVP topology at the architecture level, including whether recommendation logic is part of one backend deployment or a separately deployed service, without selecting implementation libraries or vendor products reserved for later tasks.
 - Update both canonical PlantUML diagrams and every localized render so implemented scanner behavior and planned downstream behavior remain visibly distinct.
 - Synchronize TODO, decisions, architecture, status, plan, handoff, report, and presentation; validate all diagram variants and compile/visually inspect both formal deliverables.
+- **Evidence:** `docs/ARCHITECTURE.md` defines one Android application plus one backend modular-monolith deployment, module and data ownership, conceptual request/outcome contracts, trust boundaries, and user-visible failure responsibility. Bounded history is device-owned request context; the backend retains no user profile. Both canonical PlantUML sources and all English/Serbian/presentation renders show the selected topology and distinguish the implemented scanner slice from planned components. No framework, vendor, provider, endpoint schema, model, storage product, backend scaffold, or Android behavior was introduced.
+- **Acceptance evidence:** The user explicitly responded “I accept this” on 2026-09-05.
+- **Status:** Accepted.
 
 ### Proposed task-level acceptance criteria
 
@@ -306,3 +309,5 @@ All acceptance criteria were verified and T-005 was explicitly accepted and clos
 - Selecting concrete product-data APIs or fallback datasets.
 - Selecting backend framework/library versions, embedding models, vector databases, or cloud vendors.
 - Defining final endpoint schemas, authentication, production deployment, or operational scaling.
+
+All task-level acceptance criteria were verified and the user explicitly accepted and closed T-006 with “I accept you can commit” on 2026-09-05.

@@ -111,3 +111,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The fastest useful MVP must remain small without dropping history-based recommendation from the intended project.
 - **Decision:** Treat the complete scan-to-semantic-similarity path as the mandatory 80-point core MVP, history-based personalized ranking as the committed 15-point extended MVP, and broader evaluation/feedback as the final 5 points. Use bounded recent history as the baseline personalization concept, but defer the exact window, weighting, aggregation, and retention choices until they can be evaluated.
 - **Consequence:** Core-MVP acceptance does not close the personalization scope. The extended MVP must demonstrate that controlled history changes ranking and must preserve an explicit generic cold-start fallback.
+
+## D-015 — MVP uses device-owned history and one backend modular monolith
+
+- **Status:** Accepted
+- **Date:** 2026-09-05
+- **Context:** The MVP needs explicit deployment, data-ownership, and failure boundaries without incurring premature distributed-system or account-management work.
+- **Decision:** Deploy one Android application and one backend modular monolith. Keep API coordination, product resolution, and recommendation as internal backend modules. Store bounded interaction history on the device and supply it only as optional request context; do not retain a central user profile. Give the product-resolution module ownership of the normalized catalog and the recommendation module ownership of the vector index as logical stores.
+- **Consequence:** The first backend implementation remains operationally simple while module boundaries permit later extraction if evidence justifies it. Product and recommendation outcomes stay independent, generic similarity is the cold-start fallback, and provider, framework, schema, model, physical storage, and retention details remain later decisions.

@@ -4,81 +4,113 @@
 !ifdef SERBIAN
   !define DIAGRAM_TITLE ASAP — Planirani tok od skeniranja do preporuke
   !define USER_LABEL Korisnik
-  !define UI_LABEL Interfejs mobilne Android aplikacije\n[Java + XML Views]
-  !define SCANNER_LABEL Google Code Scanner\n[početni MVP]
+  !define UI_LABEL Android aplikacija
+  !define SCANNER_LABEL Google Code Scanner
+  !define HISTORY_LABEL Lokalna istorija
   !define API_LABEL Backend API
-  !define PRODUCTS_LABEL Skladište metapodataka o proizvodima\n[vlasništvo/izvor nisu izabrani]
-  !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
-  !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
-  !define MSG_POINT_CAMERA pokreće skeniranje proizvoda
-  !define MSG_FRAMES pokreće interfejs skenera
-  !define ALT_UNREADABLE barkod nije čitljiv
-  !define MSG_NO_BARCODE nema validnog barkoda
-  !define MSG_SCAN_AGAIN prikazuje zahtev za ponovno skeniranje
+  !define RESOLVER_LABEL Razrešavanje proizvoda
+  !define PRODUCTS_LABEL Katalog proizvoda
+  !define RECOMMENDER_LABEL Preporuke
+  !define VECTORS_LABEL Vektorski indeks
+  !define MSG_START pokreće skeniranje
+  !define MSG_LAUNCH pokreće interfejs skenera
+  !define ALT_UNREADABLE barkod nije očitan / skeniranje je otkazano
+  !define MSG_SCAN_OUTCOME nema validnog barkoda
+  !define MSG_SCAN_STATE prikazuje odgovarajuće stanje skenera
   !define ELSE_DECODED barkod je očitan
   !define MSG_BARCODE barkod
-  !define MSG_PRODUCT_LOOKUP zahtev za proizvod (barkod)
-  !define MSG_LOOKUP pretraga po barkodu
-  !define ALT_METADATA_FAIL metapodaci nisu dostupni ili proizvod ne postoji
-  !define MSG_MISSING nedostaje / nije dostupno
-  !define MSG_PRODUCT_UNAVAILABLE proizvod nije dostupan
-  !define MSG_UNAVAILABLE_STATE prikazuje da proizvod nije dostupan
-  !define ELSE_METADATA_FOUND podaci o proizvodu su pronađeni
-  !define MSG_DETAILS podaci o proizvodu
-  !define MSG_SIMILAR_QUERY upit za slične proizvode (atributi proizvoda)
-  !define MSG_SIMILARITY upit sličnosti
-  !define ALT_RECOMMENDATIONS preporuke su dostupne
-  !define MSG_CANDIDATES top-N kandidata
-  !define MSG_RECOMMENDATIONS preporuke
-  !define MSG_DETAILS_RECOMMENDATIONS podaci o proizvodu + preporuke
-  !define MSG_DISPLAY_RECOMMENDATIONS prikazuje proizvod i preporuke
-  !define ELSE_NO_RECOMMENDATIONS preporuke su prazne ili nisu dostupne
-  !define MSG_EMPTY_RESULT prazan / nedostupan rezultat
-  !define MSG_NO_RECOMMENDATIONS nema preporuka
-  !define MSG_DETAILS_STATUS podaci o proizvodu + status preporuka
-  !define MSG_DISPLAY_WITHOUT prikazuje proizvod bez preporuka
-  !define LEGEND_LINE_1 Samo planirani logički tok.
-  !define LEGEND_LINE_2 Poruke opisuju razmenjene podatke, a ne konkretne krajnje tačke ili strukture podataka.
-  !define LEGEND_LINE_3 Grane grešaka opisuju ishode vidljive korisniku, a ne politiku ponovnih pokušaja.
+  !define MSG_HISTORY čita ograničeni nedavni kontekst
+  !define MSG_HISTORY_RESULT reference proizvoda ili cold-start
+  !define MSG_REQUEST barkod + opcioni kontekst istorije
+  !define ALT_BACKEND_UNAVAILABLE backend/API nije dostupan
+  !define MSG_BACKEND_UNAVAILABLE nema upotrebljivog odgovora
+  !define ELSE_BACKEND_AVAILABLE backend je dostupan
+  !define MSG_RESOLVE razreši barkod
+  !define MSG_CATALOG pronađi normalizovane metapodatke
+  !define ALT_KNOWN proizvod je poznat
+  !define MSG_PRODUCT podaci o proizvodu + poreklo
+  !define MSG_RANK trenutni proizvod + opcioni kontekst istorije
+  !define MSG_VECTOR_QUERY upit sličnosti / personalizacije
+  !define ALT_RESULTS kandidati su dostupni
+  !define MSG_CANDIDATES kandidati + ocene
+  !define MSG_CANDIDATES_OR_STATUS kandidati ili prazan/nedostupan ishod
+  !define MSG_RECOMMENDATION_OUTCOMES personalizovan / generički / prazan / nedostupan ishod
+  !define ALT_PERSONALIZED istorija je dovoljna
+  !define MSG_PERSONALIZED personalizovani rezultati
+  !define ELSE_COLD_START nema dovoljne istorije
+  !define MSG_GENERIC generički slični proizvodi
+  !define ELSE_NO_RESULTS rezultat je prazan / nedostupan
+  !define MSG_NO_RESULTS zaseban status preporuka
+  !define MSG_RESPONSE proizvod + režim/rezultati/status preporuka
+  !define MSG_RECORD beleži poznati proizvod
+  !define MSG_DISPLAY prikazuje proizvod i jasno označen ishod preporuka
+  !define ELSE_UNKNOWN proizvod nije poznat
+  !define MSG_UNKNOWN nepoznat proizvod
+  !define MSG_UNKNOWN_STATE prikazuje stanje nepoznatog proizvoda
+  !define ELSE_UNAVAILABLE razrešavanje nije dostupno
+  !define MSG_UNAVAILABLE privremeno nedostupno
+  !define MSG_RETRY_STATE prikazuje grešku koja dozvoljava ponovni pokušaj
+  !define ELSE_PRODUCT_FAILURE proizvod nije poznat / razrešavanje nije dostupno
+  !define MSG_PRODUCT_FAILURE nepoznat / privremeno nedostupan proizvod
+  !define MSG_PRODUCT_FAILURE_STATE prikazuje odgovarajuće stanje proizvoda
+  !define LEGEND_1 Jedna backend aplikacija interno koordinira razrešavanje i preporuke.
+  !define LEGEND_2 Poruke označavaju informacije i ishode, ne krajnje tačke ili šeme.
+  !define LEGEND_3 Nedostupne preporuke ne skrivaju pronađene podatke o proizvodu.
 !else
   !define DIAGRAM_TITLE ASAP — Proposed scan-to-recommendation flow
   !define USER_LABEL User
-  !define UI_LABEL Android client UI\n[Java + XML Views]
-  !define SCANNER_LABEL Google Code Scanner\n[initial MVP]
+  !define UI_LABEL Android app
+  !define SCANNER_LABEL Google Code Scanner
+  !define HISTORY_LABEL Local history
   !define API_LABEL Backend API
-  !define PRODUCTS_LABEL Product metadata store\n[ownership/provider TBD]
-  !define SEMANTIC_LABEL Semantic search and\nrecommendation component
-  !define VECTORS_LABEL Vector index\n[technology TBD]
-  !define MSG_POINT_CAMERA start product scan
-  !define MSG_FRAMES launch scanner UI
-  !define ALT_UNREADABLE unreadable barcode
-  !define MSG_NO_BARCODE no valid barcode
-  !define MSG_SCAN_AGAIN show scan-again state
+  !define RESOLVER_LABEL Product resolution
+  !define PRODUCTS_LABEL Product catalog
+  !define RECOMMENDER_LABEL Recommendation
+  !define VECTORS_LABEL Vector index
+  !define MSG_START start scan
+  !define MSG_LAUNCH launch scanner UI
+  !define ALT_UNREADABLE barcode not decoded / scan cancelled
+  !define MSG_SCAN_OUTCOME no valid barcode
+  !define MSG_SCAN_STATE show matching scanner state
   !define ELSE_DECODED barcode decoded
   !define MSG_BARCODE barcode
-  !define MSG_PRODUCT_LOOKUP product lookup (barcode)
-  !define MSG_LOOKUP lookup by barcode
-  !define ALT_METADATA_FAIL metadata unavailable or product missing
-  !define MSG_MISSING missing / unavailable
-  !define MSG_PRODUCT_UNAVAILABLE product unavailable
-  !define MSG_UNAVAILABLE_STATE show unavailable state
-  !define ELSE_METADATA_FOUND product metadata found
-  !define MSG_DETAILS product details
-  !define MSG_SIMILAR_QUERY similar-product query (product attributes)
-  !define MSG_SIMILARITY similarity query
-  !define ALT_RECOMMENDATIONS recommendations available
-  !define MSG_CANDIDATES top-N candidates
-  !define MSG_RECOMMENDATIONS recommendations
-  !define MSG_DETAILS_RECOMMENDATIONS product details + recommendations
-  !define MSG_DISPLAY_RECOMMENDATIONS display product and recommendations
-  !define ELSE_NO_RECOMMENDATIONS recommendations empty or unavailable
-  !define MSG_EMPTY_RESULT empty / unavailable result
-  !define MSG_NO_RECOMMENDATIONS no recommendations
-  !define MSG_DETAILS_STATUS product details + recommendation status
-  !define MSG_DISPLAY_WITHOUT display product without recommendations
-  !define LEGEND_LINE_1 Proposed logical flow only.
-  !define LEGEND_LINE_2 Messages name information exchanged, not concrete endpoints or payloads.
-  !define LEGEND_LINE_3 Error branches define user-visible outcome classes, not retry policies.
+  !define MSG_HISTORY read bounded recent context
+  !define MSG_HISTORY_RESULT product references or cold start
+  !define MSG_REQUEST barcode + optional history context
+  !define ALT_BACKEND_UNAVAILABLE backend/API unavailable
+  !define MSG_BACKEND_UNAVAILABLE no usable response
+  !define ELSE_BACKEND_AVAILABLE backend available
+  !define MSG_RESOLVE resolve barcode
+  !define MSG_CATALOG find normalized metadata
+  !define ALT_KNOWN product known
+  !define MSG_PRODUCT product details + provenance
+  !define MSG_RANK current product + optional history context
+  !define MSG_VECTOR_QUERY similarity / personalization query
+  !define ALT_RESULTS candidates available
+  !define MSG_CANDIDATES candidates + scores
+  !define MSG_CANDIDATES_OR_STATUS candidates or empty/unavailable outcome
+  !define MSG_RECOMMENDATION_OUTCOMES personalized / generic / empty / unavailable outcome
+  !define ALT_PERSONALIZED sufficient history
+  !define MSG_PERSONALIZED personalized results
+  !define ELSE_COLD_START insufficient history
+  !define MSG_GENERIC generic similar products
+  !define ELSE_NO_RESULTS result empty / unavailable
+  !define MSG_NO_RESULTS separate recommendation status
+  !define MSG_RESPONSE product + recommendation mode/results/status
+  !define MSG_RECORD record known product
+  !define MSG_DISPLAY show product and clearly labelled recommendation outcome
+  !define ELSE_UNKNOWN product unknown
+  !define MSG_UNKNOWN unknown product
+  !define MSG_UNKNOWN_STATE show unknown-product state
+  !define ELSE_UNAVAILABLE resolution unavailable
+  !define MSG_UNAVAILABLE temporarily unavailable
+  !define MSG_RETRY_STATE show retryable failure
+  !define ELSE_PRODUCT_FAILURE product unknown / resolution unavailable
+  !define MSG_PRODUCT_FAILURE unknown / temporarily unavailable product
+  !define MSG_PRODUCT_FAILURE_STATE show matching product state
+  !define LEGEND_1 One backend application coordinates resolution and recommendation internally.
+  !define LEGEND_2 Messages name information and outcomes, not endpoints or schemas.
+  !define LEGEND_3 Recommendation failure never hides resolved product details.
 !endif
 
 title DIAGRAM_TITLE
@@ -90,50 +122,109 @@ title DIAGRAM_TITLE
 actor "USER_LABEL" as user
 participant "UI_LABEL" as ui
 participant "SCANNER_LABEL" as scanner
+database "HISTORY_LABEL" as history
 participant "API_LABEL" as api
+participant "RESOLVER_LABEL" as resolver
 database "PRODUCTS_LABEL" as products
-participant "SEMANTIC_LABEL" as semantic
+participant "RECOMMENDER_LABEL" as recommender
 database "VECTORS_LABEL" as vectors
 
-user -> ui : MSG_POINT_CAMERA
-ui -> scanner : MSG_FRAMES
+!ifdef PRESENTATION
+  user -> ui : MSG_START
+  ui -> scanner : MSG_LAUNCH
 
-alt ALT_UNREADABLE
-  scanner --> ui : MSG_NO_BARCODE
-  ui --> user : MSG_SCAN_AGAIN
-else ELSE_DECODED
-  scanner --> ui : MSG_BARCODE
-  ui -> api : MSG_PRODUCT_LOOKUP
-  api -> products : MSG_LOOKUP
+  alt ALT_UNREADABLE
+    scanner --> ui : MSG_SCAN_OUTCOME
+    ui --> user : MSG_SCAN_STATE
+  else ELSE_DECODED
+    scanner --> ui : MSG_BARCODE
+    ui -> history : MSG_HISTORY
+    history --> ui : MSG_HISTORY_RESULT
+    ui -> api : MSG_REQUEST
 
-  alt ALT_METADATA_FAIL
-    products --> api : MSG_MISSING
-    api --> ui : MSG_PRODUCT_UNAVAILABLE
-    ui --> user : MSG_UNAVAILABLE_STATE
-  else ELSE_METADATA_FOUND
-    products --> api : MSG_DETAILS
-    api -> semantic : MSG_SIMILAR_QUERY
-    semantic -> vectors : MSG_SIMILARITY
+    alt ALT_BACKEND_UNAVAILABLE
+      api --> ui : MSG_BACKEND_UNAVAILABLE
+      ui --> user : MSG_RETRY_STATE
+    else ELSE_BACKEND_AVAILABLE
+      api -> resolver : MSG_RESOLVE
+      resolver -> products : MSG_CATALOG
 
-    alt ALT_RECOMMENDATIONS
-      vectors --> semantic : MSG_CANDIDATES
-      semantic --> api : MSG_RECOMMENDATIONS
-      api --> ui : MSG_DETAILS_RECOMMENDATIONS
-      ui --> user : MSG_DISPLAY_RECOMMENDATIONS
-    else ELSE_NO_RECOMMENDATIONS
-      vectors --> semantic : MSG_EMPTY_RESULT
-      semantic --> api : MSG_NO_RECOMMENDATIONS
-      api --> ui : MSG_DETAILS_STATUS
-      ui --> user : MSG_DISPLAY_WITHOUT
+      alt ALT_KNOWN
+        products --> resolver : MSG_PRODUCT
+        resolver --> api : MSG_PRODUCT
+        api -> recommender : MSG_RANK
+        recommender -> vectors : MSG_VECTOR_QUERY
+        vectors --> recommender : MSG_CANDIDATES_OR_STATUS
+        recommender --> api : MSG_RECOMMENDATION_OUTCOMES
+        api --> ui : MSG_RESPONSE
+        ui -> history : MSG_RECORD
+        ui --> user : MSG_DISPLAY
+      else ELSE_PRODUCT_FAILURE
+        resolver --> api : MSG_PRODUCT_FAILURE
+        api --> ui : MSG_PRODUCT_FAILURE
+        ui --> user : MSG_PRODUCT_FAILURE_STATE
+      end
     end
   end
-end
+!else
+  user -> ui : MSG_START
+  ui -> scanner : MSG_LAUNCH
+
+  alt ALT_UNREADABLE
+    scanner --> ui : MSG_SCAN_OUTCOME
+    ui --> user : MSG_SCAN_STATE
+  else ELSE_DECODED
+    scanner --> ui : MSG_BARCODE
+    ui -> history : MSG_HISTORY
+    history --> ui : MSG_HISTORY_RESULT
+    ui -> api : MSG_REQUEST
+
+    alt ALT_BACKEND_UNAVAILABLE
+      api --> ui : MSG_BACKEND_UNAVAILABLE
+      ui --> user : MSG_RETRY_STATE
+    else ELSE_BACKEND_AVAILABLE
+      api -> resolver : MSG_RESOLVE
+      resolver -> products : MSG_CATALOG
+
+      alt ALT_KNOWN
+        products --> resolver : MSG_PRODUCT
+        resolver --> api : MSG_PRODUCT
+        api -> recommender : MSG_RANK
+        recommender -> vectors : MSG_VECTOR_QUERY
+
+        alt ALT_RESULTS
+          vectors --> recommender : MSG_CANDIDATES
+          alt ALT_PERSONALIZED
+            recommender --> api : MSG_PERSONALIZED
+          else ELSE_COLD_START
+            recommender --> api : MSG_GENERIC
+          end
+        else ELSE_NO_RESULTS
+          vectors --> recommender : MSG_NO_RESULTS
+          recommender --> api : MSG_NO_RESULTS
+        end
+
+        api --> ui : MSG_RESPONSE
+        ui -> history : MSG_RECORD
+        ui --> user : MSG_DISPLAY
+      else ELSE_UNKNOWN
+        resolver --> api : MSG_UNKNOWN
+        api --> ui : MSG_UNKNOWN
+        ui --> user : MSG_UNKNOWN_STATE
+      else ELSE_UNAVAILABLE
+        resolver --> api : MSG_UNAVAILABLE
+        api --> ui : MSG_UNAVAILABLE
+        ui --> user : MSG_RETRY_STATE
+      end
+    end
+  end
+!endif
 
 !ifndef PRESENTATION
   legend bottom
-    LEGEND_LINE_1
-    LEGEND_LINE_2
-    LEGEND_LINE_3
+    LEGEND_1
+    LEGEND_2
+    LEGEND_3
   endlegend
 !endif
 

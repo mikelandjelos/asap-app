@@ -71,6 +71,17 @@
   \end{enumerate}
 \end{frame}
 
+\begin{frame}{Arhitektonske granice MVP-a}
+  \textcolor{gray}{\footnotesize Prihvaćena arhitektura T-006/S2 --- implementacija sledi}
+  \begin{itemize}
+    \item dva postavljanja: Android aplikacija i jedna backend aplikacija;
+    \item backend je modularni monolit: API, razrešavanje proizvoda i preporuke su interni moduli;
+    \item ograničena istorija ostaje na uređaju i šalje se samo kao opcioni kontekst;
+    \item backend poseduje normalizovani katalog i vektorski indeks kao logički odvojena skladišta;
+    \item greška preporuka ne skriva pronađene podatke o proizvodu.
+  \end{itemize}
+\end{frame}
+
 \begin{frame}
   \centering
   \includegraphics[width=\textwidth,height=0.90\textheight,keepaspectratio]{\diagramassetpath component-architecture.png}

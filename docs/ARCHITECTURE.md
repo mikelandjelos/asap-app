@@ -1,54 +1,96 @@
 # Architecture
 
-Status: proposed system architecture with a device-validated Android scanner slice; backend, data, and recommendation boundaries remain unvalidated.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner slice is implemented and device-validated. Every other component described below remains planned.
 
-The accepted terminology, boundaries, required views, and PlantUML file layout are defined in [`diagrams/README.md`](diagrams/README.md). The accepted proposed logical component view has canonical [PlantUML source](diagrams/component-architecture.puml), an [English technical render](diagrams/rendered/component-architecture.png), and a [Serbian formal render](diagrams/rendered/sr/component-architecture.png). The accepted proposed end-to-end flow has canonical [PlantUML source](diagrams/scan-to-recommendation-flow.puml), an [English technical render](diagrams/rendered/scan-to-recommendation-flow.png), and a [Serbian formal render](diagrams/rendered/sr/scan-to-recommendation-flow.png). Serbian presentation variants are accepted integrations of those same canonical sources.
+The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
 
-The proposed operational boundary and thin delivery order are defined in [`MVP_SCOPE.md`](MVP_SCOPE.md). T-006/S1 fixes what the system must demonstrate; T-006/S2 still needs to assign concrete logical/deployment ownership without selecting implementation products.
+## Selected MVP topology
+
+ASAP has two application deployment boundaries:
+
+1. One Android application runs on the user's device. It owns all user-facing state, launches Google Code Scanner, calls the backend, and—only in the extended MVP—owns a bounded local interaction history.
+2. One backend application runs as a modular monolith. Its API, product-resolution, and recommendation modules execute in the same deployable unit and communicate through internal module contracts.
+
+The recommendation logic is deliberately not a separately deployed service for the MVP. This minimizes build, deployment, network, and observability work while preserving an internal boundary that can be extracted later if measured load or independent evolution justifies it.
+
+The external product source is outside ASAP's trust and availability boundary. A controlled fallback dataset is a backend-side input. The normalized product catalog and vector index are separate logical stores owned by backend modules; S2 does not require separate database products or processes.
 
 ## Implemented Android slice
 
 - A single Gradle application module lives under `android/app` with namespace and application ID `rs.ac.ni.elfak.asap`.
 - `MainActivity` is Java 17 code and renders a custom XML `ConstraintLayout` screen through AppCompat, with a scan action, current status, and decoded result.
-- Google Code Scanner 16.1.0 is configured for EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The activity handles decoded, cancelled, empty-value, module/download-unavailable, and general-failure outcomes.
-- The manifest requests install-time delivery of the unbundled `barcode_ui` module. The application declares no camera permission; Google Play services owns the camera experience. The merged dependency manifest adds internet and network-state permissions used by the scanner stack.
-- There is no product lookup, application network client, persistence, backend integration, or recommendation behavior.
-- The checksum-pinned Gradle 9.5.0 Wrapper builds the API 36 client with AGP 9.3.2. Seven local unit tests and Android lint pass.
+- Google Code Scanner 16.1.0 handles EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. Google Play services owns the scanner camera experience; ASAP declares no camera permission.
+- Success, cancellation, empty value, module/download unavailability, and general failure have implemented user-visible states. Seven local unit tests and Android lint pass.
+- The debug APK is installed on the verified phone. Two real-product scans and cancellation were confirmed.
+- No API client, application persistence, product lookup, backend, metadata pipeline, vector search, or recommendation behavior exists yet.
 
-This slice implements the Android-to-scanner launch and decoded-value boundary shown in the proposed diagrams. The debug APK is installed, its launcher activity is verified, and the user confirmed two successful real-product scans whose decoded values returned to the custom screen plus a cancellation that produced the intended status. The scanner module is therefore available and usable on the test phone; whether it was newly downloaded or already present is not observable from this run. Module/download and general failures have implemented and unit-tested handling, but were not deliberately induced on the physical phone.
+The diagrams mark only scanner integration as implemented. All arrows beyond the decoded-barcode return are design intent.
 
-## Intended components
+## Component responsibilities and ownership
 
-```mermaid
-flowchart LR
-    Mobile[Android client] -->|launch scan| Scanner[Google Code Scanner]
-    Scanner -->|decoded barcode| Mobile
-    Mobile --> API[Backend API]
-    API --> Products[(Product metadata)]
-    API --> Recommender[Semantic search and recommendations]
-    Recommender --> Vectors[(Vector index)]
-    Recommender --> API
-    API --> Mobile
-```
+| Component | Responsibility | Persistent data ownership | Primary inputs | Primary outputs |
+| --- | --- | --- | --- | --- |
+| Android UI and flow coordinator | Starts scanning, requests resolution/ranking, renders product and independently labelled recommendation states | User-facing transient state only | User action, scanner outcome, backend outcome | Scan, product, generic/personalized, empty, and retryable states |
+| Scanner integration | Adapts Google Code Scanner outcomes to ASAP's flow | None; barcode images are not retained | Scan request | Decoded EAN/UPC value or classified scanner outcome |
+| Android API client | Crosses the device/backend boundary and preserves independent product/recommendation outcome classes | None | Barcode and optional bounded history context | Product outcome plus recommendation mode/results/status |
+| Local bounded history | Supplies recent known-product context for the extended MVP and explicit cold start when insufficient | Android application on the device | Confirmed known-product interaction | Bounded recent product references |
+| Backend API module | Validates and coordinates one application operation and combines module results without hiding partial success | None | Barcode and optional history context | Product outcome and separate recommendation outcome |
+| Product-resolution module | Checks the normalized catalog, consults the external adapter when appropriate, applies controlled fallback data, normalizes records, and reports provenance | Owns writes to the normalized product catalog | Barcode, external/fallback records | Known product with provenance, unknown product, or temporarily unavailable |
+| Recommendation module | Produces generic semantic similarity or history-aware ranking, labels the mode, and handles cold start | Owns vector preparation/index synchronization at the logical level | Current known product and optional recent product references | Ranked candidates with scores/mode, empty result, or unavailable status |
+| Normalized product catalog | Provides stable barcode-to-product records independent of source-specific formats | Backend/product-resolution module | Normalized product writes and barcode lookups | Product record and provenance |
+| Vector index | Provides product-vector lookup and similarity candidates | Backend/recommendation module | Product vectors and similarity queries | Candidate product references and scores |
+| External metadata adapter/source | Supplies potentially incomplete or unavailable third-party product data | External party; ASAP retains only normalized records it chooses to cache/import | Barcode lookup | Source record, missing result, or unavailable outcome |
+| Controlled fallback dataset | Keeps development, automated checks, and the primary demo reproducible | Repository/backend preparation process once selected | Curated product fixtures | Deterministic source records |
 
-- **Android client:** uses custom Java/XML screens, launches Google Code Scanner, receives the decoded barcode, and displays product data and recommendations.
-- **Backend API:** coordinates metadata lookup, application-facing responses, and the recommendation service.
-- **Product store:** maps barcodes to product metadata such as name, description, and category.
-- **Semantic service:** produces or retrieves embeddings, performs cosine-similarity top-N search, and may apply MMR diversification.
-- **Vector index:** stores product embeddings and supports nearest-neighbor retrieval.
+“Owns” identifies the component allowed to write and interpret a data set. It does not select a database, file format, ORM, API provider, or concrete schema.
 
-## Planned personalization
+## Runtime contract
 
-History-based personalization is a committed extended-MVP capability after the complete P0 scan-to-similar-products path. A bounded last-K interaction history is the baseline candidate; the original centroid proposal, recency weighting, or another measurable aggregation method may be selected later. This is not implemented and still requires decisions about the exact window, event weighting, cold-start behavior, privacy, and evaluation. Generic semantic similarity and personalized ranking must remain separately labelled.
+The application-facing exchange remains conceptual until a later data-model/API task:
 
-## Open architecture questions
+- Request information: one decoded supported barcode plus optional bounded recent product references.
+- Product outcome: exactly one of `known` (normalized product and provenance), `unknown`, or `unavailable`.
+- Recommendation outcome for a known product: exactly one of `personalized`, `generic`, `empty`, or `unavailable`; results carry product references and ranking information.
+- Partial-success rule: an empty or unavailable recommendation result must not discard known product details.
+- History rule: absent or insufficient history yields explicitly labelled generic semantic similarity. The Android application records only confirmed known-product interactions.
 
-- Which work beyond barcode scanning must run on-device, and which work requires a backend?
-- Does later UX testing justify replacing Google Code Scanner with direct ML Kit Barcode Scanning and CameraX for a custom scanning camera experience?
-- Is the backend a modular monolith for the MVP or multiple deployable services?
-- Which external product API and fallback dataset satisfy coverage, reliability, and licensing needs?
-- Which embedding model supports Serbian and the expected product languages?
-- Is an exact vector search sufficient for MVP scale, or is an ANN index justified?
-- What data may be retained for personalization, and how is user consent handled?
+No endpoint path, wire format, class, status code, retry schedule, or timing guarantee is selected here.
 
-The historical image in `report/assets/asap-architecture.png` remains source material from the initial DOCX. The canonical PlantUML views now replace it in formal deliverables; except for the Android scanner slice explicitly listed above, they still describe proposed rather than implemented behavior.
+## Failure boundaries
+
+| Failure location | Responsible component | Required visible behavior |
+| --- | --- | --- |
+| Scan cancelled, unreadable, empty, or scanner module unavailable | Android scanner integration/UI | Remain on-device and show the already defined scanner state; make no product claim |
+| Device cannot reach the backend or receives no usable response | Android API client/UI | Show a retryable backend-unavailable state; do not invent cached product/recommendation data |
+| External source missing a barcode | Product-resolution module | Use an applicable catalog/fallback record, otherwise return `unknown` |
+| External source unavailable | Product-resolution module | Use an applicable catalog/fallback record, otherwise return `unavailable`, distinct from `unknown` |
+| Product known but vector candidates empty or search unavailable | Recommendation module/API | Return product details with independent `empty` or `unavailable` recommendation status |
+| History absent, insufficient, corrupt, or unsupported | Android history boundary and recommendation module | Ignore unusable context and return clearly labelled generic/cold-start results |
+
+The exact retry policy and validation rules belong to later API/data-model work. Controlled fallback use must be visible through provenance; it must not masquerade as a live provider result.
+
+## Personalization and privacy boundary
+
+History-based ranking is a committed extended-MVP capability, but there is no account system or central user profile. The Android application owns a bounded history of known product references and supplies it as optional request context. The backend computes the ranking for that request and does not retain the user history.
+
+A last-K window is the simplest candidate. K, event types, recency weighting, centroid/profile aggregation, deletion controls, persistence mechanism, and retention duration remain open. Before real user history is retained, the project must accept a privacy/retention decision; deterministic synthetic history may be used earlier for architecture and ranking tests.
+
+## Trust boundaries and constraints
+
+- Barcode images remain inside the Google Code Scanner experience; ASAP receives only the decoded value/outcome.
+- Barcode values and optional history references cross from the device to the backend and must be treated as untrusted input.
+- External metadata is untrusted and must pass normalization before entering the product catalog.
+- The MVP has no account/authentication boundary, public-hosting commitment, or cross-device synchronization.
+- Product metadata and vector data may share one physical storage technology later, but their logical ownership and consistency rules remain separate.
+
+## Still open
+
+- Backend language/framework, transport, hosting, and concrete module/package layout.
+- Product API/provider, controlled fallback dataset, license, normalization fields, provenance representation, and caching policy.
+- Product, interaction, and recommendation schemas and validation limits.
+- Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.
+- Personalization K/window, events, weighting, aggregation, retention, deletion, and evaluation.
+- Concrete resilience policy, timeouts, retries, observability, security hardening, and production operation.
+- Whether later UX evidence justifies replacing Google Code Scanner with direct ML Kit Barcode Scanning and CameraX.
+
+The historical image at `report/assets/asap-architecture.png` remains source material only. Canonical PlantUML renders replace it in formal deliverables.

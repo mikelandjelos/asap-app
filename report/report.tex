@@ -85,8 +85,12 @@ Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code S
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{\diagramassetpath component-architecture.png}
-\caption{Prihvaćena planirana logička arhitektura komponenti. Otvorene tehnološke odluke su eksplicitno označene i dijagram ne predstavlja dokaz implementacije.}
+\caption{Predložena konkretna arhitektura MVP-a. Samo je tok integracije skenera implementiran; ostale komponente predstavljaju plan.}
 \end{figure}
+
+\textbf{Arhitektonske granice.} MVP se sastoji od Android aplikacije i jedne backend aplikacije organizovane kao modularni monolit. API granica, razrešavanje i normalizacija proizvoda i semantičke preporuke jesu odvojeni moduli istog backend postavljanja, a ne zasebno operisani servisi. Backend poseduje normalizovani katalog proizvoda i vektorski indeks kao logički odvojene skupove podataka; fizičke tehnologije skladištenja još nisu izabrane.
+
+Android aplikacija u proširenom MVP-u poseduje ograničenu lokalnu istoriju poznatih proizvoda i šalje je samo kao opcioni kontekst zahteva. Backend ne čuva trajni korisnički profil. Razrešavanje proizvoda vraća poznat proizvod sa poreklom podataka, nepoznat proizvod ili privremenu nedostupnost. Ishod preporuka je nezavisan, tako da prazan ili nedostupan vektorski rezultat ne sme da sakrije pronađene podatke o proizvodu.
 
 \clearpage
 \subsection{Planirani tok od skeniranja do preporuke}
@@ -94,7 +98,7 @@ Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code S
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{\diagramassetpath scan-to-recommendation-flow.png}
-\caption{Planirani tok uspešnog zahteva i osnovnih ishoda kada barkod, metapodaci ili preporuke nisu dostupni.}
+\caption{Planirani tok sa lokalnom istorijom, odvojenim ishodima proizvoda i preporuka i pravilom delimičnog uspeha.}
 \end{figure}
 
 \clearpage

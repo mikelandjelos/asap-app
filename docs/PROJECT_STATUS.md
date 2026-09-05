@@ -17,8 +17,8 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - Bundled presentation theme assets under `presentation/theme/`.
 - Root-level LaTeX ignores and cross-session operating instructions.
 - An accepted canonical diagram specification in `docs/diagrams/README.md`.
-- An accepted proposed logical component architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and a verified PNG render. It documents intended structure and does not represent implemented software.
-- An accepted proposed end-to-end scan-to-recommendation sequence/data-flow diagram in `docs/diagrams/scan-to-recommendation-flow.puml` with a verified PNG render. It includes success and high-level unavailable/empty outcomes without prescribing concrete APIs or retry policies.
+- The accepted diagram contract now includes the accepted T-006/S2 concrete architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and verified PNG renders. It selects Android plus one backend modular-monolith deployment while marking only the scanner slice implemented.
+- The accepted canonical `docs/diagrams/scan-to-recommendation-flow.puml` distinguishes device-owned history, known/unknown/unavailable product outcomes, personalized/generic/empty/unavailable recommendation outcomes, and partial success without prescribing endpoints, schemas, or retry policies.
 - English technical, Serbian formal, and compact Serbian presentation renders are generated from the same two canonical PlantUML sources.
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
 - The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. The scanner slice is implemented, locally verified, and physically validated.
@@ -29,7 +29,8 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
 - Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
 - T-005 and all three of its subtasks are accepted and closed.
-- T-006/S1 is accepted and defines the durable MVP scope and iteration contract in `docs/MVP_SCOPE.md`: the complete P0 scan-to-similar-products path is the operational 80-point core, history-based recommendation is a committed 15-point extended-MVP milestone, and broader evaluation completes the remaining 5 points. The exact bounded-history method remains open. T-006/S2 is authorized to define the concrete architecture contract.
+- T-006/S1 is accepted and defines the durable MVP scope and iteration contract in `docs/MVP_SCOPE.md`: the complete P0 scan-to-similar-products path is the operational 80-point core, history-based recommendation is a committed 15-point extended-MVP milestone, and broader evaluation completes the remaining 5 points. The exact bounded-history method remains open; the S2 proposal builds on this contract.
+- T-006 and both subtasks are accepted and closed. One Android application and one backend modular monolith form the MVP topology. The device owns bounded interaction history; the backend owns normalized product and vector data through internal product-resolution and recommendation modules. Product and recommendation outcomes fail independently. No backend implementation exists.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -39,7 +40,7 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - `presentation/asap-presentation.tex` compiles with LuaLaTeX, from the repository root or the `presentation/` directory.
 - Serbian Latin glyphs render correctly with the engine-aware font setup.
 - PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 are available in the current environment when PlantUML is invoked headlessly with `env -u DISPLAY`.
-- The integrated report is 8 pages and the integrated presentation is 13 slides; their diagram and most recently changed scope/iteration pages and slides were visually inspected.
+- The integrated report is 8 pages and the integrated presentation is 14 slides; their updated architecture, flow, scope, and iteration pages/slides were visually inspected.
 
 ## Android development environment
 
@@ -60,9 +61,8 @@ Last verified: 2026-09-05 under T-005/S3.
 ## Immediate product decisions still open
 
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
-- Backend language/framework and service boundaries.
+- Backend language/framework, transport, and internal package structure within the accepted modular-monolith boundary.
 - Product metadata API and fallback dataset.
 - Embedding model and vector-index implementation.
-- Concrete architecture ownership and deployment boundaries under the authorized T-006/S2.
 
 See `TODO.md` for ordered tasks and `docs/SESSION_HANDOFF.md` for the suggested next session.

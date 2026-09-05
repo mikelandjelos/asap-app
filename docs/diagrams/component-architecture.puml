@@ -2,71 +2,73 @@
 !include includes/theme.puml
 
 !ifdef SERBIAN
-  !define DIAGRAM_TITLE ASAP — Planirana arhitektura komponenti
+  !define DIAGRAM_TITLE ASAP — Planirana arhitektura MVP-a
   !define USER_LABEL Korisnik
-  !define CLIENT_LABEL Mobilna Android aplikacija\n[Java + XML Views]
+  !define DEVICE_LABEL Android uređaj
+  !define APP_LABEL ASAP Android aplikacija\n[skener implementiran; ostalo planirano]
   !define UI_LABEL Korisnički interfejs
-  !define SCANNER_LABEL Google Code Scanner\n[početni MVP]
-  !define BACKEND_LABEL Granica backend sistema\n[topologija nije izabrana]
-  !define API_LABEL Backend API
-  !define SEMANTIC_LABEL Semantička pretraga i\nkomponenta za preporuke
-  !define PRODUCTS_LABEL Skladište metapodataka o proizvodima\n[vlasništvo/izvor nisu izabrani]
-  !define VECTORS_LABEL Vektorski indeks\n[tehnologija nije izabrana]
-  !define EXTERNAL_LABEL Eksterni izvor podataka o proizvodima\n[opciono / nije izabran]
-  !define FLOW_USER skeniranje proizvoda / prikaz rezultata
-  !define FLOW_FRAMES pokretanje skeniranja
-  !define FLOW_BARCODE očitani barkod
-  !define FLOW_LOOKUP pretraga po barkodu
-  !define FLOW_DETAILS podaci o proizvodu
-  !define FLOW_ATTRIBUTES atributi proizvoda
-  !define FLOW_RECOMMENDATIONS preporuke
-  !define FLOW_SIMILARITY upit sličnosti
-  !define FLOW_CANDIDATES top-N kandidata
-  !define FLOW_RESULT podaci o proizvodu + preporuke
-  !define FLOW_EXTERNAL pribavljanje ili uvoz metapodataka [nije izabrano]
-  !define LEGEND_NOTATION Oznaka
-  !define LEGEND_MEANING Značenje
-  !define LEGEND_SOLID Puna strelica
-  !define LEGEND_SOLID_MEANING Planirani tok informacija tokom rada
-  !define LEGEND_DASHED Isprekidana strelica
-  !define LEGEND_DASHED_MEANING Opciono ili nerazrešeno povezivanje
-  !define LEGEND_TBD [nije izabrano]
-  !define LEGEND_TBD_MEANING Eksplicitno otvorena projektna odluka
-  !define LEGEND_BOUNDARIES Granice
-  !define LEGEND_BOUNDARIES_MEANING Logičke; nisu dokaz implementacije
+  !define SCAN_ADAPTER_LABEL Integracija skenera\n[implementirano]
+  !define API_CLIENT_LABEL API klijent\n[planirano]
+  !define HISTORY_LABEL Lokalna ograničena istorija\n[prošireni MVP]
+  !define GCS_LABEL Google Code Scanner\n[Google Play servisi]
+  !define BACKEND_LABEL Jedna backend aplikacija\n[planirani modularni monolit]
+  !define API_LABEL Aplikaciona API granica
+  !define RESOLVER_LABEL Razrešavanje proizvoda\ni normalizacija
+  !define RECOMMENDER_LABEL Semantička pretraga\ni preporuke
+  !define PRODUCTS_LABEL Normalizovani katalog\nmetapodataka
+  !define VECTORS_LABEL Vektorski indeks
+  !define FALLBACK_LABEL Kontrolisani rezervni\nskup podataka
+  !define EXTERNAL_LABEL Eksterni izvor\nmetapodataka [nije izabran]
+  !define FLOW_USER skeniranje / prikaz rezultata
+  !define FLOW_LAUNCH pokretanje
+  !define FLOW_SCAN_CALL zahtev za skeniranje
+  !define FLOW_BARCODE barkod / ishod
+  !define FLOW_HISTORY čitanje / upis
+  !define FLOW_REQUEST barkod + opcioni kontekst istorije
+  !define FLOW_LOOKUP razrešavanje barkoda
+  !define FLOW_CATALOG čitanje / normalizovani upis
+  !define FLOW_PROVIDER pribavljanje metapodataka
+  !define FLOW_FALLBACK kontrolisani podaci
+  !define FLOW_RANK proizvod + opcioni kontekst istorije
+  !define FLOW_SEARCH upit sličnosti / personalizacije
+  !define FLOW_RESPONSE proizvod + zaseban ishod preporuka
+  !define LEGEND_1 Puna strelica: planirani tok tokom rada
+  !define LEGEND_2 Isprekidana strelica: rezervni ili eksterni tok
+  !define LEGEND_3 Granice prikazuju planirano postavljanje; samo integracija skenera je implementirana.
 !else
-  !define DIAGRAM_TITLE ASAP — Proposed component architecture
+  !define DIAGRAM_TITLE ASAP — Proposed MVP architecture
   !define USER_LABEL User
-  !define CLIENT_LABEL Android client\n[Java + XML Views]
+  !define DEVICE_LABEL Android device
+  !define APP_LABEL ASAP Android app\n[scanner implemented; rest planned]
   !define UI_LABEL User interface
-  !define SCANNER_LABEL Google Code Scanner\n[initial MVP]
-  !define BACKEND_LABEL Backend boundary\n[topology TBD]
-  !define API_LABEL Backend API
-  !define SEMANTIC_LABEL Semantic search and\nrecommendation component
-  !define PRODUCTS_LABEL Product metadata store\n[ownership/provider TBD]
-  !define VECTORS_LABEL Vector index\n[technology TBD]
-  !define EXTERNAL_LABEL External product metadata source\n[optional / TBD]
-  !define FLOW_USER scan product / view results
-  !define FLOW_FRAMES launch scan
-  !define FLOW_BARCODE decoded barcode
-  !define FLOW_LOOKUP lookup by barcode
-  !define FLOW_DETAILS product details
-  !define FLOW_ATTRIBUTES product attributes
-  !define FLOW_RECOMMENDATIONS recommendations
-  !define FLOW_SIMILARITY similarity query
-  !define FLOW_CANDIDATES top-N candidates
-  !define FLOW_RESULT product details + recommendations
-  !define FLOW_EXTERNAL metadata ingestion or lookup [TBD]
-  !define LEGEND_NOTATION Notation
-  !define LEGEND_MEANING Meaning
-  !define LEGEND_SOLID Solid arrow
-  !define LEGEND_SOLID_MEANING Planned runtime information flow
-  !define LEGEND_DASHED Dashed arrow
-  !define LEGEND_DASHED_MEANING Optional/unresolved integration
-  !define LEGEND_TBD [TBD]
-  !define LEGEND_TBD_MEANING Explicitly undecided design point
-  !define LEGEND_BOUNDARIES Boundaries
-  !define LEGEND_BOUNDARIES_MEANING Logical only; not deployment evidence
+  !define SCAN_ADAPTER_LABEL Scanner integration\n[implemented]
+  !define API_CLIENT_LABEL API client\n[planned]
+  !define HISTORY_LABEL Local bounded history\n[extended MVP]
+  !define GCS_LABEL Google Code Scanner\n[Google Play services]
+  !define BACKEND_LABEL Single backend application\n[planned modular monolith]
+  !define API_LABEL Application API boundary
+  !define RESOLVER_LABEL Product resolution\nand normalization
+  !define RECOMMENDER_LABEL Semantic search\nand recommendation
+  !define PRODUCTS_LABEL Normalized product\nmetadata catalog
+  !define VECTORS_LABEL Vector index
+  !define FALLBACK_LABEL Controlled fallback\ndataset
+  !define EXTERNAL_LABEL External product\nmetadata source [TBD]
+  !define FLOW_USER scan / view results
+  !define FLOW_LAUNCH launch
+  !define FLOW_SCAN_CALL scan request
+  !define FLOW_BARCODE barcode / outcome
+  !define FLOW_HISTORY read / write
+  !define FLOW_REQUEST barcode + optional history context
+  !define FLOW_LOOKUP resolve barcode
+  !define FLOW_CATALOG read / normalized write
+  !define FLOW_PROVIDER retrieve metadata
+  !define FLOW_FALLBACK controlled data
+  !define FLOW_RANK product + optional history context
+  !define FLOW_SEARCH similarity / personalization query
+  !define FLOW_RESPONSE product + separate recommendation outcome
+  !define LEGEND_1 Solid arrow: planned runtime information flow
+  !define LEGEND_2 Dashed arrow: fallback or external flow
+  !define LEGEND_3 Boundaries show planned deployment; only scanner integration is implemented.
 !endif
 
 title DIAGRAM_TITLE
@@ -74,40 +76,49 @@ top to bottom direction
 
 actor "USER_LABEL" as user
 
-package "CLIENT_LABEL" as android #EAF2F8 {
-  component "UI_LABEL" as ui
-  component "SCANNER_LABEL" as scanner
+node "DEVICE_LABEL" as device #EAF2F8 {
+  package "APP_LABEL" as android #EAF2F8 {
+    component "UI_LABEL" as ui
+    component "SCAN_ADAPTER_LABEL" as scan_adapter
+    component "API_CLIENT_LABEL" as api_client
+    database "HISTORY_LABEL" as history
+  }
+  component "GCS_LABEL" as scanner
 }
 
-package "BACKEND_LABEL" as backend #EEF6EE {
+node "BACKEND_LABEL" as backend #EEF6EE {
   component "API_LABEL" as api
-  component "SEMANTIC_LABEL" as semantic
+  component "RESOLVER_LABEL" as resolver
+  component "RECOMMENDER_LABEL" as recommender
+  database "PRODUCTS_LABEL" as products
+  database "VECTORS_LABEL" as vectors
+  artifact "FALLBACK_LABEL" as fallback
 }
 
-database "PRODUCTS_LABEL" as products
-database "VECTORS_LABEL" as vectors
 cloud "EXTERNAL_LABEL" as external
 
-user -down-> ui : FLOW_USER
-ui -right-> scanner : FLOW_FRAMES
-scanner -left-> ui : FLOW_BARCODE
-ui -down-> api : FLOW_LOOKUP
-api -down-> products : FLOW_LOOKUP
-products -up-> api : FLOW_DETAILS
-api -right-> semantic : FLOW_ATTRIBUTES
-semantic -left-> api : FLOW_RECOMMENDATIONS
-semantic -down-> vectors : FLOW_SIMILARITY
-vectors -up-> semantic : FLOW_CANDIDATES
-api -up-> ui : FLOW_RESULT
-external .left.> products : FLOW_EXTERNAL
+user --> ui : FLOW_USER
+ui --> scan_adapter : FLOW_LAUNCH
+scan_adapter --> scanner : FLOW_SCAN_CALL
+scanner --> scan_adapter : FLOW_BARCODE
+scan_adapter --> ui : FLOW_BARCODE
+ui --> history : FLOW_HISTORY
+ui --> api_client : FLOW_REQUEST
+api_client --> api : FLOW_REQUEST
+api --> resolver : FLOW_LOOKUP
+resolver --> products : FLOW_CATALOG
+external ..> resolver : FLOW_PROVIDER
+fallback ..> resolver : FLOW_FALLBACK
+api --> recommender : FLOW_RANK
+recommender --> vectors : FLOW_SEARCH
+api --> api_client : FLOW_RESPONSE
+api_client --> ui : FLOW_RESPONSE
 
 !ifndef PRESENTATION
   legend bottom
-    |= LEGEND_NOTATION |= LEGEND_MEANING |
-    | LEGEND_SOLID | LEGEND_SOLID_MEANING |
-    | LEGEND_DASHED | LEGEND_DASHED_MEANING |
-    | LEGEND_TBD | LEGEND_TBD_MEANING |
-    | LEGEND_BOUNDARIES | LEGEND_BOUNDARIES_MEANING |
+    LEGEND_1
+    LEGEND_2
+    LEGEND_3
   endlegend
 !endif
 
