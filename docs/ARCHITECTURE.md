@@ -1,8 +1,8 @@
 # Architecture
 
-Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner slice is implemented and device-validated. Every other component described below remains planned.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner and deterministic fixture-backed backend slices are implemented; their network integration and all genuine data/AI components remain planned.
 
-T-007/S1 selects Java 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one project under `backend/`. This accepted technical baseline is not implemented until T-007/S3; the deployment and ownership boundaries below remain unchanged.
+T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
 The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
 
@@ -24,9 +24,17 @@ The external product source is outside ASAP's trust and availability boundary. A
 - Google Code Scanner 16.1.0 handles EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. Google Play services owns the scanner camera experience; ASAP declares no camera permission.
 - Success, cancellation, empty value, module/download unavailability, and general failure have implemented user-visible states. Seven local unit tests and Android lint pass.
 - The debug APK is installed on the verified phone. Two real-product scans and cancellation were confirmed.
-- No API client, application persistence, product lookup, backend, metadata pipeline, vector search, or recommendation behavior exists yet.
+- No API client, application persistence, live product lookup, vector search, or recommendation display exists yet.
 
-The diagrams mark only scanner integration as implemented. All arrows beyond the decoded-barcode return are design intent.
+## Implemented deterministic backend slice
+
+- One executable Spring Boot application lives under `backend/` and preserves internal API, application, product-resolution, and recommendation package boundaries.
+- `POST /api/v1/scan-queries` validates EAN-13, EAN-8, UPC-A, and UPC-E input, rejects bodies over 2 KiB, and returns the frozen independent outcome envelope or RFC 9457 problem details.
+- Product resolution and result ordering read the canonical packaged I1 fixture. Results are always labelled `DETERMINISTIC_FIXTURE` and contain no similarity score.
+- Eleven barcode-rule tests and twelve full HTTP contract tests pass; the packaged executable JAR was started and smoke-tested.
+- There is no external adapter call, database, vector index, embedding, personalization, Android network client, or production deployment.
+
+The diagrams mark scanner integration and the deterministic backend contract as implemented. The connecting Android API-client arrows and genuine metadata/vector flows remain design intent.
 
 ## Component responsibilities and ownership
 
@@ -64,7 +72,7 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 - Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
 - Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
 
-Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. No I1 contract behavior was implemented at the S2 checkpoint.
+Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. The S3 backend implements only this deterministic subset; Android does not consume it until S4.
 
 ## Failure boundaries
 
@@ -95,7 +103,7 @@ A last-K window is the simplest candidate. K, event types, recency weighting, ce
 
 ## Still open
 
-- Hosting and concrete module/package layout within the accepted Java 21/Spring Boot 4.1.1/Maven baseline.
+- Hosting beyond local execution and any later evolution of the implemented package layout.
 - Product API/provider, controlled fallback dataset, license, normalization fields, provenance representation, and caching policy.
 - Product, interaction, and recommendation schemas and validation limits.
 - Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.

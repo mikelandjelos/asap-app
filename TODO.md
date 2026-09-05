@@ -26,7 +26,7 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 
 - [x] Precizirati arhitekturu mobilne aplikacije, API servisa, servisa preporuka i skladišta podataka.
 - [x] Definisati granice MVP-a i plan implementacije po iteracijama.
-- [ ] Postaviti početne projekte za mobilnu aplikaciju i backend.
+- [x] Postaviti početne projekte za mobilnu aplikaciju i backend.
 - [ ] Definisati modele proizvoda, korisničke interakcije i preporuke.
 - [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda.
 - [ ] Izabrati rezervni izvor ili skup podataka za razvoj bez zavisnosti od eksternog API-ja.

@@ -132,6 +132,27 @@ adb shell pidof rs.ac.ni.elfak.asap
 
 The streamed debug installation succeeded and the launcher activity became the top resumed activity on the verified Samsung device. The user confirmed two successful real-product scans, correct decoded-value display, and the intended cancellation status after closing the scanner. This proves the scanner module was usable, although the run does not reveal whether it was newly downloaded or already present. Module/download and general failure handlers are locally tested; physical failure injection was not attempted because it would require altering an otherwise valid device environment. No barcode values or device identifier are retained in project documentation.
 
+## Backend build and local run
+
+The backend owns a checksum-pinned Maven Wrapper, so no global Maven installation is required:
+
+```sh
+cd backend
+./mvnw verify
+java -jar target/asap-backend-0.0.1-SNAPSHOT.jar
+```
+
+`verify` runs 11 barcode-rule tests and 12 API tests against an embedded HTTP server. To smoke-test the primary deterministic fixture after starting the JAR:
+
+```sh
+curl --fail-with-body \
+  -H 'Content-Type: application/json' \
+  --data '{"barcode":{"value":"2000000000015","format":"EAN_13"}}' \
+  http://127.0.0.1:8080/api/v1/scan-queries
+```
+
+The expected response is a `KNOWN` fixture product and two `RESULTS` items with `mode: DETERMINISTIC_FIXTURE` and `placeholder: true`. This is integration scaffolding, not an AI recommendation. The canonical editable data remains `docs/fixtures/i1-products.json`; Maven packages that file directly.
+
 ## Documentation synchronization guide
 
 | Change | Also update |

@@ -4,6 +4,11 @@ Last updated: 2026-09-05
 
 ## Completed in the latest documentation session
 
+- The user explicitly accepted T-007/S3 with “I accept the changes, continue with your work” on 2026-09-05. S4 remains unauthorized. The new `backend/` Java 21/Spring Boot 4.1.1 modular monolith implements the frozen I1 API through separate API, coordination, product-resolution, recommendation, validation, and fixture-loading boundaries.
+- The checksum-pinned Maven 3.9.16 Wrapper builds an executable JAR and packages the canonical `docs/fixtures/i1-products.json` without a duplicate editable copy. No external provider, database, embedding, vector index, Android networking, or AI-result claim was introduced.
+- `./mvnw verify` passes all 23 tests: 11 barcode-rule cases and 12 real-HTTP API cases covering known, unknown, product unavailable, deterministic results, empty results, recommendation unavailable, repeatability, validation, media type, and body-size behavior. The executable JAR starts on Java 21 and returns the exact primary fixture response in a localhost smoke test.
+- Operational/formal documentation and canonical diagram variants were synchronized with the implemented backend boundary. The next permissible action is planning and explicit approval of T-007/S4; do not implement it without that approval.
+
 - The user explicitly accepted T-007/S2, authorized its commit, and authorized T-007/S3 with “accepted! great, you can commit this phase, and start the next one” on 2026-09-05. D-017 now freezes the I1 contract/fixtures; S3 may implement them, while S4 remains unauthorized.
 - T-007/S2 is accepted. `docs/I1_CONTRACT.md` defines the frozen versioned operation, exact validation and outcome invariants, RFC 9457 errors, deterministic-placeholder labelling, explicit deferrals, and nine S3/S4 acceptance cases.
 - `docs/fixtures/i1-products.json` contains five fictional products plus controlled product-unavailable and unknown keys. All seven EAN-13 values have valid modulo-10 digits and use restricted-circulation prefix 200; they are local-only and must never reach an external provider.
@@ -90,11 +95,11 @@ Last updated: 2026-09-05
 - Formal report and presentation sources compile.
 - The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
 - A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
-- The backend baseline and I1 contract/fixtures are accepted. T-007/S3 implementation is active; product-data providers, models, storage products, and S4 integration remain open.
+- The backend baseline, I1 contract/fixtures, and S3 implementation are accepted; product-data providers, models, storage products, and S4 integration remain open.
 
 ## Suggested next session
 
-Complete only the approved T-007/S3 fixture-backed backend implementation and synchronized documentation, then stop for user acceptance. Do not begin S4.
+Refine and review the T-007/S4 integration plan, then execute only its first explicitly approved phase.
 
 ## Blockers
 

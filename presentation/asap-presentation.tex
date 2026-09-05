@@ -72,7 +72,7 @@
 \end{frame}
 
 \begin{frame}{Arhitektonske granice MVP-a}
-  \textcolor{gray}{\footnotesize Prihvaćena arhitektura T-006/S2 --- implementacija sledi}
+  \textcolor{gray}{\footnotesize Skener i deterministički backend I1 implementirani; povezivanje sledi}
   \begin{itemize}
     \item dva postavljanja: Android aplikacija i jedna backend aplikacija;
     \item backend je modularni monolit: API, razrešavanje proizvoda i preporuke su interni moduli;
@@ -93,7 +93,7 @@
 \end{frame}
 
 \begin{frame}{Deterministički I1 ugovor}
-  \textcolor{gray}{\footnotesize T-007/S2 prihvaćen --- implementacija sledi u S3}
+  \textcolor{gray}{\footnotesize T-007/S2 prihvaćen; backend ugovor implementiran u S3}
   \begin{itemize}
     \item \texttt{POST /api/v1/scan-queries}: format i vrednost EAN/UPC barkoda;
     \item odvojeni ishodi proizvoda i rezultata čuvaju delimičan uspeh;
@@ -125,7 +125,7 @@
     \item UI: AppCompat 1.8.0 i ConstraintLayout 2.2.2;
     \item test uređaj: Samsung SM-A566B, Android 16/API 36, Google Play servisi i potrebne kamere verifikovani preko ADB-a;
     \item prilagođeni skener sa CameraX i direktnim ML Kit API-jem samo ako se pokaže potrebnim;
-    \item backend baseline: Java 21, Spring Boot 4.1.1 i Maven Wrapper; projekat još nije implementiran;
+    \item backend: Java 21, Spring Boot 4.1.1, Maven Wrapper i izvršni JAR;
     \item \textcolor{gray}{planirano: skladište podataka, embedding model, vektorski indeks i izvori podataka.}
   \end{itemize}
 \end{frame}
@@ -139,7 +139,9 @@
     \item APK instaliran i početni ekran pokrenut na fizičkom telefonu;
     \item dva stvarna proizvoda uspešno skenirana; vrednosti vraćene aplikaciji;
     \item potvrđen očekivani status pri otkazivanju skeniranja;
-    \item \textcolor{gray}{pribavljanje podataka, semantička pretraga i preporuke su planirani.}
+    \item implementiran deterministički I1 backend sa odvojenim ishodima proizvoda i rezultata;
+    \item 23 backend testa prolaze; izvršni JAR vraća očekivani kontrolisani odgovor;
+    \item \textcolor{gray}{Android povezivanje, stvarni podaci, semantička pretraga i preporuke su planirani.}
   \end{itemize}
 \end{frame}
 

@@ -4,7 +4,7 @@ Last verified: 2026-09-05
 
 ## Current phase
 
-ASAP is in early Android technical-PoC implementation. A buildable Java/XML Google Code Scanner slice and seven local unit tests exist. Its debug APK is installed on the verified physical phone, where two real-product scans successfully returned decoded values and cancellation produced the intended status. Backend, recommendation service, dataset pipeline, and end-to-end tests do not exist.
+ASAP is in early vertical-slice implementation. A buildable Java/XML Google Code Scanner slice and seven local unit tests exist; its debug APK is physically validated. A Java 21/Spring Boot backend now implements the deterministic I1 contract with packaged controlled fixtures and 23 passing tests. Android-to-backend networking, live product data, semantic search, persistence, and personalized recommendations do not yet exist.
 
 ## Available artifacts
 
@@ -17,7 +17,7 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - Bundled presentation theme assets under `presentation/theme/`.
 - Root-level LaTeX ignores and cross-session operating instructions.
 - An accepted canonical diagram specification in `docs/diagrams/README.md`.
-- The accepted diagram contract now includes the accepted T-006/S2 concrete architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and verified PNG renders. It selects Android plus one backend modular-monolith deployment while marking only the scanner slice implemented.
+- The accepted diagram contract now includes the accepted T-006/S2 concrete architecture in `docs/diagrams/component-architecture.puml`, shared styling in `docs/diagrams/includes/theme.puml`, and verified PNG renders. It selects Android plus one backend modular-monolith deployment and distinguishes the implemented scanner and deterministic backend slice from planned integration/AI components.
 - The accepted canonical `docs/diagrams/scan-to-recommendation-flow.puml` distinguishes device-owned history, known/unknown/unavailable product outcomes, personalized/generic/empty/unavailable recommendation outcomes, and partial success without prescribing endpoints, schemas, or retry policies.
 - English technical, Serbian formal, and compact Serbian presentation renders are generated from the same two canonical PlantUML sources.
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
@@ -30,9 +30,10 @@ ASAP is in early Android technical-PoC implementation. A buildable Java/XML Goog
 - Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
 - T-005 and all three of its subtasks are accepted and closed.
 - T-006/S1 is accepted and defines the durable MVP scope and iteration contract in `docs/MVP_SCOPE.md`: the complete P0 scan-to-similar-products path is the operational 80-point core, history-based recommendation is a committed 15-point extended-MVP milestone, and broader evaluation completes the remaining 5 points. The exact bounded-history method remains open; the S2 proposal builds on this contract.
-- T-006 and both subtasks are accepted and closed. One Android application and one backend modular monolith form the MVP topology. The device owns bounded interaction history; the backend owns normalized product and vector data through internal product-resolution and recommendation modules. Product and recommendation outcomes fail independently. No backend implementation exists.
-- T-007/S1 is accepted: `docs/BACKEND_BASELINE.md` freezes OpenJDK 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one Maven project under `backend/`. The baseline is not implemented and no backend dependency has been downloaded.
-- T-007/S2 is accepted. `docs/I1_CONTRACT.md` freezes `POST /api/v1/scan-queries`, exact request validation, independent product/recommendation outcomes, RFC 9457 errors, deterministic-placeholder labelling, and nine acceptance cases. Canonical design fixtures and a scannable restricted-circulation EAN-13 SVG live under `docs/fixtures/`. S3 is authorized to implement this contract; nothing is implemented at the S2 checkpoint.
+- T-006 and both subtasks are accepted and closed. One Android application and one backend modular monolith form the MVP topology. The device owns bounded interaction history; the backend owns normalized product and vector data through internal product-resolution and recommendation modules. Product and recommendation outcomes fail independently.
+- T-007/S1 is accepted: `docs/BACKEND_BASELINE.md` freezes OpenJDK 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one Maven project under `backend/`. S3 realizes this exact baseline.
+- T-007/S2 is accepted. `docs/I1_CONTRACT.md` freezes `POST /api/v1/scan-queries`, exact request validation, independent product/recommendation outcomes, RFC 9457 errors, deterministic-placeholder labelling, and nine acceptance cases. Canonical fixtures and a scannable restricted-circulation EAN-13 SVG live under `docs/fixtures/`.
+- T-007/S3 is accepted. `backend/` packages the canonical fixture and exposes API, coordination, product-resolution, recommendation, and barcode-validation boundaries. `./mvnw verify` passes 23 tests (11 barcode rules and 12 real-HTTP contract tests); the executable JAR starts and returns the expected primary fixture response. It contains no Android client, external provider, embeddings, vector storage, or genuine recommendation logic.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -62,9 +63,9 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-007/S3 fixture-backed backend implementation is active; S4 Android integration is not authorized.
+- T-007/S3 is accepted; S4 Android integration is not authorized.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
-- Concrete internal backend package structure is being realized under S3 within the accepted contract and baseline.
+- Any post-I1 evolution of the implemented backend package boundaries.
 - Product metadata API and fallback dataset.
 - Embedding model and vector-index implementation.
 

@@ -3,6 +3,8 @@ meditations/*
 # LaTeX intermediate files; keep generated PDFs available.
 build/*
 !build/*.pdf
+# Alternate-engine verification artifact; canonical PDFs keep their normal names.
+build/report-lua.pdf
 
 # TeX/LaTeX auxiliary files
 *.aux
@@ -41,3 +43,6 @@ build/*
 *.iml
 .gradle/
 local.properties
+
+# Maven build output
+backend/target/

@@ -4,13 +4,13 @@ Status: T-001's diagram contract and the T-006/S2 concrete MVP-topology refineme
 
 ## Purpose and audiences
 
-The diagrams describe the **proposed MVP design**, not deployed or implemented software. They serve three audiences:
+The diagrams describe the **proposed complete MVP design** and visibly annotate the implemented scanner and deterministic backend slices. They serve three audiences:
 
 - project design and implementation sessions, which need maintainable technical detail;
 - the formal Serbian report, which needs readable architecture evidence;
 - the Beamer presentation, which needs a simplified visual explanation.
 
-Every diagram must visibly use the phrase **Proposed architecture** or **Planirana arhitektura**. Diagram presence must never be presented as implementation evidence.
+Every architecture diagram must visibly use the phrase **Proposed architecture** or **Planirana arhitektura**. Diagram presence alone is not implementation evidence; explicit status annotations must agree with `docs/PROJECT_STATUS.md`.
 
 ## Required diagrams
 
@@ -38,13 +38,13 @@ PlantUML identifiers and operational documentation use the English canonical ter
 
 | Canonical term | Serbian deliverable label | Existing-source variants | Contract note |
 | --- | --- | --- | --- |
-| Android client | Mobilna aplikacija | Mobile application | Java/XML application exists; only the scanner slice is implemented. |
+| Android client | Mobilna aplikacija | Mobile application | Java/XML application exists; the scanner is implemented and the API client is planned. |
 | Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
 | Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Owned by the Android application; exact retention and representation remain undecided. |
-| Backend API | Backend API / API servis | Backend; API service | Application-facing module inside one planned backend deployment; framework and transport remain undecided. |
+| Backend API | Backend API / API servis | Backend; API service | Implemented Spring MVC I1 boundary inside one backend deployment; Android connection remains planned. |
 | Product resolution | Razrešavanje proizvoda | Metadata adapter | Owns lookup, fallback selection, normalization, provenance, and product outcome classification. |
-| Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | Backend-owned logical catalog; storage product and external provider remain undecided. |
-| Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | Internal backend module; embedding model, exact ranking method, and MMR remain undecided. |
+| Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | I1 uses a packaged controlled fixture; durable storage and an external provider remain undecided. |
+| Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | I1 boundary returns labelled deterministic fixture results; embedding, ranking, and MMR remain unimplemented. |
 | Vector index | Vektorski indeks | Embeddings store | Owned by the recommendation module; exact versus approximate search and storage technology remain undecided. |
 | Product details | Podaci o proizvodu | Product; metadata | Concrete fields and schema remain undecided. |
 | Recommendations | Preporuke | Top-N similar products | Ranking, personalization, and fallback behavior remain undecided. |
@@ -117,10 +117,10 @@ Run the syntax check for each enabled variant when conditional content changes. 
 
 - Android SDK levels, dependency versions, and project structure.
 - Whether UX evidence later justifies upgrading from Google Code Scanner to direct ML Kit Barcode Scanning with CameraX.
-- Backend framework, transport, and deployment environment.
+- Backend hosting/deployment environment and any post-I1 transport evolution.
 - Product metadata provider, catalog storage product, caching policy, and fallback dataset.
 - Embedding model, vector-index technology, exact/ANN search, and MMR use.
 - Personalization event model, K/window, weighting, aggregation, retention duration, and consent wording. Generic cold-start behavior itself is required.
-- Concrete API payloads, persistence schemas, retry policies, and service-level targets.
+- Persistence schemas, retry policies, and service-level targets. The deterministic I1 payload is frozen in `docs/I1_CONTRACT.md`.
 
 Resolving any of these requires its own approved task or subtask and a recorded decision.

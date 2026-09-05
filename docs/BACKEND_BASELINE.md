@@ -1,6 +1,6 @@
 # Accepted backend baseline
 
-Status: Accepted and frozen under T-007/S1. The baseline is selected but remains unimplemented until T-007/S3.
+Status: Accepted and frozen under T-007/S1; realized by the accepted T-007/S3 implementation.
 
 Last researched: 2026-09-05 from official Spring Boot, Apache Maven, Javalin, and Quarkus documentation.
 
@@ -37,16 +37,17 @@ The S2 contract should decide endpoint paths, payloads, status mapping, validati
 
 Spring Boot is the shortest maintainable path here because the user already knows Java, the required JDK is present, and the project needs a tested REST boundary that can grow into the accepted modules. The recommendation does not commit the project to Spring persistence, security, AI, or cloud products.
 
-## Deferred downloads and verification
+## Realized scaffold and verification
 
-S1 performed no download and created no backend project. Only a later explicit T-007/S3 authorization—not S2 acceptance—may add the wrapper and resolve:
+The approved S3 scaffold now exists under `backend/`. It uses the exact baseline above, adds the conditionally approved validation starter, and packages the canonical `docs/fixtures/i1-products.json` resource directly so there is no second editable fixture copy. The Maven Wrapper records distribution SHA-256 `5af3b743dd8b876b5c45da33b676251e5f1687712644abb4ee519ca56e1d89ce`.
 
-- the checksum-pinned Apache Maven 3.9.16 binary distribution used by Maven Wrapper 3.3.3;
-- the Spring Boot 4.1.1 parent/plugin metadata and the accepted direct dependencies;
-- managed transitive runtime libraries, including Spring MVC, Jackson, and embedded Tomcat;
-- managed test libraries, including Spring Boot test support, JUnit Jupiter, AssertJ, and Hamcrest.
+- production dependencies are `spring-boot-starter-webmvc` and `spring-boot-starter-validation`;
+- the sole direct test dependency is `spring-boot-starter-test`;
+- no excluded persistence, AI, provider, security, or cloud dependency was added;
+- `./mvnw verify` passes 23 tests and packages an executable JAR;
+- the packaged JAR contains the fixture and starts successfully on Java 21.
 
-The scaffold must then pass `backend/mvnw verify` and package an executable JAR. Exact wrapper-distribution checksums must be taken from Apache's official release metadata and committed with the wrapper configuration during S3.
+This implementation evidence does not authorize Android integration, which remains T-007/S4.
 
 ## Official sources
 

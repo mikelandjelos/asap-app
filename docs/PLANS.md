@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1–S2 accepted; S3 approved and executing; S4 not approved
+- **Status:** Plan approved; S1–S3 accepted; S4 not approved
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -348,12 +348,14 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 #### T-007/S3 — Implement the fixture-backed backend slice
 
-- **Status:** Approved; executing
+- **Status:** Accepted
 
 - Scaffold one backend modular-monolith project using the accepted S1 baseline.
 - Implement the S2 contract through internal API/product-resolution/recommendation boundaries using deterministic in-memory or packaged fixture data.
 - Add automated tests for known, unknown, unavailable, placeholder-result, empty-result, and partial-success behavior.
 - Synchronize build instructions and every affected operational/formal document; do not add external providers, embeddings, vector databases, or Android networking.
+- **Evidence:** `backend/` is a Java 21/Spring Boot 4.1.1 modular-monolith scaffold with a checksum-pinned Maven 3.9.16 Wrapper. API, application coordination, product-resolution, recommendation, barcode-validation, and fixture-loading boundaries implement the frozen contract while packaging the canonical documentation fixture directly. Eleven barcode-rule tests and twelve real-HTTP API tests pass (`23/23`) through `./mvnw verify`; the executable JAR contains the fixture, starts on Java 21, and returns the exact primary known-product/two-placeholder-result response. No external provider, embedding, vector database, Android networking, persistence, or AI-result claim was added. Operational/formal documentation and all diagram variants were synchronized and rebuilt.
+- **Acceptance evidence:** The user explicitly responded “I accept the changes, continue with your work” on 2026-09-05.
 
 #### T-007/S4 — Connect Android and validate the vertical slice
 
