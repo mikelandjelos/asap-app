@@ -4,12 +4,17 @@
     <string name="scan_ready">Skener je spreman za EAN i UPC barkodove.</string>
     <string name="scan_action">Skeniraj barkod</string>
     <string name="scan_in_progress">Skener je pokrenut…</string>
-    <string name="scan_success">Barkod je uspešno očitan.</string>
     <string name="scan_empty">Barkod je očitan bez tekstualne vrednosti.</string>
+    <string name="scan_unsupported">Očitani format barkoda nije podržan.</string>
     <string name="scan_cancelled">Skeniranje je otkazano.</string>
     <string name="scan_module_unavailable">Modul skenera trenutno nije dostupan ili ne može da se preuzme. Proverite Google Play usluge, slobodan prostor i internet vezu, pa pokušajte ponovo.</string>
     <string name="scan_failed">Skeniranje nije uspelo. Pokušajte ponovo.</string>
     <string name="scan_result_label">Očitana vrednost</string>
     <string name="scan_no_result">Još nema očitanog barkoda.</string>
     <string name="scan_no_value">Nema dostupne vrednosti.</string>
+    <string name="api_loading">Barkod je očitan. Čeka se odgovor backend servisa…</string>
+    <string name="api_response_received">Odgovor backend servisa je primljen. Prikaz sadržaja sledi u narednoj fazi.</string>
+    <string name="api_transport_failure">Backend servis nije dostupan. Proverite vezu i pokušajte ponovo.</string>
+    <string name="api_http_failure">Backend servis je vratio grešku (HTTP %1$d). Pokušajte ponovo.</string>
+    <string name="api_invalid_response">Backend servis je vratio neupotrebljiv odgovor.</string>
 </resources>

@@ -1,6 +1,6 @@
 # Architecture
 
-Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, isolated API-client boundary, and deterministic fixture-backed backend slices are implemented; scan-to-client coordination and all genuine data/AI components remain planned.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, scan-to-client coordinator, API-client boundary, and deterministic fixture-backed backend slices are implemented; response-content UI, physical end-to-end validation, and all genuine data/AI components remain planned.
 
 T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
@@ -22,11 +22,12 @@ The external product source is outside ASAP's trust and availability boundary. A
 - A single Gradle application module lives under `android/app` with namespace and application ID `rs.ac.ni.elfak.asap`.
 - `MainActivity` is Java 17 code and renders a custom XML `ConstraintLayout` screen through AppCompat, with a scan action, current status, and decoded result.
 - Google Code Scanner 16.1.0 handles EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. Google Play services owns the scanner camera experience; ASAP declares no camera permission.
-- Success, cancellation, empty value, module/download unavailability, and general failure have implemented user-visible states. Seven local unit tests and Android lint pass.
+- Success, cancellation, empty value, module/download unavailability, and general failure have implemented user-visible states. The complete Android slice has 27 passing local unit tests and zero lint findings.
 - The debug APK is installed on the verified phone. Two real-product scans and cancellation were confirmed.
 - The `network` package implements an app-owned `ScanQueryClient`, I1 DTOs/invariant validation, EAN/UPC format mapping, and failure classification through Retrofit/Moshi/OkHttp. Calls are cancellable and conversion callbacks stay off the UI thread.
+- The pure-Java `ScanQueryCoordinator` accepts only non-empty supported scan results, invokes the client, dispatches visible callbacks through the main-thread executor, cancels active work on a newer scan or activity destruction, and rejects stale callbacks. `MainActivity` exposes loading plus distinct transport, HTTP, and invalid-response states.
 - The debug base URL is `http://127.0.0.1:8080/` for `adb reverse`; only the debug manifest permits cleartext. The release manifest denies cleartext and carries no usable production endpoint.
-- `MainActivity` does not construct or call the client. Application persistence, live product lookup, vector search, and recommendation display do not exist yet.
+- `MainActivity` constructs the client and invokes it through the coordinator, but only acknowledges a valid backend response. Product/recommendation content rendering, application persistence, live product lookup, vector search, and genuine recommendation display do not exist yet.
 
 ## Implemented deterministic backend slice
 
@@ -36,7 +37,7 @@ The external product source is outside ASAP's trust and availability boundary. A
 - Eleven barcode-rule tests and twelve full HTTP contract tests pass; the packaged executable JAR was started and smoke-tested.
 - There is no external adapter call, database, vector index, embedding, personalization, Android network client, or production deployment.
 
-The diagrams mark scanner integration, the isolated Android API boundary, and deterministic backend contract as implemented. The scan-to-client coordination arrow, device/backend runtime exchange, and genuine metadata/vector flows remain design intent.
+The diagrams mark scanner integration, Android coordination/API boundary, and deterministic backend contract as implemented. The device/backend exchange exists in source but remains physically unvalidated; response rendering and genuine metadata/vector flows remain design intent.
 
 ## Component responsibilities and ownership
 
@@ -74,7 +75,7 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 - Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
 - Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
 
-Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.1 implements the isolated client contract, but Android does not consume it until S4.2.
+Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.2 connects successful supported scans to the client with cancellation and stale-response protection; S4.3 must render the independent response outcomes, and S4.4 must validate the exchange on the phone.
 
 ## Failure boundaries
 

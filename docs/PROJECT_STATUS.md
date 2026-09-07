@@ -4,7 +4,7 @@ Last verified: 2026-09-07
 
 ## Current phase
 
-ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner slice plus an isolated Retrofit/Moshi I1 client boundary; all 20 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The scanner does not yet invoke the client, so Android-to-backend behavior remains unimplemented; live product data, semantic search, persistence, and personalized recommendations also do not exist.
+ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner slice and source-level scan-to-Retrofit/Moshi I1 coordination; all 27 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. Physical Android-to-backend behavior and response-content rendering remain unvalidated; live product data, semantic search, persistence, and personalized recommendations also do not exist.
 
 ## Available artifacts
 
@@ -34,7 +34,8 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - T-007/S1 is accepted: `docs/BACKEND_BASELINE.md` freezes OpenJDK 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one Maven project under `backend/`. S3 realizes this exact baseline.
 - T-007/S2 is accepted. `docs/I1_CONTRACT.md` freezes `POST /api/v1/scan-queries`, exact request validation, independent product/recommendation outcomes, RFC 9457 errors, deterministic-placeholder labelling, and nine acceptance cases. Canonical fixtures and a scannable restricted-circulation EAN-13 SVG live under `docs/fixtures/`.
 - T-007/S3 is accepted. `backend/` packages the canonical fixture and exposes API, coordination, product-resolution, recommendation, and barcode-validation boundaries. `./mvnw verify` passes 23 tests (11 barcode rules and 12 real-HTTP contract tests); the executable JAR starts and returns the expected primary fixture response. It contains no Android client, external provider, embeddings, vector storage, or genuine recommendation logic.
-- T-007/S4.1 is accepted. The Android-side `ScanQueryClient` boundary uses Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and API-36-compatible OkHttp 5.3.2. It serializes the frozen request, validates all response unions, distinguishes transport/HTTP/invalid-response failures, maps the four scanner formats, and returns a cancellable call handle. Debug builds target device loopback and permit cleartext for `adb reverse`; release builds deny cleartext and use a non-routable placeholder URL. `MainActivity` does not create or call this client.
+- T-007/S4.1 is accepted. The Android-side `ScanQueryClient` boundary uses Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and API-36-compatible OkHttp 5.3.2. It serializes the frozen request, validates all response unions, distinguishes transport/HTTP/invalid-response failures, maps the four scanner formats, and returns a cancellable call handle. Debug builds target device loopback and permit cleartext for `adb reverse`; release builds deny cleartext and use a non-routable placeholder URL.
+- T-007/S4.2 is accepted. `MainActivity` delegates supported successful scan values to a pure-Java `ScanQueryCoordinator`, which invokes `ScanQueryClient`, posts callback state through the Android main-thread executor, exposes loading and separated transport/HTTP/invalid-response states, cancels active work on a newer scan or destruction, and rejects stale callbacks. Empty, unsupported, cancelled, module-unavailable, and scanner-error paths do not submit a request. Product and recommendation content are deliberately not rendered until S4.3, and no physical end-to-end claim is made before S4.4.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -64,7 +65,7 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-007/S4.1 is accepted; S4.2 scan-to-client coordination is proposed but not authorized.
+- T-007/S4.2 is accepted; S4.3 outcome rendering is approved and in progress.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
 - Product metadata API and fallback dataset.

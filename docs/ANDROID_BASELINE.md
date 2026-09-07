@@ -2,7 +2,7 @@
 
 Status: Accepted and frozen under completed T-004.
 
-Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below without changing this frozen build baseline.
+Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below, and S4.2 connects supported successful scans to it without changing this frozen build baseline.
 
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 
@@ -60,7 +60,7 @@ These decisions were made before implementation. Their current realization is tr
 
 ## Accepted S4.1 networking extension
 
-T-007/S4.1 adds Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and OkHttp 5.3.2 behind the app-owned `ScanQueryClient`. OkHttp 5.5.0 is not compatible with this baseline because its Android artifact requires compile SDK 37; the accepted stable Android 16/API-36 build remains unchanged. Debug-only device-loopback HTTP supports ADB reverse, while release builds deny cleartext and have no usable production endpoint. This extension does not connect `MainActivity` to the backend.
+T-007/S4.1 adds Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and OkHttp 5.3.2 behind the app-owned `ScanQueryClient`. OkHttp 5.5.0 is not compatible with this baseline because its Android artifact requires compile SDK 37; the accepted stable Android 16/API-36 build remains unchanged. Debug-only device-loopback HTTP supports ADB reverse, while release builds deny cleartext and have no usable production endpoint. T-007/S4.2 connects `MainActivity` through a lifecycle-aware coordinator but adds no dependency and makes no physical runtime claim.
 
 ## Official sources
 

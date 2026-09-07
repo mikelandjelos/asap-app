@@ -4,18 +4,21 @@ Last updated: 2026-09-07
 
 ## Completed in the latest documentation session
 
-- The user explicitly accepted T-007/S4.1 on 2026-09-07. S4.2–S4.4 remain unauthorized.
-- Android now has an isolated, app-owned `ScanQueryClient` implemented with Retrofit 3.0.0, converter-moshi 3.0.0, Moshi 1.15.2, and OkHttp 5.3.2. It serializes the frozen request, validates every response union, maps all four accepted scanner formats, distinguishes transport/HTTP/invalid-response failures, and returns a cancellable handle. `MainActivity` does not reference it.
+- The user explicitly accepted T-007/S4.2 and authorized T-007/S4.3 with “s4.2 accepted, start s4.3” on 2026-09-07. S4.3 is in progress; S4.4 remains unauthorized.
+- `MainActivity` now routes only non-empty supported scan results through a pure-Java `ScanQueryCoordinator` into the accepted `ScanQueryClient`. Loading, response receipt, transport failure, HTTP failure, and invalid-response state are distinct; scanner cancellation/failure branches make no API request.
+- A newer scan and activity destruction cancel active work; callbacks are dispatched through the main-thread executor and stale/closed callbacks are ignored. Seven new coordinator tests bring the Android total to 27; a clean Android build, lint, and debug assembly pass, and the unchanged backend still passes all 23 tests. Product/recommendation response content is intentionally not rendered until S4.3, and no physical end-to-end claim is made before S4.4.
+- The user explicitly accepted T-007/S4.1 on 2026-09-07; it was committed as `40ed840` (`Add Android API client`).
+- Android has an app-owned `ScanQueryClient` implemented with Retrofit 3.0.0, converter-moshi 3.0.0, Moshi 1.15.2, and OkHttp 5.3.2. It serializes the frozen request, validates every response union, maps all four accepted scanner formats, distinguishes transport/HTTP/invalid-response failures, and returns a cancellable handle. S4.2 connects it to `MainActivity` through the coordinator.
 - Debug builds alone permit cleartext and use `http://127.0.0.1:8080/` for `adb reverse tcp:8080 tcp:8080`; release builds deny cleartext and use a non-routable HTTPS placeholder. OkHttp 5.5.0 was rejected during verification because it requires compile SDK 37; 5.3.2 preserves the accepted API-36 baseline.
-- Android verification passes with 20 tests, zero lint issues, successful debug assembly, and inspected debug/release merged manifests. Operational/formal documentation and diagram status annotations were synchronized. The next permissible action is review and explicit approval or revision of the proposed S4.2 plan, not its implementation.
-- T-007/S3 was committed as `94d4c9f` (`Implement I1 backend`) after explicit acceptance. The T-007/S4 integration plan is now refined into four separately gated phases: API-client foundation, scan coordination, outcome UI, and physical validation. No S4 implementation phase is approved.
+- At the accepted S4.1 checkpoint, Android verification passed with 20 tests, zero lint issues, successful debug assembly, and inspected debug/release merged manifests. S4.2 now supersedes that test count and isolation status.
+- T-007/S3 was committed as `94d4c9f` (`Implement I1 backend`) after explicit acceptance. The T-007/S4 integration plan is refined into four separately gated phases: API-client foundation, scan coordination, outcome UI, and physical validation; S4.1–S4.2 are accepted and S4.3 is in progress.
 - The proposed development transport uses the frozen HTTP/JSON contract through `adb reverse tcp:8080 tcp:8080`, a device-loopback base URL, and debug-only cleartext permission. Any deployed endpoint must use HTTPS.
-- The user explicitly accepted T-007/S3 with “I accept the changes, continue with your work” on 2026-09-05. S4 remains unauthorized. The new `backend/` Java 21/Spring Boot 4.1.1 modular monolith implements the frozen I1 API through separate API, coordination, product-resolution, recommendation, validation, and fixture-loading boundaries.
+- The user explicitly accepted T-007/S3 with “I accept the changes, continue with your work” on 2026-09-05. The new `backend/` Java 21/Spring Boot 4.1.1 modular monolith implements the frozen I1 API through separate API, coordination, product-resolution, recommendation, validation, and fixture-loading boundaries.
 - The checksum-pinned Maven 3.9.16 Wrapper builds an executable JAR and packages the canonical `docs/fixtures/i1-products.json` without a duplicate editable copy. No external provider, database, embedding, vector index, Android networking, or AI-result claim was introduced.
 - `./mvnw verify` passes all 23 tests: 11 barcode-rule cases and 12 real-HTTP API cases covering known, unknown, product unavailable, deterministic results, empty results, recommendation unavailable, repeatability, validation, media type, and body-size behavior. The executable JAR starts on Java 21 and returns the exact primary fixture response in a localhost smoke test.
 - Operational/formal documentation and canonical diagram variants were synchronized with the implemented backend boundary. The next permissible action is planning and explicit approval of T-007/S4; do not implement it without that approval.
 
-- The user explicitly accepted T-007/S2, authorized its commit, and authorized T-007/S3 with “accepted! great, you can commit this phase, and start the next one” on 2026-09-05. D-017 now freezes the I1 contract/fixtures; S3 may implement them, while S4 remains unauthorized.
+- The user explicitly accepted T-007/S2, authorized its commit, and authorized T-007/S3 with “accepted! great, you can commit this phase, and start the next one” on 2026-09-05. D-017 freezes the I1 contract/fixtures subsequently implemented by S3 and consumed by S4.
 - T-007/S2 is accepted. `docs/I1_CONTRACT.md` defines the frozen versioned operation, exact validation and outcome invariants, RFC 9457 errors, deterministic-placeholder labelling, explicit deferrals, and nine S3/S4 acceptance cases.
 - `docs/fixtures/i1-products.json` contains five fictional products plus controlled product-unavailable and unknown keys. All seven EAN-13 values have valid modulo-10 digits and use restricted-circulation prefix 200; they are local-only and must never reach an external provider.
 - `docs/fixtures/i1-known-product-ean13.svg` encodes the primary `2000000000015` happy-path fixture in a 95-module EAN-13 pattern with quiet zones for later physical-phone scanning. No application code or dependency was created/downloaded.
@@ -100,12 +103,12 @@ Last updated: 2026-09-07
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
 - The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
-- A buildable Android Java/XML scanner slice and isolated I1 API-client boundary exist with 20 passing local tests. The scanner remains physically verified, but does not yet invoke the client.
-- The backend baseline, I1 contract/fixtures, S3 implementation, and S4.1 Android API-client boundary are accepted; product-data providers, models, storage products, and scan-to-backend integration remain open.
+- A buildable Android Java/XML scanner-to-client slice exists with 27 passing local tests. The scanner itself remains physically verified; source-level backend coordination exists, but the end-to-end exchange has not yet been exercised on the phone.
+- The backend baseline, I1 contract/fixtures, S3 implementation, and S4.1–S4.2 Android work are accepted; S4.3 is in progress. Product-data providers, models, storage products, and physical integration evidence remain open.
 
 ## Suggested next session
 
-Review and explicitly approve or request changes to the proposed T-007/S4.2 plan. Do not execute S4.2 without explicit approval.
+Complete and verify only the approved T-007/S4.3 outcome UI, then stop for acceptance. Do not execute S4.4 without explicit approval.
 
 ## Blockers
 

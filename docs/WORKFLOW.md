@@ -117,11 +117,11 @@ ANDROID_HOME=/home/mih/Android/Sdk ./gradlew clean testDebugUnitTest lintDebug a
 
 The debug APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`; all generated build output and machine-local configuration are ignored. The committed Gradle distribution checksum is `553c78f50dafcd54d65b9a444649057857469edf836431389695608536d6b746`, and the wrapper JAR checksum is `497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7`.
 
-For S4.1, 20 unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The source manifest now explicitly declares normal `INTERNET` access for the API client; the scanner dependency also contributes network-state permission.
+Through S4.2, 27 unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The source manifest explicitly declares normal `INTERNET` access for the API client; the scanner dependency also contributes network-state permission.
 
 ### Debug phone-to-host transport
 
-The S4.1 client is isolated from `MainActivity`, but its approved later physical-development path is already configured:
+The S4.2 source now routes supported successful scans through the API client. Its physical-development path is configured but remains unvalidated until S4.4:
 
 ```sh
 adb reverse tcp:8080 tcp:8080

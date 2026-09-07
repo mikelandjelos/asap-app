@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1–S4.1 accepted; S4.2–S4.4 not approved
+- **Status:** Plan approved; S1–S4.2 accepted; S4.3 approved; S4.4 not approved
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -359,7 +359,7 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 #### T-007/S4 — Connect Android and validate the vertical slice
 
-- **Status:** S4.1 accepted; later phases not approved
+- **Status:** S4.1–S4.2 accepted; S4.3 approved; S4.4 not approved
 - **Communication contract:** Android sends the scanner-provided value and mapped EAN/UPC format to the frozen `POST /api/v1/scan-queries` HTTP/JSON operation. The backend returns independent product and recommendation outcomes. During physical-device development, `adb reverse tcp:8080 tcp:8080` exposes the PC backend as device loopback; cleartext HTTP is permitted only by a debug configuration. A deployed environment must use HTTPS.
 
 ##### T-007/S4.1 — Establish the Android API-client boundary
@@ -380,7 +380,10 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Add explicit loading and transport/backend-unavailable states, and prevent stale responses from replacing newer UI state.
 - Test format mapping, scan-to-request coordination, lifecycle-safe state behavior, and failure separation.
 - Synchronize all affected operational/formal documentation in the same phase.
-- **Status:** Proposed; not approved
+- **Approval evidence:** The user responded “okay, let's go” immediately after the S4.2 plan was presented on 2026-09-07.
+- **Evidence:** `MainActivity` now constructs the accepted API client and delegates scan results to a pure-Java `ScanQueryCoordinator`. Only non-empty EAN-13/EAN-8/UPC-A/UPC-E results submit the exact scanned value/format; loading, response-received, transport, HTTP, and invalid-response states are distinct. Starting a newer scan or destroying the activity cancels active work, callback delivery crosses the Android main-thread executor, and callbacks from stale/closed requests cannot change visible state. Existing cancellation/module/scanner-failure paths remain local and make no request. Seven new coordinator tests bring the Android total to 27 with zero failures; lint has zero findings and the debug APK assembles from a clean build. The unchanged backend still passes all 23 tests. Product/recommendation fields are not rendered, and physical Android-to-backend behavior is not claimed before S4.4.
+- **Acceptance evidence:** The user explicitly responded “s4.2 accepted” on 2026-09-07.
+- **Status:** Accepted
 
 ##### T-007/S4.3 — Render product and deterministic-result outcomes
 
@@ -388,7 +391,8 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Render `KNOWN`, `UNKNOWN`, product `UNAVAILABLE`, recommendation `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` distinctly while preserving known product data on recommendation failure.
 - Show “Deterministički demo rezultat — nije AI preporuka” whenever `placeholder` is true; never display a fabricated score.
 - Add UI/state tests for the frozen outcomes and synchronize all affected documentation.
-- **Status:** Proposed; not approved
+- **Approval evidence:** The user explicitly instructed “start s4.3” on 2026-09-07.
+- **Status:** Approved; implementation in progress
 
 ##### T-007/S4.4 — Validate and close the physical vertical slice
 

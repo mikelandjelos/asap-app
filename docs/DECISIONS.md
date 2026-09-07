@@ -143,3 +143,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** Android needs a small type-safe Java boundary for the frozen HTTP/JSON operation, complete outcome validation, asynchronous/cancellable calls, and a low-friction physical-phone development path without prematurely connecting the scanner UI.
 - **Decision:** Use Retrofit 3.0.0 with converter-moshi 3.0.0, resolved Moshi 1.15.2, and an explicit OkHttp 5.3.2 override behind the app-owned `ScanQueryClient` interface. OkHttp 5.5.0 was evaluated but rejected because its Android artifact requires compile SDK 37, conflicting with the accepted API-36 baseline. Use `http://127.0.0.1:8080/` plus `adb reverse tcp:8080 tcp:8080` only in debug builds; release builds deny cleartext and use a non-routable HTTPS placeholder until hosting is selected.
 - **Consequence:** S4.2 can coordinate scans without binding UI code directly to Retrofit and can cancel stale calls. Response conversion/validation occurs off the UI thread, while S4.2 must explicitly marshal visible state changes to the main thread. No production endpoint, authentication, retry policy, scanner invocation, or result UI is selected by this decision.
+
+## D-019 — A coordinator owns Android scan-to-request lifecycle
+
+- **Status:** Accepted
+- **Date:** 2026-09-07
+- **Context:** Scanner callbacks originate in `MainActivity`, while I1 callbacks complete asynchronously and may arrive after a newer scan or activity destruction.
+- **Decision:** Route successful supported scans through a pure-Java `ScanQueryCoordinator`. It owns the active cancellable call, rejects callbacks that no longer belong to the current request, and uses an injected executor before delivering API state to the view. Scanner cancellation and failures remain local and never trigger the client.
+- **Consequence:** Coordination is unit-testable without an Android runtime, visible state is changed on the main thread, and S4.3 can add outcome rendering without moving transport/lifecycle policy into UI widgets. S4.2 does not add retries, preserve requests across activity recreation, or render product/recommendation content.
