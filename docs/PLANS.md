@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1–S4.3 accepted; S4.4 approved
+- **Status:** Accepted and complete
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -359,7 +359,7 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 #### T-007/S4 — Connect Android and validate the vertical slice
 
-- **Status:** S4.1–S4.3 accepted; S4.4 approved
+- **Status:** Accepted and complete
 - **Communication contract:** Android sends the scanner-provided value and mapped EAN/UPC format to the frozen `POST /api/v1/scan-queries` HTTP/JSON operation. The backend returns independent product and recommendation outcomes. During physical-device development, `adb reverse tcp:8080 tcp:8080` exposes the PC backend as device loopback; cleartext HTTP is permitted only by a debug configuration. A deployed environment must use HTTPS.
 
 ##### T-007/S4.1 — Establish the Android API-client boundary
@@ -402,7 +402,9 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Exercise the happy path plus feasible unknown, empty-result, recommendation-unavailable, and backend-unavailable behavior; record which cases are automated versus physically observed.
 - Re-run Android tests/lint/build and backend verification, inspect deliverables, synchronize TODO/status/architecture/plan/handoff/report/presentation, and stop for S4 and T-007 acceptance.
 - **Approval evidence:** The user explicitly instructed “continue to s4.4” on 2026-09-07.
-- **Status:** Approved; validation in progress
+- **Evidence:** Clean Android verification passed all 32 tests, lint with zero findings, debug APK assembly, and release-manifest processing; clean backend verification passed all 23 tests and built the executable JAR. The started backend returned the exact primary fixture response in a localhost smoke test. After `adb reverse tcp:8080 tcp:8080` and a fresh debug APK installation, the physical API-36 phone displayed the known product with almond/soy ranks and the exact demo-only label. Physical checks also confirmed unknown/`NOT_APPLICABLE`, known product with `EMPTY`, known product retained with recommendation `UNAVAILABLE`, and backend-unavailable with stale outcome content cleared. UI hierarchy evidence was inspected for every case. The backend was stopped gracefully, ADB forwarding and temporary validation artifacts were removed, the APK remains installed, and no device identifier or UI dump was persisted.
+- **Acceptance evidence:** The user explicitly accepted S4.4 and then explicitly stated “T-007 is also accepted” on 2026-09-08.
+- **Status:** Accepted
 
 ### Approved task-level acceptance criteria
 
@@ -418,3 +420,5 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Embedding generation, cosine similarity, MMR, vector indexing, or history-based personalization.
 - Production hosting, authentication, accounts, analytics, or final UI polish.
 - Changing the accepted scanner technology or architecture topology.
+
+All task-level acceptance criteria were verified, and the user explicitly accepted and closed T-007 on 2026-09-08.

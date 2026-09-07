@@ -63,7 +63,7 @@
 \begin{frame}{Plan tankih iteracija}
   \begin{enumerate}
     \item \textbf{I0:} skener --- implementiran i fizički potvrđen;
-    \item \textbf{I1:} deterministički vertikalni tok sa kontrolisanim podacima;
+    \item \textbf{I1:} deterministički vertikalni tok --- implementiran i fizički potvrđen;
     \item \textbf{I2:} stvarni metapodaci proizvoda i rezervni izvor;
     \item \textbf{I3:} embedding reprezentacije i top-N semantička sličnost;
     \item \textbf{I4:} prošireni MVP --- preporuka iz istorije i cold-start stanje;
@@ -72,7 +72,7 @@
 \end{frame}
 
 \begin{frame}{Arhitektonske granice MVP-a}
-  \textcolor{gray}{\footnotesize Skener, backend I1, povezivanje i prikaz ishoda implementirani; fizička provera sledi}
+  \textcolor{gray}{\footnotesize Kontrolisani I1 tok je implementiran i fizički potvrđen; stvarni podaci i AI tokovi su planirani}
   \begin{itemize}
     \item dva postavljanja: Android aplikacija i jedna backend aplikacija;
     \item backend je modularni monolit: API, razrešavanje proizvoda i preporuke su interni moduli;
@@ -137,14 +137,13 @@
   \begin{itemize}
     \item implementiran prilagođeni ekran za pokretanje skenera, status i rezultat;
     \item obrađeni uspeh, otkazivanje, nedostupan modul i opšta greška;
-    \item APK instaliran i početni ekran pokrenut na fizičkom telefonu;
-    \item dva stvarna proizvoda uspešno skenirana; vrednosti vraćene aplikaciji;
-    \item potvrđen očekivani status pri otkazivanju skeniranja;
+    \item APK instaliran, skener i otkazivanje potvrđeni na fizičkom telefonu;
     \item implementiran deterministički I1 backend sa odvojenim ishodima proizvoda i rezultata;
     \item skener je povezan sa Android API granicom uz otkazivanje zastarelih zahteva;
-    \item prikazani su odvojeni ishodi proizvoda i demo rezultata, bez AI skora;
+    \item fizički potvrđeni poznat/nepoznat proizvod, prazan i nedostupan rezultat;
+    \item greška preporuka čuva proizvod, a nedostupan backend briše stari ishod;
     \item 23 backend testa prolaze; izvršni JAR vraća očekivani kontrolisani odgovor;
-    \item \textcolor{gray}{Fizička provera, stvarni podaci, semantička pretraga i preporuke su planirani.}
+    \item \textcolor{gray}{Stvarni podaci, semantička pretraga i personalizovane preporuke su planirani.}
   \end{itemize}
 \end{frame}
 

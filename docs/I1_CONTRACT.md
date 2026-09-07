@@ -1,6 +1,6 @@
 # Accepted deterministic I1 contract
 
-Status: Accepted and frozen under T-007/S2. The backend implementation is accepted under T-007/S3. S4.1 implements the Android client boundary, S4.2 implements scan-to-client coordination, and S4.3 implements every response-content state. Physical end-to-end validation remains S4.4 work.
+Status: Accepted and frozen under completed T-007. The backend, Android client and coordination, response-content UI, and physically validated controlled end-to-end flow are accepted.
 
 The contract proves the Android-to-backend boundary with controlled data. It must not be presented as live product resolution, semantic similarity, or personalization.
 
@@ -155,6 +155,8 @@ S3 must automate the backend cases; S4 must automate Android mapping where pract
 | I1-C07 | Invalid check digit | `400` problem detail with `INVALID_CHECK_DIGIT` |
 | I1-C08 | Missing, extra, malformed, non-JSON, or oversized input | Corresponding `400`/`413`/`415` problem response; no internal detail leakage |
 | I1-C09 | Physical scan of the supplied SVG | Google Code Scanner returns `EAN_13`/`2000000000015`; Android shows the known product and explicit demo-only results |
+
+S4.4 physically verified I1-C09 on the authorized phone. It also physically exercised the controlled unknown, empty-recommendation, recommendation-unavailable, and backend-unavailable paths; the UI hierarchy confirmed their exact independent states. Product-unavailable and malformed-request branches remain automated rather than physically scanned because the approved S4.4 plan required only feasible representative cases.
 
 ## Explicitly deferred
 

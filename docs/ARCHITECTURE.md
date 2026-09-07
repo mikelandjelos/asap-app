@@ -1,6 +1,6 @@
 # Architecture
 
-Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, scan-to-client coordinator, API-client boundary, I1 outcome UI, and deterministic fixture-backed backend slices are implemented; physical end-to-end validation and all genuine data/AI components remain planned.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, coordinator, API client, I1 outcome UI, and deterministic fixture-backed backend are implemented and physically validated together; all genuine data/AI components remain planned.
 
 T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
@@ -28,6 +28,7 @@ The external product source is outside ASAP's trust and availability boundary. A
 - The pure-Java `ScanQueryCoordinator` accepts only non-empty supported scan results, invokes the client, dispatches visible callbacks through the main-thread executor, cancels active work on a newer scan or activity destruction, and rejects stale callbacks. `MainActivity` exposes loading plus distinct transport, HTTP, and invalid-response states.
 - The debug base URL is `http://127.0.0.1:8080/` for `adb reverse`; only the debug manifest permits cleartext. The release manifest denies cleartext and carries no usable production endpoint.
 - `MainActivity` constructs the client and invokes it through the coordinator. Its scrollable XML outcome area renders normalized known-product data, unknown/unavailable product states, and independent result/empty/unavailable/not-applicable recommendation states. Placeholder results always carry the required non-AI label and never show a score. Application persistence, live product lookup, vector search, and genuine recommendation display do not exist yet.
+- The complete debug I1 path was physically validated through ADB reverse. The phone displayed the controlled known, unknown, empty-result, recommendation-unavailable, and backend-unavailable cases with the required partial-success behavior.
 
 ## Implemented deterministic backend slice
 
@@ -37,7 +38,7 @@ The external product source is outside ASAP's trust and availability boundary. A
 - Eleven barcode-rule tests and twelve full HTTP contract tests pass; the packaged executable JAR was started and smoke-tested.
 - There is no external adapter call, database, vector index, embedding, personalization, Android network client, or production deployment.
 
-The diagrams mark scanner integration, Android coordination/API boundary and outcome UI, and deterministic backend contract as implemented. The device/backend exchange exists in source but remains physically unvalidated; genuine metadata/vector flows remain design intent.
+The diagrams mark scanner integration, Android coordination/API boundary and outcome UI, deterministic backend contract, and their controlled physical exchange as implemented. Genuine metadata/vector flows remain design intent.
 
 ## Component responsibilities and ownership
 
@@ -75,7 +76,7 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 - Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
 - Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
 
-Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.2 connects successful supported scans to the client with cancellation and stale-response protection; S4.3 renders the independent response outcomes, and S4.4 must validate the exchange on the phone.
+Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.2 connects successful supported scans to the client with cancellation and stale-response protection, S4.3 renders the independent response outcomes, and S4.4 physically validates the controlled exchange on the phone.
 
 ## Failure boundaries
 

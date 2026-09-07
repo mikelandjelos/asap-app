@@ -38,10 +38,10 @@ PlantUML identifiers and operational documentation use the English canonical ter
 
 | Canonical term | Serbian deliverable label | Existing-source variants | Contract note |
 | --- | --- | --- | --- |
-| Android client | Mobilna aplikacija | Mobile application | Java/XML scanner-to-API coordination and all I1 outcome states are implemented; physical end-to-end validation remains planned. |
+| Android client | Mobilna aplikacija | Mobile application | Java/XML scanner-to-API coordination and all I1 outcome states are implemented and physically validated with the controlled backend. |
 | Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
 | Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Owned by the Android application; exact retention and representation remain undecided. |
-| Backend API | Backend API / API servis | Backend; API service | Implemented Spring MVC I1 boundary inside one backend deployment; physical Android connection remains planned. |
+| Backend API | Backend API / API servis | Backend; API service | Implemented Spring MVC I1 boundary inside one backend deployment; the controlled Android connection is physically validated. |
 | Product resolution | Razrešavanje proizvoda | Metadata adapter | Owns lookup, fallback selection, normalization, provenance, and product outcome classification. |
 | Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | I1 uses a packaged controlled fixture; durable storage and an external provider remain undecided. |
 | Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | I1 boundary returns labelled deterministic fixture results; embedding, ranking, and MMR remain unimplemented. |

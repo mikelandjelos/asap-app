@@ -1,10 +1,10 @@
 # Project status
 
-Last verified: 2026-09-07
+Last verified: 2026-09-08
 
 ## Current phase
 
-ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner slice, source-level scan-to-Retrofit/Moshi I1 coordination, and UI for every frozen product/recommendation outcome; all 32 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The complete Android-to-backend path remains physically unvalidated; live product data, semantic search, persistence, and personalized recommendations also do not exist.
+ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner-to-Retrofit/Moshi I1 flow and UI for every frozen product/recommendation outcome; all 32 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The controlled end-to-end vertical slice is physically validated; live product data, semantic search, persistence, and personalized recommendations do not exist.
 
 ## Available artifacts
 
@@ -24,7 +24,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. The scanner slice is implemented, locally verified, and physically validated.
 - The baseline in `docs/ANDROID_BASELINE.md` is realized through T-005/S2: Android Platform 36, Build Tools 36.0.0, checksum-pinned Gradle Wrapper 9.5.0, AGP 9.3.2, AppCompat 1.8.0, ConstraintLayout 2.2.2, Google Code Scanner 16.1.0, and the JUnit/AndroidX test graph are installed or resolved.
 - The Android project lives in `android/` with one `app` module, namespace/application ID `rs.ac.ni.elfak.asap`, a Java `MainActivity`, one custom XML scanner screen, an isolated `network` package, helper logic covered by local tests, and a vector launcher icon.
-- The scanner is restricted to EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The UI reports success, empty value, cancellation, module/download unavailability, and general failure; it performs no product lookup.
+- The scanner is restricted to EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The UI reports empty value, cancellation, module/download unavailability, and general failure locally; a supported success enters the implemented I1 backend flow.
 - The source manifest includes install-time `barcode_ui` metadata and declares no camera permission. The merged scanner dependency adds internet and network-state permissions.
 - The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
 - Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
@@ -37,6 +37,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - T-007/S4.1 is accepted. The Android-side `ScanQueryClient` boundary uses Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and API-36-compatible OkHttp 5.3.2. It serializes the frozen request, validates all response unions, distinguishes transport/HTTP/invalid-response failures, maps the four scanner formats, and returns a cancellable call handle. Debug builds target device loopback and permit cleartext for `adb reverse`; release builds deny cleartext and use a non-routable placeholder URL.
 - T-007/S4.2 is accepted. `MainActivity` delegates supported successful scan values to a pure-Java `ScanQueryCoordinator`, which invokes `ScanQueryClient`, posts callback state through the Android main-thread executor, exposes loading and separated transport/HTTP/invalid-response states, cancels active work on a newer scan or destruction, and rejects stale callbacks. Empty, unsupported, cancelled, module-unavailable, and scanner-error paths do not submit a request. S4.3 builds outcome rendering on this boundary; no physical end-to-end claim is made before S4.4.
 - T-007/S4.3 is accepted. The scrollable custom XML screen renders normalized known-product details, distinct unknown/unavailable product states, and independent `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` recommendation states. Every placeholder outcome shows “Deterministički demo rezultat — nije AI preporuka”; result rows contain rank and product summary only, with no fabricated score. Five outcome-model tests verify all frozen combinations and preservation of known product data when recommendations are empty or unavailable.
+- T-007/S4.4 and task T-007 are accepted and complete. A clean build produced 32/32 passing Android tests, zero lint findings, a debug APK, and 23/23 passing backend tests. On the verified phone, the fresh APK used `adb reverse` to reach the local backend and physically displayed: the primary known product with almond/soy ranks and the exact demo-only label; unknown product with `NOT_APPLICABLE`; known product with empty recommendations; known product with unavailable recommendations while retaining product data; and backend unavailability with prior outcome content cleared. The backend was stopped gracefully, forwarding and temporary validation artifacts were removed, and the APK remains installed.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -66,7 +67,7 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-007/S4.3 is accepted; S4.4 physical validation is approved and in progress.
+- T-007 is accepted and closed. No subsequent task has been planned or authorized.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
 - Product metadata API and fallback dataset.
