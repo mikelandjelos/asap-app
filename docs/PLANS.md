@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1–S4.2 accepted; S4.3 approved; S4.4 not approved
+- **Status:** Plan approved; S1–S4.3 accepted; S4.4 approved
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -359,7 +359,7 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 #### T-007/S4 — Connect Android and validate the vertical slice
 
-- **Status:** S4.1–S4.2 accepted; S4.3 approved; S4.4 not approved
+- **Status:** S4.1–S4.3 accepted; S4.4 approved
 - **Communication contract:** Android sends the scanner-provided value and mapped EAN/UPC format to the frozen `POST /api/v1/scan-queries` HTTP/JSON operation. The backend returns independent product and recommendation outcomes. During physical-device development, `adb reverse tcp:8080 tcp:8080` exposes the PC backend as device loopback; cleartext HTTP is permitted only by a debug configuration. A deployed environment must use HTTPS.
 
 ##### T-007/S4.1 — Establish the Android API-client boundary
@@ -392,14 +392,17 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Show “Deterministički demo rezultat — nije AI preporuka” whenever `placeholder` is true; never display a fabricated score.
 - Add UI/state tests for the frozen outcomes and synchronize all affected documentation.
 - **Approval evidence:** The user explicitly instructed “start s4.3” on 2026-09-07.
-- **Status:** Approved; implementation in progress
+- **Evidence:** A scrollable custom XML outcome area now renders normalized known-product fields and separate recommendation state/content. `KNOWN`, `UNKNOWN`, product `UNAVAILABLE`, recommendation `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` have distinct Serbian states. Every `placeholder: true` outcome shows the exact mandatory demo-only label; rows show only rank/name/brand/category and no score. Product data remains present when recommendations are empty or unavailable. Five new pure-Java outcome-model tests cover all frozen combinations, bringing the Android total to 32; lint has zero findings and debug assembly succeeds. Physical end-to-end execution remains reserved for S4.4.
+- **Acceptance evidence:** The user explicitly responded “approved s4.3” on 2026-09-07.
+- **Status:** Accepted
 
 ##### T-007/S4.4 — Validate and close the physical vertical slice
 
 - Build both projects, start the backend locally, configure `adb reverse`, install the debug APK, and scan the controlled barcode asset on the verified phone.
 - Exercise the happy path plus feasible unknown, empty-result, recommendation-unavailable, and backend-unavailable behavior; record which cases are automated versus physically observed.
 - Re-run Android tests/lint/build and backend verification, inspect deliverables, synchronize TODO/status/architecture/plan/handoff/report/presentation, and stop for S4 and T-007 acceptance.
-- **Status:** Proposed; not approved
+- **Approval evidence:** The user explicitly instructed “continue to s4.4” on 2026-09-07.
+- **Status:** Approved; validation in progress
 
 ### Approved task-level acceptance criteria
 

@@ -2,7 +2,7 @@
 
 **Automatska Semantička Analiza Proizvoda** je planirani mobilni AI MVP za prepoznavanje proizvoda pomoću barkoda, semantičku pretragu i personalizovane preporuke.
 
-Projekat je u ranoj PoC fazi. Java/XML Android klijent u `android/` integriše Google Code Scanner i nakon uspešnog podržanog očitavanja poziva Retrofit/Moshi I1 granicu; svih 27 lokalnih testova i Android lint prolaze, a sam skener je fizički potvrđen. Java/Spring Boot backend u `backend/` implementira deterministički I1 ugovor nad kontrolisanim lokalnim podacima i ima 23 prolazna testa. Izvorno povezivanje aplikacija postoji, ali fizički Android--backend tok i prikaz sadržaja odgovora još nisu potvrđeni; stvarni izvori podataka, semantička pretraga i personalizovane preporuke nisu implementirani. Početni predlog projekta nalazi se u [LaTeX izveštaju](report/report.tex), plan rada u [TODO listi](TODO.md), a prezentacija u [Beamer izvoru](presentation/asap-presentation.tex).
+Projekat je u ranoj PoC fazi. Java/XML Android klijent u `android/` integriše Google Code Scanner, poziva Retrofit/Moshi I1 granicu i prikazuje odvojene ishode proizvoda i determinističkih demo rezultata; sva 32 lokalna testa i Android lint prolaze, a sam skener je fizički potvrđen. Java/Spring Boot backend u `backend/` implementira deterministički I1 ugovor nad kontrolisanim lokalnim podacima i ima 23 prolazna testa. Izvorno povezivanje i UI postoje, ali ceo Android--backend tok još nije fizički potvrđen; stvarni izvori podataka, semantička pretraga i personalizovane preporuke nisu implementirani. Početni predlog projekta nalazi se u [LaTeX izveštaju](report/report.tex), plan rada u [TODO listi](TODO.md), a prezentacija u [Beamer izvoru](presentation/asap-presentation.tex).
 
 ## Android PoC
 

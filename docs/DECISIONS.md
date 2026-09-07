@@ -151,3 +151,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** Scanner callbacks originate in `MainActivity`, while I1 callbacks complete asynchronously and may arrive after a newer scan or activity destruction.
 - **Decision:** Route successful supported scans through a pure-Java `ScanQueryCoordinator`. It owns the active cancellable call, rejects callbacks that no longer belong to the current request, and uses an injected executor before delivering API state to the view. Scanner cancellation and failures remain local and never trigger the client.
 - **Consequence:** Coordination is unit-testable without an Android runtime, visible state is changed on the main thread, and S4.3 can add outcome rendering without moving transport/lifecycle policy into UI widgets. S4.2 does not add retries, preserve requests across activity recreation, or render product/recommendation content.
+
+## D-020 — I1 product and recommendation outcomes render independently
+
+- **Status:** Accepted
+- **Date:** 2026-09-07
+- **Context:** The frozen response carries an independently useful product outcome and recommendation outcome; partial recommendation failure must not hide known product data.
+- **Decision:** Use one scrollable XML outcome area with separate product and recommendation sections. Map the validated union into a pure-Java UI model, render every state explicitly, and show the exact deterministic-demo label whenever `placeholder` is true. Recommendation rows contain rank and product summary only.
+- **Consequence:** Known product data remains visible for empty or unavailable recommendations, unknown and unavailable products remain distinguishable, and the I1 UI cannot imply an AI similarity score. S4.3 does not add richer styling, navigation, persistence, or physical integration evidence.

@@ -5,8 +5,8 @@
   !define DIAGRAM_TITLE ASAP — Planirana arhitektura MVP-a
   !define USER_LABEL Korisnik
   !define DEVICE_LABEL Android uređaj
-  !define APP_LABEL ASAP Android aplikacija\n[skener i API povezivanje implementirani]
-  !define UI_LABEL Korisnički interfejs
+  !define APP_LABEL ASAP Android aplikacija\n[I1 klijentski tok implementiran]
+  !define UI_LABEL Korisnički interfejs\n[I1 ishodi implementirani]
   !define SCAN_ADAPTER_LABEL Integracija skenera\n[implementirano]
   !define API_CLIENT_LABEL API klijent\n[poziv iz skenera implementiran]
   !define HISTORY_LABEL Lokalna ograničena istorija\n[prošireni MVP]
@@ -34,13 +34,13 @@
   !define FLOW_RESPONSE proizvod + zaseban ishod preporuka
   !define LEGEND_1 Puna strelica: planirani tok tokom rada
   !define LEGEND_2 Isprekidana strelica: rezervni ili eksterni tok
-  !define LEGEND_3 Skener, Android koordinacija/API klijent i backend I1 su implementirani; fizička provera, prikaz odgovora i AI tokovi su planirani.
+  !define LEGEND_3 Skener, Android I1 tok i backend I1 su implementirani; fizička provera i AI tokovi su planirani.
 !else
   !define DIAGRAM_TITLE ASAP — Proposed MVP architecture
   !define USER_LABEL User
   !define DEVICE_LABEL Android device
-  !define APP_LABEL ASAP Android app\n[scanner and API connection implemented]
-  !define UI_LABEL User interface
+  !define APP_LABEL ASAP Android app\n[I1 client flow implemented]
+  !define UI_LABEL User interface\n[I1 outcomes implemented]
   !define SCAN_ADAPTER_LABEL Scanner integration\n[implemented]
   !define API_CLIENT_LABEL API client\n[scanner invocation implemented]
   !define HISTORY_LABEL Local bounded history\n[extended MVP]
@@ -68,7 +68,7 @@
   !define FLOW_RESPONSE product + separate recommendation outcome
   !define LEGEND_1 Solid arrow: planned runtime information flow
   !define LEGEND_2 Dashed arrow: fallback or external flow
-  !define LEGEND_3 Scanner, Android coordination/API client, and backend I1 are implemented; physical validation, response UI, and AI flows are planned.
+  !define LEGEND_3 Scanner, Android I1 flow, and backend I1 are implemented; physical validation and AI flows are planned.
 !endif
 
 title DIAGRAM_TITLE

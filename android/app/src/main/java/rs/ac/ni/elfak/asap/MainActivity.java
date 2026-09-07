@@ -1,6 +1,7 @@
 package rs.ac.ni.elfak.asap;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +21,12 @@ public final class MainActivity extends AppCompatActivity {
     private Button scanButton;
     private TextView statusText;
     private TextView resultText;
+    private View outcomeContent;
+    private TextView productStatusText;
+    private TextView productDetailsText;
+    private TextView recommendationStatusText;
+    private TextView placeholderText;
+    private TextView recommendationsText;
     private GmsBarcodeScanner scanner;
     private ScanQueryCoordinator queryCoordinator;
 
@@ -31,6 +38,12 @@ public final class MainActivity extends AppCompatActivity {
         scanButton = findViewById(R.id.scan_button);
         statusText = findViewById(R.id.status_text);
         resultText = findViewById(R.id.result_text);
+        outcomeContent = findViewById(R.id.outcome_content);
+        productStatusText = findViewById(R.id.product_status_text);
+        productDetailsText = findViewById(R.id.product_details_text);
+        recommendationStatusText = findViewById(R.id.recommendation_status_text);
+        placeholderText = findViewById(R.id.placeholder_text);
+        recommendationsText = findViewById(R.id.recommendations_text);
 
         GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder()
                 .setBarcodeFormats(
@@ -51,6 +64,7 @@ public final class MainActivity extends AppCompatActivity {
 
     private void startScan() {
         queryCoordinator.onScanStarted();
+        hideOutcome();
         setScanning(true);
 
         scanner.startScan()
@@ -88,22 +102,92 @@ public final class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void hideOutcome() {
+        outcomeContent.setVisibility(View.GONE);
+    }
+
+    private void renderOutcome(I1ApiModels.ScanQueryResponse response) {
+        I1OutcomeUiModel model = I1OutcomeUiModel.fromValidatedResponse(response);
+        outcomeContent.setVisibility(View.VISIBLE);
+
+        switch (model.productState) {
+            case KNOWN:
+                productStatusText.setText(R.string.product_known);
+                productDetailsText.setText(getString(
+                        R.string.product_details_format,
+                        model.product.name,
+                        model.product.brand,
+                        model.product.category,
+                        model.product.description,
+                        model.product.barcode.value,
+                        model.product.barcode.format,
+                        model.product.provenance.source));
+                productDetailsText.setVisibility(View.VISIBLE);
+                break;
+            case UNKNOWN:
+                productStatusText.setText(R.string.product_unknown);
+                productDetailsText.setVisibility(View.GONE);
+                break;
+            case UNAVAILABLE:
+                productStatusText.setText(R.string.product_unavailable);
+                productDetailsText.setVisibility(View.GONE);
+                break;
+        }
+
+        switch (model.recommendationState) {
+            case RESULTS:
+                recommendationStatusText.setText(R.string.recommendations_results);
+                StringBuilder renderedItems = new StringBuilder();
+                for (I1ApiModels.RecommendationItem item : model.items) {
+                    if (renderedItems.length() > 0) {
+                        renderedItems.append('\n');
+                    }
+                    renderedItems.append(getString(
+                            R.string.recommendation_item_format,
+                            item.rank,
+                            item.product.name,
+                            item.product.brand,
+                            item.product.category));
+                }
+                recommendationsText.setText(renderedItems.toString());
+                recommendationsText.setVisibility(View.VISIBLE);
+                break;
+            case EMPTY:
+                recommendationStatusText.setText(R.string.recommendations_empty);
+                recommendationsText.setVisibility(View.GONE);
+                break;
+            case UNAVAILABLE:
+                recommendationStatusText.setText(R.string.recommendations_unavailable);
+                recommendationsText.setVisibility(View.GONE);
+                break;
+            case NOT_APPLICABLE:
+                recommendationStatusText.setText(R.string.recommendations_not_applicable);
+                recommendationsText.setVisibility(View.GONE);
+                break;
+        }
+
+        placeholderText.setVisibility(model.placeholder ? View.VISIBLE : View.GONE);
+    }
+
     private final class QueryView implements ScanQueryCoordinator.View {
 
         @Override
         public void showEmptyBarcode() {
+            hideOutcome();
             statusText.setText(R.string.scan_empty);
             resultText.setText(R.string.scan_no_value);
         }
 
         @Override
         public void showUnsupportedBarcode(String value) {
+            hideOutcome();
             statusText.setText(R.string.scan_unsupported);
             resultText.setText(value);
         }
 
         @Override
         public void showLoading(String value) {
+            hideOutcome();
             statusText.setText(R.string.api_loading);
             resultText.setText(value);
         }
@@ -112,10 +196,12 @@ public final class MainActivity extends AppCompatActivity {
         public void showResponse(String value, I1ApiModels.ScanQueryResponse response) {
             statusText.setText(R.string.api_response_received);
             resultText.setText(value);
+            renderOutcome(response);
         }
 
         @Override
         public void showFailure(String value, ScanQueryClient.Failure failure) {
+            hideOutcome();
             switch (failure.kind()) {
                 case TRANSPORT:
                     statusText.setText(R.string.api_transport_failure);

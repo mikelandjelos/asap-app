@@ -2,7 +2,7 @@
 
 Status: Accepted and frozen under completed T-004.
 
-Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below, and S4.2 connects supported successful scans to it without changing this frozen build baseline.
+Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below, S4.2 connects supported successful scans to it, and S4.3 adds the I1 outcome UI without changing this frozen build baseline.
 
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 

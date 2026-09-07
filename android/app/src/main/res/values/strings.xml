@@ -17,4 +17,16 @@
     <string name="api_transport_failure">Backend servis nije dostupan. Proverite vezu i pokušajte ponovo.</string>
     <string name="api_http_failure">Backend servis je vratio grešku (HTTP %1$d). Pokušajte ponovo.</string>
     <string name="api_invalid_response">Backend servis je vratio neupotrebljiv odgovor.</string>
+    <string name="product_section_label">Proizvod</string>
+    <string name="product_known">Proizvod je pronađen.</string>
+    <string name="product_unknown">Proizvod nije pronađen u kontrolisanom skupu.</string>
+    <string name="product_unavailable">Podaci o proizvodu trenutno nisu dostupni.</string>
+    <string name="product_details_format">%1$s\nBrend: %2$s\nKategorija: %3$s\nOpis: %4$s\nBarkod: %5$s (%6$s)\nIzvor: %7$s</string>
+    <string name="recommendations_section_label">Rezultati</string>
+    <string name="recommendations_results">Dostupni su rangirani demo rezultati.</string>
+    <string name="recommendations_empty">Proizvod je pronađen, ali nema demo rezultata.</string>
+    <string name="recommendations_unavailable">Proizvod je prikazan, ali demo rezultati trenutno nisu dostupni.</string>
+    <string name="recommendations_not_applicable">Rezultati nisu primenljivi bez poznatog proizvoda.</string>
+    <string name="deterministic_placeholder_label">Deterministički demo rezultat — nije AI preporuka</string>
+    <string name="recommendation_item_format">%1$d. %2$s — %3$s (%4$s)</string>
 </resources>

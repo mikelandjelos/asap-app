@@ -72,7 +72,7 @@
 \end{frame}
 
 \begin{frame}{Arhitektonske granice MVP-a}
-  \textcolor{gray}{\footnotesize Skener, backend I1 i izvorno povezivanje implementirani; prikaz i fizička provera slede}
+  \textcolor{gray}{\footnotesize Skener, backend I1, povezivanje i prikaz ishoda implementirani; fizička provera sledi}
   \begin{itemize}
     \item dva postavljanja: Android aplikacija i jedna backend aplikacija;
     \item backend je modularni monolit: API, razrešavanje proizvoda i preporuke su interni moduli;
@@ -119,7 +119,7 @@
 
 \begin{frame}{Izabrane tehnologije}
   \begin{itemize}
-    \item Android klijent: Java/XML modul \texttt{android/app}; build, 27 testova i lint prolaze;
+    \item Android klijent: Java/XML modul \texttt{android/app}; build, 32 testa i lint prolaze;
     \item skeniranje: Google Code Scanner 16.1.0, EAN/UPC, bez dozvole aplikacije za kameru;
     \item build: AGP 9.3.2, Gradle 9.5.0, Java 17, API 36 i \texttt{minSdk 23};
     \item UI: AppCompat 1.8.0 i ConstraintLayout 2.2.2;
@@ -142,8 +142,9 @@
     \item potvrđen očekivani status pri otkazivanju skeniranja;
     \item implementiran deterministički I1 backend sa odvojenim ishodima proizvoda i rezultata;
     \item skener je povezan sa Android API granicom uz otkazivanje zastarelih zahteva;
+    \item prikazani su odvojeni ishodi proizvoda i demo rezultata, bez AI skora;
     \item 23 backend testa prolaze; izvršni JAR vraća očekivani kontrolisani odgovor;
-    \item \textcolor{gray}{Prikaz I1 odgovora, fizička provera, stvarni podaci, semantička pretraga i preporuke su planirani.}
+    \item \textcolor{gray}{Fizička provera, stvarni podaci, semantička pretraga i preporuke su planirani.}
   \end{itemize}
 \end{frame}
 
