@@ -135,3 +135,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The first vertical slice must prove Android-to-backend behavior reproducibly without making claims about live metadata, semantic similarity, or personalization.
 - **Decision:** Use `POST /api/v1/scan-queries` with scanner-provided barcode value/format, exact GS1 validation, independent product and recommendation outcomes, and RFC 9457 request errors. Use the versioned local fixture set and restricted-circulation EAN-13 codes in `docs/fixtures/`. Every known-product recommendation outcome is marked `DETERMINISTIC_FIXTURE` and `placeholder: true`, carries no AI score, and requires an explicit non-AI demo label.
 - **Consequence:** S3 must implement all nine contract cases while preserving known-product details when recommendation results are empty or unavailable. Fixture codes may never be sent to an external product provider. History, providers, embeddings, vector search, scores, and Android integration remain deferred.
+
+## D-018 — Android I1 boundary uses Retrofit, Moshi, and debug-only ADB transport
+
+- **Status:** Accepted
+- **Date:** 2026-09-07
+- **Context:** Android needs a small type-safe Java boundary for the frozen HTTP/JSON operation, complete outcome validation, asynchronous/cancellable calls, and a low-friction physical-phone development path without prematurely connecting the scanner UI.
+- **Decision:** Use Retrofit 3.0.0 with converter-moshi 3.0.0, resolved Moshi 1.15.2, and an explicit OkHttp 5.3.2 override behind the app-owned `ScanQueryClient` interface. OkHttp 5.5.0 was evaluated but rejected because its Android artifact requires compile SDK 37, conflicting with the accepted API-36 baseline. Use `http://127.0.0.1:8080/` plus `adb reverse tcp:8080 tcp:8080` only in debug builds; release builds deny cleartext and use a non-routable HTTPS placeholder until hosting is selected.
+- **Consequence:** S4.2 can coordinate scans without binding UI code directly to Retrofit and can cancel stale calls. Response conversion/validation occurs off the UI thread, while S4.2 must explicitly marshal visible state changes to the main thread. No production endpoint, authentication, retry policy, scanner invocation, or result UI is selected by this decision.

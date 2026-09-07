@@ -1,6 +1,6 @@
 # Accepted deterministic I1 contract
 
-Status: Accepted and frozen under T-007/S2. The backend implementation is accepted under T-007/S3; it is not connected to Android until S4.
+Status: Accepted and frozen under T-007/S2. The backend implementation is accepted under T-007/S3. S4.1 implements an isolated Android client boundary, but the scanner does not invoke it until S4.2.
 
 The contract proves the Android-to-backend boundary with controlled data. It must not be presented as live product resolution, semantic similarity, or personalization.
 

@@ -1,9 +1,15 @@
 # Session handoff
 
-Last updated: 2026-09-05
+Last updated: 2026-09-07
 
 ## Completed in the latest documentation session
 
+- The user explicitly accepted T-007/S4.1 on 2026-09-07. S4.2–S4.4 remain unauthorized.
+- Android now has an isolated, app-owned `ScanQueryClient` implemented with Retrofit 3.0.0, converter-moshi 3.0.0, Moshi 1.15.2, and OkHttp 5.3.2. It serializes the frozen request, validates every response union, maps all four accepted scanner formats, distinguishes transport/HTTP/invalid-response failures, and returns a cancellable handle. `MainActivity` does not reference it.
+- Debug builds alone permit cleartext and use `http://127.0.0.1:8080/` for `adb reverse tcp:8080 tcp:8080`; release builds deny cleartext and use a non-routable HTTPS placeholder. OkHttp 5.5.0 was rejected during verification because it requires compile SDK 37; 5.3.2 preserves the accepted API-36 baseline.
+- Android verification passes with 20 tests, zero lint issues, successful debug assembly, and inspected debug/release merged manifests. Operational/formal documentation and diagram status annotations were synchronized. The next permissible action is review and explicit approval or revision of the proposed S4.2 plan, not its implementation.
+- T-007/S3 was committed as `94d4c9f` (`Implement I1 backend`) after explicit acceptance. The T-007/S4 integration plan is now refined into four separately gated phases: API-client foundation, scan coordination, outcome UI, and physical validation. No S4 implementation phase is approved.
+- The proposed development transport uses the frozen HTTP/JSON contract through `adb reverse tcp:8080 tcp:8080`, a device-loopback base URL, and debug-only cleartext permission. Any deployed endpoint must use HTTPS.
 - The user explicitly accepted T-007/S3 with “I accept the changes, continue with your work” on 2026-09-05. S4 remains unauthorized. The new `backend/` Java 21/Spring Boot 4.1.1 modular monolith implements the frozen I1 API through separate API, coordination, product-resolution, recommendation, validation, and fixture-loading boundaries.
 - The checksum-pinned Maven 3.9.16 Wrapper builds an executable JAR and packages the canonical `docs/fixtures/i1-products.json` without a duplicate editable copy. No external provider, database, embedding, vector index, Android networking, or AI-result claim was introduced.
 - `./mvnw verify` passes all 23 tests: 11 barcode-rule cases and 12 real-HTTP API cases covering known, unknown, product unavailable, deterministic results, empty results, recommendation unavailable, repeatability, validation, media type, and body-size behavior. The executable JAR starts on Java 21 and returns the exact primary fixture response in a localhost smoke test.
@@ -94,12 +100,12 @@ Last updated: 2026-09-05
 - Documentation scaffolding is operational.
 - Formal report and presentation sources compile.
 - The accepted MVP scope/iteration contract and concrete architecture contract are synchronized; T-006 is closed.
-- A buildable Android Java/XML scanner slice and seven local unit tests exist. The debug APK is installed, launched, has completed two successful real-product scans, and handles cancellation as intended; the data pipeline remains unimplemented.
-- The backend baseline, I1 contract/fixtures, and S3 implementation are accepted; product-data providers, models, storage products, and S4 integration remain open.
+- A buildable Android Java/XML scanner slice and isolated I1 API-client boundary exist with 20 passing local tests. The scanner remains physically verified, but does not yet invoke the client.
+- The backend baseline, I1 contract/fixtures, S3 implementation, and S4.1 Android API-client boundary are accepted; product-data providers, models, storage products, and scan-to-backend integration remain open.
 
 ## Suggested next session
 
-Refine and review the T-007/S4 integration plan, then execute only its first explicitly approved phase.
+Review and explicitly approve or request changes to the proposed T-007/S4.2 plan. Do not execute S4.2 without explicit approval.
 
 ## Blockers
 

@@ -315,7 +315,7 @@ All task-level acceptance criteria were verified and the user explicitly accepte
 ## T-007 — Deliver the deterministic I1 vertical slice
 
 - **TODO sources:** “Postaviti početne projekte za mobilnu aplikaciju i backend,” “Definisati modele proizvoda, korisničke interakcije i preporuke,” and the accepted I1 iteration in `docs/MVP_SCOPE.md`.
-- **Status:** Plan approved; S1–S3 accepted; S4 not approved
+- **Status:** Plan approved; S1–S4.1 accepted; S4.2–S4.4 not approved
 - **Goal:** Demonstrate the accepted Android-to-backend boundary with controlled fixture data before introducing external product providers, embeddings, vector storage, or semantic-result claims.
 
 The user explicitly approved the four-subtask plan and authorized only T-007/S1 with “continue with T-007:S1” on 2026-09-05.
@@ -359,12 +359,43 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 #### T-007/S4 — Connect Android and validate the vertical slice
 
-- **Status:** Not approved
+- **Status:** S4.1 accepted; later phases not approved
+- **Communication contract:** Android sends the scanner-provided value and mapped EAN/UPC format to the frozen `POST /api/v1/scan-queries` HTTP/JSON operation. The backend returns independent product and recommendation outcomes. During physical-device development, `adb reverse tcp:8080 tcp:8080` exposes the PC backend as device loopback; cleartext HTTP is permitted only by a debug configuration. A deployed environment must use HTTPS.
 
-- Add the Android API-client boundary and custom product/result UI while preserving the accepted Google Code Scanner integration.
-- Exercise a controlled barcode from the physical phone through the backend to product details and a clearly labelled deterministic placeholder list.
-- Verify unknown-product and feasible backend-unavailable/empty-result behavior with automated checks and a reproducible phone demonstration.
-- Synchronize TODO, architecture, status, plan, handoff, report, and presentation, then stop for subtask and task-level acceptance.
+##### T-007/S4.1 — Establish the Android API-client boundary
+
+- Compare and select the smallest maintainable Java HTTP/JSON client compatible with the accepted Android baseline; record the dependency/version decision before adding it.
+- Add contract DTOs, barcode-format mapping, API invocation boundary, and an injectable base URL without invoking it from the scanner UI.
+- Add a debug-only localhost/cleartext configuration for the `adb reverse` development path; do not weaken release network security.
+- Test request serialization, all frozen response unions, malformed/unusable response handling, and transport-failure classification without requiring the physical phone.
+- Synchronize `TODO.md`, `docs/DECISIONS.md`, `docs/PROJECT_STATUS.md`, `docs/ARCHITECTURE.md`, `docs/WORKFLOW.md`, `docs/PLANS.md`, `docs/SESSION_HANDOFF.md`, report, and presentation as affected.
+- **Approval evidence:** The user explicitly responded “I explicitly approve s4.1; let's continue” on 2026-09-07.
+- **Evidence:** The Android `network` package defines an app-owned cancellable `ScanQueryClient`, Retrofit service, frozen DTOs, strict outcome validator, scanner-format mapper, injectable/default client factory, and transport/HTTP/invalid-response failure classes. Debug builds target `http://127.0.0.1:8080/` and alone permit cleartext for the documented ADB reverse path; the release manifest denies cleartext and uses a non-routable HTTPS placeholder. Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and API-36-compatible OkHttp 5.3.2 are resolved; OkHttp 5.5.0 was rejected by AAR metadata because it requires compile SDK 37. Twenty local tests pass, including request serialization, all product/recommendation unions, invalid JSON/invariants, HTTP/transport classification, cancellation, and four format mappings; lint reports zero issues, debug assembly succeeds, and both merged manifest policies were inspected. `MainActivity` has no reference to the new boundary, so S4.2 behavior is not claimed.
+- **Acceptance evidence:** The user explicitly responded “I accept s4.1” on 2026-09-07.
+- **Status:** Accepted
+
+##### T-007/S4.2 — Connect successful scans to the backend
+
+- Submit only successful supported EAN/UPC scans through the API-client boundary; preserve cancellation, empty-value, module-unavailable, and scanner-error behavior without network calls.
+- Add explicit loading and transport/backend-unavailable states, and prevent stale responses from replacing newer UI state.
+- Test format mapping, scan-to-request coordination, lifecycle-safe state behavior, and failure separation.
+- Synchronize all affected operational/formal documentation in the same phase.
+- **Status:** Proposed; not approved
+
+##### T-007/S4.3 — Render product and deterministic-result outcomes
+
+- Add minimal custom XML views for normalized product details and the independent recommendation status/results.
+- Render `KNOWN`, `UNKNOWN`, product `UNAVAILABLE`, recommendation `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` distinctly while preserving known product data on recommendation failure.
+- Show “Deterministički demo rezultat — nije AI preporuka” whenever `placeholder` is true; never display a fabricated score.
+- Add UI/state tests for the frozen outcomes and synchronize all affected documentation.
+- **Status:** Proposed; not approved
+
+##### T-007/S4.4 — Validate and close the physical vertical slice
+
+- Build both projects, start the backend locally, configure `adb reverse`, install the debug APK, and scan the controlled barcode asset on the verified phone.
+- Exercise the happy path plus feasible unknown, empty-result, recommendation-unavailable, and backend-unavailable behavior; record which cases are automated versus physically observed.
+- Re-run Android tests/lint/build and backend verification, inspect deliverables, synchronize TODO/status/architecture/plan/handoff/report/presentation, and stop for S4 and T-007 acceptance.
+- **Status:** Proposed; not approved
 
 ### Approved task-level acceptance criteria
 

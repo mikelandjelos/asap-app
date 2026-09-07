@@ -46,7 +46,7 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 
 ## 4. MVP implementacija i integracija
 
-- [ ] Implementirati kameru i skeniranje barkoda na mobilnom uređaju.
+- [x] Implementirati kameru i skeniranje barkoda na mobilnom uređaju.
 - [ ] Povezati barkod sa metapodacima proizvoda preko backend API-ja.
 - [ ] Integrisati semantičku pretragu i preporuke.
 - [ ] Implementirati osnovni UI za proizvod, slične proizvode i personalizovane preporuke.

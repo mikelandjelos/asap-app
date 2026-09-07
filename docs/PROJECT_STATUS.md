@@ -1,10 +1,10 @@
 # Project status
 
-Last verified: 2026-09-05
+Last verified: 2026-09-07
 
 ## Current phase
 
-ASAP is in early vertical-slice implementation. A buildable Java/XML Google Code Scanner slice and seven local unit tests exist; its debug APK is physically validated. A Java 21/Spring Boot backend now implements the deterministic I1 contract with packaged controlled fixtures and 23 passing tests. Android-to-backend networking, live product data, semantic search, persistence, and personalized recommendations do not yet exist.
+ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner slice plus an isolated Retrofit/Moshi I1 client boundary; all 20 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The scanner does not yet invoke the client, so Android-to-backend behavior remains unimplemented; live product data, semantic search, persistence, and personalized recommendations also do not exist.
 
 ## Available artifacts
 
@@ -23,7 +23,7 @@ ASAP is in early vertical-slice implementation. A buildable Java/XML Google Code
 - The report embeds the Serbian component and scan-to-recommendation diagrams; the presentation embeds their slide-specific Serbian variants. T-001 is accepted and complete.
 - The accepted initial Android baseline is Java application code, XML-based Android Views, and Google Code Scanner. The scanner slice is implemented, locally verified, and physically validated.
 - The baseline in `docs/ANDROID_BASELINE.md` is realized through T-005/S2: Android Platform 36, Build Tools 36.0.0, checksum-pinned Gradle Wrapper 9.5.0, AGP 9.3.2, AppCompat 1.8.0, ConstraintLayout 2.2.2, Google Code Scanner 16.1.0, and the JUnit/AndroidX test graph are installed or resolved.
-- The Android project lives in `android/` with one `app` module, namespace/application ID `rs.ac.ni.elfak.asap`, a Java `MainActivity`, one custom XML scanner screen, helper logic covered by local tests, and a vector launcher icon.
+- The Android project lives in `android/` with one `app` module, namespace/application ID `rs.ac.ni.elfak.asap`, a Java `MainActivity`, one custom XML scanner screen, an isolated `network` package, helper logic covered by local tests, and a vector launcher icon.
 - The scanner is restricted to EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. The UI reports success, empty value, cancellation, module/download unavailability, and general failure; it performs no product lookup.
 - The source manifest includes install-time `barcode_ui` metadata and declares no camera permission. The merged scanner dependency adds internet and network-state permissions.
 - The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
@@ -34,6 +34,7 @@ ASAP is in early vertical-slice implementation. A buildable Java/XML Google Code
 - T-007/S1 is accepted: `docs/BACKEND_BASELINE.md` freezes OpenJDK 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one Maven project under `backend/`. S3 realizes this exact baseline.
 - T-007/S2 is accepted. `docs/I1_CONTRACT.md` freezes `POST /api/v1/scan-queries`, exact request validation, independent product/recommendation outcomes, RFC 9457 errors, deterministic-placeholder labelling, and nine acceptance cases. Canonical fixtures and a scannable restricted-circulation EAN-13 SVG live under `docs/fixtures/`.
 - T-007/S3 is accepted. `backend/` packages the canonical fixture and exposes API, coordination, product-resolution, recommendation, and barcode-validation boundaries. `./mvnw verify` passes 23 tests (11 barcode rules and 12 real-HTTP contract tests); the executable JAR starts and returns the expected primary fixture response. It contains no Android client, external provider, embeddings, vector storage, or genuine recommendation logic.
+- T-007/S4.1 is accepted. The Android-side `ScanQueryClient` boundary uses Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and API-36-compatible OkHttp 5.3.2. It serializes the frozen request, validates all response unions, distinguishes transport/HTTP/invalid-response failures, maps the four scanner formats, and returns a cancellable call handle. Debug builds target device loopback and permit cleartext for `adb reverse`; release builds deny cleartext and use a non-routable placeholder URL. `MainActivity` does not create or call this client.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -63,7 +64,7 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-007/S3 is accepted; S4 Android integration is not authorized.
+- T-007/S4.1 is accepted; S4.2 scan-to-client coordination is proposed but not authorized.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
 - Product metadata API and fallback dataset.

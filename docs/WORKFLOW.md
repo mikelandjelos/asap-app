@@ -102,7 +102,7 @@ The verified device has enabled Google Play services and declares rear/front cam
 
 The Android project uses the exact baseline in `docs/ANDROID_BASELINE.md`: AGP 9.3.2, Gradle Wrapper 9.5.0, Gradle on OpenJDK 21, Java source/target 17, `compileSdk 36`, `targetSdk 36`, `minSdk 23`, and Build Tools 36.0.0. Configure only `google()` and `mavenCentral()` repositories and never use dynamic dependency versions.
 
-Required production coordinates are Code Scanner 16.1.0, AppCompat 1.8.0, and ConstraintLayout 2.2.2. The initial tests use JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0. Material Views, direct ML Kit Barcode Scanning, and CameraX remain deferred.
+Required production coordinates are Code Scanner 16.1.0, AppCompat 1.8.0, ConstraintLayout 2.2.2, Retrofit/converter-moshi 3.0.0, and OkHttp 5.3.2; Moshi resolves to 1.15.2. The tests use JUnit 4.13.2, AndroidX JUnit 1.3.0, and Espresso 3.7.0. Material Views, direct ML Kit Barcode Scanning, and CameraX remain deferred.
 
 Platform 36, Build Tools 36.0.0, the Gradle Wrapper, all accepted UI/test dependencies, and Google Code Scanner 16.1.0 are installed or resolved.
 
@@ -117,7 +117,18 @@ ANDROID_HOME=/home/mih/Android/Sdk ./gradlew clean testDebugUnitTest lintDebug a
 
 The debug APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`; all generated build output and machine-local configuration are ignored. The committed Gradle distribution checksum is `553c78f50dafcd54d65b9a444649057857469edf836431389695608536d6b746`, and the wrapper JAR checksum is `497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7`.
 
-For S2, seven unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The scanner dependency contributes internet and network-state permissions for its unbundled Google Play services flow.
+For S4.1, 20 unit tests, lint, and debug assembly pass; lint reports zero findings. APK inspection confirms application ID `rs.ac.ni.elfak.asap`, min SDK 23, target SDK 36, `barcode_ui` module metadata, and no application camera permission. The source manifest now explicitly declares normal `INTERNET` access for the API client; the scanner dependency also contributes network-state permission.
+
+### Debug phone-to-host transport
+
+The S4.1 client is isolated from `MainActivity`, but its approved later physical-development path is already configured:
+
+```sh
+adb reverse tcp:8080 tcp:8080
+adb reverse --list
+```
+
+The debug build uses `http://127.0.0.1:8080/`, which refers to device loopback and is forwarded to the PC by ADB. Only `src/debug/AndroidManifest.xml` permits cleartext; the release manifest explicitly denies it and uses `https://example.invalid/` until a real HTTPS deployment decision is approved. Do not use the placeholder as a deployable endpoint.
 
 ### Scanner PoC installation and launch
 

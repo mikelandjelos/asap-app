@@ -2,7 +2,7 @@
 
 Status: Accepted and frozen under completed T-004.
 
-Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. Physical-device validation remains pending T-005/S3.
+Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below without changing this frozen build baseline.
 
 Last researched: 2026-09-04 from official Android, Google ML Kit, AndroidX, Gradle, and upstream library documentation.
 
@@ -56,7 +56,11 @@ T-004/S2 freezes the following choices from the accepted S1 recommendation:
 4. The minimal JUnit/Espresso test baseline.
 5. Deferring Material Views, direct ML Kit Barcode Scanning, and CameraX.
 
-These decisions were made before implementation. Their current realization is tracked in `docs/PROJECT_STATUS.md`; scanner runtime validation remains outside this baseline document.
+These decisions were made before implementation. Their current realization is tracked in `docs/PROJECT_STATUS.md`.
+
+## Accepted S4.1 networking extension
+
+T-007/S4.1 adds Retrofit 3.0.0, converter-moshi 3.0.0, resolved Moshi 1.15.2, and OkHttp 5.3.2 behind the app-owned `ScanQueryClient`. OkHttp 5.5.0 is not compatible with this baseline because its Android artifact requires compile SDK 37; the accepted stable Android 16/API-36 build remains unchanged. Debug-only device-loopback HTTP supports ADB reverse, while release builds deny cleartext and have no usable production endpoint. This extension does not connect `MainActivity` to the backend.
 
 ## Official sources
 
@@ -73,3 +77,7 @@ These decisions were made before implementation. Their current realization is tr
 - [AndroidX Test releases](https://developer.android.com/jetpack/androidx/releases/test)
 - [JUnit 4 releases](https://github.com/junit-team/junit4/releases)
 - [Material Components for Android releases](https://github.com/material-components/material-components-android/releases)
+- [Retrofit](https://github.com/square/retrofit)
+- [OkHttp changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+- [Android network operations](https://developer.android.com/develop/connectivity/network-ops/connecting)
+- [Android network security configuration](https://developer.android.com/privacy-and-security/security-config)

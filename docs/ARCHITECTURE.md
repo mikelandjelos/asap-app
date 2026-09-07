@@ -1,6 +1,6 @@
 # Architecture
 
-Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner and deterministic fixture-backed backend slices are implemented; their network integration and all genuine data/AI components remain planned.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, isolated API-client boundary, and deterministic fixture-backed backend slices are implemented; scan-to-client coordination and all genuine data/AI components remain planned.
 
 T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
@@ -24,7 +24,9 @@ The external product source is outside ASAP's trust and availability boundary. A
 - Google Code Scanner 16.1.0 handles EAN-13, EAN-8, UPC-A, and UPC-E with auto-zoom. Google Play services owns the scanner camera experience; ASAP declares no camera permission.
 - Success, cancellation, empty value, module/download unavailability, and general failure have implemented user-visible states. Seven local unit tests and Android lint pass.
 - The debug APK is installed on the verified phone. Two real-product scans and cancellation were confirmed.
-- No API client, application persistence, live product lookup, vector search, or recommendation display exists yet.
+- The `network` package implements an app-owned `ScanQueryClient`, I1 DTOs/invariant validation, EAN/UPC format mapping, and failure classification through Retrofit/Moshi/OkHttp. Calls are cancellable and conversion callbacks stay off the UI thread.
+- The debug base URL is `http://127.0.0.1:8080/` for `adb reverse`; only the debug manifest permits cleartext. The release manifest denies cleartext and carries no usable production endpoint.
+- `MainActivity` does not construct or call the client. Application persistence, live product lookup, vector search, and recommendation display do not exist yet.
 
 ## Implemented deterministic backend slice
 
@@ -34,7 +36,7 @@ The external product source is outside ASAP's trust and availability boundary. A
 - Eleven barcode-rule tests and twelve full HTTP contract tests pass; the packaged executable JAR was started and smoke-tested.
 - There is no external adapter call, database, vector index, embedding, personalization, Android network client, or production deployment.
 
-The diagrams mark scanner integration and the deterministic backend contract as implemented. The connecting Android API-client arrows and genuine metadata/vector flows remain design intent.
+The diagrams mark scanner integration, the isolated Android API boundary, and deterministic backend contract as implemented. The scan-to-client coordination arrow, device/backend runtime exchange, and genuine metadata/vector flows remain design intent.
 
 ## Component responsibilities and ownership
 
@@ -72,7 +74,7 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 - Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
 - Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
 
-Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. The S3 backend implements only this deterministic subset; Android does not consume it until S4.
+Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.1 implements the isolated client contract, but Android does not consume it until S4.2.
 
 ## Failure boundaries
 

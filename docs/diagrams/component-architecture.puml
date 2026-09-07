@@ -5,10 +5,10 @@
   !define DIAGRAM_TITLE ASAP — Planirana arhitektura MVP-a
   !define USER_LABEL Korisnik
   !define DEVICE_LABEL Android uređaj
-  !define APP_LABEL ASAP Android aplikacija\n[skener implementiran; API klijent planiran]
+  !define APP_LABEL ASAP Android aplikacija\n[skener i API granica implementirani]
   !define UI_LABEL Korisnički interfejs
   !define SCAN_ADAPTER_LABEL Integracija skenera\n[implementirano]
-  !define API_CLIENT_LABEL API klijent\n[planirano]
+  !define API_CLIENT_LABEL API klijent\n[izolovana granica implementirana; poziv S4.2]
   !define HISTORY_LABEL Lokalna ograničena istorija\n[prošireni MVP]
   !define GCS_LABEL Google Code Scanner\n[Google Play servisi]
   !define BACKEND_LABEL Jedna backend aplikacija\n[modularni monolit implementiran za I1]
@@ -34,15 +34,15 @@
   !define FLOW_RESPONSE proizvod + zaseban ishod preporuka
   !define LEGEND_1 Puna strelica: planirani tok tokom rada
   !define LEGEND_2 Isprekidana strelica: rezervni ili eksterni tok
-  !define LEGEND_3 Skener i deterministički backend I1 su implementirani; API klijent i AI tokovi su planirani.
+  !define LEGEND_3 Skener, izolovani API klijent i backend I1 su implementirani; povezivanje i AI tokovi su planirani.
 !else
   !define DIAGRAM_TITLE ASAP — Proposed MVP architecture
   !define USER_LABEL User
   !define DEVICE_LABEL Android device
-  !define APP_LABEL ASAP Android app\n[scanner implemented; API client planned]
+  !define APP_LABEL ASAP Android app\n[scanner and API boundary implemented]
   !define UI_LABEL User interface
   !define SCAN_ADAPTER_LABEL Scanner integration\n[implemented]
-  !define API_CLIENT_LABEL API client\n[planned]
+  !define API_CLIENT_LABEL API client\n[isolated boundary implemented; invocation S4.2]
   !define HISTORY_LABEL Local bounded history\n[extended MVP]
   !define GCS_LABEL Google Code Scanner\n[Google Play services]
   !define BACKEND_LABEL Single backend application\n[modular monolith implemented for I1]
@@ -68,7 +68,7 @@
   !define FLOW_RESPONSE product + separate recommendation outcome
   !define LEGEND_1 Solid arrow: planned runtime information flow
   !define LEGEND_2 Dashed arrow: fallback or external flow
-  !define LEGEND_3 Scanner and deterministic backend I1 are implemented; API client and AI flows are planned.
+  !define LEGEND_3 Scanner, isolated API client, and backend I1 are implemented; connection and AI flows are planned.
 !endif
 
 title DIAGRAM_TITLE
