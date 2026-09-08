@@ -156,6 +156,28 @@ T-008/S1 usvaja minimalan model proizvoda nezavisan od izvora podataka, HTTP por
 
 Normalizacija koristi Unicode NFC, uklanja okolne razmake, prazne opcione vrednosti pretvara u odsustvo i ne prevodi niti generiše sadržaj. Razrešavanje i dalje vraća odvojena stanja poznato, nepoznato i nedostupno. Model je saglasan sa potpunim I1 fixture zapisima, ali ne menja prihvaćeni I1 HTTP ugovor niti Java kod. Izbor izvora, licence, keširanje, skladištenje, slike, nutritivni podaci i pravila semantičkog modela ostaju za naredne faze.
 
+\subsection{Prihvaćeni model interakcija i preporuka}
+
+T-008/S2 usvaja anonimnu interakciju \texttt{PRODUCT\_VIEWED}, koju Android uređaj beleži tek kada prikaže poznat proizvod. Događaj sadrži samo sopstveni identifikator, interni identifikator proizvoda i UTC vreme uređaja; ne sadrži barkod, kopiju proizvoda, nalog, identitet uređaja, lokaciju niti izvedenu preferenciju. Opcioni kontekst istorije šalje događaje od najnovijeg ka najstarijem samo za jedan zahtev. Backend iz konteksta izvodi stanje \texttt{COLD\_START} ili \texttt{SUFFICIENT} i ne čuva trajni korisnički profil. Tačni K, prag dovoljnosti, zadržavanje, ponderisanje i agregacija biraju se kasnije, pre čuvanja stvarnih korisničkih podataka.
+
+Ishod preporuka razlikuje ne-AI režim \texttt{DETERMINISTIC\_FIXTURE}, generičku semantičku sličnost \texttt{GENERIC\_SEMANTIC} pri cold-start stanju i \texttt{PERSONALIZED\_HISTORY} kada istorija stvarno utiče na rang. Stanja rezultata ostaju \texttt{RESULTS}, \texttt{EMPTY}, \texttt{UNAVAILABLE} i \texttt{NOT\_APPLICABLE}; greška preporuka ne skriva poznat proizvod. Rangirani AI rezultat nosi tip sirove ocene i verziju modela/cevovoda, ali ocena se poredi samo unutar jednog kompatibilnog odgovora i ne prikazuje se kao procenat bez kalibracije.
+
+\clearpage
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{\diagramassetpath domain-model.png}
+\caption{Prihvaćeni model domena. Plavo označava činjenične podatke, žuto anonimni kontekst uređaja, zeleno ishode, a ljubičasto planirane AI izvedene artefakte.}
+\end{figure}
+
+\clearpage
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{\diagramassetpath ai-enrichment-flow.png}
+\caption{Poreklo podataka i AI obogaćivanje. Deterministička normalizacija čuva činjenice; embedding, profil istorije i rang predstavljaju odvojene planirane izvedene artefakte.}
+\end{figure}
+
+\clearpage
+
 \subsection{AI tehnologije}
 
 Za početno očitavanje barkoda implementiran je Google Code Scanner 16.1.0, koji skeniranje delegira Google Play servisima bez dozvole aplikacije za kameru. Skener koristi automatsko uvećanje i ograničen je na EAN-13, EAN-8, UPC-A i UPC-E formate. Manifest sadrži \texttt{barcode\_ui} metapodatak za isporuku modula, a ekran razlikuje uspeh, otkazivanje, nedostupnost ili problem preuzimanja modula i opštu grešku. Na fizičkom telefonu uspešno su obavljena dva skeniranja stvarnih proizvoda i očitane vrednosti su vraćene aplikaciji, čime je potvrđeno da je modul skenera upotrebljiv. Zatvaranje skenera bez očitavanja prikazalo je očekivani status otkazivanja. Nije moguće utvrditi da li je modul tokom provere preuzet ili je već bio prisutan, a fizičko izazivanje greške nije sprovedeno. Direktni ML Kit Barcode Scanning i CameraX su odloženi. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.

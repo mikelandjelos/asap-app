@@ -1,6 +1,6 @@
 # Diagram contract
 
-Status: T-001's diagram contract and the T-006/S2 concrete MVP-topology refinement are accepted.
+Status: T-001's diagram contract, the T-006/S2 concrete MVP-topology refinement, and the T-008/S2 canonical domain-model and AI-enrichment views are accepted.
 
 ## Purpose and audiences
 
@@ -32,6 +32,22 @@ Every architecture diagram must visibly use the phrase **Proposed architecture**
 - **Outcome boundaries:** distinguish scan cancellation/unreadable input, backend/API unavailability, unknown product, temporarily unavailable resolution, personalized results, generic cold-start results, and empty/unavailable recommendations. Do not prescribe retries, error types, or recovery algorithms before those decisions are made.
 - **Boundary rule:** show exchanged information and responsibility, not classes, endpoints, payload schemas, or timing guarantees that do not exist yet.
 
+### Domain model
+
+- **Source:** `domain-model.puml`
+- **Notation:** PlantUML UML class diagram.
+- **Purpose:** show the product, interaction/history, request/outcome, ranked-item, and AI-derived concepts with ownership, cardinalities, and references.
+- **Boundary rule:** blue source-backed facts, yellow device-owned context, green outcomes, and purple planned AI-derived artifacts are structurally distinct. AI artifacts may reference factual product data but never replace it.
+- **Detail rule:** the technical/report render contains fields and status invariants; the presentation render may omit attributes but retains every class, relationship, cardinality, ownership stereotype, and AI marker.
+
+### AI enrichment and data lineage
+
+- **Source:** `ai-enrichment-flow.puml`
+- **Notation:** PlantUML data-lineage/component flow.
+- **Purpose:** identify where source records undergo deterministic normalization and where planned embedding, semantic retrieval, history profiling, and ranking derive new artifacts.
+- **Boundary rule:** retain the factual product-details path, the explicitly non-AI I1 fixture branch, generic cold-start behavior, optional sufficient-history enrichment, and the final separation between facts and AI results.
+- **Status rule:** embeddings, vector storage, semantic retrieval, history profiles, and AI ranking are labelled as planned until implementation evidence exists.
+
 ## Canonical terminology
 
 PlantUML identifiers and operational documentation use the English canonical term. The report and presentation use the corresponding Serbian Latin label.
@@ -40,14 +56,17 @@ PlantUML identifiers and operational documentation use the English canonical ter
 | --- | --- | --- | --- |
 | Android client | Mobilna aplikacija | Mobile application | Java/XML scanner-to-API coordination and all I1 outcome states are implemented and physically validated with the controlled backend. |
 | Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
-| Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Owned by the Android application; exact retention and representation remain undecided. |
+| Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Android-owned; S2 accepts anonymous newest-first view events while K, persistence, weighting, and retention remain undecided. |
 | Backend API | Backend API / API servis | Backend; API service | Implemented Spring MVC I1 boundary inside one backend deployment; the controlled Android connection is physically validated. |
 | Product resolution | Razrešavanje proizvoda | Metadata adapter | Owns lookup, fallback selection, normalization, provenance, and product outcome classification. |
 | Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | I1 uses a packaged controlled fixture; durable storage and an external provider remain undecided. |
 | Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | I1 boundary returns labelled deterministic fixture results; embedding, ranking, and MMR remain unimplemented. |
 | Vector index | Vektorski indeks | Embeddings store | Owned by the recommendation module; exact versus approximate search and storage technology remain undecided. |
 | Product details | Podaci o proizvodu | Product; metadata | T-008/S1 accepts the source-neutral aggregate and limits in `../DOMAIN_MODEL.md`; it does not change the I1 wire contract. |
-| Recommendations | Preporuke | Top-N similar products | Ranking, personalization, and fallback behavior remain undecided. |
+| Interaction | Interakcija | Scan/view event | T-008/S2 accepts one anonymous device-owned `PRODUCT_VIEWED` event for a known displayed product. |
+| History context | Kontekst istorije | User profile; recent activity | T-008/S2 accepts optional newest-first bounded interactions; K, persistence, weighting, and retention remain undecided. |
+| Recommendations | Preporuke | Top-N similar products | T-008/S2 separates deterministic fixture, generic semantic, and personalized-history modes plus independent result states. |
+| AI-derived artifact | AI izvedeni artefakt | Embedding; profile; score | Planned model output with version evidence; it never overwrites factual product metadata. |
 
 ## Source and rendered-file layout
 
@@ -57,15 +76,23 @@ docs/diagrams/
 ├── includes/
 │   └── theme.puml
 ├── component-architecture.puml
+├── domain-model.puml
+├── ai-enrichment-flow.puml
 ├── scan-to-recommendation-flow.puml
 └── rendered/
+    ├── ai-enrichment-flow.png
     ├── component-architecture.png
+    ├── domain-model.png
     ├── scan-to-recommendation-flow.png
     └── sr/
+        ├── ai-enrichment-flow.png
         ├── component-architecture.png
+        ├── domain-model.png
         ├── scan-to-recommendation-flow.png
         └── presentation/
+            ├── ai-enrichment-flow.png
             ├── component-architecture.png
+            ├── domain-model.png
             └── scan-to-recommendation-flow.png
 ```
 
@@ -73,8 +100,8 @@ docs/diagrams/
 - `includes/theme.puml` contains shared deterministic styling only; it must not contain architectural elements.
 - PNG renders are committed because pdfLaTeX, the report, and the presentation need portable raster assets.
 - Default renders use English canonical terminology for technical review. `SERBIAN` renders use Serbian Latin for formal deliverables.
-- `PRESENTATION` renders remove secondary furniture and may collapse repeated response messages or nested branch detail to remain legible on a 16:9 slide. They retain every component/participant, responsibility, and named outcome class.
-- All variants come from the same two canonical `.puml` sources. Do not duplicate architecture structure to localize or simplify a render.
+- `PRESENTATION` renders remove secondary furniture and may group sequential internal stages or collapse repeated response messages and nested branch detail to remain legible on a 16:9 slide. The technical/report render remains authoritative for every individual component; presentation grouping must retain every responsibility, branch, ownership boundary, and named outcome class.
+- All variants come from the same four canonical `.puml` sources. Do not duplicate architecture structure to localize or simplify a render.
 - Rendered files must be regenerated whenever their source or shared theme changes.
 - Diagram filenames remain stable so documentation references do not require churn.
 
@@ -82,7 +109,7 @@ docs/diagrams/
 
 - Use UTF-8 source and Serbian Latin text only where a deliverable-facing label needs it.
 - Keep colors and layout deterministic through the shared theme include.
-- Visually distinguish device/application, single backend deployment, external dependency, and data-store boundaries.
+- Visually distinguish device/application, single backend deployment, external dependency, data-store, factual-source, device-context, outcome, and AI-derived boundaries as applicable to the view.
 - Add a legend only when notation is not self-explanatory.
 - Avoid decorative icons, vendor branding, speculative technology badges, and implementation-status colors.
 - Prefer readable labels over dense detail; move unresolved detail into documentation questions.
@@ -120,7 +147,7 @@ Run the syntax check for each enabled variant when conditional content changes. 
 - Backend hosting/deployment environment and any post-I1 transport evolution.
 - Product metadata provider, catalog storage product, caching policy, and fallback dataset.
 - Embedding model, vector-index technology, exact/ANN search, and MMR use.
-- Personalization event model, K/window, weighting, aggregation, retention duration, and consent wording. Generic cold-start behavior itself is required.
+- K/window, weighting, aggregation, retention duration, and consent wording for the accepted interaction/recommendation model remain undecided. Generic cold-start behavior itself is required.
 - Persistence schemas, retry policies, and service-level targets. The deterministic I1 payload is frozen in `docs/I1_CONTRACT.md`.
 
 Resolving any of these requires its own approved task or subtask and a recorded decision.

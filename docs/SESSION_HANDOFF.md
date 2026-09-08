@@ -7,12 +7,23 @@ Last updated: 2026-09-08
 - The user explicitly accepted S4.4 and closed T-007 on 2026-09-08.
 - T-007 is committed as `6bd2682` (`Validate I1 vertical slice`).
 - The user explicitly accepted T-008/S1 with “I accept S1, it's done” on 2026-09-08.
-- D-021 records the accepted source-neutral sparse product model. The S1 checkpoint is ready to commit.
-- The user requested canonical domain-class and AI-enrichment/data-lineage diagrams in S2. The revised S2 plan includes both and awaits explicit execution approval.
+- D-021 records the accepted source-neutral sparse product model, committed as `5d28d23` (`Define product domain model`).
+- The user explicitly approved the revised T-008/S2 scope and authorized execution on 2026-09-08.
+- The user explicitly accepted T-008/S2 with “I accept it, great!” on 2026-09-08; T-008 is closed and no later task is authorized.
+
+## T-008/S2 result
+
+- `docs/DOMAIN_MODEL.md` now defines the accepted anonymous device-owned `PRODUCT_VIEWED` event, optional newest-first bounded `HistoryContext`, server-derived cold-start/sufficient readiness, and explicit data-minimization/privacy gates.
+- Recommendation outcomes distinguish non-AI `DETERMINISTIC_FIXTURE`, AI-derived cold-start `GENERIC_SEMANTIC`, and history-applied `PERSONALIZED_HISTORY`, while retaining independent result/empty/unavailable/not-applicable states.
+- Ranked AI items require typed finite score evidence and model/pipeline versioning, but scores are response-local and may not be presented as percentages without calibration.
+- Factual product data, device observations, embeddings, request-scoped history profiles, and AI ranking evidence are structurally separate. AI-derived data never overwrites product facts.
+- `docs/diagrams/domain-model.puml` and `docs/diagrams/ai-enrichment-flow.puml` are canonical sources for English technical, Serbian formal, and compact Serbian presentation renders.
+- All four canonical sources pass default, Serbian, and Serbian-presentation syntax checks, and all 12 PNG variants regenerate successfully. The 12-page report builds twice under both pdfLaTeX and LuaLaTeX; the 18-slide presentation builds twice under LuaLaTeX. Final logs are warning-free, and report pages 8–10 plus presentation slides 1, 13, and 14 were visually inspected without clipping.
+- S2 changes no Android/backend code, I1 payload, provider, dataset, persistence technology, embedding model, vector store, similarity metric, K/window, or ranking algorithm.
 
 ## T-008/S1 result
 
-- `docs/DOMAIN_MODEL.md` proposes a provider-neutral product aggregate rather than treating API, fixture, Android, or future persistence shapes as the domain model.
+- `docs/DOMAIN_MODEL.md` defines the accepted provider-neutral product aggregate rather than treating API, fixture, Android, or future persistence shapes as the domain model.
 - Stable internal product identity is separate from exact barcode value/format lookup identity. The MVP keeps one package barcode per product record and defers cross-package grouping.
 - `id`, barcode, name, and provenance are mandatory. Bounded brand, category, description, and tags are optional so sparse source data remains honest.
 - Provenance distinguishes `CONTROLLED_FIXTURE`, `EXTERNAL_PROVIDER`, and `FALLBACK_DATASET`; resolution remains `KNOWN`, `UNKNOWN`, or `UNAVAILABLE`.
@@ -46,7 +57,7 @@ Last updated: 2026-09-08
 
 ## Next concrete action
 
-Commit the accepted S1 checkpoint with a short one-line message. Present the complete revised S2 plan and do not execute it until the user explicitly authorizes S2.
+T-008 is accepted and closed. Await explicit user direction before selecting or planning the next task; do not implement another task.
 
 ## Environment caveat
 

@@ -41,6 +41,7 @@ Core operational MVP acceptance requires all P0 capabilities, a reproducible pho
 - Preserve the validated permissionless Google Code Scanner boundary and custom Java/XML application UI.
 - Keep product metadata, semantic similarity, and personalization as distinct responsibilities and distinct user-visible concepts.
 - In the extended MVP, derive personalization from a bounded recent interaction history; a last-K profile is the baseline candidate, while the exact window, weighting, and aggregation method remain a later evidence-based decision.
+- Treat normalized products as factual source-backed data and embeddings, history profiles, similarity scores, and AI-ranked order as separate derived artifacts. Derived output must never overwrite product facts.
 - Preserve an explicit cold-start path that falls back to clearly labelled generic semantic similarity when history is absent or insufficient.
 - Use a controlled development/fallback dataset so the primary demo does not depend entirely on a third-party service.
 - Return explicit known, unknown, unavailable, empty-result, and retryable-failure outcomes rather than fabricating product or recommendation data.

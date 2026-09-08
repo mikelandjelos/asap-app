@@ -1,10 +1,10 @@
 # Architecture
 
-Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, coordinator, API client, I1 outcome UI, and deterministic fixture-backed backend are implemented and physically validated together; all genuine data/AI components remain planned.
+Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scanner, coordinator, API client, I1 outcome UI, and deterministic fixture-backed backend are implemented and physically validated together. T-008/S2's domain/AI-lineage refinement was accepted on 2026-09-08; all genuine data/AI components remain planned.
 
 T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
-The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). T-008/S1 accepts the source-neutral product aggregate and normalization rules in [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) without changing the implemented I1 contract. Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
+The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). T-008/S1 accepts the source-neutral product aggregate and normalization rules in [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) without changing the implemented I1 contract; S2 accepts its interaction, recommendation, and derived-artifact extension. Canonical views are the [component/deployment](diagrams/component-architecture.puml), [scan-to-recommendation](diagrams/scan-to-recommendation-flow.puml), [domain-model](diagrams/domain-model.puml), and [AI-enrichment](diagrams/ai-enrichment-flow.puml) sources; their rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
 
 ## Selected MVP topology
 
@@ -47,7 +47,7 @@ The diagrams mark scanner integration, Android coordination/API boundary and out
 | Android UI and flow coordinator | Starts scanning, requests resolution/ranking, renders product and independently labelled recommendation states | User-facing transient state only | User action, scanner outcome, backend outcome | Scan, product, generic/personalized, empty, and retryable states |
 | Scanner integration | Adapts Google Code Scanner outcomes to ASAP's flow | None; barcode images are not retained | Scan request | Decoded EAN/UPC value or classified scanner outcome |
 | Android API client | Crosses the device/backend boundary and preserves independent product/recommendation outcome classes | None | Barcode and optional bounded history context | Product outcome plus recommendation mode/results/status |
-| Local bounded history | Supplies recent known-product context for the extended MVP and explicit cold start when insufficient | Android application on the device | Confirmed known-product interaction | Bounded recent product references |
+| Local bounded history | Supplies newest-first anonymous known-product interactions for the extended MVP and explicit cold start when insufficient | Android application on the device | Confirmed displayed known product | Optional bounded `HistoryContext`; no account/device identity |
 | Backend API module | Validates and coordinates one application operation and combines module results without hiding partial success | None | Barcode and optional history context | Product outcome and separate recommendation outcome |
 | Product-resolution module | Checks the normalized catalog, consults the external adapter when appropriate, applies controlled fallback data, normalizes records against the accepted T-008/S1 product model, and reports provenance | Owns writes to the normalized product catalog | Barcode, external/fallback records | Known product with provenance, unknown product, or temporarily unavailable |
 | Recommendation module | Produces generic semantic similarity or history-aware ranking, labels the mode, and handles cold start | Owns vector preparation/index synchronization at the logical level | Current known product and optional recent product references | Ranked candidates with scores/mode, empty result, or unavailable status |
@@ -79,6 +79,15 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 
 Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.2 connects successful supported scans to the client with cancellation and stale-response protection, S4.3 renders the independent response outcomes, and S4.4 physically validates the controlled exchange on the phone.
 
+### Accepted T-008/S2 domain refinement
+
+- Android records only `PRODUCT_VIEWED` after displaying a known product. Each event contains an opaque event ID, product ID, and device UTC time; it contains no barcode, product snapshot, account/device ID, location, free text, or inferred preference.
+- Optional `HistoryContext` is newest-first, client-bounded, deduplicated by event ID, and request-scoped. The backend derives `COLD_START` or `SUFFICIENT`; it does not persist a profile. Out-of-order, malformed, duplicate, or over-limit context must be rejected by a future versioned API rather than silently sorted or reinterpreted.
+- Recommendation mode is `DETERMINISTIC_FIXTURE` (not AI), `GENERIC_SEMANTIC` (AI-derived cold start), or `PERSONALIZED_HISTORY` (AI-derived with sufficient history). Status remains independent: `RESULTS`, `EMPTY`, `UNAVAILABLE`, or `NOT_APPLICABLE`.
+- AI-ranked items use contiguous ranks and unique candidate product IDs. Real AI modes require finite typed score evidence plus a model/pipeline version, but scores are comparable only inside one response with matching semantics and must not be displayed as percentages without calibration.
+- `ProductEmbedding`, request-scoped `HistoryProfile`, and ranking evidence are planned derived artifacts. They never overwrite source-backed `Product`, `Barcode`, or `Provenance` facts.
+- Numeric K/window, sufficiency threshold, retention duration, persistence, model, vector store, similarity metric, and ranking algorithm remain separate evidence-based decisions.
+
 ## Failure boundaries
 
 | Failure location | Responsible component | Required visible behavior |
@@ -88,7 +97,8 @@ Endpoint evolution, retries, timing, history context, and production guarantees 
 | External source missing a barcode | Product-resolution module | Use an applicable catalog/fallback record, otherwise return `unknown` |
 | External source unavailable | Product-resolution module | Use an applicable catalog/fallback record, otherwise return `unavailable`, distinct from `unknown` |
 | Product known but vector candidates empty or search unavailable | Recommendation module/API | Return product details with independent `empty` or `unavailable` recommendation status |
-| History absent, insufficient, corrupt, or unsupported | Android history boundary and recommendation module | Ignore unusable context and return clearly labelled generic/cold-start results |
+| History absent or policy-insufficient | Android history boundary and recommendation module | Return clearly labelled generic/cold-start results |
+| History out of order, malformed, duplicate, unsupported, or over its future limit | Backend API boundary | Reject through stable validation detail; do not silently sort, reinterpret, or claim personalization |
 
 The exact retry policy and validation rules belong to later API/data-model work. Controlled fallback use must be visible through provenance; it must not masquerade as a live provider result.
 
@@ -96,7 +106,7 @@ The exact retry policy and validation rules belong to later API/data-model work.
 
 History-based ranking is a committed extended-MVP capability, but there is no account system or central user profile. The Android application owns a bounded history of known product references and supplies it as optional request context. The backend computes the ranking for that request and does not retain the user history.
 
-A last-K window is the simplest candidate. K, event types, recency weighting, centroid/profile aggregation, deletion controls, persistence mechanism, and retention duration remain open. Before real user history is retained, the project must accept a privacy/retention decision; deterministic synthetic history may be used earlier for architecture and ranking tests.
+A last-K window remains the simplest candidate. T-008/S2 accepts a single `PRODUCT_VIEWED` event and a newest-first bounded request context, but K, sufficiency threshold, recency weighting, profile aggregation, deletion controls, persistence mechanism, and retention duration remain open. Before real user history is retained, the project must accept a privacy/retention decision; deterministic synthetic history may be used earlier for architecture and ranking tests.
 
 ## Trust boundaries and constraints
 
@@ -110,7 +120,6 @@ A last-K window is the simplest candidate. K, event types, recency weighting, ce
 
 - Hosting beyond local execution and any later evolution of the implemented package layout.
 - Product API/provider, controlled fallback dataset, license, source precedence, attribution details, and caching policy.
-- Interaction/recommendation schemas, validation limits, and the canonical domain/AI-lineage diagrams remain T-008/S2.
 - Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.
 - Personalization K/window, events, weighting, aggregation, retention, deletion, and evaluation.
 - Concrete resilience policy, timeouts, retries, observability, security hardening, and production operation.

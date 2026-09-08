@@ -426,9 +426,9 @@ All task-level acceptance criteria were verified, and the user explicitly accept
 ## T-008 — Define the MVP domain models
 
 - **TODO source:** “Definisati modele proizvoda, korisničke interakcije i preporuke.”
-- **Status:** Plan approved; S1 accepted; S2 revised and awaiting explicit approval
+- **Status:** Accepted and closed
 - **Goal:** Establish the smallest provider-neutral domain vocabulary needed by I2–I4 without selecting providers, persistence, embeddings, ranking algorithms, or changing the accepted I1 behavior.
-- **Plan approval evidence:** After reviewing the two-subtask proposal, the user instructed “okay, let's start with all of these” on 2026-09-08. Under the mandatory separate gate, this authorizes S1 only; S2 still requires explicit approval after S1 acceptance.
+- **Plan approval evidence:** After reviewing the two-subtask proposal, the user instructed “okay, let's start with all of these” on 2026-09-08. Under the mandatory separate gate, that authorized S1 only; S2 was later approved separately as recorded below.
 
 ### T-008/S1 — Define the normalized product model
 
@@ -452,7 +452,10 @@ All task-level acceptance criteria were verified, and the user explicitly accept
 - Generate English technical, Serbian report, and compact Serbian presentation variants from both sources; integrate the appropriate renders into architecture docs, report, and presentation without claiming that planned AI behavior is implemented.
 - Specify I1 compatibility plus deterministic acceptance examples for no history, sufficient synthetic history, empty/unavailable recommendations, malformed history, and partial success. Do not alter the accepted I1 payload or application code.
 - Synchronize TODO, domain model, status, decisions if accepted, architecture, diagram contract, plan, handoff, report, and presentation; validate/render all diagram variants, compile affected LaTeX deliverables, visually inspect them, and stop for S2/T-008 acceptance.
-- **Status:** Revised plan; requires explicit user approval
+- **Approval evidence:** The user explicitly stated “approved s2 scope, execute” on 2026-09-08.
+- **Evidence:** `docs/DOMAIN_MODEL.md` defines the accepted anonymous device-owned `PRODUCT_VIEWED` event, newest-first bounded `HistoryContext`, derived history readiness, deterministic/generic-semantic/personalized modes, independent recommendation states, ranked-item/evidence constraints, factual-versus-AI-derived boundary, I1 compatibility, and seven deterministic examples. Canonical `domain-model.puml` and `ai-enrichment-flow.puml` sources plus English, Serbian, and compact Serbian renders expose ownership/cardinality and AI data lineage without claiming implementation. All four PlantUML sources pass syntax checks in default, Serbian, and Serbian-presentation modes, and all 12 PNG variants regenerate successfully. The 12-page report builds twice with pdfLaTeX and twice with LuaLaTeX; the 18-slide presentation builds twice with LuaLaTeX. All three final logs contain no LaTeX, package, layout, or missing-glyph warnings. Report pages 8–10, the title slide, and diagram slides 13–14 were visually inspected without clipping; the AI slide uses a compact three-lane presentation view while its report render retains every stage. No Java, Android, provider, persistence, model, vector-store, or I1 payload changed.
+- **User acceptance:** The user explicitly stated “I accept it, great!” on 2026-09-08 in response to the S2 and T-008 closure request.
+- **Status:** Accepted; T-008 closed
 
 ### Task-level acceptance criteria
 
@@ -460,6 +463,8 @@ All task-level acceptance criteria were verified, and the user explicitly accept
 - I1 compatibility and future API evolution are explicit; planning language is not presented as implemented behavior.
 - The contracts support I2 product resolution, I3 semantic similarity, and I4 bounded-history personalization without selecting their concrete providers, algorithms, or stores.
 - S1 and S2 are separately accepted before the TODO item and T-008 are closed.
+
+All task-level acceptance criteria were verified, and the user explicitly accepted S2 and closed T-008 on 2026-09-08.
 
 ### Exclusions
 

@@ -1,0 +1,253 @@
+@startuml
+!include includes/theme.puml
+
+!ifdef SERBIAN
+  !define DIAGRAM_TITLE ASAP — Poreklo podataka i AI obogaćivanje
+  !define SOURCE_LABEL Eksterni izvor ili rezervni skup
+  !define NORMALIZE_LABEL Deterministička normalizacija
+  !define PRODUCT_LABEL Normalizovani proizvod
+  !define FACT_UI_LABEL Činjenični detalji proizvoda
+  !define TEXT_LABEL Izbor tekstualnog ulaza
+  !define EMBED_MODEL_LABEL Embedding model\n[AI — planirano]
+  !define EMBEDDING_LABEL Vektorska reprezentacija\n[AI izvedeno]
+  !define VECTOR_LABEL Vektorski indeks\n[planirano]
+  !define RETRIEVAL_LABEL Semantičko pronalaženje\n[AI — planirano]
+  !define CANDIDATES_LABEL Generički kandidati + ocene\n[AI izvedeno]
+  !define HISTORY_LABEL Ograničena istorija\n[podatak uređaja]
+  !define READINESS_LABEL Provera dovoljnosti istorije
+  !define PROFILE_LABEL Profil istorije\n[AI izvedeno, samo za zahtev]
+  !define RANK_LABEL Rangiranje / ponovno rangiranje\n[AI — planirano]
+  !define FIXTURE_LABEL Deterministički I1 redosled\n[nije AI]
+  !define OUTCOME_LABEL Ishod preporuka
+  !define UI_LABEL Jasno označen prikaz
+  !define SEMANTIC_LABEL Embedding model + reprezentacija\nVektorski indeks + pronalaženje\n[AI — planirano]
+  !define SOURCE_NORMALIZE_LABEL Eksterni izvor / rezervni skup\n→ deterministička normalizacija
+  !define P_PRODUCT_LABEL Proizvod\n[činjenice]
+  !define P_FACT_UI_LABEL Detalji proizvoda
+  !define P_UI_LABEL Prikaz: činjenice + AI ishod
+  !define P_SEMANTIC_LABEL Embedding + indeks + pretraga\n[AI — planirano]
+  !define P_CANDIDATES_LABEL Kandidati + skorovi\n[AI izvedeno]
+  !define P_HISTORY_LABEL Istorija\n[podatak uređaja]
+  !define P_READINESS_LABEL Dovoljna istorija?
+  !define P_PROFILE_LABEL Profil zahteva\n[AI izvedeno]
+  !define P_RANK_LABEL Rangiranje\n[AI — planirano]
+  !define P_FIXTURE_LABEL I1 redosled\n[nije AI]
+  !define P_OUTCOME_LABEL Ishod preporuke
+  !define P_FLOW_FACTS činjenice
+  !define P_FLOW_TEXT činjenični tekst
+  !define P_FLOW_SCORE sličnost
+  !define P_FLOW_CANDIDATES kandidati
+  !define P_FLOW_EVENTS interakcije
+  !define P_FLOW_READY dovoljna
+  !define P_FLOW_COLD cold-start
+  !define P_FLOW_PROFILE personalizacija
+  !define P_FLOW_RANKED režim + rang
+  !define P_FLOW_FIXTURE bez skora
+  !define P_FLOW_DISPLAY odvojen ishod
+  !define FACT_LANE Činjenice i poreklo
+  !define AI_LANE Planirano AI obogaćivanje
+  !define HISTORY_LANE Opcioni kontekst istorije
+  !define FLOW_RECORD izvorni zapis
+  !define FLOW_NORMALIZED činjenice + poreklo
+  !define FLOW_FACTUAL samo činjenični podaci
+  !define FLOW_TEXT izabrani činjenični tekst
+  !define FLOW_VECTOR vektor + verzija modela
+  !define FLOW_INDEX upis / upit
+  !define FLOW_CANDIDATES kandidati + sirove ocene
+  !define FLOW_EVENTS anonimne poznate interakcije
+  !define FLOW_READY dovoljna istorija
+  !define FLOW_COLD cold-start bez profila
+  !define FLOW_PROFILE profil + verzija cevovoda
+  !define FLOW_RANKED režim + rang + dokaz
+  !define FLOW_PLACEHOLDER placeholder bez ocene
+  !define FLOW_DISPLAY činjenice odvojene od AI ishoda
+  !define NOTE_COLD_1 Cold-start koristi GENERIC_SEMANTIC.
+  !define NOTE_COLD_2 Dovoljna istorija dozvoljava PERSONALIZED_HISTORY.
+  !define LEGEND_1 Plavo: proverljive činjenice posle normalizacije
+  !define LEGEND_2 Žuto: anonimni kontekst u vlasništvu uređaja
+  !define LEGEND_3 Ljubičasto: AI izvedeno i još nije implementirano
+  !define LEGEND_4 Zeleno: ugovoreni ishod; I1 grana ostaje jasno označena kao ne-AI
+  !define LEGEND_5 AI artefakti nikada ne prepisuju metapodatke proizvoda.
+!else
+  !define DIAGRAM_TITLE ASAP — Data lineage and AI enrichment
+  !define SOURCE_LABEL External source or fallback dataset
+  !define NORMALIZE_LABEL Deterministic normalization
+  !define PRODUCT_LABEL Normalized product
+  !define FACT_UI_LABEL Factual product details
+  !define TEXT_LABEL Factual text selection
+  !define EMBED_MODEL_LABEL Embedding model\n[AI — planned]
+  !define EMBEDDING_LABEL Product embedding\n[AI-derived]
+  !define VECTOR_LABEL Vector index\n[planned]
+  !define RETRIEVAL_LABEL Semantic retrieval\n[AI — planned]
+  !define CANDIDATES_LABEL Generic candidates + scores\n[AI-derived]
+  !define HISTORY_LABEL Bounded history\n[device-owned data]
+  !define READINESS_LABEL History sufficiency policy
+  !define PROFILE_LABEL History profile\n[AI-derived, request-scoped]
+  !define RANK_LABEL Rank / rerank\n[AI — planned]
+  !define FIXTURE_LABEL Deterministic I1 order\n[not AI]
+  !define OUTCOME_LABEL Recommendation outcome
+  !define UI_LABEL Clearly labelled display
+  !define SEMANTIC_LABEL Embedding model + representation\nVector index + retrieval\n[AI — planned]
+  !define SOURCE_NORMALIZE_LABEL External source / fallback dataset\n→ deterministic normalization
+  !define P_PRODUCT_LABEL Product\n[facts]
+  !define P_FACT_UI_LABEL Product details
+  !define P_UI_LABEL Display: facts + AI outcome
+  !define P_SEMANTIC_LABEL Embedding + index + retrieval\n[AI — planned]
+  !define P_CANDIDATES_LABEL Candidates + scores\n[AI-derived]
+  !define P_HISTORY_LABEL History\n[device-owned data]
+  !define P_READINESS_LABEL Sufficient history?
+  !define P_PROFILE_LABEL Request profile\n[AI-derived]
+  !define P_RANK_LABEL Ranking\n[AI — planned]
+  !define P_FIXTURE_LABEL I1 order\n[not AI]
+  !define P_OUTCOME_LABEL Recommendation outcome
+  !define P_FLOW_FACTS facts
+  !define P_FLOW_TEXT factual text
+  !define P_FLOW_SCORE similarity
+  !define P_FLOW_CANDIDATES candidates
+  !define P_FLOW_EVENTS interactions
+  !define P_FLOW_READY sufficient
+  !define P_FLOW_COLD cold start
+  !define P_FLOW_PROFILE personalization
+  !define P_FLOW_RANKED mode + rank
+  !define P_FLOW_FIXTURE unscored
+  !define P_FLOW_DISPLAY separate outcome
+  !define FACT_LANE Facts and provenance
+  !define AI_LANE Planned AI enrichment
+  !define HISTORY_LANE Optional history context
+  !define FLOW_RECORD source record
+  !define FLOW_NORMALIZED facts + provenance
+  !define FLOW_FACTUAL factual data only
+  !define FLOW_TEXT selected factual text
+  !define FLOW_VECTOR vector + model version
+  !define FLOW_INDEX write / query
+  !define FLOW_CANDIDATES candidates + raw scores
+  !define FLOW_EVENTS anonymous known interactions
+  !define FLOW_READY sufficient history
+  !define FLOW_COLD cold start without profile
+  !define FLOW_PROFILE profile + pipeline version
+  !define FLOW_RANKED mode + rank + evidence
+  !define FLOW_PLACEHOLDER unscored placeholder
+  !define FLOW_DISPLAY facts separated from AI outcome
+  !define NOTE_COLD_1 Cold start uses GENERIC_SEMANTIC.
+  !define NOTE_COLD_2 Sufficient history permits PERSONALIZED_HISTORY.
+  !define LEGEND_1 Blue: verifiable facts after normalization
+  !define LEGEND_2 Yellow: anonymous device-owned context
+  !define LEGEND_3 Purple: AI-derived and not implemented
+  !define LEGEND_4 Green: contracted result; I1 branch remains explicitly non-AI
+  !define LEGEND_5 AI artifacts never overwrite product metadata.
+!endif
+
+title DIAGRAM_TITLE
+
+!ifdef PRESENTATION
+top to bottom direction
+
+rectangle "FACT_LANE" as fact_lane #FFFFFF {
+  component "SOURCE_NORMALIZE_LABEL" as source_normalize #EAF2F8
+  artifact "P_PRODUCT_LABEL" as product #EAF2F8
+  component "P_FACT_UI_LABEL" as factual_ui #EAF2F8
+  component "P_UI_LABEL" as ui #EEF6EE
+
+  source_normalize -right-> product : FLOW_NORMALIZED
+  product -right-> factual_ui : P_FLOW_FACTS
+  factual_ui -right-> ui
+}
+
+rectangle "AI_LANE" as ai_lane #FFFFFF {
+  component "P_SEMANTIC_LABEL" as semantic #F3E8FF
+  artifact "P_CANDIDATES_LABEL" as candidates #F3E8FF
+  component "P_RANK_LABEL" as ranker #F3E8FF
+  component "P_OUTCOME_LABEL" as outcome #EEF6EE
+
+  semantic -right-> candidates : P_FLOW_SCORE
+  candidates -right-> ranker : P_FLOW_CANDIDATES
+  ranker -right-> outcome : P_FLOW_RANKED
+}
+
+rectangle "HISTORY_LANE" as history_lane #FFFFFF {
+  database "P_HISTORY_LABEL" as history #FFF8E1
+  component "P_READINESS_LABEL" as readiness #FFF8E1
+  artifact "P_PROFILE_LABEL" as profile #F3E8FF
+
+  history -right-> readiness : P_FLOW_EVENTS
+  readiness -right-> profile : P_FLOW_READY
+}
+
+artifact "P_FIXTURE_LABEL" as fixture #F8FAFC
+
+product -down-> semantic : P_FLOW_TEXT
+readiness -[dashed]up-> ranker : P_FLOW_COLD
+profile -up-> ranker : P_FLOW_PROFILE
+fixture -up-> outcome : P_FLOW_FIXTURE
+outcome -up-> ui : P_FLOW_DISPLAY
+
+fact_lane -[hidden]down-> ai_lane
+ai_lane -[hidden]down-> history_lane
+
+note bottom of readiness
+  NOTE_COLD_1
+  NOTE_COLD_2
+end note
+
+!else
+top to bottom direction
+
+cloud "SOURCE_LABEL" as source #F3F4F6
+component "NORMALIZE_LABEL" as normalize #EAF2F8
+artifact "PRODUCT_LABEL" as product #EAF2F8
+component "FACT_UI_LABEL" as factual_ui #EAF2F8
+
+component "TEXT_LABEL" as text_input #F8FAFC
+component "EMBED_MODEL_LABEL" as embedding_model #F3E8FF
+artifact "EMBEDDING_LABEL" as embedding #F3E8FF
+database "VECTOR_LABEL" as vectors #F3E8FF
+component "RETRIEVAL_LABEL" as retrieval #F3E8FF
+artifact "CANDIDATES_LABEL" as candidates #F3E8FF
+
+database "HISTORY_LABEL" as history #FFF8E1
+component "READINESS_LABEL" as readiness #FFF8E1
+artifact "PROFILE_LABEL" as profile #F3E8FF
+component "RANK_LABEL" as ranker #F3E8FF
+
+artifact "FIXTURE_LABEL" as fixture #F8FAFC
+component "OUTCOME_LABEL" as outcome #EEF6EE
+component "UI_LABEL" as ui #EEF6EE
+
+source --> normalize : FLOW_RECORD
+normalize --> product : FLOW_NORMALIZED
+product --> factual_ui : FLOW_FACTUAL
+
+product --> text_input : FLOW_FACTUAL
+text_input --> embedding_model : FLOW_TEXT
+embedding_model --> embedding : FLOW_VECTOR
+embedding --> vectors : FLOW_INDEX
+vectors --> retrieval : FLOW_INDEX
+retrieval --> candidates : FLOW_CANDIDATES
+
+history --> readiness : FLOW_EVENTS
+readiness --> profile : FLOW_READY
+readiness --> ranker : FLOW_COLD
+profile --> ranker : FLOW_PROFILE
+candidates --> ranker : FLOW_CANDIDATES
+ranker --> outcome : FLOW_RANKED
+
+fixture --> outcome : FLOW_PLACEHOLDER
+factual_ui --> ui : FLOW_FACTUAL
+outcome --> ui : FLOW_DISPLAY
+
+note bottom of readiness
+  NOTE_COLD_1
+  NOTE_COLD_2
+end note
+
+legend bottom
+  LEGEND_1
+  LEGEND_2
+  LEGEND_3
+  LEGEND_4
+  LEGEND_5
+endlegend
+
+!endif
+
+@enduml

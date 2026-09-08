@@ -1,0 +1,198 @@
+@startuml
+!include includes/theme.puml
+
+!ifdef SERBIAN
+  !define DIAGRAM_TITLE ASAP — Model domena i granica AI izvođenja
+  !define PRODUCT_LABEL Proizvod
+  !define BARCODE_LABEL Barkod
+  !define PROVENANCE_LABEL Poreklo
+  !define RESOLUTION_LABEL Ishod razrešavanja proizvoda
+  !define INTERACTION_LABEL Interakcija
+  !define HISTORY_LABEL Kontekst istorije
+  !define REQUEST_LABEL Zahtev za preporuke
+  !define OUTCOME_LABEL Ishod preporuka
+  !define RANKED_LABEL Rangirani proizvod
+  !define EVIDENCE_LABEL Dokaz rangiranja
+  !define EMBEDDING_LABEL Vektorska reprezentacija proizvoda
+  !define PROFILE_LABEL Profil istorije
+  !define FACTUAL_STEREO izvorni podatak
+  !define DEVICE_STEREO podatak uređaja
+  !define RESULT_STEREO ishod
+  !define AI_STEREO AI izvedeno — planirano
+  !define REL_CONTAINS sadrži
+  !define REL_RESOLVES poznat ishod
+  !define REL_REFERENCES referenca po ID-ju
+  !define REL_CURRENT trenutni proizvod
+  !define REL_CONTEXT opcioni kontekst
+  !define REL_ITEMS rangirani elementi
+  !define REL_CANDIDATE kandidat
+  !define REL_EVIDENCE opcioni dokaz
+  !define REL_DERIVED izvedeno iz
+  !define REL_INFLUENCES utiče na rang
+  !define NOTE_PRODUCT_STATUS Proizvod: KNOWN / UNKNOWN / UNAVAILABLE
+  !define NOTE_RECOMMENDATION_STATUS Preporuke: RESULTS / EMPTY / UNAVAILABLE / NOT_APPLICABLE
+  !define LEGEND_FACT Faktički podaci posle determinističke normalizacije
+  !define LEGEND_DEVICE Anonimni kontekst u vlasništvu Android uređaja
+  !define LEGEND_AI AI izvedeni artefakti — još nisu implementirani
+  !define LEGEND_RULE AI rezultat nikada ne prepisuje činjenične podatke proizvoda.
+!else
+  !define DIAGRAM_TITLE ASAP — Domain model and AI-derivation boundary
+  !define PRODUCT_LABEL Product
+  !define BARCODE_LABEL Barcode
+  !define PROVENANCE_LABEL Provenance
+  !define RESOLUTION_LABEL Product resolution outcome
+  !define INTERACTION_LABEL Interaction
+  !define HISTORY_LABEL History context
+  !define REQUEST_LABEL Recommendation request
+  !define OUTCOME_LABEL Recommendation outcome
+  !define RANKED_LABEL Ranked product
+  !define EVIDENCE_LABEL Ranking evidence
+  !define EMBEDDING_LABEL Product embedding
+  !define PROFILE_LABEL History profile
+  !define FACTUAL_STEREO source-backed
+  !define DEVICE_STEREO device-owned
+  !define RESULT_STEREO result
+  !define AI_STEREO AI-derived — planned
+  !define REL_CONTAINS contains
+  !define REL_RESOLVES known outcome
+  !define REL_REFERENCES references by ID
+  !define REL_CURRENT current product
+  !define REL_CONTEXT optional context
+  !define REL_ITEMS ranked items
+  !define REL_CANDIDATE candidate
+  !define REL_EVIDENCE optional evidence
+  !define REL_DERIVED derived from
+  !define REL_INFLUENCES influences rank
+  !define NOTE_PRODUCT_STATUS Product: KNOWN / UNKNOWN / UNAVAILABLE
+  !define NOTE_RECOMMENDATION_STATUS Recommendation: RESULTS / EMPTY / UNAVAILABLE / NOT_APPLICABLE
+  !define LEGEND_FACT Factual data after deterministic normalization
+  !define LEGEND_DEVICE Anonymous context owned by the Android device
+  !define LEGEND_AI AI-derived artifacts — not implemented
+  !define LEGEND_RULE AI output never overwrites factual product data.
+!endif
+
+title DIAGRAM_TITLE
+top to bottom direction
+hide methods
+hide circle
+skinparam classAttributeIconSize 0
+skinparam class {
+  BorderColor #164D7D
+  FontColor #0F172A
+}
+
+!ifdef PRESENTATION
+  skinparam defaultFontSize 11
+!endif
+
+class "PRODUCT_LABEL" as Product <<FACTUAL_STEREO>> #EAF2F8 {
+!ifndef PRESENTATION
+  + id : ProductId
+  + name : text
+  + brand : text [0..1]
+  + category : text [0..1]
+  + description : text [0..1]
+  + tags : text [0..32]
+!endif
+}
+
+class "BARCODE_LABEL" as Barcode <<FACTUAL_STEREO>> #EAF2F8 {
+!ifndef PRESENTATION
+  + value : ASCII digits
+  + format : EAN_13 | EAN_8 | UPC_A | UPC_E
+!endif
+}
+
+class "PROVENANCE_LABEL" as Provenance <<FACTUAL_STEREO>> #EAF2F8 {
+!ifndef PRESENTATION
+  + type : fixture | provider | fallback
+  + source : text
+!endif
+}
+
+class "RESOLUTION_LABEL" as ProductResolution <<RESULT_STEREO>> #EEF6EE {
+!ifndef PRESENTATION
+  + status : KNOWN | UNKNOWN | UNAVAILABLE
+  + product : Product [0..1]
+!endif
+}
+
+class "INTERACTION_LABEL" as Interaction <<DEVICE_STEREO>> #FFF8E1 {
+!ifndef PRESENTATION
+  + id : InteractionId
+  + productId : ProductId
+  + kind : PRODUCT_VIEWED
+  + occurredAt : UTC instant
+!endif
+}
+
+class "HISTORY_LABEL" as HistoryContext <<DEVICE_STEREO>> #FFF8E1 {
+!ifndef PRESENTATION
+  + interactions : newest-first, bounded
+!endif
+}
+
+class "REQUEST_LABEL" as RecommendationRequest #F8FAFC {
+!ifndef PRESENTATION
+  + currentProductId : ProductId
+  + history : HistoryContext [0..1]
+!endif
+}
+
+class "OUTCOME_LABEL" as RecommendationOutcome <<RESULT_STEREO>> #EEF6EE {
+!ifndef PRESENTATION
+  + status : RESULTS | EMPTY | UNAVAILABLE | NOT_APPLICABLE
+  + mode : fixture | generic semantic | personalized
+  + historyState : NOT_USED | COLD_START | APPLIED
+!endif
+}
+
+class "RANKED_LABEL" as RankedProduct <<RESULT_STEREO>> #EEF6EE {
+!ifndef PRESENTATION
+  + rank : positive integer
+  + productId : ProductId
+!endif
+}
+
+class "EVIDENCE_LABEL" as RankingEvidence <<AI_STEREO>> #F3E8FF {
+!ifndef PRESENTATION
+  + score : finite number
+  + scoreType : text
+  + modelVersion : text
+!endif
+}
+
+class "EMBEDDING_LABEL" as ProductEmbedding <<AI_STEREO>> #F3E8FF
+class "PROFILE_LABEL" as HistoryProfile <<AI_STEREO>> #F3E8FF
+
+Product *-- "1" Barcode : REL_CONTAINS
+Product *-- "1" Provenance : REL_CONTAINS
+ProductResolution o-- "0..1" Product : REL_RESOLVES
+Interaction --> "1" Product : REL_REFERENCES
+HistoryContext *-- "0..*" Interaction : REL_CONTAINS
+RecommendationRequest --> "1" Product : REL_CURRENT
+RecommendationRequest o-- "0..1" HistoryContext : REL_CONTEXT
+RecommendationOutcome *-- "0..*" RankedProduct : REL_ITEMS
+RankedProduct --> "1" Product : REL_CANDIDATE
+RankedProduct o-- "0..1" RankingEvidence : REL_EVIDENCE
+ProductEmbedding ..> Product : REL_DERIVED
+HistoryProfile ..> HistoryContext : REL_DERIVED
+ProductEmbedding ..> RankedProduct : REL_INFLUENCES
+HistoryProfile ..> RankedProduct : REL_INFLUENCES
+
+!ifndef PRESENTATION
+  note bottom of RecommendationOutcome
+    NOTE_PRODUCT_STATUS
+    NOTE_RECOMMENDATION_STATUS
+  end note
+
+  legend bottom
+    |= Color |= Meaning |
+    |<#EAF2F8> | LEGEND_FACT |
+    |<#FFF8E1> | LEGEND_DEVICE |
+    |<#F3E8FF> | LEGEND_AI |
+    LEGEND_RULE
+  endlegend
+!endif
+
+@enduml
