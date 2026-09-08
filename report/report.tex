@@ -150,6 +150,12 @@ Za backend su izabrani OpenJDK 21, Spring Boot 4.1.1 sa Servlet Spring MVC prist
 
 Backend verifikacija obuhvata 11 testova pravila EAN/UPC barkodova i 12 testova stvarne HTTP granice. Svih 23 testa prolazi, izvršni JAR se uspešno pokreće na Javi 21 i za primarni kontrolisani kod vraća poznat proizvod i dva jasno označena deterministička rezultata. Ovaj rezultat ne predstavlja semantičku niti personalizovanu preporuku; eksterni izvor, baza, embedding model i vektorski indeks nisu implementirani.
 
+\subsection{Model proizvoda}
+
+T-008/S1 usvaja minimalan model proizvoda nezavisan od izvora podataka, HTTP poruke i buduće baze. Proizvod predstavlja jednu skeniranu robu ili varijantu pakovanja. Obavezni su stabilan interni identifikator, tačna vrednost i format barkoda, naziv i poreklo podatka; brend, kategorija, opis i najviše 32 oznake ostaju opcioni kako nepotpuni izvorni podaci ne bi bili izmišljeni. Interni identifikator nije identifikator eksternog provajdera, dok se identitet barkoda određuje zajedno vrednošću i formatom. Poreklo razlikuje kontrolisani fixture, eksterni izvor i rezervni skup podataka.
+
+Normalizacija koristi Unicode NFC, uklanja okolne razmake, prazne opcione vrednosti pretvara u odsustvo i ne prevodi niti generiše sadržaj. Razrešavanje i dalje vraća odvojena stanja poznato, nepoznato i nedostupno. Model je saglasan sa potpunim I1 fixture zapisima, ali ne menja prihvaćeni I1 HTTP ugovor niti Java kod. Izbor izvora, licence, keširanje, skladištenje, slike, nutritivni podaci i pravila semantičkog modela ostaju za naredne faze.
+
 \subsection{AI tehnologije}
 
 Za početno očitavanje barkoda implementiran je Google Code Scanner 16.1.0, koji skeniranje delegira Google Play servisima bez dozvole aplikacije za kameru. Skener koristi automatsko uvećanje i ograničen je na EAN-13, EAN-8, UPC-A i UPC-E formate. Manifest sadrži \texttt{barcode\_ui} metapodatak za isporuku modula, a ekran razlikuje uspeh, otkazivanje, nedostupnost ili problem preuzimanja modula i opštu grešku. Na fizičkom telefonu uspešno su obavljena dva skeniranja stvarnih proizvoda i očitane vrednosti su vraćene aplikaciji, čime je potvrđeno da je modul skenera upotrebljiv. Zatvaranje skenera bez očitavanja prikazalo je očekivani status otkazivanja. Nije moguće utvrditi da li je modul tokom provere preuzet ili je već bio prisutan, a fizičko izazivanje greške nije sprovedeno. Direktni ML Kit Barcode Scanning i CameraX su odloženi. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.

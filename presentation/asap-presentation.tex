@@ -131,6 +131,19 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Model proizvoda}
+  \textcolor{gray}{\footnotesize T-008/S1 prihvaćen; I1 ugovor se ne menja}
+  \begin{itemize}
+    \item jedan zapis predstavlja jednu robu ili varijantu pakovanja;
+    \item obavezni: interni ID, barkod, naziv i poreklo podatka;
+    \item opcioni: brend, kategorija, opis i do 32 oznake;
+    \item interni ID je odvojen od identiteta barkoda i ID-ja eksternog izvora;
+    \item poreklo: kontrolisani fixture, eksterni izvor ili rezervni skup;
+    \item normalizacija ne izmišlja, prevodi niti generiše nedostajuće podatke;
+    \item stanja razrešavanja ostaju: poznato, nepoznato i nedostupno.
+  \end{itemize}
+\end{frame}
+
 \section{Implementacija}
 
 \begin{frame}{Trenutno stanje implementacije}

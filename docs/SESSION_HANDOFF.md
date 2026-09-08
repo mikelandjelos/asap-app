@@ -5,8 +5,20 @@ Last updated: 2026-09-08
 ## Active approval state
 
 - The user explicitly accepted S4.4 and closed T-007 on 2026-09-08.
-- T-007 is accepted and complete. No later task has been planned or authorized.
-- The S4.4 validation and synchronized documentation are ready for their acceptance commit.
+- T-007 is committed as `6bd2682` (`Validate I1 vertical slice`).
+- The user explicitly accepted T-008/S1 with “I accept S1, it's done” on 2026-09-08.
+- D-021 records the accepted source-neutral sparse product model. The S1 checkpoint is ready to commit.
+- The user requested canonical domain-class and AI-enrichment/data-lineage diagrams in S2. The revised S2 plan includes both and awaits explicit execution approval.
+
+## T-008/S1 result
+
+- `docs/DOMAIN_MODEL.md` proposes a provider-neutral product aggregate rather than treating API, fixture, Android, or future persistence shapes as the domain model.
+- Stable internal product identity is separate from exact barcode value/format lookup identity. The MVP keeps one package barcode per product record and defers cross-package grouping.
+- `id`, barcode, name, and provenance are mandatory. Bounded brand, category, description, and tags are optional so sparse source data remains honest.
+- Provenance distinguishes `CONTROLLED_FIXTURE`, `EXTERNAL_PROVIDER`, and `FALLBACK_DATASET`; resolution remains `KNOWN`, `UNKNOWN`, or `UNAVAILABLE`.
+- Normalization uses Unicode NFC, trims text, omits blank optional fields, preserves source language, and never fabricates missing metadata.
+- The complete I1 fixture maps to the proposal, but its accepted wire contract and all Java/Android code remain unchanged.
+- `git diff --check` and documentation path checks pass. The 9-page report builds twice under pdfLaTeX and LuaLaTeX, and the 16-slide presentation builds twice under LuaLaTeX; logs are clean, and the changed report page and product-model slide were visually inspected without clipping.
 
 ## S4.4 result
 
@@ -34,7 +46,7 @@ Last updated: 2026-09-08
 
 ## Next concrete action
 
-Commit the accepted T-007/S4.4 checkpoint with a short one-line message. The next candidate is the first substantive unchecked item in `TODO.md`: define the product, interaction, and recommendation domain models. Do not plan or execute it without explicit user approval.
+Commit the accepted S1 checkpoint with a short one-line message. Present the complete revised S2 plan and do not execute it until the user explicitly authorizes S2.
 
 ## Environment caveat
 

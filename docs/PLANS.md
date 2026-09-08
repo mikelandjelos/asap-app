@@ -422,3 +422,47 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 - Changing the accepted scanner technology or architecture topology.
 
 All task-level acceptance criteria were verified, and the user explicitly accepted and closed T-007 on 2026-09-08.
+
+## T-008 — Define the MVP domain models
+
+- **TODO source:** “Definisati modele proizvoda, korisničke interakcije i preporuke.”
+- **Status:** Plan approved; S1 accepted; S2 revised and awaiting explicit approval
+- **Goal:** Establish the smallest provider-neutral domain vocabulary needed by I2–I4 without selecting providers, persistence, embeddings, ranking algorithms, or changing the accepted I1 behavior.
+- **Plan approval evidence:** After reviewing the two-subtask proposal, the user instructed “okay, let's start with all of these” on 2026-09-08. Under the mandatory separate gate, this authorizes S1 only; S2 still requires explicit approval after S1 acceptance.
+
+### T-008/S1 — Define the normalized product model
+
+- Inventory the implemented I1 product/identity/provenance fields and distinguish domain concepts from API DTOs, fixture format, Android UI state, and future persistence.
+- Define the minimal product aggregate, barcode and provenance value objects, mandatory/optional fields, normalization limits, and `KNOWN`/`UNKNOWN`/`UNAVAILABLE` outcome invariants.
+- Preserve the frozen I1 behavior and explicitly defer provider, fallback, database, image/nutrition, embedding, interaction, and recommendation choices.
+- Add the canonical model document and synchronize TODO, documentation hub, I1 relationship, status, architecture, scope scorecard, handoff, report, and presentation.
+- **Approval evidence:** The user instructed “okay, let's start with all of these” on 2026-09-08; per D-005, execution is limited to this first subtask.
+- **Acceptance evidence:** A source-neutral product contract exists in `docs/DOMAIN_MODEL.md`; it separates stable internal identity from exact barcode lookup identity, defines bounded required/optional metadata and provenance, preserves independent resolution outcomes, maps the complete I1 fixture model without changing its wire contract, and records all later choices as deferrals. No Java, Android, provider, persistence, or AI artifact changed. Documentation paths and `git diff --check` pass; the 9-page report builds twice with pdfLaTeX and LuaLaTeX, and the 16-slide presentation builds twice with LuaLaTeX. Logs contain no document/layout/missing-glyph warnings, and the changed report page and model slide were visually inspected without clipping.
+- **User acceptance:** The user explicitly stated “I accept S1, it's done” on 2026-09-08 and requested that the two model/AI diagrams be added to S2.
+- **Status:** Accepted
+
+### T-008/S2 — Define interaction and recommendation models
+
+- Define the minimal anonymous `Interaction` event owned by Android: identity, known-product reference, event kind, ordering/time information, valid/invalid states, and data-minimization boundary.
+- Define the bounded `HistoryContext`: ordered recent interactions, client ownership, cold-start/insufficient-history meaning, request validation, truncation/deduplication behavior, and privacy/retention decision points. Do not select persistence or a final K/weighting algorithm.
+- Define recommendation concepts separately from product facts: deterministic fixture, generic semantic similarity, and personalized modes; ranked items; score semantics and comparability limits; `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE`; and the rule that recommendation failure never hides a known product.
+- Define the AI-derived boundary: normalized factual product metadata remains source-backed, while embedding representations, similarity candidates/scores, history profiles, and reranked results are derived artifacts that never overwrite the product aggregate.
+- Add canonical `docs/diagrams/domain-model.puml` for static entities/value objects, relationships, cardinalities, and ownership.
+- Add canonical `docs/diagrams/ai-enrichment-flow.puml` for factual-source normalization, embedding derivation, semantic retrieval, optional history enrichment, cold start, and displayed result lineage.
+- Generate English technical, Serbian report, and compact Serbian presentation variants from both sources; integrate the appropriate renders into architecture docs, report, and presentation without claiming that planned AI behavior is implemented.
+- Specify I1 compatibility plus deterministic acceptance examples for no history, sufficient synthetic history, empty/unavailable recommendations, malformed history, and partial success. Do not alter the accepted I1 payload or application code.
+- Synchronize TODO, domain model, status, decisions if accepted, architecture, diagram contract, plan, handoff, report, and presentation; validate/render all diagram variants, compile affected LaTeX deliverables, visually inspect them, and stop for S2/T-008 acceptance.
+- **Status:** Revised plan; requires explicit user approval
+
+### Task-level acceptance criteria
+
+- Product, interaction, and recommendation concepts have explicit identities, fields, invariants, ownership, and lifecycle boundaries.
+- I1 compatibility and future API evolution are explicit; planning language is not presented as implemented behavior.
+- The contracts support I2 product resolution, I3 semantic similarity, and I4 bounded-history personalization without selecting their concrete providers, algorithms, or stores.
+- S1 and S2 are separately accepted before the TODO item and T-008 are closed.
+
+### Exclusions
+
+- Refactoring Java/Android code or changing the accepted I1 HTTP contract.
+- Selecting or calling a product provider, choosing a fallback dataset, or ingesting real products.
+- Selecting persistence/vector technologies, embedding models, similarity metrics, history length, or ranking algorithms.

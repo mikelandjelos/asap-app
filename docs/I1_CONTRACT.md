@@ -4,6 +4,8 @@ Status: Accepted and frozen under completed T-007. The backend, Android client a
 
 The contract proves the Android-to-backend boundary with controlled data. It must not be presented as live product resolution, semantic similarity, or personalization.
 
+The accepted source-neutral product model is defined in [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md). It does not alter this frozen I1 wire contract.
+
 ## HTTP operation
 
 `POST /api/v1/scan-queries`

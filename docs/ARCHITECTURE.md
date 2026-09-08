@@ -4,7 +4,7 @@ Status: T-006/S2 architecture contract accepted on 2026-09-05. The Android scann
 
 T-007/S3 realizes the accepted Java 21, Spring Boot 4.1.1, Servlet Spring MVC, Maven Wrapper baseline in one project under `backend/`. The deployment and ownership boundaries below remain unchanged.
 
-The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
+The accepted product boundary is in [`MVP_SCOPE.md`](MVP_SCOPE.md). T-008/S1 accepts the source-neutral product aggregate and normalization rules in [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) without changing the implemented I1 contract. Canonical views are the [component/deployment source](diagrams/component-architecture.puml) and [scan-to-recommendation source](diagrams/scan-to-recommendation-flow.puml); the rendering and terminology contract is in [`diagrams/README.md`](diagrams/README.md).
 
 ## Selected MVP topology
 
@@ -49,7 +49,7 @@ The diagrams mark scanner integration, Android coordination/API boundary and out
 | Android API client | Crosses the device/backend boundary and preserves independent product/recommendation outcome classes | None | Barcode and optional bounded history context | Product outcome plus recommendation mode/results/status |
 | Local bounded history | Supplies recent known-product context for the extended MVP and explicit cold start when insufficient | Android application on the device | Confirmed known-product interaction | Bounded recent product references |
 | Backend API module | Validates and coordinates one application operation and combines module results without hiding partial success | None | Barcode and optional history context | Product outcome and separate recommendation outcome |
-| Product-resolution module | Checks the normalized catalog, consults the external adapter when appropriate, applies controlled fallback data, normalizes records, and reports provenance | Owns writes to the normalized product catalog | Barcode, external/fallback records | Known product with provenance, unknown product, or temporarily unavailable |
+| Product-resolution module | Checks the normalized catalog, consults the external adapter when appropriate, applies controlled fallback data, normalizes records against the accepted T-008/S1 product model, and reports provenance | Owns writes to the normalized product catalog | Barcode, external/fallback records | Known product with provenance, unknown product, or temporarily unavailable |
 | Recommendation module | Produces generic semantic similarity or history-aware ranking, labels the mode, and handles cold start | Owns vector preparation/index synchronization at the logical level | Current known product and optional recent product references | Ranked candidates with scores/mode, empty result, or unavailable status |
 | Normalized product catalog | Provides stable barcode-to-product records independent of source-specific formats | Backend/product-resolution module | Normalized product writes and barcode lookups | Product record and provenance |
 | Vector index | Provides product-vector lookup and similarity candidates | Backend/recommendation module | Product vectors and similarity queries | Candidate product references and scores |
@@ -75,6 +75,7 @@ T-007/S2 accepts and freezes the exact deterministic-I1 subset in [`I1_CONTRACT.
 - Every I1 recommendation for a known product uses mode `DETERMINISTIC_FIXTURE` and `placeholder: true`; it carries no score and must be shown as a non-AI demo result.
 - Invalid requests use RFC 9457 problem details. Transport failure remains an Android-side backend-unavailable outcome, not a fabricated domain response.
 - Controlled fixtures use restricted-circulation EAN-13 codes and `CONTROLLED_FIXTURE` provenance; they may never be queried against an external provider or represented as real products.
+- The accepted T-008/S1 model separates an opaque stable product ID from exact barcode value/format lookup identity; requires only ID, barcode, name, and provenance; and bounds optional brand, category, description, and tags. It is an internal model contract, not an I1 payload change.
 
 Endpoint evolution, retries, timing, history context, and production guarantees remain deferred. S4.2 connects successful supported scans to the client with cancellation and stale-response protection, S4.3 renders the independent response outcomes, and S4.4 physically validates the controlled exchange on the phone.
 
@@ -108,8 +109,8 @@ A last-K window is the simplest candidate. K, event types, recency weighting, ce
 ## Still open
 
 - Hosting beyond local execution and any later evolution of the implemented package layout.
-- Product API/provider, controlled fallback dataset, license, normalization fields, provenance representation, and caching policy.
-- Product, interaction, and recommendation schemas and validation limits.
+- Product API/provider, controlled fallback dataset, license, source precedence, attribution details, and caching policy.
+- Interaction/recommendation schemas, validation limits, and the canonical domain/AI-lineage diagrams remain T-008/S2.
 - Embedding model/version, text composition, vector dimensions, exact versus approximate search, and update strategy.
 - Personalization K/window, events, weighting, aggregation, retention, deletion, and evaluation.
 - Concrete resilience policy, timeouts, retries, observability, security hardening, and production operation.

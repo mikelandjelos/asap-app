@@ -27,10 +27,10 @@ The “approximately 80%” target is an operational threshold, not permission t
 | Priority | Capability | Weight | Current evidence |
 | --- | --- | ---: | --- |
 | P0 | Physical barcode acquisition and cancellation | 15 | Implemented and device-validated under T-005 |
-| P0 | Barcode-to-product metadata resolution with controlled fallback | 20 | Planned |
-| P0 | Product details and honest unknown/unavailable UI states | 10 | Planned |
+| P0 | Barcode-to-product metadata resolution with controlled fallback | 20 | Controlled I1 path validated; real provider/fallback still planned |
+| P0 | Product details and honest unknown/unavailable UI states | 10 | Implemented for I1; real metadata remains planned |
 | P0 | Top-N semantic similarity for known products | 20 | Planned |
-| P0 | Reproducible integration, resilience checks, demo, and synchronized deliverables | 15 | Partially established; end-to-end evidence pending |
+| P0 | Reproducible integration, resilience checks, demo, and synchronized deliverables | 15 | Controlled I1 end-to-end path validated; later integrations pending |
 | P1 | Extended MVP: history-based personalization with an explicit cold-start state | 15 | Committed after the core path |
 | P2 | Broader quality/latency evaluation and user feedback | 5 | Planned after integration |
 
@@ -75,7 +75,7 @@ Each iteration must end in reviewable evidence and synchronize tests, status, ar
 | Iteration | Goal | Entry condition | Required exit evidence |
 | --- | --- | --- | --- |
 | I0 — Scanner foundation | Acquire a supported barcode on Android | Android baseline selected | Complete: clean build/test/lint, physical install, two real scans, cancellation |
-| I1 — Deterministic vertical slice | Connect the phone flow through the backend boundary using controlled fixture data | T-006 architecture accepted; later backend baseline accepted | A scanned fixture barcode produces product details and a clearly labelled deterministic placeholder list; unknown fixture behavior and automated contract checks pass |
+| I1 — Deterministic vertical slice | Connect the phone flow through the backend boundary using controlled fixture data | T-006 architecture and backend baseline accepted | Complete: physical scan shows product and labelled fixture results; representative outcome and automated contract checks pass |
 | I2 — Product resolution | Replace fixture-only resolution with a normalized metadata adapter plus fallback | Product source, fallback dataset, and product model accepted | Known and unknown real barcodes exercise primary/fallback/unavailable outcomes with provenance recorded |
 | I3 — Semantic similarity | Generate/store embeddings and return ranked top-N similar products | Representative dataset, embedding model, and vector-storage approach accepted | Measured offline quality/latency baseline plus phone demonstration; empty/unavailable outcomes verified |
 | I4 — Extended MVP personalization | Use bounded interaction history to distinguish generic from personalized ranking | Core operational MVP accepted; privacy/retention and interaction model accepted | Cold-start behavior and a repeatable controlled example where history changes ranking; automated tests pass and the selected history method is documented |

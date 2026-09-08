@@ -159,3 +159,11 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** The frozen response carries an independently useful product outcome and recommendation outcome; partial recommendation failure must not hide known product data.
 - **Decision:** Use one scrollable XML outcome area with separate product and recommendation sections. Map the validated union into a pure-Java UI model, render every state explicitly, and show the exact deterministic-demo label whenever `placeholder` is true. Recommendation rows contain rank and product summary only.
 - **Consequence:** Known product data remains visible for empty or unavailable recommendations, unknown and unavailable products remain distinguishable, and the I1 UI cannot imply an AI similarity score. S4.3 does not add richer styling, navigation, persistence, or physical integration evidence.
+
+## D-021 — MVP product model is source-neutral and permits sparse metadata
+
+- **Status:** Accepted
+- **Date:** 2026-09-08
+- **Context:** I2 needs a stable product concept before selecting an external provider or fallback dataset. The complete I1 fixture shape cannot be assumed for every real record, and transport/provider/persistence representations must not become the domain model accidentally.
+- **Decision:** Model one scannable item or package variant with a stable opaque ASAP ID, exact validated barcode value/format, name, and provenance as required fields. Brand, category, description, and bounded ordered tags are optional. Keep internal identity distinct from barcode and provider identity; normalize source text without translating, generating, or fabricating missing facts; preserve `KNOWN`, `UNKNOWN`, and `UNAVAILABLE` resolution outcomes.
+- **Consequence:** The complete I1 records map to the model without changing the frozen HTTP contract. Future providers may supply sparse but honest records. Provider/fallback precedence, storage, images/nutrition, cross-package grouping, embeddings, interactions, and recommendations remain separate decisions.

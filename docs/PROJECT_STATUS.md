@@ -4,7 +4,7 @@ Last verified: 2026-09-08
 
 ## Current phase
 
-ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner-to-Retrofit/Moshi I1 flow and UI for every frozen product/recommendation outcome; all 32 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The controlled end-to-end vertical slice is physically validated; live product data, semantic search, persistence, and personalized recommendations do not exist.
+ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner-to-Retrofit/Moshi I1 flow and UI for every frozen product/recommendation outcome; all 32 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The controlled end-to-end vertical slice is physically validated. T-008/S1 defines the accepted provider-neutral product contract for the next iteration; live product data, semantic search, persistence, and personalized recommendations do not exist.
 
 ## Available artifacts
 
@@ -38,6 +38,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - T-007/S4.2 is accepted. `MainActivity` delegates supported successful scan values to a pure-Java `ScanQueryCoordinator`, which invokes `ScanQueryClient`, posts callback state through the Android main-thread executor, exposes loading and separated transport/HTTP/invalid-response states, cancels active work on a newer scan or destruction, and rejects stale callbacks. Empty, unsupported, cancelled, module-unavailable, and scanner-error paths do not submit a request. S4.3 builds outcome rendering on this boundary; no physical end-to-end claim is made before S4.4.
 - T-007/S4.3 is accepted. The scrollable custom XML screen renders normalized known-product details, distinct unknown/unavailable product states, and independent `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` recommendation states. Every placeholder outcome shows “Deterministički demo rezultat — nije AI preporuka”; result rows contain rank and product summary only, with no fabricated score. Five outcome-model tests verify all frozen combinations and preservation of known product data when recommendations are empty or unavailable.
 - T-007/S4.4 and task T-007 are accepted and complete. A clean build produced 32/32 passing Android tests, zero lint findings, a debug APK, and 23/23 passing backend tests. On the verified phone, the fresh APK used `adb reverse` to reach the local backend and physically displayed: the primary known product with almond/soy ranks and the exact demo-only label; unknown product with `NOT_APPLICABLE`; known product with empty recommendations; known product with unavailable recommendations while retaining product data; and backend unavailability with prior outcome content cleared. The backend was stopped gracefully, forwarding and temporary validation artifacts were removed, and the APK remains installed.
+- T-008/S1 is accepted. `docs/DOMAIN_MODEL.md` defines a source-neutral product aggregate with stable internal identity, exact barcode lookup identity, minimal required metadata, bounded optional metadata, explicit provenance, normalization rules, and independent resolution outcomes. It maps the complete I1 fixtures without changing code or the frozen wire contract; interaction/recommendation contracts and two canonical model/AI-lineage diagrams remain S2.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
 - Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
 
@@ -47,7 +48,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - `presentation/asap-presentation.tex` compiles with LuaLaTeX, from the repository root or the `presentation/` directory.
 - Serbian Latin glyphs render correctly with the engine-aware font setup.
 - PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 are available in the current environment when PlantUML is invoked headlessly with `env -u DISPLAY`.
-- The integrated report is 9 pages and the integrated presentation is 15 slides; their updated architecture, flow, scope, iteration, technology, and proposed I1-contract pages/slides were visually inspected.
+- The integrated report is 9 pages and the integrated presentation is 16 slides; their architecture, flow, scope, iteration, technology, I1-contract, and accepted T-008/S1 product-model pages/slides were visually inspected.
 
 ## Android development environment
 
@@ -67,7 +68,7 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-007 is accepted and closed. No subsequent task has been planned or authorized.
+- T-008/S1 is accepted. The expanded S2 plan includes canonical domain-class and AI-enrichment diagrams and awaits explicit approval.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
 - Product metadata API and fallback dataset.

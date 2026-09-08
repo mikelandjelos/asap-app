@@ -46,7 +46,7 @@ PlantUML identifiers and operational documentation use the English canonical ter
 | Product metadata store | Katalog metapodataka o proizvodima | Baza proizvoda; barcode → metadata | I1 uses a packaged controlled fixture; durable storage and an external provider remain undecided. |
 | Semantic search and recommendation component | Semantička pretraga i preporuke | Semantic search/recommendations | I1 boundary returns labelled deterministic fixture results; embedding, ranking, and MMR remain unimplemented. |
 | Vector index | Vektorski indeks | Embeddings store | Owned by the recommendation module; exact versus approximate search and storage technology remain undecided. |
-| Product details | Podaci o proizvodu | Product; metadata | Concrete fields and schema remain undecided. |
+| Product details | Podaci o proizvodu | Product; metadata | T-008/S1 accepts the source-neutral aggregate and limits in `../DOMAIN_MODEL.md`; it does not change the I1 wire contract. |
 | Recommendations | Preporuke | Top-N similar products | Ranking, personalization, and fallback behavior remain undecided. |
 
 ## Source and rendered-file layout
