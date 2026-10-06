@@ -52,7 +52,9 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
 - `asap.sources.upcitemdb.burst` (default 5 lookups per rolling minute, below the provider's documented 6/min; replaced the original 11 s fixed spacing, which made quick consecutive scans `UNAVAILABLE`);
 - `asap.sources.user-agent`.
 
-Fixed limits: 3 s total budget and 1.5 s per source. OFF results are cached (found 24 h, not found 1 h); UPCitemdb results are never cached. A source's circuit opens for 60 s after 3 consecutive failures.
+Timeouts: `asap.sources.per-source-timeout` (default 8 s) and `asap.sources.total-budget` (default 12 s), with a 4 s connect timeout.
+- The first 1.5 s / 3 s limits turned every UPCitemdb-dependent scan into `UNAVAILABLE`: the provider's latency varies from about 0.8 s to more than 4 s.
+- Each source lookup is logged as `source=… barcode=… outcome=… ms=…`. OFF results are cached (found 24 h, not found 1 h); UPCitemdb results are never cached. A source's circuit opens for 60 s after 3 consecutive failures.
 
 ## `GET /api/v2/catalog-map`
 

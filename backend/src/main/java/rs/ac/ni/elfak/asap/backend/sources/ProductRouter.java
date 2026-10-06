@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rs.ac.ni.elfak.asap.backend.barcode.Barcode;
 import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.Found;
 import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.Lookup;
@@ -31,6 +33,7 @@ public final class ProductRouter {
     private record CacheEntry(Lookup lookup, Instant expires) {
     }
 
+    private static final Logger LOG = LoggerFactory.getLogger(ProductRouter.class);
     private static final int BREAKER_THRESHOLD = 3;
     private static final Duration BREAKER_OPEN = Duration.ofSeconds(60);
     private static final Duration FOUND_TTL = Duration.ofHours(24);
@@ -92,9 +95,13 @@ public final class ProductRouter {
         }
         Instant open = openUntil.get(source.id());
         if (open != null && open.isAfter(now)) {
+            LOG.info("source={} barcode={} outcome=Unavailable reason=circuit_open", source.id(), barcode.value());
             return new Unavailable("circuit_open");
         }
+        long started = System.nanoTime();
         Lookup lookup = source.lookup(barcode, timeout);
+        LOG.info("source={} barcode={} outcome={}{} ms={}", source.id(), barcode.value(), lookup.getClass().getSimpleName(),
+                lookup instanceof Unavailable u ? " reason=" + u.reason() : "", (System.nanoTime() - started) / 1_000_000);
         if (lookup instanceof Unavailable u && !"local_quota".equals(u.reason())) {
             if (failures.merge(source.id(), 1, Integer::sum) >= BREAKER_THRESHOLD) {
                 openUntil.put(source.id(), now.plus(BREAKER_OPEN));

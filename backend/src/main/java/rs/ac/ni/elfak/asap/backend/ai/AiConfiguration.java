@@ -59,11 +59,13 @@ public class AiConfiguration {
             @Value("${asap.sources.off.base-url:https://world.openfoodfacts.org}") String offUrl,
             @Value("${asap.sources.upcitemdb.base-url:https://api.upcitemdb.com}") String upcUrl,
             @Value("${asap.sources.upcitemdb.daily-quota:90}") int upcQuota,
-            @Value("${asap.sources.upcitemdb.burst:5}") int upcBurst) {
+            @Value("${asap.sources.upcitemdb.burst:5}") int upcBurst,
+            @Value("${asap.sources.per-source-timeout:8s}") Duration perSource,
+            @Value("${asap.sources.total-budget:12s}") Duration budget) {
         List<ProductSource> sources = enabled
                 ? List.of(new OpenFactsSource(http, offUrl),
                         new UpcItemDbSource(http, upcUrl, upcQuota, upcBurst, Duration.ofMinutes(1), Clock.systemUTC()))
                 : List.of();
-        return new ProductRouter(sources, Duration.ofSeconds(3), Duration.ofMillis(1500), Clock.systemUTC());
+        return new ProductRouter(sources, budget, perSource, Clock.systemUTC());
     }
 }

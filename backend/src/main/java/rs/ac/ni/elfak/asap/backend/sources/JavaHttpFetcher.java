@@ -13,7 +13,7 @@ import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.Response;
 public final class JavaHttpFetcher implements HttpFetcher {
 
     private final HttpClient client = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(2))
+            .connectTimeout(Duration.ofSeconds(4))
             .followRedirects(HttpClient.Redirect.NEVER)
             .build();
     private final String userAgent;

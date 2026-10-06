@@ -680,6 +680,9 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - **S7b phone check (2026-10-06):** "Quattro Plazma" resolved in dark mode with theme "Biscuits & crackers" and 10 results.
   - **Bug reported by the user:** every later scan showed "temporarily unavailable". Cause: UPCitemdb's 11 s spacing guard. Fix: a 5/min rolling burst window.
   - **Test-run OOM:** the backend test JVM was OOM-killed while the phone-test backend held a second copy of the model; it was rerun with the backend stopped and passed 54/54.
+  - **Second root cause:** after the burst fix, scans still showed "unavailable". The new per-lookup logging showed `transport` failures at exactly the 1.5 s per-source timeout.
+    - Diagnosis: `curl` took 0.8–1.0 s, a Java client 1.0–4.8 s; IPv6 was ruled out (IPv4-only DNS).
+    - Fix: configurable timeouts (8 s per source, 12 s total, 4 s connect). The failing barcode now resolves to an honest `UNKNOWN` in 2.0 s.
   - **Pending:** dark-mode status-bar icon contrast, to fix in S7c.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
