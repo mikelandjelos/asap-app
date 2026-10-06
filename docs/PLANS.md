@@ -690,6 +690,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   3. A new report written from scratch, following the user's instructions.
   4. Then: user-perspective testing, demo preparation, presentation, deployment, and the post-MVP refit pipeline (Airflow-style orchestration, `POST_MVP_ARCHITECTURE.md`).
 - **S7c:** approved 2026-10-06 (“let's go legend!”). The S7d Analytics content proposal (PCA main chart, top themes, personalization status, 14-day activity, data sources) still needs explicit confirmation before S7d.
+- **S7c:** implemented, awaiting the phone visual check and acceptance.
+  - **Rendering model:** `ProductUiModel` (pure, tested) maps every session state to a screen: none, loading, product, not found, unavailable, offline, server error, invalid response. Retry appears only where it can help: not on "not found".
+  - **Product screen:** elevated product card (name, brand · category, theme chip, description, barcode and data-source line such as "ASAP catalog · Open Food Facts" or "… (live lookup)"); "For you" / "Similar products" / "No recommendations" header with an explanatory subtitle; ranked result cards (rank badge, name, brand · category, theme tag) that open the tapped product; ODbL attribution; scroll to top on a new product.
+  - **Other:** dark-mode status-bar icon contrast fixed; plural-correct strings.
+  - **Verification:** tests 38/38 (+4 `ProductUiModelTest`), lint 0, APK installed. Screenshot pending: the phone was locked.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

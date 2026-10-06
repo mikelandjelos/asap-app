@@ -19,20 +19,33 @@
     <string name="recent_empty">No scans yet. Your recent products will appear here.</string>
     <string name="recent_item_description">Open %1$s again</string>
 
-    <string name="product_none">Scan a product to see it here.</string>
-    <string name="product_loading">Looking up barcode %1$s…</string>
-    <string name="product_unknown">We could not find this product (%1$s).</string>
-    <string name="product_unavailable">Product data is temporarily unavailable. Please try again.</string>
-    <string name="error_transport">Cannot reach the ASAP server. Check your connection.</string>
-    <string name="error_http">The server returned an error (HTTP %1$d).</string>
-    <string name="error_invalid">The server sent an unusable response.</string>
+    <string name="state_none_title">No product yet</string>
+    <string name="state_none_message">Scan a barcode on the Scan tab to see the product and smart alternatives here.</string>
+    <string name="state_loading_title">Looking it up…</string>
+    <string name="state_loading_message">Barcode %1$s</string>
+    <string name="state_not_found_title">Product not found</string>
+    <string name="state_not_found_message">Barcode %1$s is not in our catalog or the public product databases yet.</string>
+    <string name="state_unavailable_title">Sources are busy</string>
+    <string name="state_unavailable_message">We could not reach the product databases for %1$s right now. Please try again in a moment.</string>
+    <string name="state_offline_title">Cannot reach ASAP</string>
+    <string name="state_offline_message">Check your connection and try again.</string>
+    <string name="state_server_title">Something went wrong</string>
+    <string name="state_server_message">The server returned an error (HTTP %1$d).</string>
+    <string name="state_invalid_title">Something went wrong</string>
+    <string name="state_invalid_message">The server sent a response the app cannot use.</string>
     <string name="retry">Try again</string>
-    <plurals name="results_count">
-        <item quantity="one">%1$d recommendation · %2$s</item>
-        <item quantity="other">%1$d recommendations · %2$s</item>
-    </plurals>
+    <string name="product_meta">Barcode %1$s · %2$s</string>
+    <string name="theme_description">Theme: %1$s</string>
     <string name="mode_personal">For you</string>
     <string name="mode_similar">Similar products</string>
+    <string name="mode_empty">No recommendations</string>
+    <plurals name="results_personal_subtitle">
+        <item quantity="one">Picked using your %1$d recent product and kept varied</item>
+        <item quantity="other">Picked using your %1$d recent products and kept varied</item>
+    </plurals>
+    <string name="results_similar_subtitle">Scan a few different products to get personal picks</string>
+    <string name="results_empty_subtitle">We found no close alternatives for this product.</string>
+    <string name="result_description">Rank %1$d: %2$s, %3$s. Double tap to open.</string>
 
     <string name="coming_soon">This screen is built in the next step.</string>
 </resources>

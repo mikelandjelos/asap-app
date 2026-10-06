@@ -23,7 +23,7 @@ public class V2ClientTest {
 
     private static final MediaType JSON = MediaType.get("application/json");
 
-    static final String KNOWN = "{\"product\":{\"status\":\"KNOWN\",\"data\":{\"id\":\"off:1\","
+    public static final String KNOWN = "{\"product\":{\"status\":\"KNOWN\",\"data\":{\"id\":\"off:1\","
             + "\"barcode\":{\"value\":\"3017620422003\",\"format\":\"EAN_13\"},\"name\":\"Nutella\",\"brand\":\"Ferrero\","
             + "\"category\":\"Spreads\",\"tags\":[],\"provenance\":{\"type\":\"FALLBACK_DATASET\",\"source\":\"open_food_facts\"},"
             + "\"theme\":{\"id\":21,\"label\":\"Chocolate & hazelnut spreads\"},\"mapPosition\":{\"x\":0.1,\"y\":-0.2}}},"

@@ -31,7 +31,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [ ] S7: Android istorija i doteran UI. (Odluke o UI-u: D-038.)
   - [x] S7a: v2 klijent sa striktnom validacijom, lokalna istorija (50/90 dana/brisanje), slanje najnovijih 20 događaja. (41 test, lint 0.)
   - [x] S7b: Material 3 okvir, donja navigacija, tema. (34 testa, lint 0; zelena tema svetla/tamna.)
-  - [ ] S7c: ekran proizvoda i rezultata sa svim stanjima.
+  - [x] S7c: ekran proizvoda i rezultata sa svim stanjima. (38 testova, lint 0; vizuelna provera na telefonu sledi.)
   - [ ] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije.
   - [ ] S7e: pristupačnost i provera na telefonu.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
