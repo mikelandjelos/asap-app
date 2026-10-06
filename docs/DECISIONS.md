@@ -317,3 +317,10 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - The backend must refuse to start on a checksum mismatch. A refit (drift task) produces a new bundle version.
 - **Rationale:** simple formats every language reads without extra libraries, an explicit link between the notebook evidence and runtime artifacts, and reproducible parity testing.
 - **Note:** the bundle is git-ignored (the model alone is 470 MB). Regenerate it with the WORKFLOW commands.
+
+## D-035 — ONNX Runtime Java and DJL tokenizers in the backend (T-011/S6b)
+
+- **Date:** 2026-10-06
+- **Decision:** The backend runs the e5-small encoder in-process with `com.microsoft.onnxruntime:onnxruntime` 1.30.0 and `ai.djl.huggingface:tokenizers` 0.38.0. Char-TF-IDF, hybrid scoring and top-k are plain Java ports of the Python reference.
+- **Evidence:** `BundleParityTest` matches every fixture: TF-IDF within 1e-6 including Unicode edge cases, embedding cosine ≥ 0.999, and identical top-50 rankings and scores within 1e-4. Desktop timings: encode 9.2 ms; hybrid top-50 over 10k products 5.8 ms; startup indexing 4.8 s.
+- **Consequences:** The JAR grows to ~101 MB because of the bundled natives. No Python sidecar is needed (the design fallback in §4 is not used). Parity tests skip, with an explicit reason, when the git-ignored bundle is absent.

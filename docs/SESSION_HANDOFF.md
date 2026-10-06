@@ -10,10 +10,10 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S6a is done and committed: verified runtime bundle (D-034, `AI_MVP_DESIGN.md` §11). Await acceptance, then explicit approval of S6b.
-  - **S6b scope:** Java bundle loader, ONNX Runtime Java + DJL HuggingFace tokenizers encoder, char-TF-IDF port of `ml/verify_bundle.py`, hybrid retrieval, and JUnit parity tests against `fixtures/parity.json`.
-  - **Dependency choices:** decide them in the S6b plan.
-  - **Deferred:** report work. Commit at the end of every subtask.
+- **Next action:** T-011/S6b is done and committed (D-035). Await acceptance, then explicit approval of S6c.
+  - **Java ranking:** multi-interest profile + readiness, MMR, cluster assignment and PCA "you" position, with parity tests on fixture users and new products.
+  - **API:** written v2 contract + `POST /api/v2/scan-queries` + `GET /api/v2/catalog-map`, with Spring wiring conditional on `asap.bundle.dir`. v1 stays.
+  - Report work is deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.
 

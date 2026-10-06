@@ -23,7 +23,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [x] S5: notebook 03 — personalizacija i MMR. (Višeinteresni profil, β = 0,4, +0,007 nDCG@10 značajno; MMR λ = 0,6: −4,9 % nDCG, +21 % raznovrsnost; D-032.)
 - [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
   - [x] S6a: verzionisani paket artefakata + parity fiksture; nezavisna provera prolazi (D-034).
-  - [ ] S6b: Java učitavanje paketa, ONNX enkoder, char TF-IDF, hibridna pretraga, parity testovi.
+  - [x] S6b: Java učitavanje paketa, ONNX enkoder, char TF-IDF, hibridna pretraga, parity testovi. (32/32 testova; D-035.)
   - [ ] S6c: Java profil, MMR, klasteri/PCA; v2 ugovor i endpoint; v1 ostaje.
   - [ ] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima.
 - [ ] S7: Android istorija i doteran UI.

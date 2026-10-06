@@ -622,6 +622,12 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - **S6a:** Approved 2026-10-06 (“cool, let's go”); complete, awaiting acceptance.
   - **Export:** `ml/export_bundle.py` exports bundle `20261006-d7293828` (12 files, 526 MB), asserting the notebook hashes and parameters.
   - **Verification:** `ml/verify_bundle.py` passes all 10 checks from bundle files only, with a pure-Python TF-IDF max error of 5e-9.
+- **S6a:** accepted 2026-10-06 (“good, continue”).
+- **S6b:** Approved 2026-10-06 (“good, continue”); complete, awaiting acceptance.
+  - **Dependencies:** versions checked on Maven Central; the DJL natives are bundled (no runtime download).
+  - **Code:** 9 new main classes in `backend/.../ai/`, plus `CharTfidfTest` and `BundleParityTest`.
+  - **Verification:** `./mvnw verify` passes 32/32 (23 existing + 4 unit + 5 parity, none skipped). v1 still starts and serves without a bundle. The JAR is ~101 MB.
+  - **Report facts for the end:** Java parity and Java latency.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

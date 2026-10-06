@@ -155,7 +155,8 @@ The backend owns a checksum-pinned Maven Wrapper, so no global Maven installatio
 
 ```sh
 cd backend
-./mvnw verify
+./mvnw verify   # bundle parity tests run when ../data/processed/bundle/CURRENT exists (else skipped);
+                # override the location with -Dasap.bundle.root=/path/to/bundle
 java -jar target/asap-backend-0.0.1-SNAPSHOT.jar
 ```
 

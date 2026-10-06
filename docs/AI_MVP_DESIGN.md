@@ -168,6 +168,17 @@ New `POST /api/v2/scan-queries`; v1/I1 stays frozen. The request adds an optiona
 
 `ml/verify_bundle.py` re-checks a bundle from its own files only. It includes a sklearn-free char-TF-IDF reference implementation, which is the blueprint for the Java port.
 
+**Java port (S6b, D-035):** the `rs.ac.ni.elfak.asap.backend.ai` package holds:
+- `RuntimeBundle` (checksum-verified loader);
+- `CharTfidf` (port of `ml/verify_bundle.py`), plus `LexicalIndex` (inverted index);
+- `OnnxTextEncoder` (DJL tokenizer + ONNX Runtime + mean pooling);
+- `HybridRetriever` (exact top-k, ties to the lower index);
+- `ProductText`.
+
+`BundleParityTest` passes every TF-IDF (including Unicode edge cases), embedding (cosine ≥ 0.999), retrieval and text-rule fixture.
+- Desktop timings: load + index 4.8 s at startup; encode 9.2 ms; hybrid top-50 over 10k products 5.8 ms.
+- These classes are not yet wired into Spring or an endpoint (S6c).
+
 `GET /api/v2/catalog-map` returns the cluster-coloured catalog sample and cluster labels. The artifact bundle is versioned, and the backend refuses to start on a checksum mismatch.
 
 ## 12. UI direction (built in S7)

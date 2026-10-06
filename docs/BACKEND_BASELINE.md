@@ -51,6 +51,12 @@ The approved S3 scaffold now exists under `backend/`. It uses the exact baseline
 
 This historical S3 evidence did not itself authorize Android integration; T-007/S4 subsequently implemented and validated it, as recorded in `PROJECT_STATUS.md`.
 
+## AI runtime dependencies (T-011/S6b, D-035)
+
+- `com.microsoft.onnxruntime:onnxruntime` 1.30.0 (CPU), the same version as the Python runtime used for the notebook parity runs.
+- `ai.djl.huggingface:tokenizers` 0.38.0, which bundles native libraries for linux/osx x86_64/aarch64. No runtime download is needed.
+- Effect: the executable JAR grows to ~101 MB. The 526 MB bundle stays outside the JAR (`data/processed/bundle/`).
+
 ## Official sources
 
 - [Spring Boot project and current release](https://spring.io/projects/spring-boot/)
