@@ -10,4 +10,9 @@ public final class ApiClientFactory {
     public static ScanQueryClient createDefault() {
         return RetrofitScanQueryClient.create(BuildConfig.I1_BASE_URL);
     }
+
+    /** AI v2 client on the same backend base URL. */
+    public static V2Client createV2() {
+        return V2Client.create(BuildConfig.I1_BASE_URL);
+    }
 }

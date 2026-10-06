@@ -352,3 +352,14 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - The cache is in-memory only; persistence belongs to the post-MVP database/consolidator.
   - Externally resolved products are not in the catalog, so they do not contribute to history profiles.
   - Sparse provider records give weak recommendations.
+
+## D-038 — Android UI direction and device history store (T-011/S7)
+
+- **Date:** 2026-10-06
+- **Decision (user choices):**
+  - **Visual style:** fresh grocery-green Material 3, with light and dark themes.
+  - **Navigation:** bottom tabs (Scan, Product, Map, History).
+  - **Results:** one ranked list labelled "For you" (personalized) or "Similar products" (cold start), with a theme chip per row.
+  - **Map:** 60 theme bubbles (size = theme size), a "You" marker, the last scanned product and the history as dots.
+  - **History:** device-only JSON (newest 50, 90 days, clear action); the newest 20 events are sent. Local display fields stay on the device.
+- **Rationale:** easiest to demo and discover; matches the v2 contract exactly (no extra backend computation); keeps the DOMAIN_MODEL privacy boundary.

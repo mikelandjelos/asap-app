@@ -98,6 +98,12 @@ The client records the event only after it has displayed a valid known product. 
 
 ## Bounded history context
 
+**T-011/S7a implementation (D-038):**
+- **Storage:** `HistoryStore` keeps events in app-private storage, newest first, at most 50 entries and 90 days old, with a clear action. Unreadable files are discarded.
+- **Requests:** only the newest 20 events are sent, as `{id, productId, kind, occurredAt}` with strictly descending times.
+- **Display cache:** next to each event the device also stores name, brand, theme and map position, used by the History and Map screens. These never leave the device; the event sent to the backend stays minimal, as specified below.
+
+
 `HistoryContext` is an optional, newest-first list of `Interaction` values sent by Android for one future recommendation request. The Android application owns and can delete the underlying history; the backend may use only the supplied request context and does not persist it as a user profile.
 
 - Absence or an empty list is valid and produces `COLD_START` for a real semantic request.

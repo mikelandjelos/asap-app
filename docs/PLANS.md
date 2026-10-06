@@ -663,6 +663,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 | S7e | Accessibility and end-to-end verification on the phone: TalkBack labels, 48 dp targets, contrast, 200 % font, dark mode | checklist + screenshots; Android/backend test counts |
 
   The UI decisions (visual style, navigation, results layout, map content) are asked of the user before S7b. S7a needs none of them.
+- **UI decisions (user, 2026-10-06, D-038):** fresh grocery green; bottom tabs; one labelled results list; map with themes, you and scans.
+- **S7a:** approved by “then continue to the 7”; complete, awaiting acceptance.
+  - **Code:** `V2ApiModels`, `V2ApiService`, `V2ResponseValidator`, `V2Client` and `ApiClientFactory.createV2`; `history/HistoryStore`. API 23-safe (no `java.time`/`List.of`).
+  - **Tests:** 41/41 (+9: request serialization, validator accept/reject cases, client failure classes, store order/window/limits/expiry/clear/corrupt file). Lint 0.
+  - **Visible change:** none on the phone yet (UI in S7b–c).
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

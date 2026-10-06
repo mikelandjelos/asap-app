@@ -28,7 +28,12 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S6c.1: sažimanje duplikata istog naziva i brenda u rezultatima (4,1 % kataloga); provera u notebook-u 03 i nove parity fiksture. (5,2 % → 0 % lista sa varijantama; MMR λ = 0,7; D-036.)
   - [x] Ručno pregledati i ispraviti nazive 60 tema pre S7. (Predlog u `ml/theme_labels.json`, paket `20261006-07904a7f`; korisnik može izmeniti pojedinačne nazive.)
   - [x] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima. (54/54 testova; živa provera 4 stvarna proizvoda; D-037.)
-- [ ] S7: Android istorija i doteran UI.
+- [ ] S7: Android istorija i doteran UI. (Odluke o UI-u: D-038.)
+  - [x] S7a: v2 klijent sa striktnom validacijom, lokalna istorija (50/90 dana/brisanje), slanje najnovijih 20 događaja. (41 test, lint 0.)
+  - [ ] S7b: Material 3 okvir, donja navigacija, tema.
+  - [ ] S7c: ekran proizvoda i rezultata sa svim stanjima.
+  - [ ] S7d: mapa „ti naspram tema“ i ekran istorije.
+  - [ ] S7e: pristupačnost i provera na telefonu.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
 
 ## T-010: mock MVP i nacrt izveštaja (S2–S3 odloženi, D-026)
