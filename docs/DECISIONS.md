@@ -379,3 +379,10 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   3. Discard the current report draft and write a new report from scratch, following instructions the user will give.
   4. Only after the report: thorough user-perspective testing, demo preparation, presentation, deployment, and post-MVP work. Post-MVP work includes the refit pipeline, designed with Airflow-style orchestration.
 - **Supersedes:** D-026 ordering details where they conflict, the T-010/S1 draft as the basis of the final report, and the plan to finish the presentation before testing.
+
+## D-041 — Vector database and a larger catalog before the report
+
+- **Date:** 2026-10-06
+- **Decision (user):** The vector database moves from post-MVP (D-028) to **before the report**, because it is the final stage of the NLP/semantic-search feature, just as the CNN/TFLite scanner is the final stage of the vision feature. It holds a substantially larger catalog than the current 10k products. The catalog's source (a larger slice of the official OFF exports, scrapers or other) and the database product (pgvector or Qdrant) are chosen in that stage's plan.
+- **Order (amends D-040):** MVP → CNN/TFLite scanner → vector DB + larger catalog → new report → testing, demo and the rest.
+- **Constraint:** the larger catalog changes the evaluated artifacts. Notebooks 01–03 must be re-run on it, and the in-memory exact search stays as the parity reference for the database's approximate (ANN) search.

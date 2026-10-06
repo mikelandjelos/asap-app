@@ -695,6 +695,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Product screen:** elevated product card (name, brand · category, theme chip, description, barcode and data-source line such as "ASAP catalog · Open Food Facts" or "… (live lookup)"); "For you" / "Similar products" / "No recommendations" header with an explanatory subtitle; ranked result cards (rank badge, name, brand · category, theme tag) that open the tapped product; ODbL attribution; scroll to top on a new product.
   - **Other:** dark-mode status-bar icon contrast fixed; plural-correct strings.
   - **Verification:** tests 38/38 (+4 `ProductUiModelTest`), lint 0, APK installed. Screenshot pending: the phone was locked.
+- **S7c:** accepted 2026-10-06 (“the product page looks POPPING! I accept it”). S7d is approved to build the proposed Analytics + History and review it on the phone.
+- **User questions (2026-10-06):**
+  - Product pictures: answered, proposed as S7c.1, awaiting approval.
+  - Vector DB before the report: recorded as D-041.
+  - Larger catalog in the vector DB: recorded as D-041.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

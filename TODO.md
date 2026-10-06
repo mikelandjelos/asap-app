@@ -110,6 +110,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 ## Redosled posle MVP-a — D-040
 
 1. CNN/TFLite zamena skenera (duboko učenje za barkodove) — pre izveštaja.
+1a. Vektorska baza (završna faza NLP dela) i veći katalog u njoj — pre izveštaja (D-041).
 2. Novi izveštaj od nule (postojeći se odbacuje; korisnik daje uputstvo).
 3. Posle izveštaja: temeljno testiranje iz ugla korisnika, priprema demonstracije, prezentacija, postavljanje na server, refit pipeline (Airflow ili sličan orkestrator) i ostale post-MVP stavke.
 
