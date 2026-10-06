@@ -1,5 +1,7 @@
 # MVP domain model
 
+D-024 scope amendment (2026-10-06): personalization is mandatory MVP behavior; clustering, PCA and MMR are also mandatory under D-025, with notebook evidence for every AI/statistical component; their detailed domain/derived-artifact extensions are not defined here yet. Extend this accepted model through an approved plan, without presenting planned entities as implemented. The final CNN/TFLite scanner replacement must preserve downstream barcode identity semantics.
+
 Status: Accepted under completed T-008 on 2026-09-08. S1 defines the product model; S2 defines interaction, history, recommendation, and AI-derived-artifact boundaries.
 
 This document defines source-neutral application concepts. It is not an HTTP payload, provider schema, database schema, or Java-class prescription. The accepted I1 wire contract remains frozen in [`I1_CONTRACT.md`](I1_CONTRACT.md); later iterations must map between that boundary and this model explicitly.

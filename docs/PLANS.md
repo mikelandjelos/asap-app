@@ -464,10 +464,124 @@ All task-level acceptance criteria were verified, and the user explicitly accept
 - The contracts support I2 product resolution, I3 semantic similarity, and I4 bounded-history personalization without selecting their concrete providers, algorithms, or stores.
 - S1 and S2 are separately accepted before the TODO item and T-008 are closed.
 
-All task-level acceptance criteria were verified, and the user explicitly accepted S2 and closed T-008 on 2026-09-08.
-
 ### Exclusions
 
 - Refactoring Java/Android code or changing the accepted I1 HTTP contract.
 - Selecting or calling a product provider, choosing a fallback dataset, or ingesting real products.
 - Selecting persistence/vector technologies, embedding models, similarity metrics, history length, or ranking algorithms.
+
+All task-level acceptance criteria were verified, and the user explicitly accepted S2 and closed T-008 on 2026-09-08.
+
+## T-009 — Evaluate barcode product-data APIs
+
+Priority update, 2026-10-06: paused by the user's deadline pivot to T-010. S1 artifacts and verification are preserved, still awaiting acceptance; S2 and S3 remain unapproved. This task is not closed.
+
+- **TODO source:** “Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda.”
+- **Status:** Plan approved; S1 implemented and awaiting acceptance
+- **Goal:** Produce an evidence-backed primary API recommendation for I2, or an explicit no-provider conclusion, against the accepted T-008 product model without integrating a provider or selecting the fallback dataset/storage implementation.
+- **Planning authorization:** After T-008 closure, the user agreed that API evaluation should be next and authorized formulation of this plan on 2026-09-08.
+- **Plan and S1 approval evidence:** After reviewing the written plan, the user explicitly responded “approved, authorized” on 2026-09-08. Under D-005 this approves the task plan and authorizes T-009/S1 only.
+
+### T-009/S1 — Define the evaluation protocol and shortlist
+
+- Create `docs/PRODUCT_DATA_API_EVALUATION.md` as the dated source of truth for this investigation.
+- Derive mandatory and comparative criteria from the accepted product model: GTIN format support; product/category coverage without silently narrowing the application; required/optional field mapping; provenance; unknown versus unavailable behavior; official access method; authentication; quotas and cost; licensing, attribution, caching and redistribution constraints; localization; freshness; and operational fit for an MVP.
+- Research current official provider documentation and terms, then shortlist two to four credible candidates. Record direct evidence links and a reason to test or reject each candidate. A food-specific source may be considered, but cannot redefine ASAP as food-only without a separate user decision.
+- Define a reproducible probe corpus of at least 12 publicly verifiable real GTINs spanning relevant product categories and EAN-13, EAN-8, and UPC-A where available; include UPC-E only if a legitimate public example is available. Never query the local restricted-circulation `200…` fixtures.
+- Define the S2 observation schema and request budget before any live endpoint call. Do not create accounts, buy plans, request credentials, call live product endpoints, or modify application code in S1.
+- **Acceptance evidence:** Each criterion is testable; every shortlisted candidate has dated official-source evidence; the probe rules cover scope and supported barcode formats without using local fixtures; unknowns and any credential dependency are explicit.
+- **Verification:** Validate all cited links and local paths, check the document for unsupported claims and secrets, run `git diff --check`, synchronize TODO/status/handoff/report when the research changes formal data-source content, and stop for S1 acceptance.
+- **Affected documentation:** `TODO.md`, `docs/PRODUCT_DATA_API_EVALUATION.md`, `docs/README.md`, `docs/PLANS.md`, `docs/PROJECT_STATUS.md`, `docs/SESSION_HANDOFF.md`, and, if the candidate analysis materially changes formal data-source content, `report/report.tex` and `presentation/asap-presentation.tex`.
+- **Evidence:** `docs/PRODUCT_DATA_API_EVALUATION.md` defines six mandatory gates and three comparative criteria against the accepted product model, exact provider-field mappings, and a dated three-provider shortlist backed by official documentation and terms. It defines 12 public product-bound inputs covering EAN-8, UPC-E, EAN-13, UPC-A, food/beverage, regional food, personal care, cosmetics, hardware, and media; all check digits and the UPC-E expansion were locally verified. The S2 protocol permits only 13 sequential read-only lookups per accessible provider (26 total), requires 11-second pacing, preserves exact scanned identity, distinguishes `KNOWN`/`UNKNOWN`/`UNAVAILABLE`/local `INVALID`, and forbids every local `200…` fixture. Barcode Lookup is documentation-only because an API key/account is required and its free-account terms prohibit automated access; UPCitemdb payload retention is blocked by unclear trial licence terms. No live product endpoint, account, credential, dependency, or application code was used or changed. Official links and local paths were checked; `git diff --check` and the secret/restricted-fixture scan pass. The synchronized 12-page report builds twice with pdfLaTeX and LuaLaTeX, and the 19-slide presentation builds twice with the ELFak LuaLaTeX workflow. Final logs contain no LaTeX, layout, or missing-glyph warnings; report page 11 and presentation slides 1 and 12 were visually inspected without clipping.
+- **Status:** Implemented; awaiting user acceptance
+
+### T-009/S2 — Run controlled read-only API probes
+
+- Query only shortlisted endpoints whose official terms permit the experiment and whose access is available without account creation or payment. If a serious candidate requires credentials, stop and request user-supplied credentials or approval to evaluate it from documentation only; never commit or print a secret.
+- Use the approved corpus and a descriptive user agent, respect published rate limits, and cap the run at 50 requests per provider. Record request time, HTTP/domain outcome, observed latency, required/optional field completeness, language, provenance support, and error/not-found behavior.
+- Map observed records to the accepted T-008 model without treating provider IDs as ASAP IDs or inventing absent metadata. Confirm that unavailable, invalid, and unknown outcomes remain distinguishable where the API permits it.
+- Store reproducible commands and a normalized measurement table. Preserve raw payloads only when provider terms permit redistribution; otherwise retain hashes or minimal non-copyrightable observations sufficient for verification.
+- Do not integrate a provider, add runtime dependencies, persist provider data, select the fallback dataset, or alter the I1 contract.
+- **Acceptance evidence:** The approved corpus was exercised consistently for each accessible candidate; totals reconcile with the recorded observations; exclusions and failed/unavailable probes are visible; no local `200…` fixture, credential, or prohibited payload entered the evidence.
+- **Verification:** Parse/validate any retained machine-readable evidence, independently recompute table totals, scan tracked/untracked changes for secrets and restricted fixtures, run `git diff --check`, synchronize all affected documentation and formal deliverables, and stop for S2 acceptance.
+- **Affected documentation:** S1 surfaces plus any approved evidence files under `docs/evaluation/product-data-apis/`, architecture notes if provider failure semantics reveal a required refinement, report, and presentation.
+- **Status:** Blocked on accepted S1 and explicit S2 approval
+
+### T-009/S3 — Compare candidates and recommend the I2 source boundary
+
+- Apply mandatory gates first, then a transparent comparison matrix; do not hide a licensing, coverage, attribution, caching, or authentication failure behind an aggregate score.
+- Recommend one primary provider, a deliberately limited hybrid, or no provider. State confidence, unsupported product categories/formats, cost/quota assumptions, attribution/cache obligations, expected fallback needs, and the exact evidence that could reverse the recommendation.
+- Define the provider adapter boundary and follow-up acceptance cases at design level only: successful sparse record, unknown barcode, upstream unavailable, invalid/malformed provider response, rate limit, and safe rejection of restricted-circulation fixtures.
+- Keep fallback-dataset selection, storage/cache implementation, API integration, credentials, and production operation in later separately approved tasks.
+- **Acceptance evidence:** The recommendation follows from published gates and observed evidence; every important limitation is visible; the accepted product/provenance and partial-success contracts remain intact; next-task dependencies are concrete.
+- **Verification:** Recheck evidence links and calculations, validate documentation paths, compile and visually inspect changed report/presentation material, run `git diff --check`, synchronize TODO/decision/status/handoff, and stop for S3 and T-009 acceptance.
+- **Affected documentation:** All prior T-009 surfaces plus `docs/DECISIONS.md`, `docs/ARCHITECTURE.md`, `report/report.tex`, and `presentation/asap-presentation.tex`.
+- **Status:** Blocked on accepted S2 and explicit S3 approval
+
+### Task-level acceptance criteria
+
+- Current official documentation and controlled observations support the conclusion; source dates and evidence links are retained.
+- Coverage and field mapping are evaluated against ASAP's accepted general product model rather than assumed from a provider's marketing.
+- Legal/operational constraints and unknown/unavailable/rate-limit behavior are explicit.
+- The recommendation does not query restricted local fixtures, leak credentials, overstate sampled availability as an SLA, or claim integration.
+- All three subtasks are separately accepted before T-009 and its TODO item are closed.
+
+### Dependencies and exclusions
+
+- S1 requires internet browsing of official provider documentation. S2 requires network access to permitted read-only endpoints and may require user-supplied credentials for a candidate to remain testable.
+- No account creation, paid subscription, terms acceptance on the user's behalf, bulk scraping, provider integration, fallback-dataset selection, storage implementation, embedding work, or Android/backend behavior change belongs to T-009.
+
+## 2026-10-06 — D-025 documentation audit, commit and push
+
+- **Approval:** The user explicitly requests recording mandatory PCA, MMR, polished UI and notebook verification for every AI/statistical component, auditing all documentation, then committing and pushing the handoff. This single documentation/publishing subtask does not authorize feature implementation.
+- **Plan:** Record D-025 and an authoritative requirements/evidence checklist; reconcile active docs and report; inventory historical/deferred artifacts without discarding information; verify links, scope consistency, report builds and staged diff; commit with a short one-line message and push the current branch to its configured origin.
+- **Acceptance:** Required features and notebook evidence are recoverable without chat, current versus historical state is explicit, no invented results, presentation finalization remains deferred, and commit/push outcome is reported.
+- **Status:** Documentation and verification complete; commit/push explicitly authorized as the final publishing step (actual outcome is recorded by Git). T-009/S1 and T-010/S1 acceptance remains pending; future implementation still needs explicit subtask approval.
+- **Evidence:** `CURRENT_REQUIREMENTS.md`, `NOTEBOOK_VALIDATION.md` and `DOCUMENTATION_AUDIT.md` preserve the full revised scope and notebook criteria. Report includes the requested GitHub link on page 1 and builds to 19 pages with three clean passes under both engines; cover/notebook page visually inspected. All local Markdown links, six marker mappings, PDF copy equality and whitespace checks pass. Historical scope and deliberately deferred presentation/diagrams are explicitly classified; no runtime code, experiments or current performance claims were added.
+
+## 2026-10-06 — Scope amendment and agent handoff
+
+- **Authorization:** User explicitly requested recording revised scope and preparing the repository for another agent; this is documentation-only handoff work, not approval to execute future implementation.
+- **Bounded plan:** Record D-024 and mandatory TODO items; reconcile scope/status/report and flag historical diagrams; preserve dirty work and deferred presentation; verify report build and whitespace; stop with a restart prompt.
+- **New requirements:** Clustering and personalization are required for MVP acceptance. Finish PoC/MVP with the existing scanner, then replace only scanner-related parts with a dataset-trained CNN/TFLite EAN/UPC pipeline. Decoder/dataset/model/clustering details require later planning.
+- **Next-agent gate:** Propose one concise revised delivery plan, including minimal clustering/personalization acceptance evidence and the scanner replacement last. Do not automatically execute T-009/S2 or T-010/S2. T-009/S1 and T-010/S1 still await acceptance.
+- **Presentation:** Explicitly deferred until the end; no edits or rebuild in this handoff.
+- **Result:** Handoff complete. D-024 and pending design work recorded across current docs; report scope reconciled and PDF rebuilt to 18 pages with three pdfLaTeX passes and clean final log. `git diff --check` passes. No application code, presentation, provider access, training or commit changed. Historical verification entries remain dated; this amendment did not rerun runtime tests or LuaLaTeX.
+
+## T-010 — Deadline mock MVP and complete report draft
+
+D-024 supersedes this plan's original MVP assumptions. Its mock package remains an interim demonstration, never a replacement for required clustering/personalization. Reconfirm next work with the user through a revised plan.
+
+- **Status:** Plan and S1 approved on 2026-10-06 by “let's do it quickly, and then go back to finishing the plan”; S1 complete and awaiting acceptance. Later subtasks remain separately gated.
+- **User direction (2026-10-06):** Prioritize speed, minimal mock MVP, and a report draft in its final form with explicit markers for unfinished work.
+- **Goal:** Reuse the working I1 implementation for a reproducible simulation and produce a complete Serbian report structure quickly. Preserve the larger AI roadmap without claiming its completion.
+- **Scope:** Existing Java/XML scanner, Spring backend, bundled fictional catalog and deterministic recommendation simulation. No new provider, model download, database, hosting, personalization, or framework is required for this deadline milestone.
+- **Draft convention:** Verified results may use completed tense. Future completion wording is permitted only inside visibly labelled conditional draft blocks: `NACRT — NIJE IMPLEMENTIRANO/PROVERENO`, with a stable marker ID and required evidence. Markers must appear in the PDF, not only source comments. Measurements, participant counts, dates and feedback remain explicit blanks until supplied or observed. Draft status is visible on the cover. Remove markers only after evidence or replace the passage with an accurate limitation before submission.
+
+### T-010/S1 — Complete the report draft first
+
+- Fill all five report sections in Serbian Latin using existing implementation, design contracts and diagrams; frame target users and benefits as design assumptions where unvalidated.
+- Explain the real scanner/backend flow and the deterministic simulation. Provide final-form conditional draft wording for later AI work with visible markers; do not fabricate experiments, teacher meetings or user feedback.
+- Add `docs/REPORT_COMPLETION.md` mapping every marker to missing implementation, verification or user input. Separate submission needs from work deferred until the defense.
+- Synchronize README/documentation hub, TODO, status, plan, handoff, and the affected scope/decision records to distinguish this deadline milestone from the full MVP. Correct the stale AGENTS claim that no application code exists.
+- **Verification:** Compile the report twice, inspect changed pages and Serbian glyphs, validate marker/register correspondence and documentation links, run `git diff --check`.
+- **Acceptance:** A readable complete report draft and PDF, no generic empty section, and an actionable list of remaining evidence. Existing code and T-009 work preserved.
+- **Status:** Complete, awaiting acceptance (2026-10-06). Documentation-only execution, no runtime changes. The user explicitly deferred presentation work until the end; existing presentation changes were preserved without further editing or rebuilding it.
+- **Evidence:** All five Serbian sections populated, with six visible conditional draft blocks R01–R06 and a cover notice; `docs/REPORT_COMPLETION.md` maps each to missing work/evidence and a truthful submission alternative. Both report engines compile repeatedly to 17 pages; final logs have no warnings, missing glyphs or overfull/underfull boxes. Cover and pages 13, 14, 16 and 17 visually inspected; all marker blocks are readable and unclipped. PDF copied to `report/report.pdf`. Marker correspondence, local paths and `git diff --check` verified. Runtime test counts remain dated September evidence, not new test runs. README, scope, D-023, TODO, status, hub, handoff and stale AGENTS statement reconciled.
+
+### T-010/S2 — Package the smallest reproducible mock demo
+
+- Reuse the existing fixture catalog and recommendation lists; preserve explicit simulation labels and independent product/result failure states.
+- Supply a compact printable barcode sheet for existing scenarios and one concise startup/demo procedure. Avoid UI expansion unless a verified demonstration blocker requires a scoped fix.
+- Build/test Android and backend, smoke-test the HTTP flow, and document what was reverified versus inherited physical evidence. A fresh phone check requires a connected authorized device; do not claim it if unavailable.
+- **Affected docs:** README, workflow, demo instructions/assets, TODO, status, plan, handoff, report and presentation where results change.
+- **Acceptance:** Repeatable known/unknown/empty/unavailable scenarios, usable build artifacts, test results, and no live-provider dependency.
+- **Status:** Proposed; requires accepted S1 and separate S2 approval.
+
+### T-010/S3 — Prepare the submission package
+
+- Reconcile report markers against the verified demo. Replace unsupported submission claims with limitations; retain a separate visibly marked future draft only if useful.
+- Synchronize the Serbian presentation, README, TODO/status/handoff and defense backlog. Describe full AI features as pending until implemented.
+- Rebuild and inspect final PDFs, verify documented commands/paths, and present deliverables plus any course-required evidence still missing.
+- **Acceptance:** Consistent repository and formal deliverables, clear implemented/simulated/deferred scope, and no unmarked hypothetical results. Request task acceptance; do not start the defense backlog automatically.
+- **Status:** Proposed; requires accepted S2 and separate S3 approval.

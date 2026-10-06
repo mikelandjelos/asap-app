@@ -4,6 +4,12 @@
 
 Projekat je u ranoj PoC fazi. Java/XML Android klijent u `android/` integriše Google Code Scanner, poziva Retrofit/Moshi I1 granicu i prikazuje odvojene ishode proizvoda i determinističkih demo rezultata; sva 32 lokalna testa i Android lint prolaze. Java/Spring Boot backend u `backend/` implementira deterministički I1 ugovor nad kontrolisanim lokalnim podacima i ima 23 prolazna testa. Ceo kontrolisani Android--backend tok fizički je potvrđen na telefonu, uključujući poznat i nepoznat proizvod, prazan i nedostupan rezultat i nedostupan backend; stvarni izvori podataka, semantička pretraga i personalizovane preporuke nisu implementirani. Početni predlog projekta nalazi se u [LaTeX izveštaju](report/report.tex), plan rada u [TODO listi](TODO.md), a prezentacija u [Beamer izvoru](presentation/asap-presentation.tex).
 
+## Izveštaj za rok
+
+Najnoviji obim (D-024/D-025): klasterizacija, personalizacija, PCA, MMR i doteran UI obavezni su za MVP. Svaka AI/statistička komponenta mora imati ponovljive notebook provere i stvarne rezultate za izveštaj; merodavni su [aktuelni zahtevi](docs/CURRENT_REQUIREMENTS.md) i [pravila evaluacije](docs/NOTEBOOK_VALIDATION.md). Google Code Scanner ostaje privremeno; tek nakon PoC/MVP-a skenerski deo se zamenjuje treniranim CNN/TFLite rešenjem za EAN/UPC, uz naknadni izbor dekodera. Nastavak počinje sažetim revidiranim planom iz [predaje sesije](docs/SESSION_HANDOFF.md), ne automatskim izvršavanjem T-010/S2.
+
+Celovit radni nacrt je u [PDF izveštaju](report/report.pdf). Vidljivi markeri R01–R06 odvajaju uslovni tekst buduće završne verzije od ostvarenih rezultata; [spisak preostalog rada i dokaza](docs/REPORT_COMPLETION.md) vodi do svakog markera. Prioritet T-010 koristi postojeći mock tok, bez tvrdnje da je puni AI MVP završen. Prezentacija se završava na kraju; originalni implementacioni plan ostaje sačuvan.
+
 ## Android PoC
 
 ```sh

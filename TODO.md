@@ -1,6 +1,23 @@
 # ASAP — plan rada
 
-Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Plan je izveden iz beleški `meditations/sept_3.pdf` i početnog projektnog izveštaja.
+Radni cilj je operativan AI MVP. Plan je izveden iz beleški `meditations/sept_3.pdf` i početnog projektnog izveštaja, uz izmene D-024/D-025 od 2026-10-06: klasterizacija, personalizacija, PCA, MMR i doteran UI neophodni su za prihvatanje MVP-a. Sve AI/statističke komponente zahtevaju notebook verifikaciju i stvarne rezultate za izveštaj (`docs/CURRENT_REQUIREMENTS.md`, `docs/NOTEBOOK_VALIDATION.md`). Stara granica 80/95% više nije kriterijum prihvatanja.
+
+## Najnoviji zahtev i predaja sesije — D-024
+
+- [x] Evidentirati novi obim i pripremiti predaju drugom agentu; bez promene aplikacije.
+- [ ] Predložiti sažet revidirani plan sa obaveznom klasterizacijom, personalizacijom, PCA, MMR, doteranim UI-em i notebook dokazima; tražiti odobrenje pre implementacije.
+- [ ] Posle završenog PoC/MVP-a zameniti samo skenerski deo: CNN treniran na dokumentovanom skupu EAN/UPC slika, TFLite na telefonu i ZXing/drugi dekoder ili posebno odobren end-to-end pristup. Google Code Scanner ostaje privremeno.
+- [ ] U revidiranom dizajnu dopuniti kanonske dijagrame klasterizacijom i kasnijom zamenom skenera. Prezentaciju ostaviti za kraj.
+
+Sada se radi samo predaja sesije. T-009/S1 i T-010/S1 i dalje čekaju prihvatanje; njihovi S2 koraci nisu odobreni. Detalji su u `docs/SESSION_HANDOFF.md`.
+
+## Prioritet za rok — T-010: mock MVP i nacrt završnog izveštaja
+
+Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveštaja; realizacija narednih koraka i dalje zahteva posebno odobrenje. T-009 je pauziran, bez zatvaranja ili gubitka postojećeg rada. Puni AI MVP ostaje cilj nakon ovog ograničenog odstupanja. Prezentacija se završava tek na kraju. Markeri i dokazi vode se u `docs/REPORT_COMPLETION.md`.
+
+- [x] T-010/S1: napisati celovit srpski nacrt izveštaja sa vidljivim markerima i spiskom nedostajućih dokaza. (17 strana, oba LaTeX engine-a proverena; čeka prihvatanje korisnika, nije konačna predaja.)
+- [ ] T-010/S2: pripremiti minimalan ponovljiv mock demo na postojećem Android/backend toku.
+- [ ] T-010/S3: uskladiti izveštaj, prezentaciju i README sa proverenim demo stanjem i pripremiti predaju.
 
 ## 0. Osnova projekta i dokumentacija
 
@@ -28,7 +45,7 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 - [x] Definisati granice MVP-a i plan implementacije po iteracijama.
 - [x] Postaviti početne projekte za mobilnu aplikaciju i backend.
 - [x] Definisati modele proizvoda, korisničke interakcije i preporuke. (T-008 je prihvaćen i zatvoren: model proizvoda, interakcija, istorije i preporuka, AI granica i dva kanonska dijagrama.)
-- [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda.
+- [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda. (T-009 plan i S1 su odobreni; S1 protokol, uži izbor i korpus su implementirani i čekaju prihvatanje. Nije pozvan nijedan proizvodni API.)
 - [ ] Izabrati rezervni izvor ili skup podataka za razvoj bez zavisnosti od eksternog API-ja.
 - [ ] Definisati način čuvanja metapodataka i vektorskih reprezentacija proizvoda.
 - [ ] Dokumentovati slučajeve upotrebe i tok podataka od skeniranja do preporuke.
@@ -39,7 +56,8 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 - [ ] Izabrati model za generisanje semantičkih vektorskih reprezentacija.
 - [ ] Implementirati generisanje i čuvanje embedding vektora.
 - [ ] Implementirati top-N semantičku pretragu kosinusnom sličnošću.
-- [ ] Oceniti opcionu MMR diversifikaciju rezultata.
+- [ ] Definisati i implementirati obaveznu klasterizaciju (cilj, podaci, algoritam, uloga u aplikaciji i evaluacija se tek odobravaju).
+- [ ] Implementirati i notebook eksperimentima proveriti obaveznu MMR diversifikaciju rezultata.
 - [ ] Definisati i testirati korisnički profil kao centroid istorije interakcija.
 - [ ] Izmeriti kvalitet i odziv PoC-a pre integracije u sistem.
 - [ ] Odlučiti da li će PoC biti zasebno postavljen ili simuliran lokalno na završnoj prezentaciji.
@@ -64,7 +82,9 @@ Radni cilj je operativan AI MVP sa približno 80% planiranih funkcionalnosti. Pl
 - [ ] Dopuniti prezentaciju arhitekturom, demonstracijom, rezultatima i naučenim lekcijama.
 - [ ] Proveriti završni kriterijum: operativna MVP aplikacija, demonstrabilan PoC, kompletan izveštaj i kompletna prezentacija.
 
-## Opciono posle osnovnog MVP-a
+## Obavezne dodatne MVP provere — D-025
 
-- [ ] Klasterizovati proizvode ili korisničke interakcije.
-- [ ] Dodati PCA projekciju i jednostavnu vizuelnu analitiku u aplikaciji.
+- [ ] Implementirati PCA i dogovorenu vizuelnu analitiku; proveriti metod i performanse u notebook-u.
+- [ ] Dogovoriti i implementirati doteran UI; proveriti čitljivost, pristupačnost, sve ishode i upotrebljivost na telefonu.
+- [ ] Za CNN/TFLite, embedding, pretragu, klasterizaciju, personalizaciju, PCA, MMR i svaku dodatnu AI/statističku komponentu pripremiti izvršiv notebook, stvarne metrike, grafikone/tabele i vezu sa izveštajem.
+- [ ] Proveriti ponovljivost eksperimenata i saglasnost notebook metoda sa aplikacionom implementacijom.

@@ -31,8 +31,11 @@
 \setlength{\emergencystretch}{2em}
 \setlist{itemsep=0.4em,topsep=0.4em}
 
-\newcommand{\placeholder}[1]{%
-  \par\noindent\fbox{\parbox{0.95\linewidth}{\textit{Za dopunu: #1}}}\par
+\newcommand{\draftblock}[3]{%
+  \par\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+  \small\textbf{#1: NACRT --- NIJE IMPLEMENTIRANO/PROVERENO}\par
+  \textbf{Potrebno:} #2\par
+  \textit{Uslovni tekst završne verzije, upotrebljiv tek posle potvrde:} #3}}\par
 }
 
 \title{Projektovanje i implementacija AI MVP\\[0.4em]
@@ -45,6 +48,20 @@
 \begin{document}
 
 \maketitle
+\begin{center}
+\textbf{Repozitorijum projekta:}\\
+\url{https://github.com/mikelandjelos/asap-app}
+\end{center}
+\begin{center}
+\textbf{RADNI NACRT ZAVRŠNOG IZVEŠTAJA --- 6. oktobar 2026.}
+\end{center}
+Ostvaren je kontrolisani Android--backend prototip sa stvarnim skeniranjem i
+simuliranim rezultatima. Semantička pretraga i personalizacija nisu implementirane.
+Okviri R01--R06 sadrže uslovni tekst za kasniju završnu verziju, a ne rezultate.
+Pre predaje moraju se potkrepiti dokazima ili zameniti ograničenjima.
+Tehnički rezultati preuzeti su iz evidentiranih provera od 5--8. septembra 2026;
+u ovoj redakciji nisu ponavljani testovi aplikacije.
+\newpage
 \tableofcontents
 \newpage
 
@@ -60,23 +77,25 @@ Tim & Mihajlo Madić 2119 (MAS Veštačka inteligencija i mašinsko učenje) \\
 
 \subsection{Kratak opis}
 
-Mobilna aplikacija za automatsku identifikaciju i akviziciju podataka o proizvodima, koja koristi lokalno očitavanje barkoda i semantičke vektorske reprezentacije (engl. \textit{embeddings}) za generisanje personalizovanih preporuka i analitike zasnovane na semantičkoj sličnosti među proizvodima.
+ASAP je projekat mobilne aplikacije za identifikaciju proizvoda pomoću barkoda i prikaz povezanih proizvoda. Realizovani prototip povezuje lokalno očitavanje, HTTP API, kontrolisani katalog i prikaz determinističkih rezultata. Ciljna verzija proširuje ovaj tok semantičkim vektorskim reprezentacijama (engl. \textit{embeddings}) i preporukama na osnovu istorije; te mogućnosti u sadašnjoj verziji predstavljaju prihvaćeni dizajn, ne implementaciju.
 
 \subsection{Planirane AI tehnologije}
+
+\textbf{Izmena obima od 6. oktobra 2026. (D-024).} Klasterizacija, personalizacija, PCA, MMR i doteran korisnički interfejs obavezni su uslovi MVP-a prema D-024/D-025. Svaka AI/statistička komponenta zahteva notebook verifikaciju i stvarne rezultate za izveštaj. Google Code Scanner je privremeno rešenje: nakon završenog PoC/MVP-a menja se samo skenerski deo CNN modelom treniranim na dokumentovanom skupu EAN/UPC slika i izvršavanim kroz TFLite. ZXing ili drugi dekoder može dekodirati pronađeni region; end-to-end model ostaje alternativa za procenu. Skup, model, dekoder i metod klasterizacije još nisu izabrani. Postojeći dijagrami prikazuju prethodno prihvaćen dizajn; proširenje klasterizacijom i novim skenerom tek sledi.
 
 \begin{enumerate}
   \item \textbf{Google Code Scanner (računarski vid)} --- lokalno očitavanje i dekodiranje barkodova proizvoda kroz gotovo korisničko iskustvo skeniranja koje obezbeđuju Google Play servisi.
 
   \item \textbf{Semantički embedding vektori (NLP)} --- generisanje vektorskih reprezentacija proizvoda u specijalizovanom servisu, na osnovu naziva, opisa, kategorije i drugih atributa prikupljenih preko eksternih API-ja.
 
-  \item \textbf{Semantička pretraga} --- pronalaženje top-N najsličnijih proizvoda primenom metrika poput kosinusne sličnosti, uz opcionu MMR diversifikaciju radi izbegavanja redundantnih preporuka.
+  \item \textbf{Semantička pretraga} --- pronalaženje top-N najsličnijih proizvoda primenom metrika poput kosinusne sličnosti, uz obaveznu MMR diversifikaciju radi izbegavanja redundantnih preporuka.
 
   \item \textbf{Personalizovane preporuke} --- formiranje profila iz ograničene istorije skeniranih ili pregledanih proizvoda; centroid je početni kandidat, dok će tačan način agregacije biti izabran naknadno.
 
-  \item \textbf{Personalna analitika (opciono)} --- klasterizacija proizvoda ili korisničkih interakcija i redukcija dimenzionalnosti pomoću PCA radi jednostavne vizuelne analitike u aplikaciji.
+  \item \textbf{Klasterizacija (obavezno)} --- grupisanje proizvoda ili korisničkih interakcija; predmet, metod i uloga u aplikaciji biće definisani u revidiranom planu. PCA i dogovorena vizuelna analitika takođe su obavezni; svrha i parametri se tek biraju.
 \end{enumerate}
 
-Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code Scanner, jer predstavljaju najkraći put do funkcionalne verzije uz potpuno prilagodljiv ostatak korisničkog interfejsa. Direktni ML Kit Barcode Scanning sa CameraX bibliotekom ostaje moguća kasnija zamena samo ako bude potreban prilagođen prikaz kamere, preklopi ili kontinualno skeniranje. Oznake CNN i TFLite iz početnih materijala više ne predstavljaju planiranu implementaciju skenera.
+Za početni PoC prihvaćeni su Java, XML zasnovani Android Views i Google Code Scanner kao najkraći put do funkcionalnog toka. Konačni smer skenera sada je CNN/TFLite prema D-024, tek nakon završetka ostalog PoC/MVP-a. Zamena treba da sačuva postojeći aplikacioni UI, identitet barkoda i backend tok; izbor kamere, dekodera, obuke i provera nije deo trenutne implementacije.
 
 \newpage
 
@@ -90,7 +109,7 @@ Za početni MVP prihvaćeni su Java, XML zasnovani Android Views i Google Code S
 
 \textbf{Arhitektonske granice.} MVP se sastoji od Android aplikacije i jedne backend aplikacije organizovane kao modularni monolit. API granica, razrešavanje i normalizacija proizvoda i semantičke preporuke jesu odvojeni moduli istog backend postavljanja, a ne zasebno operisani servisi. Backend poseduje normalizovani katalog proizvoda i vektorski indeks kao logički odvojene skupove podataka; fizičke tehnologije skladištenja još nisu izabrane.
 
-Android aplikacija u proširenom MVP-u poseduje ograničenu lokalnu istoriju poznatih proizvoda i šalje je samo kao opcioni kontekst zahteva. Backend ne čuva trajni korisnički profil. Razrešavanje proizvoda vraća poznat proizvod sa poreklom podataka, nepoznat proizvod ili privremenu nedostupnost. Ishod preporuka je nezavisan, tako da prazan ili nedostupan vektorski rezultat ne sme da sakrije pronađene podatke o proizvodu.
+Android aplikacija u planiranom MVP-u poseduje ograničenu lokalnu istoriju poznatih proizvoda i šalje je samo kao opcioni kontekst zahteva. Backend ne čuva trajni korisnički profil. Razrešavanje proizvoda vraća poznat proizvod sa poreklom podataka, nepoznat proizvod ili privremenu nedostupnost. Ishod preporuka je nezavisan, tako da prazan ili nedostupan vektorski rezultat ne sme da sakrije pronađene podatke o proizvodu.
 
 \textbf{Deterministički I1 ugovor.} T-007/S2 prihvata HTTP POST zahtev na putanji \path{/api/v1/scan-queries}, sa JSON telom koje sadrži vrednost i format barkoda. Validan zahtev vraća odvojene ishode proizvoda (poznat, nepoznat ili nedostupan) i rezultata (deterministički rezultati, prazno, nedostupno ili neprimenljivo). Rezultati za poznat proizvod nose oznaku \texttt{DETERMINISTIC\_FIXTURE} i ne sadrže skor; aplikacija ih mora jasno prikazati kao demo rezultat koji nije AI preporuka. Neispravni zahtevi koriste RFC 9457 Problem Details. Kontrolisani skup koristi izmišljene proizvode i EAN-13 brojeve ograničene cirkulacije koji se ne smeju slati eksternom izvoru. Backend, Android povezivanje i prikaz svih I1 ishoda postoje, a S4.4 je na fizičkom telefonu potvrdio kontrolisani tok i reprezentativna stanja greške i praznog rezultata.
 
@@ -106,39 +125,41 @@ Android aplikacija u proširenom MVP-u poseduje ograničenu lokalnu istoriju poz
 \clearpage
 \section{Izveštaj 2: Definisanje problema}
 
-Ovaj deo se dopunjava tokom faze definisanja problema.
+Problem koji projekat razmatra jeste prelazak sa identifikatora na razumljive podatke i relevantne alternative: barkod sam po sebi ne opisuje proizvod niti objašnjava sličnost sa drugim proizvodima. Razdvojeni su tehnička izvodljivost skeniranja i povezivanja, koja je proverena, i korisna semantička preporuka, koja tek zahteva podatke, model i evaluaciju.
 
 \subsection{Predlog rešenja}
-\placeholder{promotivni opis rešenja do približno 150 reči}
+ASAP omogućava korisniku da skeniranjem barkoda započne pregled proizvoda bez ručnog unosa. Mobilni klijent prikazuje identitet i dostupne atribute proizvoda, kao i zasebnu listu povezanih stavki. Trenutni demonstrator koristi mali kontrolisani katalog kako bi tok i obrada grešaka bili ponovljivi. Ciljno rešenje bira slične proizvode na osnovu semantičkog sadržaja, a obavezna personalizacija prilagođava redosled ograničenoj istoriji interakcija. Nepoznat proizvod, nedostupni podaci i prazni rezultati prikazuju se izričito; sistem ne izmišlja nedostajuće činjenice.
 
 \subsection{Ciljna grupa}
-\placeholder{očekivani korisnici, inovativnost i razlika u odnosu na druga rešenja, do približno 300 reči}
+Ciljna grupa su korisnici Android telefona koji žele brz pregled proizvoda i istraživanje alternativa. Za prvu proveru opravdano je ograničiti domen na mali katalog proizvoda sa dovoljno opisnih podataka, umesto obećavati univerzalnu pokrivenost. Očekivana korist je kraći put od fizičkog proizvoda do razumljive informacije. To je projektna pretpostavka: nisu sprovedeni intervjui niti merenje upotrebljivosti koje bi je potvrdilo.
 
 \subsubsection{Korisnici}
-\placeholder{primarne i sekundarne korisničke grupe}
+Primarni korisnik skenira proizvod, pregleda rezultat i ponavlja postupak za drugu stavku. Sekundarnu grupu čine nastavnik i kolege koji procenjuju izvodljivost, jasnost demonstracije i doprinos AI komponenti. Razvojni demonstrator ne zahteva nalog, ne obrađuje kupovinu i ne predstavlja savet o zdravstvenoj ili nutritivnoj podobnosti proizvoda.
 
 \subsubsection{Glavne konkurentske prednosti}
-\placeholder{prednosti u odnosu na postojeća rešenja}
+Predložena vrednost nije nov algoritam za dekodiranje barkoda, već povezivanje skeniranja, sledljivih podataka i jasno objašnjenog režima preporuke. U odnosu na samostalni čitač barkoda, ostvareni prototip dodaje prikaz proizvoda i nezavisnih ishoda backend obrade. Semantička sličnost i lokalni kontekst istorije predstavljaju buduće razlike u odnosu na običnu pretragu identifikatora. Nije sprovedena komparativna studija tržišnih aplikacija, pa se ne tvrdi bolji kvalitet, brzina ili jedinstvenost na tržištu.
 
 \subsection{Detaljan opis rešenja}
 
-Radna granica operativnog MVP-a obuhvata celovit tok u kome korisnik skenira podržani EAN/UPC barkod, dobija proverljive metapodatke o proizvodu i rangiranu top-N listu semantički sličnih proizvoda. Kontrolisani rezervni skup podataka mora da omogući demonstraciju i kada eksterni izvor nije dostupan. Rezultati semantičke sličnosti ne smeju biti predstavljeni kao personalizovane preporuke. Preporuka na osnovu ograničene nedavne istorije interakcija obavezan je deo proširenog MVP-a, posle funkcionalnog osnovnog toka; tačna dužina istorije, ponderisanje i način agregacije biće izabrani naknadno na osnovu provere.
+Radna granica operativnog MVP-a obuhvata celovit tok u kome korisnik skenira podržani EAN/UPC barkod, dobija proverljive metapodatke o proizvodu i rangiranu top-N listu semantički sličnih proizvoda. Kontrolisani rezervni skup podataka mora da omogući demonstraciju i kada eksterni izvor nije dostupan. Rezultati semantičke sličnosti ne smeju biti predstavljeni kao personalizovane preporuke. Preporuka na osnovu ograničene nedavne istorije interakcija obavezan je deo MVP-a, posle funkcionalnog osnovnog toka; tačna dužina istorije, ponderisanje i način agregacije biće izabrani naknadno na osnovu provere.
 
-Cilj od približno 80\% nije proizvoljan broj funkcionalnosti. Obavezno jezgro čine skeniranje (15 poena), razrešavanje metapodataka sa rezervnim izvorom (20), prikaz proizvoda i jasnih stanja nedostupnosti (10), top-N semantička sličnost (20) i ponovljiva integracija, testiranje i demonstracija (15). Prošireni MVP obavezno dodaje personalizaciju na osnovu istorije (15), do ukupno 95 poena, dok šira evaluacija i povratne informacije čine završnih 5 poena.
+Prethodni plan razlikovao je 80-poensko jezgro i 95-poenski prošireni MVP. Ta podela više nije kriterijum prihvatanja: prema D-024/D-025, bez klasterizacije, personalizacije, PCA, MMR, doteranog UI-a i notebook dokaza nema prihvaćenog MVP-a. Skeniranje, razrešavanje proizvoda, semantička pretraga, jasni ishodi i ponovljiva demonstracija ostaju potrebni. Detaljan revidirani plan i merljivi kriterijumi za klasterizaciju tek treba da budu odobreni.
 
 \subsubsection{Osnovne funkcionalnosti}
+
+\textbf{Milestone za rok.} Radi brze pripreme izveštaja izdvojen je mock demonstrator nad postojećom I1 implementacijom. On nije ostvarenje 80-poenskog AI jezgra: skener, komunikacija i prikaz su stvarni, dok su katalog i redosled rezultata kontrolisani. Originalni obim i naredne iteracije ostaju na snazi.
 
 Osnovne funkcionalnosti su pokretanje i otkazivanje skeniranja, slanje barkoda backend granici, prikaz normalizovanih podataka o poznatom proizvodu i eksplicitna stanja za nepoznat proizvod, nedostupan izvor, prazan rezultat i grešku koja dozvoljava ponovni pokušaj. Autentikacija, objavljivanje aplikacije, kupovina, poređenje cena, administracija kataloga i produkciono hostovanje nisu deo operativnog MVP-a.
 
 \subsubsection{AI zasnovane funkcionalnosti}
 
-Potvrđeni Google Code Scanner predstavlja početnu komponentu računarskog vida. Planirano AI jezgro generiše ili učitava embedding reprezentacije proizvoda i vraća top-N rezultate semantičke sličnosti. Prošireni MVP zatim obavezno uvodi preporuke zasnovane na ograničenoj istoriji i eksplicitno cold-start stanje; poslednjih K interakcija predstavlja početnog kandidata, ali algoritam još nije izabran. MMR, klasterizacija i PCA ostaju van granice MVP-a.
+Potvrđeni Google Code Scanner predstavlja privremenu komponentu računarskog vida. Planirano AI jezgro generiše ili učitava embedding reprezentacije i vraća top-N slične proizvode. Personalizacija na osnovu ograničene istorije, uz eksplicitno cold-start stanje, i klasterizacija obavezni su za MVP. Poslednjih K interakcija ostaje kandidat, ne izabran algoritam. MMR i PCA su takođe obavezni; kasnija CNN/TFLite zamena skenera zaseban je obavezan završni razvojni korak.
 
 Razvoj je podeljen na tanke iteracije: potvrđeni skener; deterministički vertikalni tok sa kontrolisanim podacima; stvarno razrešavanje proizvoda; semantička sličnost; osnovna personalizacija; zatim stabilizacija, evaluacija i prezentacija. Svaka iteracija mora da završi proverljivim ponašanjem, testovima i ažuriranom dokumentacijom.
 
 \section{Izveštaj 3: Izbor tehnologija i skupova podataka}
 
-Ovaj deo se dopunjava posle tehničkih eksperimenata i potvrde arhitekture.
+Tehnološki izbor prati najkraći put do proverljivog vertikalnog toka. Naredni pregled odvaja korišćene komponente od prihvaćenih modela koji tek treba da budu implementirani. Verzije i rezultati predstavljaju evidentiranu razvojnu osnovu iz septembra 2026, a ne tvrdnju o najnovijim dostupnim izdanjima.
 
 \subsection{Tehnologije}
 
@@ -157,6 +178,8 @@ T-008/S1 usvaja minimalan model proizvoda nezavisan od izvora podataka, HTTP por
 Normalizacija koristi Unicode NFC, uklanja okolne razmake, prazne opcione vrednosti pretvara u odsustvo i ne prevodi niti generiše sadržaj. Razrešavanje i dalje vraća odvojena stanja poznato, nepoznato i nedostupno. Model je saglasan sa potpunim I1 fixture zapisima, ali ne menja prihvaćeni I1 HTTP ugovor niti Java kod. Izbor izvora, licence, keširanje, skladištenje, slike, nutritivni podaci i pravila semantičkog modela ostaju za naredne faze.
 
 \subsection{Prihvaćeni model interakcija i preporuka}
+
+\textbf{Status: projektni ugovor, ne implementirana istorija.} Sledeći opis propisuje ponašanje buduće ciljne verzije; sadašnji I1 zahtev ne sadrži istoriju i backend ne računa AI rang.
 
 T-008/S2 usvaja anonimnu interakciju \texttt{PRODUCT\_VIEWED}, koju Android uređaj beleži tek kada prikaže poznat proizvod. Događaj sadrži samo sopstveni identifikator, interni identifikator proizvoda i UTC vreme uređaja; ne sadrži barkod, kopiju proizvoda, nalog, identitet uređaja, lokaciju niti izvedenu preferenciju. Opcioni kontekst istorije šalje događaje od najnovijeg ka najstarijem samo za jedan zahtev. Backend iz konteksta izvodi stanje \texttt{COLD\_START} ili \texttt{SUFFICIENT} i ne čuva trajni korisnički profil. Tačni K, prag dovoljnosti, zadržavanje, ponderisanje i agregacija biraju se kasnije, pre čuvanja stvarnih korisničkih podataka.
 
@@ -183,40 +206,120 @@ Ishod preporuka razlikuje ne-AI režim \texttt{DETERMINISTIC\_FIXTURE}, generič
 Za početno očitavanje barkoda implementiran je Google Code Scanner 16.1.0, koji skeniranje delegira Google Play servisima bez dozvole aplikacije za kameru. Skener koristi automatsko uvećanje i ograničen je na EAN-13, EAN-8, UPC-A i UPC-E formate. Manifest sadrži \texttt{barcode\_ui} metapodatak za isporuku modula, a ekran razlikuje uspeh, otkazivanje, nedostupnost ili problem preuzimanja modula i opštu grešku. Na fizičkom telefonu uspešno su obavljena dva skeniranja stvarnih proizvoda i očitane vrednosti su vraćene aplikaciji, čime je potvrđeno da je modul skenera upotrebljiv. Zatvaranje skenera bez očitavanja prikazalo je očekivani status otkazivanja. Nije moguće utvrditi da li je modul tokom provere preuzet ili je već bio prisutan, a fizičko izazivanje greške nije sprovedeno. Direktni ML Kit Barcode Scanning i CameraX su odloženi. Model za embedding reprezentacije, vektorski indeks i metrike evaluacije još nisu izabrani.
 
 \subsection{Skup podataka}
-\placeholder{izvori podataka o proizvodima, licenca, obim, atributi i priprema podataka}
+
+\textbf{Podaci koje prototip stvarno koristi.} Kanonski skup
+\path{docs/fixtures/i1-products.json} sadrži pet izmišljenih proizvoda: ovseni,
+bademov i sojin napitak, proizvod bez rezultata i proizvod sa nedostupnim
+rezultatima. Posebno su definisani nepoznat i nedostupan barkod. Za ovseni
+napitak vraćaju se bademov pa sojin napitak; taj poredak je unapred upisan,
+a ne izračunat iz teksta ili korisničkog profila. EAN-13 kodovi sa prefiksom
+\texttt{200} služe samo lokalnom testu i nikada se ne šalju javnom izvoru.
+Skup proverava grananja ugovora, ali nije reprezentativan za procenu kvaliteta
+semantičke pretrage i nije izabran rezervni katalog za stvarne proizvode.
+
+\textbf{Istraživanje budućeg izvora.} Sledeći pregled sažima istraživanje zvanične dokumentacije evidentirano 8. septembra 2026. u \path{docs/PRODUCT_DATA_API_EVALUATION.md}; nije rezultat pozivanja proizvodnih endpoint-a niti nova provera uslova u oktobru.
+
+U T-009/S1 definisan je protokol za izbor izvora podataka prema prihvaćenom modelu proizvoda. Obavezni kriterijumi su dozvoljena upotreba i jasne obaveze za atribuciju, keširanje i redistribuciju, očuvanje tačne EAN/UPC vrednosti i formata, dostupnost naziva i uskladivog identiteta barkoda, razdvajanje nepoznatog proizvoda od nedostupnog izvora, ostvariv pristup za akademski MVP i poštena pokrivenost kategorija. Uporedno će se meriti prisustvo brenda, kategorije, opisa i oznaka, poreklo i svežina podataka, lokalizacija, odziv i operativna ograničenja. Izvorni ID ne postaje interni ASAP ID, a prazna polja se ne dopunjavaju nagađanjem ili generisanjem.
+
+Za kontrolisanu proveru izdvojeni su Open Food Facts, Barcode Lookup i UPCitemdb. Open Food Facts ima otvorene, ali višeslojne licence i snažan fokus na hranu; UPCitemdb nudi opšti probni pristup bez naloga, ali uslovi keširanja i redistribucije probnih odgovora nisu dovoljno jasni; Barcode Lookup zahteva ključ i nalog, a besplatni nalog nije pogodan za automatizovanu proveru. Zato u ovoj fazi nijedan izvor nije izabran. Pripremljen je javno proverljiv korpus od 12 proizvoda formata EAN-8, UPC-E, EAN-13 i UPC-A, sa više kategorija. Naredna, posebno odobrena faza sme da izvrši najviše 13 sekvencijalnih read-only upita po dostupnom izvoru, bez slanja lokalnih kodova prefiksa \texttt{200}, preuzimanja slika ili čuvanja sirovih odgovora kada licenca to ne dozvoljava.
+
+\draftblock{R01}{Izbor i licenca izvora/rezervnog skupa, adapter, poreklo podataka i testovi poznatog, nepoznatog i nedostupnog proizvoda.}{U završnoj podatkovnoj iteraciji povezan je izabrani izvor sa internim modelom proizvoda i uveden dozvoljeni rezervni skup. Proverena su pravila identiteta i odsustva opcionih atributa. Naziv izvora, verzija skupa, obim pokrivenosti i rezultati provera unose se iz evidencije: [nije popunjeno].}
+
+\subsection{Metod semantičke pretrage i proširenja}
+
+Planirani postupak formira tekst od dostupnih atributa, generiše vektor izabranim modelom i poredi ga sa vektorima kataloga. Za nenulte vektore $x$ i $y$ kosinusna sličnost je
+\[
+ s(x,y)=\frac{\sum_i x_i y_i}{\sqrt{\sum_i x_i^2}\sqrt{\sum_i y_i^2}}.
+\]
+Veća vrednost označava veću sličnost u tom prostoru, ne verovatnoću da će se korisniku proizvod dopasti. Pre implementacije treba odabrati model, tekstualna polja, dimenziju i način indeksiranja, definisati ponašanje za nedostajuće vektore, isključiti sam upit iz rezultata i utvrditi stabilno razrešavanje jednakih ocena. Trenutni demo ne izračunava ovu formulu.
+
+\draftblock{R02}{Izabrani model i verzija, reproduktivan katalog, generisanje/čuvanje vektora, top-N integracija i merena evaluacija.}{Implementirana je semantička pretraga proizvoda na osnovu embedding reprezentacija i kosinusne sličnosti. Rezultat sadrži rang i podatke o poreklu ocene. Model, broj proizvoda, N, kvalitet i vreme odziva: [nije izmereno/popunjeno].}
+
+Za personalizaciju je početni kandidat agregacija poslednjih K interakcija, na primer centroid dostupnih vektora. Tačan K, ponderi, prag dovoljnosti, čuvanje i brisanje istorije nisu izabrani. Generička pretraga mora ostati dostupna kada istorije nema, a njen rezultat ne sme biti označen kao personalizovan.
+
+\draftblock{R03}{Odobrena pravila privatnosti i istorije, implementirani događaji, odabran algoritam i test gde istorija menja rang uz proveru cold-start režima.}{Ciljna MVP verzija koristi ograničenu lokalnu istoriju za formiranje konteksta preporuke. Pri nedovoljnoj istoriji koristi generičku sličnost, a kada kontekst utiče na rang prikazuje personalizovani režim. K, agregacija, rok čuvanja i rezultati provere: [nije popunjeno].}
 
 \section{Izveštaj 4: Razvoj MVP-a i dorade}
 
-Prethodni delovi izveštaja dopunjavaju se u skladu sa odlukama i izmenama tokom razvoja.
+Razvoj je sproveden kroz male proverljive celine: izbor i fizička provera skenera, zamrzavanje I1 HTTP ugovora, backend nad kontrolisanim podacima, mrežna granica na Androidu, povezivanje skeniranja i prikaz ishoda. Posle toga prihvaćeni su modeli domena i AI obogaćivanja kao osnova narednih iteracija.
 
 \subsection{Odluke koje se odnose na prethodne faze}
-\placeholder{promene zahteva, arhitekture, tehnologija ili skupa podataka i razlozi za njih}
+Java i XML izabrani su zbog postojećeg znanja i brzog razvoja prilagodljivog aplikacionog ekrana. Google Code Scanner obezbeđuje gotov tok kamere bez razvijanja sopstvenog CameraX interfejsa. Jedan Spring Boot modularni monolit smanjuje broj komponenti koje treba pokretati i omogućava jasne unutrašnje granice bez mikroservisne infrastrukture.
+
+Deterministički katalog uveden je da se povezivanje i stanja grešaka provere pre izbora eksternog izvora i AI modela. Ishodi proizvoda i rezultata su odvojeni kako kvar preporuka ne bi uklonio pronađeni proizvod. Koordinator na Androidu odbacuje zastarele odgovore i otkazuje prethodni zahtev, čime rezultat ranijeg skeniranja ne zamenjuje noviji prikaz.
+
+U oktobru je prioritet privremeno preusmeren na dokumentovan mock demonstrator i ovaj nacrt. To je odluka o redosledu rada, ne zatvaranje preostalih funkcionalnosti niti preimenovanje determinističke liste u AI preporuku.
+
+\subsection{Ostvareni tok i tehnička verifikacija}
+
+Korisnik pokreće skener, a podržano očitavanje ulazi u \texttt{ScanQueryCoordinator}. Mrežni klijent šalje JSON zahtev backendu, koji validira barkod, razrešava lokalni proizvod i nezavisno određuje rezultat. Android prikazuje proizvod i listu ili odgovarajuće stanje. Demo koristi lokalni backend i ADB prosleđivanje porta; nije javno postavljen servis.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.31\linewidth}p{0.59\linewidth}}
+\textbf{Provera} & \textbf{Evidentirani ishod (septembar 2026)} \\
+Android & 32 lokalna testa prolaze; lint bez nalaza; debug APK izgrađen. \\
+Backend & 23 testa prolaze: 11 pravila barkodova i 12 HTTP testova; izvršni JAR pokrenut. \\
+Skener na telefonu & Dva stvarna proizvoda uspešno očitana; otkazivanje potvrđeno. \\
+Poznat proizvod & Ovseni napitak i dva deterministička rezultata prikazani uz demo oznaku. \\
+Nepoznat proizvod & Posebno stanje; preporuke neprimenljive. \\
+Prazno/nedostupno & Poznat proizvod ostaje vidljiv kada lista izostane ili nije dostupna. \\
+Backend nedostupan & Prikazana greška veze, prethodni sadržaj uklonjen. \\
+\end{tabular}
+\end{center}
+
+Brojevi testova opisuju obim automatizovane provere, ne procenat tačnosti preporuka. Nedostupan proizvod i neispravni zahtevi provereni su automatizovano; nisu svi slučajevi fizički skenirani. Namerno izazivanje neuspeha preuzimanja modula skenera nije sprovedeno. Nema izmerenog odziva ni procene kvaliteta semantičkog ranga.
 
 \subsection{Prezentacija MVP-a nastavniku i drugim timovima}
 
-\begin{tabular}{>{\bfseries}p{0.22\linewidth}p{0.7\linewidth}}
-Datum & \textit{nije održana} \\
-Komentari & \textit{za dopunu posle prezentacije} \\
-\end{tabular}
+Prezentacija nastavniku i drugim timovima nije evidentirana. Razvojna provera telefona nije zamena za ovu aktivnost. Potrebno je predstaviti realni tok i granice simulacije, zatim zabeležiti primedbe i dogovorene prioritete.
+
+\draftblock{R04}{Stvarni datum prezentacije, sagovornici/uloge, beleške komentara i odluke o korekcijama.}{Prototip je predstavljen nastavniku i drugim timovima. Povratne informacije razvrstane su na funkcionalne korekcije i kasnija proširenja. Datum, komentari i dogovorene izmene: [nije održano/evidentirano].}
 
 \subsection{Korekcije i dorade}
-\placeholder{povratne informacije, prioriteti i sprovedene izmene}
+Dosadašnje tehničke dorade obuhvataju validaciju odgovora, odvojeno prikazivanje ishoda, zaštitu od zastarelih mrežnih odgovora i jasnu oznaku simulacije. One proizlaze iz razvojnog plana i testova; ne pripisuju se nepostojećim korisničkim komentarima. Korekcije nakon prezentacije mogu se navesti tek uz belešku R04, konkretan zadatak i rezultat njegove provere.
 
 \subsection{Prezentacija konačne verzije MVP-a}
 
-\begin{tabular}{>{\bfseries}p{0.22\linewidth}p{0.7\linewidth}}
-Datum & \textit{nije održana} \\
-Komentari & \textit{za dopunu posle prezentacije} \\
-\end{tabular}
+Za ponovljivu demonstraciju potrebno je ponovo izgraditi Android i backend, pokrenuti lokalni servis, povezati telefon, postaviti ADB prosleđivanje i skenirati kontrolisane barkodove. Tačne postojeće naredbe nalaze se u \path{docs/WORKFLOW.md}; priprema sažetog demo paketa i sveža provera pripadaju T-010/S2. Završna prezentacija ostavljena je za kraj rada, po zahtevu autora.
+
+\draftblock{R05}{Ponovljen build/test, demo uputstvo i barkodovi, datum stvarne završne demonstracije i zapis ishoda; fizičku proveru navesti samo ako je izvedena.}{Pripremljen je ponovljiv lokalni demonstracioni paket i prikazani su poznat, nepoznat, prazan i nedostupan ishod uz eksplicitnu oznaku simulacije. Datum, okruženje, rezultati sveže provere i komentari završne prezentacije: [nije evidentirano].}
 
 \section{Izveštaj 5: Testiranje sa potencijalnim korisnicima}
 
-U ovoj fazi MVP se, u dogovoru sa nastavnikom, predstavlja potencijalnim korisnicima.
+\subsection{Status i cilj evaluacije}
 
-\begin{tabular}{>{\bfseries}p{0.28\linewidth}p{0.64\linewidth}}
-Datum prezentacije & \textit{nije održana} \\
-Podaci o korisniku & \textit{za dopunu} \\
-Komentari & \textit{za dopunu} \\
-\end{tabular}
+Testiranje sa potencijalnim korisnicima nije sprovedeno niti postoji zapis o učesnicima. Dosadašnja fizička provera predstavlja razvojni test integracije. Sledeći protokol je predlog za dogovor sa nastavnikom, ne završena studija. Cilj prve sesije jeste da se utvrdi da li korisnik samostalno pokreće skeniranje, razume podatke i razlikuje simulaciju od stvarne preporuke.
+
+\subsection{Predloženi postupak i kriterijumi}
+
+Učesniku treba objasniti svrhu prototipa i kontrolisanu prirodu podataka, zatim zadati skeniranje poznatog i nepoznatog barkoda, tumačenje prazne liste i oporavak posle nedostupne veze. Beleže se ishod zadatka, potreba za pomoći, eventualne greške i kratak komentar o jasnosti. Koristiti anonimne oznake, bez imena, serijskih brojeva uređaja ili nepotrebnih ličnih podataka.
+
+Uspešnost zadatka može se prikazati odnosom uspešnih i svih pokušaja, uz obavezan apsolutni broj pokušaja. Odziv treba meriti od slanja zahteva do prikaza ishoda i odvojiti ga od vremena otvaranja/skaniranja kamerom; medijanu i visoke percentile prijaviti samo uz dovoljan broj ponavljanja i opis okruženja. Kvalitet buduće semantičke pretrage zahteva nezavisno označenu relevantnost i metriku poput Precision@N. Trenutne ručno zadate liste nisu podatak za takvu evaluaciju.
+
+\draftblock{R06}{Dogovoren protokol, stvarni učesnici i datum, anonimne beleške, broj pokušaja i izmereni rezultati; povratne informacije bez izmišljanja.}{Evaluacija je obuhvatila zadatke skeniranja, razumevanja ishoda i oporavka od greške. Na osnovu zabeleženih komentara izdvojena su ograničenja interfejsa i prioriteti dorade. Datum, broj učesnika, rezultati zadataka i komentari: [nije sprovedeno/izmereno].}
+
+\subsection{Obavezna notebook verifikacija AI i statističkih komponenti}
+
+Pre prihvatanja svake komponente moraju postojati izvršivi notebook eksperimenti: CNN i TFLite izvoz, embedding model, semantička pretraga, klasterizacija, agregacija istorije i personalizacija, PCA, MMR i svaka naknadno dodata AI/statistička obrada. Ovi eksperimenti još nisu sprovedeni; u izveštaju nema njihovih izmerenih rezultata.
+
+Za svaki eksperiment treba evidentirati izvor i licencu podataka, verziju modela i okruženja, podelu podataka bez curenja, seme i parametre, hardver, broj uzoraka, datum i ponovljivu naredbu izvršavanja. Odvojeno se ocenjuju ispravnost, kvalitet, vreme i resursi. CNN zahteva proveru detekcije i dekodiranja, kao i saglasnosti izvoza; embedding i pretraga poređenje sa referentnim pristupom; klasterizacija kvalitet i stabilnost; personalizacija cold-start i promenu ranga; PCA objašnjenu varijansu i očuvanje relevantne informacije; MMR odnos relevantnosti i raznovrsnosti. Konkretne metrike i pragovi tek se odobravaju.
+
+Tabele i grafikoni završnog izveštaja moraju upućivati na stvarni notebook, konfiguraciju, skup i izvršavanje. Merenje na računaru nije merenje na telefonu; notebook nije zamena za integracione i korisničke provere. Protokol je u \path{docs/NOTEBOOK_VALIDATION.md}; budući notebook izvori pripadaju direktorijumu \path{notebooks/}. Doteran UI zahteva zasebnu proveru čitljivosti, pristupačnosti, jasnih stanja i upotrebljivosti na uređaju.
+
+\subsection{Ograničenja i zaključak}
+
+Ostvareni rezultat je integrisan demonstrator sa stvarnim mobilnim očitavanjem, validiranom mrežnom granicom i kontrolisanim prikazom proizvoda i ishoda. Time je proverena tehnička osnova na koju se mogu dodavati stvarni podaci i AI obrada. Pet izmišljenih proizvoda, jedno fizičko okruženje i odsustvo korisničke studije ne dozvoljavaju zaključke o tržišnoj korisnosti, pokrivenosti ili kvalitetu preporuka.
+
+Sledeći razvojni koraci obuhvataju dozvoljeni izvor i rezervni skup, semantički PoC, pretragu i obaveznu klasterizaciju i personalizaciju. Tek nakon završenog PoC/MVP-a sledi obuka i integracija CNN/TFLite skenera uz očuvanje ostalih komponenti. MMR, PCA i doteran UI takođe su obavezni, uz ponovljive notebook eksperimente za sve AI/statističke komponente. Nacrt i uslovni okviri nisu dokaz završenih funkcionalnosti; konačni rezultati zahtevaju stvarni rad i verifikaciju.
+
+\subsection{Sledljivost i prateći materijal}
+
+Implementacija je u direktorijumima \path{android/} i \path{backend/}.
+Ugovor i scenariji su u \path{docs/I1_CONTRACT.md}, model u
+\path{docs/DOMAIN_MODEL.md}, a izvori četiri dijagrama u \path{docs/diagrams/}.
+Evidencija verifikacije je u \path{docs/PLANS.md} i
+\path{docs/SESSION_HANDOFF.md}. Registar \path{docs/REPORT_COMPLETION.md}
+povezuje svih šest markera sa potrebnim dokazima i preostalim planom.
 
 \end{document}

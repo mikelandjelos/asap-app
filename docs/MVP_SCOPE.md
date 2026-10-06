@@ -1,8 +1,24 @@
 # MVP scope and iteration contract
 
-Status: Accepted under T-006/S1 on 2026-09-05.
+Status: Original T-006/S1 contract amended by accepted D-024 on 2026-10-06.
 
-Last updated: 2026-09-05.
+## Current acceptance override — D-024
+
+Clustering, history-based personalization, PCA, MMR and a polished UI are mandatory for MVP acceptance under D-024/D-025. Every AI/statistical component requires reproducible notebook correctness/performance evidence and traceable report results; see `CURRENT_REQUIREMENTS.md` and `NOTEBOOK_VALIDATION.md`. The historical core/extended split and numerical scorecard below no longer authorize acceptance without them. Their concrete clustering target, method, integration and evaluation still need an approved revised plan. MMR and PCA are required; their exact role/configuration remains to be planned.
+
+Google Code Scanner is temporary: finish the PoC/MVP first, then replace only scanner-related components with a dataset-trained CNN deployed through TFLite for EAN/UPC detection. ZXing/another decoder or a learned end-to-end approach remains a later choice. Preserve downstream barcode/API/product/recommendation behavior. No dataset/model/decoder has been selected or trained. A working interim MVP and completion of the final scanner requirement are distinct checkpoints.
+
+The following original iteration details are retained for continuity; D-024 takes precedence over all references to personalization as only extended, permissionless scanning as permanent, or the old score thresholds. Revised implementation subtasks require approval.
+
+Last updated: 2026-10-06 (deadline milestone only; original scope unchanged).
+
+## Historical iteration contract (retained; D-024/D-025 override exclusions)
+
+The following September contract preserves rationale and sequencing, not current acceptance rules. Use `CURRENT_REQUIREMENTS.md` for the complete current scope.
+
+## Deadline milestone — distinct from full MVP acceptance
+
+Accepted D-023 temporarily prioritizes T-010: a complete visibly marked report draft and a reproducible mock demonstration using the existing I1 implementation. Real scanning, transport and UI coexist with fictional catalog data and deterministic result ordering. This milestone does not satisfy the 80-point AI core or the 95-point extended MVP and does not close I2–I5. The user requested presentation work only at the end. After the deadline detour, return to the preserved plan through its explicit approval gates; see [REPORT_COMPLETION.md](REPORT_COMPLETION.md).
 
 ## Product outcome
 
@@ -20,7 +36,7 @@ History-based personalization is a committed part of the project scope. It forms
 6. The client presents the scanned product and similar products without implying that similarity is a personalized recommendation.
 7. In the extended MVP, recent interaction history influences the ranking when sufficient history exists. The client labels those results separately and otherwise uses an explicit cold-start/generic state.
 
-## Scope scorecard
+## Historical scope scorecard — superseded as an acceptance rule by D-024
 
 The “approximately 80%” target is an operational threshold, not permission to complete arbitrary low-value features. All P0 rows together form the required 80-point core and must work as one demonstrable path.
 
@@ -54,7 +70,7 @@ Core operational MVP acceptance requires all P0 capabilities, a reproducible pho
 - Production publication, app-store release, public hosting, autoscaling, monitoring platforms, or service-level guarantees.
 - A custom CameraX preview, continuous scanning, visual overlays, or barcode formats outside the accepted EAN/UPC set.
 - Catalog administration, crowdsourced editing, inventory, price comparison, or guaranteed global product coverage.
-- Clustering, PCA visualization, MMR diversification, conversational features, or generative product descriptions.
+- Conversational features or generative product descriptions. Clustering, PCA and MMR are mandatory under D-024/D-025, not non-goals.
 - Offline-first synchronization, background scanning, analytics tracking, notifications, or retention of barcode images.
 - Finalized security/authentication schemes and production data-retention policy; these must be resolved before any real user data is retained.
 

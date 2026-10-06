@@ -1,5 +1,9 @@
 # Accepted Android PoC baseline
 
+D-025 addition: a polished Java/XML UI is required, not implemented by the current technical screen. Agree visual direction and phone acceptance before redesign; no new UI library is selected. The final CNN/TFLite scanner requires notebook evidence and separate real-device validation under `NOTEBOOK_VALIDATION.md`.
+
+D-024 amendment (2026-10-06): this remains the implemented **interim** baseline. After finishing the PoC/MVP, replace scanner-related parts with a dataset-trained CNN/TFLite EAN/UPC pipeline. Decoder, camera integration, model and training data are not yet selected; preserve the downstream API and application. Do not start replacement during handoff.
+
 Status: Accepted and frozen under completed T-004.
 
 Implementation status: T-005/S1 realized the SDK, wrapper, AGP, AppCompat, ConstraintLayout, and initial test portions of this baseline. T-005/S2 realized Google Code Scanner 16.1.0, `barcode_ui` metadata, auto-zoom, the restricted EAN/UPC format set, and scanner outcome handling. T-005/S3 physically validated successful scanning and cancellation. T-007/S4.1 adds the networking extension below, S4.2 connects supported successful scans to it, S4.3 adds the I1 outcome UI, and S4.4 physically validates the controlled vertical slice without changing this frozen build baseline.

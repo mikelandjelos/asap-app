@@ -1,10 +1,12 @@
 # Diagram contract
 
+D-024 amendment (2026-10-06): existing canonical sources/renders represent the earlier design, not a complete model of the revised scope. Mandatory clustering, PCA, MMR and the final dataset-trained CNN/TFLite scanner replacement need an approved design extension under D-024/D-025. Notebook-to-report evidence links and polished UI are also required; see `../CURRENT_REQUIREMENTS.md`. Personalization is mandatory MVP functionality. Do not infer optionality from missing diagram elements; do not regenerate/edit presentation assets until the user authorizes the final presentation phase.
+
 Status: T-001's diagram contract, the T-006/S2 concrete MVP-topology refinement, and the T-008/S2 canonical domain-model and AI-enrichment views are accepted.
 
 ## Purpose and audiences
 
-The diagrams describe the **proposed complete MVP design** and visibly annotate the implemented scanner and deterministic backend slices. They serve three audiences:
+The diagrams describe the **earlier proposed MVP design, pending D-024/D-025 extensions** and visibly annotate the implemented scanner and deterministic backend slices. They serve three audiences:
 
 - project design and implementation sessions, which need maintainable technical detail;
 - the formal Serbian report, which needs readable architecture evidence;
@@ -21,7 +23,7 @@ Every architecture diagram must visibly use the phrase **Proposed architecture**
 - **Purpose:** show logical system boundaries, responsibilities, dependencies, and data stores.
 - **Required elements:** Android application boundary, Google Code Scanner integration, local bounded history, one backend deployment with API/product-resolution/recommendation modules, normalized product catalog, vector index, controlled fallback dataset, and external product source boundary.
 - **Boundary rule:** combine logical ownership with the two selected deployment boundaries: one Android application and one backend modular monolith. Logical stores do not imply separate database products, and no protocol, framework, vendor, or hosting platform is selected.
-- **Planned behavior:** history-based personalization is a committed extended-MVP capability. The diagram locates history on the device but does not select K, persistence APIs, weighting, profile aggregation, or retention duration.
+- **Planned behavior:** history-based personalization is a mandatory MVP capability. The diagram locates history on the device but does not select K, persistence APIs, weighting, profile aggregation, or retention duration.
 
 ### Scan-to-recommendation flow
 
@@ -55,7 +57,7 @@ PlantUML identifiers and operational documentation use the English canonical ter
 | Canonical term | Serbian deliverable label | Existing-source variants | Contract note |
 | --- | --- | --- | --- |
 | Android client | Mobilna aplikacija | Mobile application | Java/XML scanner-to-API coordination and all I1 outcome states are implemented and physically validated with the controlled backend. |
-| Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Accepted for the initial MVP. Direct ML Kit Barcode Scanning with CameraX is only a possible custom-UI upgrade. |
+| Google Code Scanner | Google Code Scanner | Kamera/skeniranje; Lokalni skener barkoda; CNN; TFLite | Temporary implemented scanner; required dataset-trained CNN/TFLite replacement follows the PoC/MVP under D-024. Decoder/camera choices remain open. |
 | Local bounded history | Lokalna ograničena istorija | User profile; interaction history | Android-owned; S2 accepts anonymous newest-first view events while K, persistence, weighting, and retention remain undecided. |
 | Backend API | Backend API / API servis | Backend; API service | Implemented Spring MVC I1 boundary inside one backend deployment; the controlled Android connection is physically validated. |
 | Product resolution | Razrešavanje proizvoda | Metadata adapter | Owns lookup, fallback selection, normalization, provenance, and product outcome classification. |

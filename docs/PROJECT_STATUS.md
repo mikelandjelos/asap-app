@@ -1,16 +1,24 @@
 # Project status
 
-Last verified: 2026-09-08
+Documentation/report last verified: 2026-10-06. Runtime evidence remains dated September 2026.
+
+Current report: 19 pages, repository link on page 1, D-024/D-025 scope and notebook verification protocol included. Three passes under each report engine succeeded with clean final logs; cover and notebook page visually checked. Local links, six-marker register and whitespace checks pass. See `DOCUMENTATION_AUDIT.md` for all-document dispositions, including intentionally deferred presentation and design renders.
 
 ## Current phase
 
-ASAP is in early vertical-slice implementation. The Java/XML Android app has a physically validated Google Code Scanner-to-Retrofit/Moshi I1 flow and UI for every frozen product/recommendation outcome; all 32 local tests and lint pass. The Java 21/Spring Boot backend implements the deterministic I1 contract with 23 passing tests. The controlled end-to-end vertical slice is physically validated. Completed T-008 defines the accepted provider-neutral product, interaction/history, recommendation, and AI-lineage contracts; live product data, semantic search, persistence, and personalized recommendations do not exist.
+D-024/D-025 require clustering, personalization, PCA, MMR, polished UI and notebook verification for **every** AI/statistical component. See `CURRENT_REQUIREMENTS.md` and `NOTEBOOK_VALIDATION.md`. Google Code Scanner stays temporarily; dataset-trained CNN/TFLite replacement of scanner-related parts comes after the working PoC/MVP. Dataset/model/decoder and algorithm details remain unselected.
+
+Implemented reality is unchanged: Java/XML Android and Spring Boot deterministic I1 fixture flow, historically verified with 32 Android tests, clean lint, 23 backend tests and representative physical-phone cases. There is no live provider, embedding/vector system, genuine semantic retrieval, clustering, history/personalization, PCA, MMR, final polished UI, custom CNN/TFLite scanner or executed AI notebook.
+
+T-009/S1 provider research and T-010/S1 full report draft await acceptance; neither S2 is authorized. This handoff is authorized to reconcile documentation, preserve work, commit and push only. Next implementation requires a concise revised plan and explicit subtask approval. Committing a draft does not accept it.
+
+The report now includes the repository link and current scope/notebook requirements; see `DOCUMENTATION_AUDIT.md` for the latest build evidence. The presentation remains an explicitly deferred earlier snapshot under `presentation/README.md`; diagrams require an approved design extension. Earlier page counts and test records below describe their dated stage, not newly measured results.
 
 ## Available artifacts
 
 - A phased product plan in `TODO.md`, transcribed and normalized from `meditations/sept_3.pdf`.
 - A Serbian LaTeX report in `report/report.tex`, based on the parent-directory DOCX.
-- Report sections 2–5 remain incomplete. T-006/S1 populates the detailed-solution/MVP-boundary material, while target users, competitive analysis, data selection, feedback, corrections, and final evaluation remain placeholders.
+- All five report sections have substantive draft content. Target users/benefits are unvalidated assumptions; actual I1 implementation and dated technical evidence are separated from planned AI work. Six visible conditional blocks R01–R06 mark missing implementation, measurements and genuine feedback. `docs/REPORT_COMPLETION.md` maps each to its evidence requirements. The draft is not submission-ready until unresolved blocks are supported or replaced with limitations.
 - The original architecture image from the DOCX is retained as historical source material at `report/assets/asap-architecture.png`; formal deliverables use canonical PlantUML renders.
 - A Serbian ELFak-styled Beamer deck in `presentation/asap-presentation.tex`.
 - The presentation contains proposal content and explicitly marked placeholders for design, implementation, and evaluation results.
@@ -30,7 +38,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - The debug APK was installed and its launcher activity was verified on the Samsung device. Two successful real-product scans confirm that the scanner module is usable and decoded values return to the app; cancellation also produced the intended user-visible status.
 - Physical module/download and general failures were not deliberately induced. Their handlers exist and the failure classification policy is covered by local tests.
 - T-005 and all three of its subtasks are accepted and closed.
-- T-006/S1 is accepted and defines the durable MVP scope and iteration contract in `docs/MVP_SCOPE.md`: the complete P0 scan-to-similar-products path is the operational 80-point core, history-based recommendation is a committed 15-point extended-MVP milestone, and broader evaluation completes the remaining 5 points. The exact bounded-history method remains open; the accepted T-008/S2 model builds on this contract.
+- T-006/S1 is historically accepted and defined the now-superseded 80/95-point scope and original iteration contract in `docs/MVP_SCOPE.md`: the complete P0 scan-to-similar-products path is the operational 80-point core, history-based recommendation is a committed 15-point extended-MVP milestone, and broader evaluation completes the remaining 5 points. The exact bounded-history method remains open; the accepted T-008/S2 model builds on this contract.
 - T-006 and both subtasks are accepted and closed. One Android application and one backend modular monolith form the MVP topology. The device owns bounded interaction history; the backend owns normalized product and vector data through internal product-resolution and recommendation modules. Product and recommendation outcomes fail independently.
 - T-007/S1 is accepted: `docs/BACKEND_BASELINE.md` freezes OpenJDK 21, Spring Boot 4.1.1 with Servlet Spring MVC, Maven 3.9.16 through Maven Wrapper 3.3.3, and one Maven project under `backend/`. S3 realizes this exact baseline.
 - T-007/S2 is accepted. `docs/I1_CONTRACT.md` freezes `POST /api/v1/scan-queries`, exact request validation, independent product/recommendation outcomes, RFC 9457 errors, deterministic-placeholder labelling, and nine acceptance cases. Canonical fixtures and a scannable restricted-circulation EAN-13 SVG live under `docs/fixtures/`.
@@ -41,8 +49,9 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - T-007/S4.4 and task T-007 are accepted and complete. A clean build produced 32/32 passing Android tests, zero lint findings, a debug APK, and 23/23 passing backend tests. On the verified phone, the fresh APK used `adb reverse` to reach the local backend and physically displayed: the primary known product with almond/soy ranks and the exact demo-only label; unknown product with `NOT_APPLICABLE`; known product with empty recommendations; known product with unavailable recommendations while retaining product data; and backend unavailability with prior outcome content cleared. The backend was stopped gracefully, forwarding and temporary validation artifacts were removed, and the APK remains installed.
 - T-008/S1 is accepted. `docs/DOMAIN_MODEL.md` defines a source-neutral product aggregate with stable internal identity, exact barcode lookup identity, minimal required metadata, bounded optional metadata, explicit provenance, normalization rules, and independent resolution outcomes. It maps the complete I1 fixtures without changing code or the frozen wire contract.
 - T-008/S2 and task T-008 are accepted and complete. The contract defines one anonymous device-owned `PRODUCT_VIEWED` event, an optional newest-first bounded history context, derived cold-start/sufficient readiness, deterministic/generic-semantic/personalized recommendation modes, independent result states, ranked-item evidence constraints, and a hard boundary preventing AI-derived artifacts from overwriting product facts. It changes no application code or I1 payload.
+- T-009's plan and S1 were explicitly approved. `docs/PRODUCT_DATA_API_EVALUATION.md` defines model-derived gates, field mappings, the official-documentation shortlist (Open Food Facts, Barcode Lookup, and UPCitemdb), a 12-product EAN-8/UPC-E/EAN-13/UPC-A corpus, and a bounded S2 observation protocol. Open Food Facts and UPCitemdb are eligible for controlled S2 reads after separate approval; Barcode Lookup remains documentation-only without separately authorized compatible access. No provider has been selected or queried.
 - T-004 is accepted and complete; the next implementation task must preserve this frozen baseline unless a separately accepted compatibility issue requires a decision revision.
-- Direct ML Kit Barcode Scanning with CameraX remains an upgrade path only if the MVP later requires a custom scanner camera experience.
+- D-024 replaces the earlier optional ML Kit/CameraX upgrade direction with a required trained CNN/TFLite scanner after the PoC/MVP; camera/decoder details remain open.
 
 ## Verified document builds
 
@@ -50,7 +59,7 @@ ASAP is in early vertical-slice implementation. The Java/XML Android app has a p
 - `presentation/asap-presentation.tex` compiles with LuaLaTeX, from the repository root or the `presentation/` directory.
 - Serbian Latin glyphs render correctly with the engine-aware font setup.
 - PlantUML 1.2020.02, Java 21, and Graphviz 2.43.0 are available in the current environment when PlantUML is invoked headlessly with `env -u DISPLAY`.
-- The integrated report is 12 pages under both pdfLaTeX and LuaLaTeX, and the integrated presentation is 18 slides under LuaLaTeX. Their T-008/S2 text, full domain/AI-lineage figures, title slide, and compact domain/AI-lineage slides were visually inspected without clipping. All final logs contain no LaTeX, package, layout, or missing-glyph warnings.
+- T-010/S1 expands the report to 17 pages; repeated pdfLaTeX and LuaLaTeX builds pass with clean final logs. Cover and pages 13, 14, 16 and 17 were visually inspected, including all six marker blocks and Serbian Latin glyphs. The report deliverable copy is synchronized with `build/report.pdf`. The unchanged 19-slide presentation retains its earlier T-009/S1 verification; it is intentionally deferred until the end, not newly verified in October.
 
 ## Android development environment
 
@@ -70,10 +79,10 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-008 is accepted and closed. No subsequent task has been selected, planned, or authorized.
+- T-009's three-subtask plan is approved. S1 is implemented and awaits acceptance; S2 is not authorized.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
-- Product metadata API and fallback dataset.
+- Primary product metadata API (T-009/S3) and fallback dataset.
 - Embedding model and vector-index implementation.
 
 See `TODO.md` for ordered tasks and `docs/SESSION_HANDOFF.md` for the suggested next session.

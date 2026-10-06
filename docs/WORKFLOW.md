@@ -1,5 +1,9 @@
 # Working workflow
 
+## Mandatory AI/statistical evidence — D-025
+
+Before accepting an AI/statistical component, require executed notebook evidence under [NOTEBOOK_VALIDATION.md](NOTEBOOK_VALIDATION.md), including reproducibility and report-linked tables/plots. Runtime tests and phone checks remain separate. Use [CURRENT_REQUIREMENTS.md](CURRENT_REQUIREMENTS.md) instead of historical exclusions. No notebook runs exist yet.
+
 ## Session loop
 
 1. **Orient:** read the files listed in `AGENTS.md` and inspect the working tree.

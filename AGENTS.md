@@ -48,10 +48,13 @@ When these disagree, do not silently choose one. Verify the repository, correct 
 
 ## Working rules
 
+- Respect `docs/CURRENT_REQUIREMENTS.md` (D-024/D-025): clustering, personalization, PCA, MMR and polished UI are mandatory. Every AI/statistical component requires reproducible notebook verification under `docs/NOTEBOOK_VALIDATION.md`. CNN/TFLite scanner replacement is required only after the PoC/MVP. The presentation stays deferred until the end. Historical scope exclusions are not current authority.
+- Keep work token-efficient: concise plans/updates, targeted inspection output, no repeated full-file dumps once read, and checks proportional to the active change. This does not waive approval gates or documentation consistency.
+
 - Select work from `TODO.md`, or add an explicitly requested task there during planning. Record the plan and approval state in `docs/PLANS.md`.
 - Mark a checkbox complete only when the repository contains evidence and relevant verification has passed.
 - Do not mark recurring documentation work permanently complete.
-- Keep planning claims separate from implemented functionality. The repository currently has documentation scaffolding but no application code.
+- Keep planning claims separate from implemented functionality. The repository contains a working Android/backend deterministic I1 slice; consult `docs/PROJECT_STATUS.md` for verified capabilities. Live data and AI recommendations remain planned.
 - Prefer small, reviewable changes. Do not introduce a framework, service, API, data source, or model without documenting the decision.
 - Use PlantUML for canonical software diagrams. Mermaid is acceptable for small Markdown-native diagrams.
 - Keep formal report and presentation content in Serbian Latin. Operational developer documentation may remain in English.

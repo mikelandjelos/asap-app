@@ -1,5 +1,7 @@
 # Accepted deterministic I1 contract
 
+Current scope note (D-024/D-025): this document freezes the implemented deterministic I1 protocol only. It does not exclude required later clustering, personalization, PCA, MMR or notebook evaluation. Evolve a future contract only through approved design, and preserve the barcode boundary during the final CNN/TFLite scanner replacement. See `CURRENT_REQUIREMENTS.md`.
+
 Status: Accepted and frozen under completed T-007. The backend, Android client and coordination, response-content UI, and physically validated controlled end-to-end flow are accepted.
 
 The contract proves the Android-to-backend boundary with controlled data. It must not be presented as live product resolution, semantic similarity, or personalization.

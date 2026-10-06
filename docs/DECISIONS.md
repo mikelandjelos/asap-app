@@ -2,6 +2,8 @@
 
 Record accepted decisions here in chronological order. A decision is not a task: implementation may remain pending after a direction is accepted.
 
+Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, PCA, MMR, personalization-as-only-an-extension, and the final scanner direction. Earlier entries remain historical decisions; their optionality and authorization statements apply to their original date/turn only.
+
 ## D-001 — Canonical software diagrams use PlantUML
 
 - **Status:** Accepted
@@ -175,3 +177,29 @@ Record accepted decisions here in chronological order. A decision is not a task:
 - **Context:** I3 and I4 need stable interaction and recommendation concepts before selecting persistence, embedding, retrieval, or ranking technologies. The model must support generic cold start and history-aware ranking without creating accounts, a durable backend profile, or misleading AI claims.
 - **Decision:** Record only device-owned `PRODUCT_VIEWED` events for displayed known products and send an optional newest-first bounded `HistoryContext` per request. Derive cold-start/sufficient readiness on the backend. Distinguish non-AI `DETERMINISTIC_FIXTURE`, AI-derived `GENERIC_SEMANTIC`, and history-applied `PERSONALIZED_HISTORY` modes; keep recommendation status independent from product resolution. Treat embeddings, request-scoped history profiles, scores, and AI-ranked order as derived artifacts that never overwrite source-backed product facts. Require typed finite score evidence and model/pipeline versioning for future AI modes, without interpreting uncalibrated scores as percentages.
 - **Consequence:** T-008 closes with canonical class and AI-lineage diagrams and leaves I1 unchanged. K/window, sufficiency threshold, retention and deletion policy, persistence, provider/dataset, embedding model, vector store, similarity metric, ranking algorithm, calibration, and API evolution remain separate approved decisions before implementation.
+
+## D-023 — Deadline draft and mock demo preserve the full implementation roadmap
+
+- **Status:** Accepted
+- **Date:** 2026-10-06
+- **Context:** The user needs a report quickly, permits simulation for the near-term demo, and wants to return to the original plan afterward.
+- **Decision:** Execute T-010 as a bounded deadline detour using existing I1 code. Complete report prose now; hypothetical completed-tense passages must remain inside visible conditional draft blocks with evidence requirements. Do not fabricate measurements, meetings or user feedback. Keep the full AI scope and T-009 work intact. Finish the presentation only at the end, per the user's explicit follow-up.
+- **Consequence:** T-010/S1 is authorized; later subtasks still require separate approval. The mock milestone is not acceptance of the 80/95-point AI MVP. Submission must resolve markers through evidence or replace unsupported passages with limitations. No new provider/model/runtime technology is selected.
+
+## D-024 — Mandatory clustering/personalization; trained CNN/TFLite scanner replacement last
+
+- **Status:** Accepted scope direction; implementation not authorized
+- **Date:** 2026-10-06
+- **Decision:** Clustering and history-based personalization are essential MVP requirements, not optional or merely extended-MVP features. Keep Google Code Scanner temporarily to finish the PoC/MVP. After that, replace only scanner-related parts with a CNN trained using a documented dataset for EAN/UPC barcode detection and deployed with TFLite. ZXing or another decoder may decode detected regions; learned end-to-end decoding is an alternative to evaluate, not a selected implementation.
+- **Boundaries:** Preserve the product/API/recommendation flow and custom Java/XML app when replacing scanning. Dataset/license, annotations/splits, training method/model, detector-versus-end-to-end choice, decoder, camera integration and evaluation must be planned and approved later. No training or replacement has happened. Clustering target, algorithm and user-visible purpose also remain to be defined.
+- **Supersedes:** D-010's eventual scanner direction and D-014's acceptance rule allowing an MVP without personalization; any clustering exclusion in prior scope/diagrams. The old 80/95-point scorecard is historical and must not certify the revised MVP. MMR and PCA remain optional.
+- **Handoff:** Stop after recording this change. No new implementation, provider calls, training, downloads or commits are authorized. Presentation remains deferred until the end. Propose a concise revised plan next and obtain explicit per-subtask approval. Keep responses and inspection output economical.
+
+## D-025 — Required PCA, MMR, polished UI and notebook evidence
+
+- **Status:** Accepted scope and documentation/publishing direction; feature implementation not authorized
+- **Date:** 2026-10-06
+- **Decision:** PCA, MMR and a polished UI join clustering and personalization as mandatory MVP capabilities. Every AI/statistical component (CNN/TFLite, embedding, retrieval, clustering, history aggregation/personalization, PCA, MMR and any later addition) must be tested and verified in reproducible notebooks, with actual performance results traceable in the report.
+- **Evidence contract:** `CURRENT_REQUIREMENTS.md` consolidates current scope; `NOTEBOOK_VALIDATION.md` records the component matrix, reproducibility, datasets/splits, correctness/quality/timing distinctions and report linkage. Detailed methods/metrics/thresholds remain subject to approved planning; no experiment is claimed complete.
+- **Supersedes:** All prior optional PCA/MMR language, including D-024's last scope sentence. The CNN/TFLite scanner is still developed last, after the working PoC/MVP; replace only scanner-related components. Presentation finalization remains deferred.
+- **Authorization:** Audit and synchronize documentation, preserve earlier uncommitted work, add the repository link at the beginning of the report, verify, commit with a short one-line message, and push to the configured origin/current branch. This does not accept pending S1 results or authorize subsequent implementation.

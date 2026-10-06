@@ -4,7 +4,11 @@ This directory contains the operational documentation needed to continue the pro
 
 | Document | Purpose |
 | --- | --- |
+| [`CURRENT_REQUIREMENTS.md`](CURRENT_REQUIREMENTS.md) | Authoritative D-024/D-025 mandatory scope, delivery order and approval boundaries |
+| [`NOTEBOOK_VALIDATION.md`](NOTEBOOK_VALIDATION.md) | Required reproducible evidence for every AI/statistical component and report results |
+| [`DOCUMENTATION_AUDIT.md`](DOCUMENTATION_AUDIT.md) | Handoff-wide document inventory, reconciliation and explicit deferred artifacts |
 | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | Current, evidence-based repository state |
+| [`REPORT_COMPLETION.md`](REPORT_COMPLETION.md) | Report draft markers, missing evidence, submission checklist and return to the full roadmap |
 | [`WORKFLOW.md`](WORKFLOW.md) | Session workflow, definition of done, and build commands |
 | [`PLANS.md`](PLANS.md) | Proposed/approved task plans and subtask approval state |
 | [`DECISIONS.md`](DECISIONS.md) | Lightweight decision log |
@@ -14,6 +18,7 @@ This directory contains the operational documentation needed to continue the pro
 | [`BACKEND_BASELINE.md`](BACKEND_BASELINE.md) | Accepted T-007/S1 backend runtime, framework, build, and dependency baseline |
 | [`I1_CONTRACT.md`](I1_CONTRACT.md) | Accepted T-007/S2 HTTP/JSON contract, fixture scenarios, and acceptance cases |
 | [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) | Accepted T-008 product, interaction/history, recommendation, and AI-derived-artifact contract |
+| [`PRODUCT_DATA_API_EVALUATION.md`](PRODUCT_DATA_API_EVALUATION.md) | T-009 provider criteria, official-source shortlist, probe corpus, and controlled evaluation protocol |
 | [`diagrams/README.md`](diagrams/README.md) | Proposed canonical diagram contract and file layout |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |
 

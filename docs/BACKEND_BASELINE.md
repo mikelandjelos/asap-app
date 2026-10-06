@@ -1,5 +1,7 @@
 # Accepted backend baseline
 
+Current scope note (D-024/D-025): this is the implemented I1 technology baseline, not a restriction on required later embedding/retrieval, clustering, personalization, PCA or MMR work. Each AI/statistical component needs notebook evidence under `NOTEBOOK_VALIDATION.md`; no new framework is selected here. Android I1 integration was subsequently completed under T-007/S4.
+
 Status: Accepted and frozen under T-007/S1; realized by the accepted T-007/S3 implementation.
 
 Last researched: 2026-09-05 from official Spring Boot, Apache Maven, Javalin, and Quarkus documentation.
@@ -47,7 +49,7 @@ The approved S3 scaffold now exists under `backend/`. It uses the exact baseline
 - `./mvnw verify` passes 23 tests and packages an executable JAR;
 - the packaged JAR contains the fixture and starts successfully on Java 21.
 
-This implementation evidence does not authorize Android integration, which remains T-007/S4.
+This historical S3 evidence did not itself authorize Android integration; T-007/S4 subsequently implemented and validated it, as recorded in `PROJECT_STATUS.md`.
 
 ## Official sources
 
