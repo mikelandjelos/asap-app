@@ -10,6 +10,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.FieldError;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.ProblemResponse;
 
@@ -18,6 +19,7 @@ public class ApiExceptionHandler {
 
     private static final String INVALID_REQUEST = "urn:asap:problem:invalid-request";
     private static final String INTERNAL_ERROR = "urn:asap:problem:internal-error";
+    private static final String NOT_FOUND = "urn:asap:problem:not-found";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ProblemResponse> validationFailure(MethodArgumentNotValidException exception) {
@@ -27,6 +29,12 @@ public class ApiExceptionHandler {
                 .toList();
         return problem(HttpStatus.BAD_REQUEST, "Invalid request",
                 "The request contains invalid fields.", errors);
+    }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    ResponseEntity<ProblemResponse> invalidRequest(InvalidRequestException exception) {
+        return problem(HttpStatus.BAD_REQUEST, "Invalid request",
+                "The request contains invalid fields.", exception.errors());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -41,6 +49,12 @@ public class ApiExceptionHandler {
     ResponseEntity<ProblemResponse> unsupportedMediaType() {
         return problem(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Unsupported media type",
                 "Content-Type must be application/json.", List.of());
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    ResponseEntity<ProblemResponse> notFound() {
+        return problem(NOT_FOUND, HttpStatus.NOT_FOUND, "Not found",
+                "No resource exists at this path.", List.of());
     }
 
     @ExceptionHandler(Exception.class)

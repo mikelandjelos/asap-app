@@ -74,6 +74,10 @@ public final class BundleModel {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    public record MapPoint(String id, double x, double y, int cluster) {
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public record Theme(
             int cluster,
             int size,

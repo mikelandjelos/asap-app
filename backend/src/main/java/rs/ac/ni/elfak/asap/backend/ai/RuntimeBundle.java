@@ -35,6 +35,7 @@ public final class RuntimeBundle {
     private final FloatMatrix pcaComponents;
     private final TfidfSpec tfidf;
     private final List<Theme> themes;
+    private final List<BundleModel.MapPoint> mapSample;
 
     private RuntimeBundle(Path dir) throws IOException {
         this.dir = dir;
@@ -48,6 +49,7 @@ public final class RuntimeBundle {
         this.pcaComponents = matrix("pca_components.f32");
         this.tfidf = JSON.readValue(dir.resolve("tfidf.json").toFile(), TfidfSpec.class);
         this.themes = JSON.readValue(dir.resolve("themes.json").toFile(), new TypeReference<List<Theme>>() { });
+        this.mapSample = JSON.readValue(dir.resolve("map_sample.json").toFile(), new TypeReference<List<BundleModel.MapPoint>>() { });
         validate();
     }
 
@@ -145,5 +147,9 @@ public final class RuntimeBundle {
 
     public List<Theme> themes() {
         return themes;
+    }
+
+    public List<BundleModel.MapPoint> mapSample() {
+        return mapSample;
     }
 }

@@ -628,6 +628,13 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Code:** 9 new main classes in `backend/.../ai/`, plus `CharTfidfTest` and `BundleParityTest`.
   - **Verification:** `./mvnw verify` passes 32/32 (23 existing + 4 unit + 5 parity, none skipped). v1 still starts and serves without a bundle. The JAR is ~101 MB.
   - **Report facts for the end:** Java parity and Java latency.
+- **S6b:** accepted 2026-10-06 (“I think this is good”).
+- **S6c:** Approved 2026-10-06 (“you can continue”); complete, awaiting acceptance.
+  - **Code:** `PersonalRanker`, `RecommendationEngine`, `AiConfiguration` and the `api/v2` package (`V2Contract`, `HistoryValidator`, `V2Controller`), plus `InvalidRequestException`. The size filter was generalized to per-path limits; v1 is unchanged.
+  - **Pre-existing bug fixed:** unknown routes returned 500 through the catch-all handler and now return a 404 problem.
+  - **Tests:** 46/46 (+5 ranking parity, +8 v2 HTTP, +1 no-bundle 404).
+  - **Smoke test:** packaged-JAR startup 5.4 s, about 9 ms per request over HTTP.
+  - **Issue found:** same name+brand variants flood results; S6c.1 is proposed.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

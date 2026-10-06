@@ -55,6 +55,14 @@ class ScanQueryControllerTest {
     }
 
     @Test
+    void v2IsNotRegisteredWithoutABundle() throws Exception {
+        HttpResponse<String> response = httpClient.send(HttpRequest.newBuilder(
+                        URI.create("http://localhost:" + port + "/api/v2/catalog-map")).GET().build(),
+                HttpResponse.BodyHandlers.ofString());
+        assertThat(response.statusCode()).isEqualTo(404);
+    }
+
+    @Test
     void returnsUnknownWithRecommendationsNotApplicable() throws Exception {
         assertProductWithoutRecommendations("2000000000992", "UNKNOWN");
     }

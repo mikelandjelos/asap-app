@@ -10,9 +10,10 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S6b is done and committed (D-035). Await acceptance, then explicit approval of S6c.
-  - **Java ranking:** multi-interest profile + readiness, MMR, cluster assignment and PCA "you" position, with parity tests on fixture users and new products.
-  - **API:** written v2 contract + `POST /api/v2/scan-queries` + `GET /api/v2/catalog-map`, with Spring wiring conditional on `asap.bundle.dir`. v1 stays.
+- **Next action:** T-011/S6c is done and committed (`docs/V2_CONTRACT.md`). Await acceptance; then the user decides between S6c.1 and S6d.
+  - **S6c.1:** collapse same name+brand variants; update `ml/asap_ml/ranking.py`, rerun notebook 03, re-export the bundle and port to Java.
+  - **S6d:** router with live OFF/UPCitemdb.
+  - **Phone:** the user will see changes only after the full UI (S7); no interim phone build.
   - Report work is deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.

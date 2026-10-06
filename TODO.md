@@ -24,7 +24,8 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
   - [x] S6a: verzionisani paket artefakata + parity fiksture; nezavisna provera prolazi (D-034).
   - [x] S6b: Java učitavanje paketa, ONNX enkoder, char TF-IDF, hibridna pretraga, parity testovi. (32/32 testova; D-035.)
-  - [ ] S6c: Java profil, MMR, klasteri/PCA; v2 ugovor i endpoint; v1 ostaje.
+  - [x] S6c: Java profil, MMR, klasteri/PCA; v2 ugovor i endpoint; v1 ostaje. (46/46 testova; `docs/V2_CONTRACT.md`.)
+  - [ ] S6c.1: sažimanje duplikata istog naziva i brenda u rezultatima (4,1 % kataloga); provera u notebook-u 03 i nove parity fiksture.
   - [ ] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima.
 - [ ] S7: Android istorija i doteran UI.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
