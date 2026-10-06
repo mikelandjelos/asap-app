@@ -1,0 +1,4 @@
+,ndcg@10,ndcg@10_in_interest,ndcg@10_out_of_interest,similar_share@10,interest_share@10,rank_changed
+generic,0.7185,0.7415,0.6343,0.5535,0.782,0.0
+centroid,0.7202,0.7473,0.6212,0.5444,0.8022,0.991
+multi_interest,0.7259,0.7528,0.6275,0.5474,0.8144,0.993

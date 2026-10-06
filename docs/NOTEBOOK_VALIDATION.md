@@ -1,6 +1,6 @@
 # AI/statistical notebook verification contract
 
-Status: Required by D-025 (2026-10-06). Executed so far: `00_source_probes` (T-011/S2, provider statistics) and `01_data_embeddings_retrieval` (T-011/S3: dataset, embedding, TF-IDF, hybrid retrieval, ONNX parity, latency). `02_clustering_pca` (T-011/S4: representation comparison, k sweep, stability, HDBSCAN comparator, themes, PCA variance/reduction/map). Personalization and MMR are not yet run, and no model/algorithm selected by this document.
+Status: Required by D-025 (2026-10-06). Executed so far: `00_source_probes` (T-011/S2, provider statistics) and `01_data_embeddings_retrieval` (T-011/S3: dataset, embedding, TF-IDF, hybrid retrieval, ONNX parity, latency). `02_clustering_pca` (T-011/S4: representation comparison, k sweep, stability, HDBSCAN comparator, themes, PCA variance/reduction/map). `03_personalization_mmr` (T-011/S5: profiles, β/H tuning, test vs generic with CIs, cold start, MMR λ sweep, edge cases, runtime). All MVP AI/statistical components have notebook evidence; the CNN scanner notebook follows after the MVP, and no model/algorithm selected by this document.
 
 Every AI/statistical component must have reproducible notebook evidence before its performance is described as verified in the report. Cover existing candidate ideas and any component added later. A component may share a notebook with related stages if its tests and results are separately identifiable.
 

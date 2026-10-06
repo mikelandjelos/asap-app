@@ -96,6 +96,11 @@ Several sources are combined behind one interface so the best available record i
 - **Profile (*initial*):** recency-weighted mean of history vectors, wᵢ = 0.5^(i/H) with half-life H = 5 events (i = 0 newest).
 - **Score:** `s(x) = (1−β)·cos(q,x) + β·cos(p,x)`, *initial* β = 0.3.
 - **Notebook 03 compares:** single centroid vs **multi-interest** (per-cluster centroids, p = closest interest to q). The variant with better nDCG@10 is chosen.
+- **S5 result (notebook 03, D-032):** **multi-interest** profile (interest centroids per type cluster; the one closest to the query is used), β = 0.4, uniform weights (half-life ∞), K = 20 window, readiness at ≥ 3 distinct products.
+  - On 1,000 synthetic test users, graded nDCG@10 is 0.726 vs generic 0.719 (+0.007, CI 0.002–0.013), and interest share@10 is 0.81 vs 0.78. The top-10 changes for 99 % of users.
+  - Out-of-interest scans lose 0.007 (n.s.). The single centroid did not significantly beat generic and significantly hurt out-of-interest scans (−0.013).
+  - Recency weighting did not help: the per-query interest selection already captures the current mission.
+  - The effect is modest but real; real-user value needs the user study.
 - **Evaluation data:** synthetic, seeded histories built from 1–3 category/cluster interests. Relevance = same leaf category as the query and inside the user's interests. Measured: generic vs personalized nDCG@10, the share of rankings changed, and cold-start correctness. Synthetic data is labelled as such in the report.
 
 ## 8. PCA
@@ -110,6 +115,10 @@ Several sources are combined behind one interface so the best available record i
 
 - Candidate pool: top **50** by `s(x)`. Select N = 10 greedily by `λ·s(x) − (1−λ)·max_{y∈S} cos(x,y)`.
 - **Notebook 03:** λ is swept over 0–1 (step 0.1) and plotted as relevance (nDCG@10) against diversity (ILD@10 = 1 − mean pairwise cosine, plus cluster/category coverage). Edge cases are tested: short lists, duplicates, λ = 1 ≡ relevance-only.
+- **S5 result:** **λ = 0.6** by the pre-declared rule.
+  - Test nDCG@10 is 0.690 vs 0.726 (−4.9 %), ILD@10 is 0.127 vs 0.104 (+21 %), and type-cluster coverage rises from 1.9 to 2.6 of 10 results.
+  - Edge cases pass: λ = 1 equals relevance order, short and empty pools, and an exact duplicate is pushed out of the top 10.
+  - A full personalized request takes 12 ms median on the desktop CPU (catalog 10k).
 - **Default λ (*initial* 0.7):** the knee where ILD rises with ≤ 5 % relative nDCG loss.
 
 ## 10. Notebook ↔ component matrix

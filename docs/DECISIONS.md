@@ -282,3 +282,19 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - Agreement with categories is partly by construction.
   - The auto-labels need a human pass.
   - k sits at the edge of the searched range.
+
+## D-032 — Multi-interest personalization and MMR parameters (T-011/S5)
+
+- **Date:** 2026-10-06
+- **Decision:**
+  - The profile is the history interest centroid (per type cluster, D-031) closest to the query.
+  - Weights are uniform (half-life ∞), with a 20-event window and `SUFFICIENT` readiness at ≥ 3 distinct catalogued products.
+  - Scoring is `s = 0.6·r(q,x) + 0.4·cos_e5(p,x)` over the hybrid relevance r (D-030).
+  - MMR runs over the top 50 to 10 results with λ = 0.6, using e5 cosine for similarity.
+- **Evidence (`notebooks/03_personalization_mmr.ipynb`; 500 tuning and 1,000 disjoint test synthetic users):**
+  - Multi-interest beat generic with nDCG@10 +0.007 (95 % CI 0.002–0.013), and interest share@10 rose from 0.78 to 0.81. The single centroid was not significant and hurt out-of-interest scans (−0.013).
+  - With fewer than 3 distinct products, ranking equals generic exactly.
+  - MMR λ = 0.6 met the pre-declared ≤ 5 % nDCG-loss rule: −4.9 % nDCG, +21 % ILD, cluster coverage 1.9 → 2.6.
+- **Limitations:**
+  - Users and relevance are synthetic and category-derived, so the effect size is modest and not evidence of real-user satisfaction.
+  - Multi-interest grouping and interest definitions are correlated.

@@ -16,7 +16,7 @@ The report now includes the repository link and current scope/notebook requireme
 
 T-011/S2 (complete, awaiting acceptance):
 - Provider priority and the offline catalog are selected (D-029). `data/processed/catalog.jsonl` holds 10,000 products; it is git-ignored and reproducible from `data/catalog_manifest.json`.
-- Executed notebooks: `00_source_probes` (S2), `01_data_embeddings_retrieval` (S3), both accepted, and `02_clustering_pca` (S4, awaiting acceptance; D-031: type-space k-means k = 60, PCA map, no PCA reduction).
+- Executed notebooks: `00_source_probes` (S2), `01_data_embeddings_retrieval` (S3), both accepted, `02_clustering_pca` (S4, accepted; D-031) and `03_personalization_mmr` (S5, awaiting acceptance; D-032: multi-interest β = 0.4, MMR λ = 0.6). Every MVP AI/statistical component now has executed notebook evidence. None is integrated into the backend/app yet (S6–S7).
 - S3 adopted hybrid retrieval: e5-small plus char TF-IDF (D-030). Catalog embeddings and the ONNX model are in git-ignored `data/processed/` and reproducible from the notebook.
 - The Python ML workspace is `ml/`, with a pinned `ml/requirements.txt` and a local `.venv`.
 

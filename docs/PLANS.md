@@ -612,6 +612,12 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Run:** `ml/asap_ml/structure.py` added; `notebooks/02_clustering_pca.ipynb` executed clean with results in `notebooks/results/02_clustering_pca/`.
   - **Rule revision:** the first run gave language clusters. A representation comparison (full / type / debiased) followed, and the user approved a revised selection rule (“yeah”, D-031) on UX grounds.
   - **Report facts for the end:** the representation table, k sweep, rule revision, themes, PCA variance and reduction tables, and the map.
+- **S4:** accepted 2026-10-06 (“good, I accept it”).
+- **S5:** Approved 2026-10-06 (“you can continue”); complete, awaiting acceptance.
+  - **Run:** `ml/asap_ml/ranking.py` added; `notebooks/03_personalization_mmr.ipynb` executed clean with results in `notebooks/results/03_personalization_mmr/`.
+  - **Bug fixed during the run:** bootstrap index sizing for subgroup CIs.
+  - **User note recorded:** post-MVP drift monitoring and refit of PCA, clusters and TF-IDF (TODO).
+  - **Report facts for the end:** the synthetic-user protocol, personalization table with CIs, cold-start table, MMR trade-off and runtime.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

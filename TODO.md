@@ -20,7 +20,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [x] S2: ograničene probe (26 poziva), ruter spajanjem polja daje 100 % naziv/brend/kategorija naspram 58–67 %; izabran redosled izvora i offline katalog od 10.000 proizvoda (D-029, notebook 00).
 - [x] S3: notebook 01 — skup podataka, embedding i top-N pretraga. (e5-small > MiniLM; hibrid 0,9·e5 + 0,1·TF-IDF značajno bolji od oba; ONNX paritet 0,9999999; D-030.)
 - [x] S4: notebook 02 — klasterizacija i PCA. (Prostor tipa proizvoda, k = 60, čistoća 0,78; PCA redukcija nije usvojena; mapa PCA(2); D-031.)
-- [ ] S5: notebook 03 — personalizacija i MMR.
+- [x] S5: notebook 03 — personalizacija i MMR. (Višeinteresni profil, β = 0,4, +0,007 nDCG@10 značajno; MMR λ = 0,6: −4,9 % nDCG, +21 % raznovrsnost; D-032.)
 - [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
 - [ ] S7: Android istorija i doteran UI.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
@@ -72,7 +72,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [ ] Implementirati top-N semantičku pretragu kosinusnom sličnošću.
 - [ ] Definisati i implementirati obaveznu klasterizaciju. (Definisano i provereno u notebook-u 02, D-031; integracija u S6.)
 - [ ] Implementirati i notebook eksperimentima proveriti obaveznu MMR diversifikaciju rezultata.
-- [ ] Definisati i testirati korisnički profil kao centroid istorije interakcija.
+- [x] Definisati i testirati korisnički profil kao centroid istorije interakcija. (Notebook 03; usvojen višeinteresni profil, D-032.)
 - [ ] Izmeriti kvalitet i odziv PoC-a pre integracije u sistem.
 - [ ] Odlučiti da li će PoC biti zasebno postavljen ili simuliran lokalno na završnoj prezentaciji.
 
