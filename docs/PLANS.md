@@ -651,6 +651,18 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Labels:** 60 short English labels in `ml/theme_labels.json`, based on each cluster's top categories, shares and sample names; status "proposed, user review pending". The exporter applies them and keeps `autoLabel`; the label file is part of the bundle version hash.
   - **Verification:** bundle `20261006-07904a7f`, verifier 10/10, Java 54/54.
   - **Remaining limitation:** external products whose OFF categories are non-English (e.g. "Pâtes à tartiner") can still land in mixed themes.
+- **Post-MVP note:** `docs/POST_MVP_ARCHITECTURE.md` written on request (2026-10-06).
+- **S7 — Android v2 + polished UI.** Plan written 2026-10-06 after “then continue to the 7”. Five sub-steps, committed one at a time:
+
+| Sub-step | Scope | Acceptance evidence |
+| --- | --- | --- |
+| S7a | Data layer: strict v2 Retrofit client + validator; device history store (app-private JSON, newest 50, 90-day max age, clear); `PRODUCT_VIEWED` recorded after a known product is shown; newest 20 sent | unit tests (client, validator, store ordering/limits/expiry), lint |
+| S7b | Material 3 shell: Material Components, light/dark theme, single Activity + bottom navigation (Scan, Product, Map, History), scanner flow moved over, English strings | build, lint, tests, phone launch |
+| S7c | Product screen: product card (theme chip, source/attribution), results list with mode label, tap a result to open it, all states (loading/empty/unknown/unavailable/error + retry) | tests for UI models, phone check of each state |
+| S7d | Map ("you vs themes", custom Canvas view) + History screen (list, clear, privacy notice) | phone check, screenshots |
+| S7e | Accessibility and end-to-end verification on the phone: TalkBack labels, 48 dp targets, contrast, 200 % font, dark mode | checklist + screenshots; Android/backend test counts |
+
+  The UI decisions (visual style, navigation, results layout, map content) are asked of the user before S7b. S7a needs none of them.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 
