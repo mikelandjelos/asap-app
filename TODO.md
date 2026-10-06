@@ -131,6 +131,10 @@ Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.
 - [ ] Dashboard lične analitike — premešten u S7d kao ekran „Analytics“ (D-039); proširenja na kraju MVP-a.
 - [ ] Doraditi PCA prikaz „ti naspram tema“ (centroid korisnika među centroidima 60 tema); detalje prodiskutovati pre S7.
 
+## Kandidat — 2D vizuelizacija (posle odluke korisnika)
+
+- [ ] Notebook evaluacija: PCA, t-SNE i UMAP nad 60 centroida tema (smeštanje novih tačaka interpolacijom k najbližih tema) i UMAP `transform`. Metrike: trustworthiness/continuity, očuvanje k-NN, stabilnost između seed-ova i refit-ova (Procrustes), greška smeštanja novih tačaka i vreme izvršavanja.
+
 ## Obavezne dodatne MVP provere — D-025
 
 - [ ] Implementirati PCA i dogovorenu vizuelnu analitiku; proveriti metod i performanse u notebook-u.

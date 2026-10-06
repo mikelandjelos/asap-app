@@ -25,17 +25,21 @@ public final class ThemeMapView extends View {
         void onTheme(V2ApiModels.ThemePoint theme);
     }
 
-    private static final int LABELS = 8;
+    private static final int LABELS_ALL = 8;
+    private static final int LABELS_FOCUS = 3;
     private final Paint bubble = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint bubbleStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint selected = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint dot = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint faint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint ring = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint star = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint label = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path starPath = new Path();
     private List<V2ApiModels.ThemePoint> themes = Collections.emptyList();
-    private List<V2ApiModels.ThemePoint> largest = Collections.emptyList();
+    private List<V2ApiModels.ThemePoint> visible = Collections.emptyList();
+    private List<V2ApiModels.ThemePoint> labelled = Collections.emptyList();
+    private boolean focused;
     private List<double[]> history = Collections.emptyList();
     private double[] latest;
     private double[] you;
@@ -57,6 +61,8 @@ public final class ThemeMapView extends View {
         selected.setStyle(Paint.Style.STROKE);
         selected.setColor(primary);
         selected.setStrokeWidth(dp(2.5f));
+        faint.setColor(onSurface);
+        faint.setAlpha(40);
         dot.setColor(secondary);
         dot.setAlpha(170);
         ring.setStyle(Paint.Style.STROKE);
@@ -68,14 +74,37 @@ public final class ThemeMapView extends View {
         setClickable(true);
     }
 
-    public void setData(List<V2ApiModels.ThemePoint> themes, List<double[]> history, double[] latest, double[] you) {
+    /**
+     * @param focusLabels the user's top themes, most scanned first; when non-empty and {@code showAll} is false the
+     *                    chart zooms to them, draws only them as bubbles and shows every other theme as a faint dot
+     */
+    public void setData(List<V2ApiModels.ThemePoint> themes, List<double[]> history, double[] latest, double[] you,
+            List<String> focusLabels, boolean showAll) {
         this.themes = themes == null ? Collections.<V2ApiModels.ThemePoint>emptyList() : themes;
         this.history = history;
         this.latest = latest;
         this.you = you;
-        List<V2ApiModels.ThemePoint> sorted = new ArrayList<>(this.themes);
-        Collections.sort(sorted, (a, b) -> Integer.compare(b.size, a.size));
-        largest = sorted.subList(0, Math.min(LABELS, sorted.size()));
+        List<V2ApiModels.ThemePoint> focus = new ArrayList<>();
+        for (String l : focusLabels) {
+            for (V2ApiModels.ThemePoint t : this.themes) {
+                if (t.label.equals(l)) {
+                    focus.add(t);
+                }
+            }
+        }
+        focused = !showAll && !focus.isEmpty();
+        if (focused) {
+            visible = focus;
+            labelled = focus.subList(0, Math.min(LABELS_FOCUS, focus.size()));
+        } else {
+            visible = this.themes;
+            List<V2ApiModels.ThemePoint> sorted = new ArrayList<>(this.themes);
+            Collections.sort(sorted, (a, b) -> Integer.compare(b.size, a.size));
+            labelled = sorted.subList(0, Math.min(LABELS_ALL, sorted.size()));
+        }
+        if (chosen != null && !visible.contains(chosen)) {
+            chosen = null;
+        }
         computeBounds();
         invalidate();
     }
@@ -88,7 +117,7 @@ public final class ThemeMapView extends View {
         bounds.setEmpty();
         boolean first = true;
         List<double[]> all = new ArrayList<>(history);
-        for (V2ApiModels.ThemePoint t : themes) {
+        for (V2ApiModels.ThemePoint t : visible) {
             all.add(new double[] {t.x, t.y});
         }
         if (you != null) {
@@ -102,8 +131,8 @@ public final class ThemeMapView extends View {
                 bounds.union((float) p[0], (float) p[1]);
             }
         }
-        float padX = Math.max(bounds.width() * 0.08f, 1e-3f);
-        float padY = Math.max(bounds.height() * 0.08f, 1e-3f);
+        float padX = Math.max(bounds.width() * (focused ? 0.2f : 0.08f), 1e-2f);
+        float padY = Math.max(bounds.height() * (focused ? 0.2f : 0.08f), 1e-2f);
         bounds.inset(-padX, -padY);
     }
 
@@ -117,7 +146,7 @@ public final class ThemeMapView extends View {
     }
 
     private float radius(V2ApiModels.ThemePoint t) {
-        return dp(6) + dp(1.2f) * (float) Math.sqrt(t.size);
+        return focused ? dp(10) + dp(0.9f) * (float) Math.sqrt(t.size) : dp(6) + dp(1.2f) * (float) Math.sqrt(t.size);
     }
 
     @Override
@@ -125,7 +154,14 @@ public final class ThemeMapView extends View {
         if (themes.isEmpty()) {
             return;
         }
-        for (V2ApiModels.ThemePoint t : themes) {
+        if (focused) {
+            for (V2ApiModels.ThemePoint t : themes) {
+                if (!visible.contains(t)) {
+                    canvas.drawCircle(sx(t.x), sy(t.y), dp(2.5f), faint);
+                }
+            }
+        }
+        for (V2ApiModels.ThemePoint t : visible) {
             float x = sx(t.x);
             float y = sy(t.y);
             canvas.drawCircle(x, y, radius(t), bubble);
@@ -137,10 +173,10 @@ public final class ThemeMapView extends View {
         if (latest != null) {
             canvas.drawCircle(sx(latest[0]), sy(latest[1]), dp(9), ring);
         }
-        for (V2ApiModels.ThemePoint t : largest) {
+        for (V2ApiModels.ThemePoint t : labelled) {
             drawLabel(canvas, t);
         }
-        if (chosen != null && !largest.contains(chosen)) {
+        if (chosen != null && !labelled.contains(chosen)) {
             drawLabel(canvas, chosen);
         }
         if (chosen != null) {
@@ -152,7 +188,7 @@ public final class ThemeMapView extends View {
     }
 
     private void drawLabel(Canvas canvas, V2ApiModels.ThemePoint t) {
-        String text = t.label.length() > 18 ? t.label.substring(0, 17) + "…" : t.label;
+        String text = focused || t.label.length() <= 18 ? t.label : t.label.substring(0, 17) + "…";
         float width = label.measureText(text);
         float x = Math.max(getPaddingLeft(), Math.min(sx(t.x) - width / 2, getWidth() - getPaddingRight() - width));
         canvas.drawText(text, x, sy(t.y) - radius(t) - dp(3), label);
@@ -177,10 +213,10 @@ public final class ThemeMapView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP && !themes.isEmpty()) {
+        if (event.getAction() == MotionEvent.ACTION_UP && !visible.isEmpty()) {
             V2ApiModels.ThemePoint best = null;
             float bestD = Float.MAX_VALUE;
-            for (V2ApiModels.ThemePoint t : themes) {
+            for (V2ApiModels.ThemePoint t : visible) {
                 float dx = sx(t.x) - event.getX();
                 float dy = sy(t.y) - event.getY();
                 float d = dx * dx + dy * dy;

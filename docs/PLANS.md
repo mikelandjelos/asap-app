@@ -715,6 +715,9 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **History tab:** privacy notice, "Clear history" with confirmation, newest-first list with picture, brand, relative time and theme; tap to reopen.
   - **History entries** now also store source and image URL (display only).
   - **Verification:** tests 41/41 (+3 `AnalyticsModelTest`), lint 0 after fixing 4 findings (plurals, no allocation in `onDraw`).
+- **S7d review (user):** "everything is pretty cool", but the PCA chart was too crowded.
+  - **Fix: focus mode.** Only the user's top themes are drawn as bubbles, the other themes are faint dots, the view zooms to the user's themes, scans and ★, the top 3 themes are labelled with full names, and a "Show all 60 themes" switch keeps the old view. Checked on the phone.
+  - **Alternative raised:** t-SNE. Analysed in theory; a notebook evaluation is proposed in TODO.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

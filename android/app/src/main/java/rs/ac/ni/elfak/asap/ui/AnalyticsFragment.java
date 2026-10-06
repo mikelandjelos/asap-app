@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 import rs.ac.ni.elfak.asap.MainActivity;
@@ -24,6 +26,7 @@ import rs.ac.ni.elfak.asap.network.V2Client;
 public final class AnalyticsFragment extends Fragment {
 
     private ThemeMapView map;
+    private boolean showAll;
     private TextView mapSelected;
     private TextView personalTitle;
     private LinearProgressIndicator personalProgress;
@@ -57,6 +60,11 @@ public final class AnalyticsFragment extends Fragment {
         for (int id : new int[] {R.id.map_title, R.id.personal_title, R.id.themes_title, R.id.activity_title, R.id.sources_title}) {
             ViewCompat.setAccessibilityHeading(view.findViewById(id), true);
         }
+        MaterialSwitch all = view.findViewById(R.id.map_show_all);
+        all.setOnCheckedChangeListener((b, checked) -> {
+            showAll = checked;
+            render();
+        });
         map.setOnThemeSelected(t -> mapSelected.setText(
                 getResources().getQuantityString(R.plurals.analytics_map_selected, t.size, t.label, t.size)));
         loadThemes();
@@ -130,7 +138,11 @@ public final class AnalyticsFragment extends Fragment {
         AnalyticsModel m = AnalyticsModel.from(session().history().entries(), serverYou, System.currentTimeMillis(),
                 TimeZone.getDefault());
 
-        map.setData(themes, m.historyPoints, m.latest, m.you);
+        List<String> focus = new ArrayList<>();
+        for (AnalyticsModel.Count c : m.topThemes) {
+            focus.add(c.label);
+        }
+        map.setData(themes, m.historyPoints, m.latest, m.you, focus, showAll);
         map.setContentDescription(m.topThemes.isEmpty() ? getString(R.string.analytics_map_description_empty)
                 : getResources().getQuantityString(R.plurals.analytics_map_description, m.scans, m.scans,
                         m.topThemes.get(0).label));
