@@ -7,7 +7,7 @@ Radni cilj je operativan AI MVP. Plan je izveden iz beleški `meditations/sept_3
 - [x] Evidentirati novi obim i pripremiti predaju drugom agentu; bez promene aplikacije.
 - [x] Predložiti sažet revidirani plan sa obaveznom klasterizacijom, personalizacijom, PCA, MMR, doteranim UI-em i notebook dokazima; tražiti odobrenje pre implementacije. (T-011 plan odobren 2026-10-06, D-026.)
 - [ ] Posle završenog PoC/MVP-a zameniti samo skenerski deo: CNN treniran na dokumentovanom skupu EAN/UPC slika, TFLite na telefonu i ZXing/drugi dekoder ili posebno odobren end-to-end pristup. Google Code Scanner ostaje privremeno.
-- [ ] U revidiranom dizajnu dopuniti kanonske dijagrame klasterizacijom i kasnijom zamenom skenera. Prezentaciju ostaviti za kraj.
+- [x] U revidiranom dizajnu dopuniti kanonske dijagrame klasterizacijom i kasnijom zamenom skenera. Prezentaciju ostaviti za kraj. (T-011/S1: arhitektura + novi cevovod preporuka; prezentacijski renderi odloženi.)
 
 T-010/S1 je prihvaćen kao nacrt; T-009/S1 čeka prihvatanje. Detalji su u `docs/SESSION_HANDOFF.md`.
 
@@ -15,8 +15,8 @@ T-010/S1 je prihvaćen kao nacrt; T-009/S1 čeka prihvatanje. Detalji su u `docs
 
 Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji u `docs/PLANS.md`. Izveštaj se temeljno prerađuje posle MVP-a, zatim prezentacija.
 
-- [ ] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija.
-- [ ] S2: ograničene T-009/S2 probe i izbor API-ja i offline skupa podataka.
+- [x] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija. (`docs/AI_MVP_DESIGN.md`, D-027; čeka prihvatanje.)
+- [ ] S2: ograničene T-009/S2 probe (i spojena popunjenost više izvora preko rutera) i izbor prioriteta API-ja i offline skupa podataka.
 - [ ] S3: notebook 01 — skup podataka, embedding i top-N pretraga.
 - [ ] S4: notebook 02 — klasterizacija i PCA.
 - [ ] S5: notebook 03 — personalizacija i MMR.
@@ -58,7 +58,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [x] Definisati granice MVP-a i plan implementacije po iteracijama.
 - [x] Postaviti početne projekte za mobilnu aplikaciju i backend.
 - [x] Definisati modele proizvoda, korisničke interakcije i preporuke. (T-008 je prihvaćen i zatvoren: model proizvoda, interakcija, istorije i preporuka, AI granica i dva kanonska dijagrama.)
-- [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda. (T-009 plan i S1 su odobreni; S1 protokol, uži izbor i korpus su implementirani i čekaju prihvatanje. Nije pozvan nijedan proizvodni API.)
+- [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda. (T-009/S1 prihvaćen 2026-10-06; probe se izvode u T-011/S2, uz moguće kombinovanje više izvora preko adaptera i rutera. Nije pozvan nijedan proizvodni API.)
 - [ ] Izabrati rezervni izvor ili skup podataka za razvoj bez zavisnosti od eksternog API-ja.
 - [ ] Definisati način čuvanja metapodataka i vektorskih reprezentacija proizvoda.
 - [ ] Dokumentovati slučajeve upotrebe i tok podataka od skeniranja do preporuke.

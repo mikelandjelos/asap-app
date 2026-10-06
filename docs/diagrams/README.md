@@ -50,6 +50,15 @@ Every architecture diagram must visibly use the phrase **Proposed architecture**
 - **Boundary rule:** retain the factual product-details path, the explicitly non-AI I1 fixture branch, generic cold-start behavior, optional sufficient-history enrichment, and the final separation between facts and AI results.
 - **Status rule:** embeddings, vector storage, semantic retrieval, history profiles, and AI ranking are labelled as planned until implementation evidence exists.
 
+### Recommendation pipeline (T-011/S1, proposed)
+
+- **Source:** `recommendation-pipeline.puml`
+- **Notation:** PlantUML activity diagram.
+- **Purpose:** show the proposed runtime stages: product resolution, query vector, candidate retrieval, cold-start vs personalized scoring, MMR, cluster/PCA enrichment and response.
+- **Status rule:** entirely planned; the title says so. Parameters are confirmed by notebooks.
+
+T-011/S1 also revised `component-architecture.puml` (source router and adapters, recommendation sub-components, offline ML pipeline, future CNN scanner). Default and `SERBIAN` renders were regenerated; `PRESENTATION` renders were deliberately not regenerated because presentation work is deferred.
+
 ## Canonical terminology
 
 PlantUML identifiers and operational documentation use the English canonical term. The report and presentation use the corresponding Serbian Latin label.

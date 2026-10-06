@@ -19,6 +19,7 @@ This directory contains the operational documentation needed to continue the pro
 | [`I1_CONTRACT.md`](I1_CONTRACT.md) | Accepted T-007/S2 HTTP/JSON contract, fixture scenarios, and acceptance cases |
 | [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) | Accepted T-008 product, interaction/history, recommendation, and AI-derived-artifact contract |
 | [`PRODUCT_DATA_API_EVALUATION.md`](PRODUCT_DATA_API_EVALUATION.md) | T-009 provider criteria, official-source shortlist, probe corpus, and controlled evaluation protocol |
+| [`AI_MVP_DESIGN.md`](AI_MVP_DESIGN.md) | T-011/S1 proposed AI MVP design: source router, dataset, embeddings, clustering, PCA, personalization, MMR, notebooks, UI |
 | [`diagrams/README.md`](diagrams/README.md) | Proposed canonical diagram contract and file layout |
 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | Latest handoff for the next session |
 

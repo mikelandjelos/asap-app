@@ -1,0 +1,66 @@
+@startuml
+!include includes/theme.puml
+
+!ifdef SERBIAN
+  !define DIAGRAM_TITLE ASAP — Planirani cevovod preporuka (T-011, nije implementirano)
+  !define S_RESOLVE Razrešiti proizvod preko rutera izvora
+  !define Q_KNOWN Proizvod poznat?
+  !define S_NA Preporuke: NOT_APPLICABLE
+  !define S_VECTOR Vektor upita: iz kataloga ili ONNX embedding
+  !define S_RETRIEVE Kosinusna pretraga kataloga: top 50 kandidata\n(bez upita i duplikata)
+  !define Q_HISTORY ≥ 3 različita proizvoda u istoriji?
+  !define S_GENERIC s(x) = cos(q,x)\nGENERIC_SEMANTIC / COLD_START
+  !define S_PROFILE Profil: težinski centroid po recentnosti\n(ili centroidi po klasterima)
+  !define S_PERS s(x) = (1−β)·cos(q,x) + β·cos(p,x)\nPERSONALIZED_HISTORY / APPLIED
+  !define S_MMR MMR: λ·s(x) − (1−λ)·max cos(x,y) → top 10
+  !define S_ENRICH Dodati klaster (tema) i PCA 2D koordinate
+  !define S_RETURN Vratiti proizvod + zaseban ishod preporuka + mapu
+  !define YES da
+  !define NO ne
+  !define NOTE_PARAMS β, λ, K, H i k potvrđuju notebook-ovi 01–03.
+!else
+  !define DIAGRAM_TITLE ASAP — Proposed recommendation pipeline (T-011, not implemented)
+  !define S_RESOLVE Resolve product through source router
+  !define Q_KNOWN Product known?
+  !define S_NA Recommendations: NOT_APPLICABLE
+  !define S_VECTOR Query vector: from catalog or ONNX embedding
+  !define S_RETRIEVE Cosine catalog search: top 50 candidates\n(excluding query and duplicates)
+  !define Q_HISTORY ≥ 3 distinct products in history?
+  !define S_GENERIC s(x) = cos(q,x)\nGENERIC_SEMANTIC / COLD_START
+  !define S_PROFILE Profile: recency-weighted centroid\n(or per-cluster centroids)
+  !define S_PERS s(x) = (1−β)·cos(q,x) + β·cos(p,x)\nPERSONALIZED_HISTORY / APPLIED
+  !define S_MMR MMR: λ·s(x) − (1−λ)·max cos(x,y) → top 10
+  !define S_ENRICH Attach cluster (theme) and PCA 2-D coordinates
+  !define S_RETURN Return product + separate recommendation outcome + map
+  !define YES yes
+  !define NO no
+  !define NOTE_PARAMS β, λ, K, H and k are confirmed by notebooks 01–03.
+!endif
+
+title DIAGRAM_TITLE
+
+start
+:S_RESOLVE;
+if (Q_KNOWN) then (NO)
+  :S_NA;
+  :S_RETURN;
+  stop
+else (YES)
+endif
+:S_VECTOR;
+:S_RETRIEVE;
+if (Q_HISTORY) then (YES)
+  :S_PROFILE;
+  :S_PERS;
+else (NO)
+  :S_GENERIC;
+endif
+:S_MMR;
+:S_ENRICH;
+:S_RETURN;
+!ifndef PRESENTATION
+  note right: NOTE_PARAMS
+!endif
+stop
+
+@enduml

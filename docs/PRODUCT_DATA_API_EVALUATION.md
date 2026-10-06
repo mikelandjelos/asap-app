@@ -6,7 +6,7 @@ Last researched: 2026-09-08
 
 Task: T-009
 
-Current state: S1 protocol and shortlist implemented; awaiting user acceptance. No live product endpoint has been called.
+Current state: S1 accepted by the user on 2026-10-06. S2 probes are folded into T-011/S2 (not yet approved); per the user's proposal, several providers may be combined through an adapter + router with field-level merge (see `AI_MVP_DESIGN.md` §2), so S2 also measures merged completeness. No live product endpoint has been called.
 
 ## Purpose and boundary
 

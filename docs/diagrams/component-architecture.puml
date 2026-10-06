@@ -2,73 +2,87 @@
 !include includes/theme.puml
 
 !ifdef SERBIAN
-  !define DIAGRAM_TITLE ASAP — Planirana arhitektura MVP-a
+  !define DIAGRAM_TITLE ASAP — Planirana arhitektura AI MVP-a (T-011)
   !define USER_LABEL Korisnik
   !define DEVICE_LABEL Android uređaj
   !define APP_LABEL ASAP Android aplikacija\n[I1 tok fizički potvrđen]
-  !define UI_LABEL Korisnički interfejs\n[I1 ishodi implementirani]
+  !define UI_LABEL Material 3 UI: skeniranje, proizvod,\nmapa (PCA), istorija [doteran UI planiran]
   !define SCAN_ADAPTER_LABEL Integracija skenera\n[implementirano]
-  !define API_CLIENT_LABEL API klijent\n[poziv iz skenera implementiran]
-  !define HISTORY_LABEL Lokalna ograničena istorija\n[prošireni MVP]
-  !define GCS_LABEL Google Code Scanner\n[Google Play servisi]
+  !define API_CLIENT_LABEL API klijent\n[I1 implementiran, v2 planiran]
+  !define HISTORY_LABEL Lokalna ograničena istorija\n[obavezno, planirano]
+  !define GCS_LABEL Google Code Scanner\n[privremeno, implementirano]
+  !define CNN_LABEL CNN/TFLite skener + dekoder\n[posle MVP-a]
   !define BACKEND_LABEL Jedna backend aplikacija\n[modularni monolit implementiran za I1]
-  !define API_LABEL Aplikaciona API granica\n[I1 implementirano]
-  !define RESOLVER_LABEL Razrešavanje proizvoda\n[I1 fixture implementiran]
-  !define RECOMMENDER_LABEL Preporuke\n[I1 deterministički fixture]
-  !define PRODUCTS_LABEL Normalizovani katalog\n[trajno skladište planirano]
-  !define VECTORS_LABEL Vektorski indeks
+  !define API_LABEL API granica\n[v1 implementiran, v2 planiran]
+  !define ROUTER_LABEL Ruter izvora proizvoda\n(spajanje po poljima, poreklo) [planirano]
+  !define LOCAL_ADAPTER_LABEL Adapter lokalnog kataloga\n[I1 fixture implementiran]
+  !define OFF_ADAPTER_LABEL Open Facts adapter\n[planirano]
+  !define UPC_ADAPTER_LABEL UPCitemdb adapter\n[planirano, bez keširanja]
+  !define RECOMMENDER_LABEL Cevovod preporuka\n[I1 deterministički fixture]
+  !define ENCODER_LABEL Embedding enkoder (ONNX)\n[planirano]
+  !define RANKING_LABEL Pretraga + profil istorije + MMR\n[planirano]
+  !define PROJECTION_LABEL Klasteri + PCA projekcija\n[planirano]
+  !define BUNDLE_LABEL Paket artefakata: katalog, vektori,\nklasteri, PCA [planirano]
   !define FALLBACK_LABEL Kontrolisani I1 fixture\n[implementirano]
-  !define EXTERNAL_LABEL Eksterni izvor\nmetapodataka [nije izabran]
-  !define FLOW_USER skeniranje / prikaz rezultata
-  !define FLOW_LAUNCH pokretanje
+  !define OFFLINE_LABEL Offline ML cevovod
+  !define NOTEBOOKS_LABEL Notebook-ovi + ml/asap_ml\n(verifikacija, izvoz) [planirano]
+  !define EXPORT_LABEL Open Food Facts izvoz\n(filtriran podskup)
+  !define OFF_LABEL Open Food/Beauty/Products Facts API
+  !define UPC_LABEL UPCitemdb API
+  !define FLOW_USER skeniranje / prikaz
   !define FLOW_SCAN_CALL zahtev za skeniranje
-  !define FLOW_BARCODE barkod / ishod
+  !define FLOW_BARCODE barkod + format
   !define FLOW_HISTORY čitanje / upis
-  !define FLOW_REQUEST barkod + opcioni kontekst istorije
-  !define FLOW_LOOKUP razrešavanje barkoda
-  !define FLOW_CATALOG čitanje / normalizovani upis
-  !define FLOW_PROVIDER pribavljanje metapodataka
-  !define FLOW_FALLBACK kontrolisani podaci
-  !define FLOW_RANK proizvod + opcioni kontekst istorije
-  !define FLOW_SEARCH upit sličnosti / personalizacije
-  !define FLOW_RESPONSE proizvod + zaseban ishod preporuka
-  !define LEGEND_1 Puna strelica: planirani tok tokom rada
-  !define LEGEND_2 Isprekidana strelica: rezervni ili eksterni tok
-  !define LEGEND_3 Kontrolisani I1 tok je implementiran i fizički potvrđen; stvarni podaci i AI tokovi su planirani.
+  !define FLOW_REQUEST barkod + opciona istorija
+  !define FLOW_RESOLVE razrešavanje barkoda
+  !define FLOW_LOOKUP upit po prioritetu
+  !define FLOW_RANK proizvod + istorija
+  !define FLOW_LOAD učitavanje pri pokretanju
+  !define FLOW_BUILD generisanje
+  !define FLOW_RESPONSE proizvod + preporuke + mapa
+  !define LEGEND_1 Puna strelica: tok tokom rada; isprekidana: eksterni, offline ili budući tok
+  !define LEGEND_2 Implementiran je samo kontrolisani I1 tok; ostale oznake su predlog T-011/S1 (AI_MVP_DESIGN.md).
 !else
-  !define DIAGRAM_TITLE ASAP — Proposed MVP architecture
+  !define DIAGRAM_TITLE ASAP — Proposed AI MVP architecture (T-011)
   !define USER_LABEL User
   !define DEVICE_LABEL Android device
   !define APP_LABEL ASAP Android app\n[I1 flow physically validated]
-  !define UI_LABEL User interface\n[I1 outcomes implemented]
+  !define UI_LABEL Material 3 UI: scan, product,\nmap (PCA), history [polished UI planned]
   !define SCAN_ADAPTER_LABEL Scanner integration\n[implemented]
-  !define API_CLIENT_LABEL API client\n[scanner invocation implemented]
-  !define HISTORY_LABEL Local bounded history\n[extended MVP]
-  !define GCS_LABEL Google Code Scanner\n[Google Play services]
+  !define API_CLIENT_LABEL API client\n[I1 implemented, v2 planned]
+  !define HISTORY_LABEL Local bounded history\n[mandatory, planned]
+  !define GCS_LABEL Google Code Scanner\n[temporary, implemented]
+  !define CNN_LABEL CNN/TFLite scanner + decoder\n[after MVP]
   !define BACKEND_LABEL Single backend application\n[modular monolith implemented for I1]
-  !define API_LABEL Application API boundary\n[I1 implemented]
-  !define RESOLVER_LABEL Product resolution\n[I1 fixture implemented]
-  !define RECOMMENDER_LABEL Recommendation\n[I1 deterministic fixture]
-  !define PRODUCTS_LABEL Normalized catalog\n[durable store planned]
-  !define VECTORS_LABEL Vector index
+  !define API_LABEL API boundary\n[v1 implemented, v2 planned]
+  !define ROUTER_LABEL Product source router\n(field-level merge, provenance) [planned]
+  !define LOCAL_ADAPTER_LABEL Local catalog adapter\n[I1 fixture implemented]
+  !define OFF_ADAPTER_LABEL Open Facts adapter\n[planned]
+  !define UPC_ADAPTER_LABEL UPCitemdb adapter\n[planned, no caching]
+  !define RECOMMENDER_LABEL Recommendation pipeline\n[I1 deterministic fixture]
+  !define ENCODER_LABEL Embedding encoder (ONNX)\n[planned]
+  !define RANKING_LABEL Retrieval + history profile + MMR\n[planned]
+  !define PROJECTION_LABEL Clusters + PCA projection\n[planned]
+  !define BUNDLE_LABEL Artifact bundle: catalog, vectors,\nclusters, PCA [planned]
   !define FALLBACK_LABEL Controlled I1 fixture\n[implemented]
-  !define EXTERNAL_LABEL External product\nmetadata source [TBD]
-  !define FLOW_USER scan / view results
-  !define FLOW_LAUNCH launch
+  !define OFFLINE_LABEL Offline ML pipeline
+  !define NOTEBOOKS_LABEL Notebooks + ml/asap_ml\n(verification, export) [planned]
+  !define EXPORT_LABEL Open Food Facts export\n(filtered subset)
+  !define OFF_LABEL Open Food/Beauty/Products Facts API
+  !define UPC_LABEL UPCitemdb API
+  !define FLOW_USER scan / view
   !define FLOW_SCAN_CALL scan request
-  !define FLOW_BARCODE barcode / outcome
+  !define FLOW_BARCODE barcode + format
   !define FLOW_HISTORY read / write
-  !define FLOW_REQUEST barcode + optional history context
-  !define FLOW_LOOKUP resolve barcode
-  !define FLOW_CATALOG read / normalized write
-  !define FLOW_PROVIDER retrieve metadata
-  !define FLOW_FALLBACK controlled data
-  !define FLOW_RANK product + optional history context
-  !define FLOW_SEARCH similarity / personalization query
-  !define FLOW_RESPONSE product + separate recommendation outcome
-  !define LEGEND_1 Solid arrow: planned runtime information flow
-  !define LEGEND_2 Dashed arrow: fallback or external flow
-  !define LEGEND_3 The controlled I1 flow is implemented and physically validated; live data and AI flows are planned.
+  !define FLOW_REQUEST barcode + optional history
+  !define FLOW_RESOLVE resolve barcode
+  !define FLOW_LOOKUP priority lookup
+  !define FLOW_RANK product + history
+  !define FLOW_LOAD load at startup
+  !define FLOW_BUILD build
+  !define FLOW_RESPONSE product + recommendations + map
+  !define LEGEND_1 Solid arrow: runtime flow; dashed: external, offline or future flow
+  !define LEGEND_2 Only the controlled I1 flow is implemented; other labels are the T-011/S1 proposal (AI_MVP_DESIGN.md).
 !endif
 
 title DIAGRAM_TITLE
@@ -84,41 +98,61 @@ node "DEVICE_LABEL" as device #EAF2F8 {
     database "HISTORY_LABEL" as history
   }
   component "GCS_LABEL" as scanner
+  component "CNN_LABEL" as cnn
 }
 
 node "BACKEND_LABEL" as backend #EEF6EE {
   component "API_LABEL" as api
-  component "RESOLVER_LABEL" as resolver
-  component "RECOMMENDER_LABEL" as recommender
-  database "PRODUCTS_LABEL" as products
-  database "VECTORS_LABEL" as vectors
+  component "ROUTER_LABEL" as router
+  component "LOCAL_ADAPTER_LABEL" as local_adapter
+  component "OFF_ADAPTER_LABEL" as off_adapter
+  component "UPC_ADAPTER_LABEL" as upc_adapter
+  package "RECOMMENDER_LABEL" as recommender #EEF6EE {
+    component "ENCODER_LABEL" as encoder
+    component "RANKING_LABEL" as ranking
+    component "PROJECTION_LABEL" as projection
+  }
+  database "BUNDLE_LABEL" as bundle
   artifact "FALLBACK_LABEL" as fallback
 }
 
-cloud "EXTERNAL_LABEL" as external
+package "OFFLINE_LABEL" as offline #F5F0FA {
+  component "NOTEBOOKS_LABEL" as notebooks
+  database "EXPORT_LABEL" as export
+}
+
+cloud "OFF_LABEL" as off
+cloud "UPC_LABEL" as upc
 
 user --> ui : FLOW_USER
-ui --> scan_adapter : FLOW_LAUNCH
+ui --> scan_adapter : FLOW_SCAN_CALL
 scan_adapter --> scanner : FLOW_SCAN_CALL
 scanner --> scan_adapter : FLOW_BARCODE
-scan_adapter --> ui : FLOW_BARCODE
+scan_adapter ..> cnn : FLOW_SCAN_CALL
 ui --> history : FLOW_HISTORY
 ui --> api_client : FLOW_REQUEST
 api_client --> api : FLOW_REQUEST
-api --> resolver : FLOW_LOOKUP
-resolver --> products : FLOW_CATALOG
-external ..> resolver : FLOW_PROVIDER
-fallback ..> resolver : FLOW_FALLBACK
+api --> router : FLOW_RESOLVE
+router --> local_adapter : FLOW_LOOKUP
+router --> off_adapter : FLOW_LOOKUP
+router --> upc_adapter : FLOW_LOOKUP
+local_adapter --> bundle
+local_adapter --> fallback
+off_adapter ..> off
+upc_adapter ..> upc
 api --> recommender : FLOW_RANK
-recommender --> vectors : FLOW_SEARCH
+encoder --> ranking
+ranking --> projection
+ranking --> bundle
+projection --> bundle
+export ..> notebooks
+notebooks ..> bundle : FLOW_BUILD
 api --> api_client : FLOW_RESPONSE
-api_client --> ui : FLOW_RESPONSE
 
 !ifndef PRESENTATION
   legend bottom
     LEGEND_1
     LEGEND_2
-    LEGEND_3
   endlegend
 !endif
 

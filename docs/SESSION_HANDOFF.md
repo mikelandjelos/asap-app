@@ -10,7 +10,7 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011 AI MVP plan approved (D-026, `PLANS.md`). Await explicit approval of T-011/S1 (design decisions, docs only) and user acceptance of T-009/S1. T-010/S1 accepted as draft; T-010/S2–S3 deferred until after MVP. Do not download models, train, call providers or change code without subtask approval.
+- **Next action:** T-011/S1 is done and committed: the proposed design is in `AI_MVP_DESIGN.md` (D-027), the diagrams are revised and the report has a new §3.6 (22 pages, both engines clean). Await S1 acceptance, then explicit approval of T-011/S2 (bounded provider probes + merged-completeness analysis + dataset selection). T-009/S1 and T-010/S1 are accepted; T-010/S2–S3 are deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.
 
@@ -89,7 +89,7 @@ Accepted prior milestones: T-007 closed on 2026-09-08 and committed as `6bd2682`
 
 ## Next concrete action
 
-Obtain explicit approval for T-011/S1 (docs-only design decisions per `PLANS.md`), then execute only that subtask. Ask for T-009/S1 acceptance after the user reviews `PRODUCT_DATA_API_EVALUATION.md`. No live-provider probe, download or code change is authorized yet. Report rewrite and presentation come after the MVP.
+Get T-011/S1 accepted, then obtain explicit approval for T-011/S2. S2 involves the network: at most 26 read-only probe calls and an OFF export download, so recheck the provider terms first. No live-provider probe, download or code change is authorized yet. Report rewrite and presentation come after the MVP.
 
 ## Environment caveat
 

@@ -588,7 +588,14 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 
 ## T-011 — AI MVP delivery (revised plan, D-026)
 
-- **Status:** Plan approved 2026-10-06 (“I accept the revised plan for now”). No subtask approved yet. T-010/S1 accepted as a draft; T-010/S2–S3 deferred until after the MVP (D-026). T-009/S1 acceptance pending; its S2 is folded into T-011/S2.
+- **Status:** Plan approved 2026-10-06 (“I accept the revised plan for now”). T-010/S1 accepted as a draft; T-010/S2–S3 deferred until after the MVP (D-026). T-009/S1 accepted 2026-10-06; its S2 is folded into T-011/S2.
+- **S1:** Approved 2026-10-06 (“I approve t-011/s1”); complete, awaiting acceptance. The user proposed multiple APIs behind an adapter + router; this is incorporated (AI_MVP_DESIGN §2).
+  - **Evidence:** `docs/AI_MVP_DESIGN.md` covers every open choice with a recommendation, alternatives, rationale and the notebook matrix; D-027 is recorded.
+  - **Diagrams:** `component-architecture.puml` revised and `recommendation-pipeline.puml` added. Both pass syntax checks in the default and Serbian variants; their renders were regenerated and visually checked. Presentation renders were not regenerated.
+  - **Report:** new §3.6 and pipeline figure; caption updated. pdfLaTeX and LuaLaTeX each built twice to 22 pages with clean final logs; pages 16–17 inspected; copied to `report/report.pdf`.
+  - **Docs synced:** architecture, requirements, domain note, evaluation, hub, audit, TODO, status, handoff. `git diff --check` passes.
+  - No code, downloads or provider calls.
+- **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 
 | Subtask | Scope | Acceptance evidence |

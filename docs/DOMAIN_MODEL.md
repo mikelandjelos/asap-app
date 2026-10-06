@@ -37,6 +37,8 @@ Only `id`, `barcode`, `name`, and `provenance` are mandatory. This permits hones
 | `type` | exactly one | `CONTROLLED_FIXTURE`, `EXTERNAL_PROVIDER`, or `FALLBACK_DATASET`. |
 | `source` | exactly one | Stable, non-blank source/dataset label of at most 120 characters. It must be suitable for logs and user-facing attribution where licensing requires it. |
 
+Proposed T-011 revision (`AI_MVP_DESIGN.md` §2, applied with the S6 contract): multi-provider merge replaces single provenance with a non-empty source list plus per-field provenance and licence attribution.
+
 Retrieval timestamps, provider record IDs, licenses, cache metadata, and source precedence are intentionally not part of the product aggregate yet. The provider/fallback selection task must define them only if its evidence requires them. `CONTROLLED_FIXTURE` remains local-only and may never be queried against an external provider.
 
 ## Product resolution outcome

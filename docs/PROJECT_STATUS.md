@@ -10,7 +10,7 @@ D-024/D-025 require clustering, personalization, PCA, MMR, polished UI and noteb
 
 Implemented reality is unchanged: Java/XML Android and Spring Boot deterministic I1 fixture flow, historically verified with 32 Android tests, clean lint, 23 backend tests and representative physical-phone cases. There is no live provider, embedding/vector system, genuine semantic retrieval, clustering, history/personalization, PCA, MMR, final polished UI, custom CNN/TFLite scanner or executed AI notebook.
 
-T-010/S1 is accepted as a working draft; T-010/S2–S3 are deferred (D-026). T-009/S1 awaits acceptance. The revised T-011 AI MVP plan is approved; no T-011 subtask is approved or started.
+T-010/S1 is accepted as a working draft; T-010/S2–S3 are deferred (D-026). T-009/S1 is accepted. The T-011 AI MVP plan is approved. T-011/S1 (the proposed design in `AI_MVP_DESIGN.md`, D-027) is complete and awaiting acceptance. Report is 22 pages after adding the proposed-design subsection.
 
 The report now includes the repository link and current scope/notebook requirements; see `DOCUMENTATION_AUDIT.md` for the latest build evidence. The presentation remains an explicitly deferred earlier snapshot under `presentation/README.md`; diagrams require an approved design extension. Earlier page counts and test records below describe their dated stage, not newly measured results.
 
@@ -79,7 +79,7 @@ Last verified: 2026-09-05 under T-005/S3.
 
 ## Immediate product decisions still open
 
-- T-009/S1 awaits acceptance; its S2 probes are folded into T-011/S2 and not yet authorized.
+- T-009/S1 is accepted; its S2 probes are folded into T-011/S2 and not yet authorized.
 - Scanner UI behavior beyond the accepted T-005/S2 experiment remains open.
 - Any post-I1 evolution of the implemented backend package boundaries.
 - Primary product metadata API (T-009/S3) and fallback dataset.

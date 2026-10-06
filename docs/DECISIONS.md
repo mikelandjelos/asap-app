@@ -210,3 +210,25 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Decision:** The user accepted T-010/S1 as a working draft and approved the revised T-011 AI MVP delivery plan. Finishing the full MVP is the top priority. T-010/S2 (mock demo) and T-010/S3 (submission package) are deferred; the report will be substantially rewritten after the MVP using real results, followed by the presentation.
 - **Expansion:** If the MVP, report and slides finish with time remaining, the work may be extended and polished further under new approved plans.
 - **Authorization:** Plan approval only. Each T-011 subtask, including S1, requires separate explicit approval. T-009/S1 acceptance remains pending user review.
+
+## D-027 — Proposed AI MVP design (T-011/S1)
+
+- **Date:** 2026-10-06
+- **Status:** Proposed; accepted when the user accepts T-011/S1.
+- **Decision:** Adopt the design in `AI_MVP_DESIGN.md`:
+  - multi-provider `ProductSourceAdapter` + router with field-level merge and per-field provenance (user proposal; local catalog, Open Facts family, transient UPCitemdb);
+  - a filtered Open Food Facts export as the offline recommendation catalog;
+  - `multilingual-e5-small`, compared against TF-IDF and MiniLM, served via ONNX Runtime in the Java backend with a parity gate;
+  - in-memory exact cosine search;
+  - spherical k-means clusters used for themes, the multi-interest profile, map colouring and coverage;
+  - PCA(2) map plus a dimensionality study;
+  - recency-weighted history profile blended with β;
+  - MMR over the top 50 with a λ sweep;
+  - four notebooks backed by a shared `ml/asap_ml` package;
+  - API v2 alongside the frozen v1;
+  - a Material 3 single-Activity UI with a JSON-file history.
+- **Rationale:** This keeps the accepted single-backend topology, adds no external services, uses openly licensed data, and makes every AI/statistical stage notebook-verifiable. Values marked *initial* are fixed by notebook evidence.
+- **Consequences:**
+  - new dependencies are introduced only in their implementing subtasks (ONNX Runtime/DJL tokenizers in S6, Material Components in S7);
+  - the T-008/S1 provenance object is revised in S6;
+  - presentation renders stay deferred.

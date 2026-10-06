@@ -104,7 +104,7 @@ Za početni PoC prihvaćeni su Java, XML zasnovani Android Views i Google Code S
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{\diagramassetpath component-architecture.png}
-\caption{Predložena konkretna arhitektura MVP-a. Kontrolisani I1 tok, od skenera do determinističkog backenda i prikaza ishoda, implementiran je i fizički potvrđen; stvarni podatkovni i AI tokovi predstavljaju plan.}
+\caption{Predložena arhitektura AI MVP-a (T-011/S1): ruter izvora sa adapterima, cevovod preporuka, offline ML cevovod i kasnija zamena skenera. Implementiran je i fizički potvrđen samo kontrolisani I1 tok; ostale komponente predstavljaju plan.}
 \end{figure}
 
 \textbf{Arhitektonske granice.} MVP se sastoji od Android aplikacije i jedne backend aplikacije organizovane kao modularni monolit. API granica, razrešavanje i normalizacija proizvoda i semantičke preporuke jesu odvojeni moduli istog backend postavljanja, a ne zasebno operisani servisi. Backend poseduje normalizovani katalog proizvoda i vektorski indeks kao logički odvojene skupove podataka; fizičke tehnologije skladištenja još nisu izabrane.
@@ -224,6 +224,22 @@ U T-009/S1 definisan je protokol za izbor izvora podataka prema prihvaćenom mod
 Za kontrolisanu proveru izdvojeni su Open Food Facts, Barcode Lookup i UPCitemdb. Open Food Facts ima otvorene, ali višeslojne licence i snažan fokus na hranu; UPCitemdb nudi opšti probni pristup bez naloga, ali uslovi keširanja i redistribucije probnih odgovora nisu dovoljno jasni; Barcode Lookup zahteva ključ i nalog, a besplatni nalog nije pogodan za automatizovanu proveru. Zato u ovoj fazi nijedan izvor nije izabran. Pripremljen je javno proverljiv korpus od 12 proizvoda formata EAN-8, UPC-E, EAN-13 i UPC-A, sa više kategorija. Naredna, posebno odobrena faza sme da izvrši najviše 13 sekvencijalnih read-only upita po dostupnom izvoru, bez slanja lokalnih kodova prefiksa \texttt{200}, preuzimanja slika ili čuvanja sirovih odgovora kada licenca to ne dozvoljava.
 
 \draftblock{R01}{Izbor i licenca izvora/rezervnog skupa, adapter, poreklo podataka i testovi poznatog, nepoznatog i nedostupnog proizvoda.}{U završnoj podatkovnoj iteraciji povezan je izabrani izvor sa internim modelom proizvoda i uveden dozvoljeni rezervni skup. Proverena su pravila identiteta i odsustva opcionih atributa. Naziv izvora, verzija skupa, obim pokrivenosti i rezultati provera unose se iz evidencije: [nije popunjeno].}
+
+\subsection{Predložene projektne odluke za AI MVP}
+
+\textbf{Status: predlog T-011/S1, nije implementirano.} Detalji su u \path{docs/AI_MVP_DESIGN.md}; konačne parametre određuju notebook eksperimenti.
+
+Podaci o skeniranom proizvodu dobijaju se preko rutera izvora: adapteri za lokalni katalog, Open Food Facts porodicu baza i UPCitemdb vraćaju delimične normalizovane zapise, a ruter ih spaja po poljima uz evidentirano poreklo svakog polja. Kontrolisani kodovi ostaju lokalni, a probni UPCitemdb odgovori se ne keširaju. Preporuke se uvek biraju iz lokalnog kataloga, filtriranog podskupa zvaničnog Open Food Facts izvoza (5--10 hiljada proizvoda, ODbL).
+
+Kandidat za embedding model je višejezični \texttt{multilingual-e5-small} (384 dimenzije), uz poređenje sa TF-IDF i MiniLM osnovom. Vektori kataloga se računaju offline, a backend ih drži u memoriji i pretražuje tačno, kosinusnom sličnošću; samo nekatalogizovani proizvod se kodira ONNX modelom u Java backendu. Klasterizacija sferičnim k-means postupkom daje teme proizvoda i višeinteresni profil; PCA projekcija u dve dimenzije prikazuje mapu kataloga, preporuka i istorije, a notebook ispituje i redukciju dimenzije. Profil istorije je težinski centroid poslednjih interakcija, kombinovan sa sličnošću upita, a MMR diversifikuje konačnu listu. Za korisnički interfejs predložen je Material 3 sa ekranima za skeniranje, proizvod, mapu i istoriju.
+
+\clearpage
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{\diagramassetpath recommendation-pipeline.png}
+\caption{Predloženi cevovod preporuka: pretraga kandidata, generički ili personalizovani skor, MMR diversifikacija i dodavanje klastera i PCA koordinata. Nije implementirano.}
+\end{figure}
+\clearpage
 
 \subsection{Metod semantičke pretrage i proširenja}
 
