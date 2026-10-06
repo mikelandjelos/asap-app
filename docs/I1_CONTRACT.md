@@ -54,11 +54,11 @@ The response contains two independent discriminated outcomes:
     "data": {
       "id": "fixture:oat-drink",
       "barcode": { "value": "2000000000015", "format": "EAN_13" },
-      "name": "ASAP ovseni napitak",
+      "name": "ASAP oat drink",
       "brand": "ASAP Demo",
-      "category": "Biljni napici",
-      "description": "Kontrolisani proizvod za I1 demonstraciju.",
-      "tags": ["ovseni", "napitak", "demo"],
+      "category": "Plant-based drinks",
+      "description": "Controlled product for the I1 demonstration.",
+      "tags": ["oat", "drink", "demo"],
       "provenance": {
         "type": "CONTROLLED_FIXTURE",
         "source": "asap-i1-fixtures-v1"
@@ -74,18 +74,18 @@ The response contains two independent discriminated outcomes:
         "rank": 1,
         "product": {
           "id": "fixture:almond-drink",
-          "name": "ASAP bademov napitak",
+          "name": "ASAP almond drink",
           "brand": "ASAP Demo",
-          "category": "Biljni napici"
+          "category": "Plant-based drinks"
         }
       },
       {
         "rank": 2,
         "product": {
           "id": "fixture:soy-drink",
-          "name": "ASAP sojin napitak",
+          "name": "ASAP soy drink",
           "brand": "ASAP Demo",
-          "category": "Biljni napici"
+          "category": "Plant-based drinks"
         }
       }
     ]
@@ -107,7 +107,7 @@ The response contains two independent discriminated outcomes:
 - The primary fixture response has exactly two items, almond then soy, matching the canonical JSON fixture order.
 - Recommendation items contain display summaries, not scores. I1 has no embedding, similarity, relevance, or personalization score to report.
 - For an `UNKNOWN` or `UNAVAILABLE` product, status is `NOT_APPLICABLE`, `mode` is absent, `placeholder` is `false`, and `items` is empty.
-- Android S4 must render the Serbian label “Deterministički demo rezultat — nije AI preporuka” whenever `placeholder` is `true`.
+- Android S4 must render the English label “Deterministic demo result — not an AI recommendation” (Serbian before D-028) whenever `placeholder` is `true`.
 - Recommendation `EMPTY` or `UNAVAILABLE` never removes a `KNOWN` product. This is the required partial-success behavior.
 
 ## Invalid-request response

@@ -15,7 +15,7 @@ public final class I1OutcomeUiModelTest {
     @Test
     public void knownProductAndResultsRemainIndependentDisplayData() {
         I1ApiModels.ScanQueryResponse response = knownResponse("RESULTS");
-        response.recommendations.items.add(item(1, "ASAP bademov napitak"));
+        response.recommendations.items.add(item(1, "ASAP almond drink"));
 
         I1OutcomeUiModel model = I1OutcomeUiModel.fromValidatedResponse(response);
 
@@ -23,7 +23,7 @@ public final class I1OutcomeUiModelTest {
         assertSame(response.product.data, model.product);
         assertEquals(I1OutcomeUiModel.RecommendationState.RESULTS, model.recommendationState);
         assertTrue(model.placeholder);
-        assertEquals("ASAP bademov napitak", model.items.get(0).product.name);
+        assertEquals("ASAP almond drink", model.items.get(0).product.name);
     }
 
     @Test
@@ -31,7 +31,7 @@ public final class I1OutcomeUiModelTest {
         I1OutcomeUiModel model = I1OutcomeUiModel.fromValidatedResponse(knownResponse("EMPTY"));
 
         assertEquals(I1OutcomeUiModel.ProductState.KNOWN, model.productState);
-        assertEquals("ASAP ovseni napitak", model.product.name);
+        assertEquals("ASAP oat drink", model.product.name);
         assertEquals(I1OutcomeUiModel.RecommendationState.EMPTY, model.recommendationState);
         assertTrue(model.placeholder);
         assertTrue(model.items.isEmpty());
@@ -43,7 +43,7 @@ public final class I1OutcomeUiModelTest {
                 I1OutcomeUiModel.fromValidatedResponse(knownResponse("UNAVAILABLE"));
 
         assertEquals(I1OutcomeUiModel.ProductState.KNOWN, model.productState);
-        assertEquals("ASAP ovseni napitak", model.product.name);
+        assertEquals("ASAP oat drink", model.product.name);
         assertEquals(
                 I1OutcomeUiModel.RecommendationState.UNAVAILABLE,
                 model.recommendationState);
@@ -82,7 +82,7 @@ public final class I1OutcomeUiModelTest {
         response.product = new I1ApiModels.ProductOutcome();
         response.product.status = "KNOWN";
         response.product.data = new I1ApiModels.ProductData();
-        response.product.data.name = "ASAP ovseni napitak";
+        response.product.data.name = "ASAP oat drink";
         response.recommendations = recommendations(recommendationStatus, true);
         return response;
     }

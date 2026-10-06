@@ -1,6 +1,6 @@
 # AI MVP design — T-011/S1
 
-Status: **Proposed 2026-10-06, awaiting S1 acceptance** (D-027). Documentation only: no code, dataset download, model download or provider call has occurred. Values marked *initial* are starting configurations that the named notebook must confirm or replace; the notebook result, not this document, is authoritative for final parameters.
+Status: **Accepted 2026-10-06** (D-027, amended by D-028: English app, vector database after the MVP). Documentation only: no code, dataset download, model download or provider call has occurred. Values marked *initial* are starting configurations that the named notebook must confirm or replace; the notebook result, not this document, is authoritative for final parameters.
 
 Inputs: [CURRENT_REQUIREMENTS.md](CURRENT_REQUIREMENTS.md), [NOTEBOOK_VALIDATION.md](NOTEBOOK_VALIDATION.md), [DOMAIN_MODEL.md](DOMAIN_MODEL.md), [PRODUCT_DATA_API_EVALUATION.md](PRODUCT_DATA_API_EVALUATION.md) (T-009/S1, accepted 2026-10-06).
 
@@ -57,7 +57,8 @@ Several sources are combined behind one interface so the best available record i
 ## 5. Vector storage and retrieval
 
 - **Recommended:** in-memory float32 matrix of L2-normalized vectors loaded from the artifact bundle, with exact brute-force cosine (dot product) search. At ≤ 10k × 384 this is ~15 MB and requires no extra service.
-- **Rejected for MVP:** pgvector, Qdrant, FAISS/ANN. These add services or native dependencies without need at this scale; revisit beyond ~10⁵ items.
+- **Rejected for MVP:** pgvector, Qdrant, FAISS/ANN. These add services or native dependencies without need at this scale.
+- **Post-MVP (user-requested, D-028):** move catalog and vectors into a real database with vector search (candidates: PostgreSQL + pgvector, Qdrant). The in-memory search stays as the notebook-verified baseline and parity reference; a retrieval interface introduced in S6 keeps the swap local.
 - **Rules:** exclude the query product, deduplicate by barcode and by normalized name+brand, and break ties by product ID.
 
 ## 6. Clustering
@@ -127,7 +128,7 @@ New `POST /api/v2/scan-queries`; v1/I1 stays frozen. The request adds an optiona
 
 - **Library:** Material Components for Android (Material 3, XML themes). This is a new dependency, justified as the standard Android Views design system. The seed palette derives from the project diagram colours (#164D7D primary, #A51003 accent), with light and dark themes.
 - **Structure:** one Activity with a `BottomNavigationView` and fragments: **Skeniraj** (scan CTA plus recent items), **Proizvod** (product card, source/licence chips; "Za tebe"/"Slični proizvodi" list with mode label, theme chip and a diversity note), **Mapa** (PCA canvas with legend), **Istorija** (list, clear history, privacy notice).
-- **States:** loading, empty, unknown, unavailable and error with retry on every screen. All text is in Serbian Latin.
+- **States:** loading, empty, unknown, unavailable and error with retry on every screen. All app text is in **English** (D-028); the formal report and presentation stay Serbian.
 - **Acceptance checklist:**
   - TalkBack labels on all controls and points of interest;
   - touch targets ≥ 48 dp and contrast ≥ 4.5:1;

@@ -163,8 +163,8 @@ public class RetrofitScanQueryClientTest {
                 + "\"product\":{\"status\":\"KNOWN\",\"data\":{"
                 + "\"id\":\"fixture:oat-drink\","
                 + "\"barcode\":{\"value\":\"2000000000015\",\"format\":\"EAN_13\"},"
-                + "\"name\":\"ASAP ovseni napitak\",\"brand\":\"ASAP Demo\","
-                + "\"category\":\"Biljni napici\",\"description\":\"Demo\","
+                + "\"name\":\"ASAP oat drink\",\"brand\":\"ASAP Demo\","
+                + "\"category\":\"Plant-based drinks\",\"description\":\"Demo\","
                 + "\"tags\":[\"demo\"],"
                 + "\"provenance\":{\"type\":\"CONTROLLED_FIXTURE\","
                 + "\"source\":\"asap-i1-fixtures-v1\"}}},"
@@ -175,8 +175,8 @@ public class RetrofitScanQueryClientTest {
 
     private static String resultItem() {
         return "{\"rank\":1,\"product\":{\"id\":\"fixture:almond-drink\","
-                + "\"name\":\"ASAP bademov napitak\",\"brand\":\"ASAP Demo\","
-                + "\"category\":\"Biljni napici\"}}";
+                + "\"name\":\"ASAP almond drink\",\"brand\":\"ASAP Demo\","
+                + "\"category\":\"Plant-based drinks\"}}";
     }
 
     private static String productWithoutData(String status) {

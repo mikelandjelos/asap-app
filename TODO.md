@@ -15,7 +15,8 @@ T-010/S1 je prihvaćen kao nacrt; T-009/S1 čeka prihvatanje. Detalji su u `docs
 
 Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji u `docs/PLANS.md`. Izveštaj se temeljno prerađuje posle MVP-a, zatim prezentacija.
 
-- [x] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija. (`docs/AI_MVP_DESIGN.md`, D-027; čeka prihvatanje.)
+- [x] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija. (`docs/AI_MVP_DESIGN.md`, D-027; prihvaćeno 2026-10-06 uz D-028.)
+- [x] S1a: tekst aplikacije i fixture podaci prevedeni na engleski (D-028); 32 Android testa, lint 0, 23 backend testa.
 - [ ] S2: ograničene T-009/S2 probe (i spojena popunjenost više izvora preko rutera) i izbor prioriteta API-ja i offline skupa podataka.
 - [ ] S3: notebook 01 — skup podataka, embedding i top-N pretraga.
 - [ ] S4: notebook 02 — klasterizacija i PCA.
@@ -94,6 +95,10 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [ ] Dopuniti svih pet delova izveštaja stvarnim odlukama, rezultatima i povratnim informacijama.
 - [ ] Dopuniti prezentaciju arhitekturom, demonstracijom, rezultatima i naučenim lekcijama.
 - [ ] Proveriti završni kriterijum: operativna MVP aplikacija, demonstrabilan PoC, kompletan izveštaj i kompletna prezentacija.
+
+## Posle MVP-a — D-028
+
+- [ ] Uvesti pravu bazu podataka sa vektorskom pretragom (PostgreSQL + pgvector ili Qdrant) iza interfejsa pretrage; uporediti sa in-memory osnovom.
 
 ## Obavezne dodatne MVP provere — D-025
 

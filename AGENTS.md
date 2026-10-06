@@ -73,3 +73,4 @@ Before reporting the subtask complete, in the same change as the implementation:
 ## Verification
 
 Run checks proportional to the change. Documentation changes must at least validate links/paths manually and compile affected LaTeX documents when their sources or assets change. Build commands are documented in `docs/WORKFLOW.md`.
+- App UI text, fixture data and code are English (D-028).

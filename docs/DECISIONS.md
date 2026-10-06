@@ -214,7 +214,7 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 ## D-027 — Proposed AI MVP design (T-011/S1)
 
 - **Date:** 2026-10-06
-- **Status:** Proposed; accepted when the user accepts T-011/S1.
+- **Status:** Accepted 2026-10-06 (“I agree with pretty much everything from the design”), amended by D-028.
 - **Decision:** Adopt the design in `AI_MVP_DESIGN.md`:
   - multi-provider `ProductSourceAdapter` + router with field-level merge and per-field provenance (user proposal; local catalog, Open Facts family, transient UPCitemdb);
   - a filtered Open Food Facts export as the offline recommendation catalog;
@@ -232,3 +232,11 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - new dependencies are introduced only in their implementing subtasks (ONNX Runtime/DJL tokenizers in S6, Material Components in S7);
   - the T-008/S1 provenance object is revised in S6;
   - presentation renders stay deferred.
+
+## D-028 — English app text; vector database after the MVP
+
+- **Date:** 2026-10-06
+- **Decision:**
+  - All Android app text and the controlled fixture data are in English. The user asked to correct existing Serbian text first and to continue in English. The formal report and presentation remain Serbian Latin (course deliverables); the report quotes the English UI label.
+  - A real database with vector search is wanted after the MVP: PostgreSQL + pgvector or Qdrant, to be chosen then. The MVP keeps in-memory exact search behind a retrieval interface so the swap stays local.
+- **Effect on I1:** the wire schema is unchanged; only fixture strings and the placeholder label text changed. September physical evidence was recorded with the earlier Serbian label.

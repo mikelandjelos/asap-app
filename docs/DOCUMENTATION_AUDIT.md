@@ -27,6 +27,8 @@ D-024/D-025 and [CURRENT_REQUIREMENTS.md](CURRENT_REQUIREMENTS.md) govern the cu
 
 Report build, local links, marker/register correspondence, stale-scope search and whitespace/staged-diff checks are required before publication. Runtime tests/notebook experiments are not rerun or invented in this documentation-only task. Final execution evidence is appended below after checks. Commit/push is explicitly authorized; determine the resulting commit and remote synchronization from Git rather than a self-referential hash in committed prose.
 
+D-028 (2026-10-06): app/fixture text is now English; the deferred presentation still quotes the old Serbian placeholder label (slide source line ~101) and must be updated in the presentation phase.
+
 T-011/S1 update (2026-10-06): report grew to 22 pages with the proposed design subsection and pipeline figure; pdfLaTeX and LuaLaTeX each passed two runs with clean final logs; pages 16–17 visually inspected. Earlier audit evidence follows.
 
 Completed checks: pdfLaTeX and LuaLaTeX each passed three runs, producing 19-page reports with no final-log warnings, missing glyphs or overfull/underfull boxes. The pdfLaTeX deliverable copies are byte-identical. Cover/repository link and page 18 notebook protocol were visually inspected; Serbian glyphs and layout are readable. All local Markdown links resolve, all six report markers match their register rows, and `git diff --check` passes. The remaining optional PCA/MMR statement is in historical D-024 and explicitly superseded by D-025; the deferred deck's older statements are inventoried above. No implementation files changed.

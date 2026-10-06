@@ -389,7 +389,7 @@ The user explicitly accepted T-007/S2 and authorized T-007/S3 with “accepted! 
 
 - Add minimal custom XML views for normalized product details and the independent recommendation status/results.
 - Render `KNOWN`, `UNKNOWN`, product `UNAVAILABLE`, recommendation `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` distinctly while preserving known product data on recommendation failure.
-- Show “Deterministički demo rezultat — nije AI preporuka” whenever `placeholder` is true; never display a fabricated score.
+- Show “Deterministički demo rezultat — nije AI preporuka” (English since D-028: “Deterministic demo result — not an AI recommendation”) whenever `placeholder` is true; never display a fabricated score.
 - Add UI/state tests for the frozen outcomes and synchronize all affected documentation.
 - **Approval evidence:** The user explicitly instructed “start s4.3” on 2026-09-07.
 - **Evidence:** A scrollable custom XML outcome area now renders normalized known-product fields and separate recommendation state/content. `KNOWN`, `UNKNOWN`, product `UNAVAILABLE`, recommendation `RESULTS`, `EMPTY`, `UNAVAILABLE`, and `NOT_APPLICABLE` have distinct Serbian states. Every `placeholder: true` outcome shows the exact mandatory demo-only label; rows show only rank/name/brand/category and no score. Product data remains present when recommendations are empty or unavailable. Five new pure-Java outcome-model tests cover all frozen combinations, bringing the Android total to 32; lint has zero findings and debug assembly succeeds. Physical end-to-end execution remains reserved for S4.4.
@@ -595,6 +595,8 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Report:** new §3.6 and pipeline figure; caption updated. pdfLaTeX and LuaLaTeX each built twice to 22 pages with clean final logs; pages 16–17 inspected; copied to `report/report.pdf`.
   - **Docs synced:** architecture, requirements, domain note, evaluation, hub, audit, TODO, status, handoff. `git diff --check` passes.
   - No code, downloads or provider calls.
+- **S1 accepted** 2026-10-06 with amendments (D-028): English app text, vector DB after the MVP.
+- **S1a (explicit user instruction “correct all the serbian text before you continue”):** translate `strings.xml`, the I1 fixture JSON, Android test literals and I1 contract examples to English; update label references in report/status. Verification: 32/32 Android tests, 0 lint issues, debug APK; 23/23 backend tests. Report rebuilt. Presentation (deferred) still quotes the old label.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 
