@@ -26,7 +26,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S6b: Java učitavanje paketa, ONNX enkoder, char TF-IDF, hibridna pretraga, parity testovi. (32/32 testova; D-035.)
   - [x] S6c: Java profil, MMR, klasteri/PCA; v2 ugovor i endpoint; v1 ostaje. (46/46 testova; `docs/V2_CONTRACT.md`.)
   - [x] S6c.1: sažimanje duplikata istog naziva i brenda u rezultatima (4,1 % kataloga); provera u notebook-u 03 i nove parity fiksture. (5,2 % → 0 % lista sa varijantama; MMR λ = 0,7; D-036.)
-  - [ ] Ručno pregledati i ispraviti nazive 60 tema pre S7 (automatske oznake su delom pogrešne).
+  - [x] Ručno pregledati i ispraviti nazive 60 tema pre S7. (Predlog u `ml/theme_labels.json`, paket `20261006-07904a7f`; korisnik može izmeniti pojedinačne nazive.)
   - [x] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima. (54/54 testova; živa provera 4 stvarna proizvoda; D-037.)
 - [ ] S7: Android istorija i doteran UI.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.

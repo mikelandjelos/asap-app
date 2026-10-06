@@ -73,7 +73,7 @@ def main(out_root=P / "bundle"):
     model_dir = P / "models/e5-small"
     hf_id, rev, prefix = R.MODELS["e5-small"]
 
-    content = E.tobytes() + centroids.tobytes() + json.dumps(params, sort_keys=True).encode() + "".join(
+    content = E.tobytes() + centroids.tobytes() + json.dumps(params, sort_keys=True).encode() + sha(ROOT / "ml/theme_labels.json").encode() + "".join(
         sha(RES / d / "summary.json") for d in ("01_data_embeddings_retrieval", "02_clustering_pca", "03_personalization_mmr")).encode()
     version = time.strftime("%Y%m%d") + "-" + hashlib.sha256(content).hexdigest()[:8]
     out = Path(out_root) / version
@@ -103,7 +103,10 @@ def main(out_root=P / "bundle"):
                                               "vocabulary": [t for t, _ in vocab], "idf": [round(float(x), 8) for x in vec.idf_]},
                                              ensure_ascii=False))
     theme_xy = S.pca_project(centroids, pca["mean"], pca["components"], 2)
-    (out / "themes.json").write_text(json.dumps([dict(t, x=round(float(theme_xy[t["cluster"], 0]), 6), y=round(float(theme_xy[t["cluster"], 1]), 6))
+    reviewed = json.loads((ROOT / "ml/theme_labels.json").read_text())["labels"]
+    assert sorted(map(int, reviewed)) == list(range(len(themes))), "theme_labels.json must label every cluster"
+    (out / "themes.json").write_text(json.dumps([dict(t, autoLabel=t["label"], label=reviewed[str(t["cluster"])],
+                                                      x=round(float(theme_xy[t["cluster"], 0]), 6), y=round(float(theme_xy[t["cluster"], 1]), 6))
                                                 for t in themes], ensure_ascii=False, indent=1))
     shutil.copy(P / "map_sample.json", out / "map_sample.json")
     for f in ("model.onnx", "tokenizer.json"):

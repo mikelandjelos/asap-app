@@ -10,9 +10,8 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S6 (a–d) is done and committed. Await S6d acceptance, then:
-  1. **Theme label pass:** propose labels for 60 themes from `cluster_themes.csv` terms/categories; the user confirms; rebuild the bundle.
-  2. **S7 plan:** Android v2 client, local history (JSON file), Material 3 single-Activity UI (Scan / Product / Map "you vs themes" / History), attribution, accessibility checks on the phone.
+- **Next action:** S6 and the theme label pass are done and committed (bundle `20261006-07904a7f`; the user may still amend labels). Next: write the S7 plan and get approval.
+  - **S7 scope:** Android v2 client, local history, Material 3 single-Activity UI (Scan / Product / Map "you vs themes" / History), attribution, accessibility and phone verification.
   - Report work is deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.

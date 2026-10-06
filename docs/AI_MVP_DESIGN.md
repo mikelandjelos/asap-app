@@ -85,7 +85,8 @@ Several sources are combined behind one interface so the best available record i
   - Seed stability is moderate (ARI 0.62). The original pre-declared rule (stability ≥ 0.7 first) would have picked the language clusters; the user approved a revised, documented rule.
   - HDBSCAN marks 31 % of products as noise, so it is rejected because every product needs a theme.
   - An uncatalogued product needs one extra encoding of its type text, or its name if it has no category; nearest-centroid assignment then takes ~7 µs.
-- **Labels:** each cluster gets a short human-readable label from its most frequent categories and c-TF-IDF terms, reviewed manually.
+- **Labels (label pass, 2026-10-06):** human-readable labels live in `ml/theme_labels.json` and replace the auto-labels in the bundle (`autoLabel` is kept). Mixed clusters get honest broad labels ("Mixed plant-based foods", "Creams (body & dairy)").
+- **Original labeling method:** each cluster gets a short human-readable label from its most frequent categories and c-TF-IDF terms, reviewed manually.
 - **Runtime roles:**
   1. A **theme chip** on the product and each recommendation.
   2. **Multi-interest personalization**: history is grouped by cluster (§7).

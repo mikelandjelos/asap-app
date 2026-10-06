@@ -646,6 +646,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Tests:** 54/54 (+6 source/router unit, +2 HTTP with a scripted fetcher; the tests never use the network).
   - **Live check:** about 5 OFF and 2 UPCitemdb calls; results in V2_CONTRACT.
   - **Fix:** UPCitemdb spacing is now configurable (tests use 0 s).
+- **S6d:** accepted 2026-10-06 (“yes I accept”).
+- **Theme label pass:** approved 2026-10-06 (“do the label pass”); done.
+  - **Labels:** 60 short English labels in `ml/theme_labels.json`, based on each cluster's top categories, shares and sample names; status "proposed, user review pending". The exporter applies them and keeps `autoLabel`; the label file is part of the bundle version hash.
+  - **Verification:** bundle `20261006-07904a7f`, verifier 10/10, Java 54/54.
+  - **Remaining limitation:** external products whose OFF categories are non-English (e.g. "Pâtes à tartiner") can still land in mixed themes.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 
