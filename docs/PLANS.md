@@ -727,6 +727,14 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Headings and labels:** accessibility headings on every section title; content descriptions on results, history, chart and activity bars.
   - **Not done:** a live TalkBack walkthrough (manual; part of the post-report user testing).
   - **Totals:** Android 41/41, lint 0; backend 55/55.
+- **S7e:** accepted 2026-10-06 (“do it”); S8 approved in the same message.
+- **S8:** complete. Evidence is in `docs/MVP_VERIFICATION.md`.
+  - **Suites:** backend 55/55, Android 41/41, lint 0, bundle 10/10.
+  - **Notebooks:** 00–03 reproduce; centroid float noise 1.5e-8.
+  - **Phone latency:** catalog median ≈ 56 ms; live lookups 0.36–2.0 s; offline and retry paths work.
+  - **Instrumentation:** `AsapTiming` log in `SessionViewModel`.
+  - **Finding:** 3 of 4 real scans were unknown, so coverage is the main gap.
+  - **The MVP (T-011 S1–S8) is complete.** Next per D-040/D-041: the user's "missing features" discussion, then the CNN/TFLite scanner, the vector DB with a larger catalog, and the new report.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

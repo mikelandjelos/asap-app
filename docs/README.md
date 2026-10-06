@@ -19,6 +19,7 @@ This directory contains the operational documentation needed to continue the pro
 | [`I1_CONTRACT.md`](I1_CONTRACT.md) | Accepted T-007/S2 HTTP/JSON contract, fixture scenarios, and acceptance cases |
 | [`DOMAIN_MODEL.md`](DOMAIN_MODEL.md) | Accepted T-008 product, interaction/history, recommendation, and AI-derived-artifact contract |
 | [`PRODUCT_DATA_API_EVALUATION.md`](PRODUCT_DATA_API_EVALUATION.md) | T-009 provider criteria, official-source shortlist, probe corpus, and controlled evaluation protocol |
+| [`MVP_VERIFICATION.md`](MVP_VERIFICATION.md) | S8 end-to-end verification: suites, notebook reproducibility, phone latency and outcomes |
 | [`POST_MVP_ARCHITECTURE.md`](POST_MVP_ARCHITECTURE.md) | Post-MVP vision: scraper adapters, consolidator, drift/refit pipeline (not scheduled) |
 | [`V2_CONTRACT.md`](V2_CONTRACT.md) | Implemented AI v2 scan-query and catalog-map HTTP contract |
 | [`AI_MVP_DESIGN.md`](AI_MVP_DESIGN.md) | T-011/S1 proposed AI MVP design: source router, dataset, embeddings, clustering, PCA, personalization, MMR, notebooks, UI |

@@ -20,6 +20,8 @@ T-011/S2 (complete, awaiting acceptance):
 - S3 adopted hybrid retrieval: e5-small plus char TF-IDF (D-030). Catalog embeddings and the ONNX model are in git-ignored `data/processed/` and reproducible from the notebook.
 - The Python ML workspace is `ml/`, with a pinned `ml/requirements.txt` and a local `.venv`.
 
+**MVP complete (T-011/S8, 2026-10-06):** scan → product (catalog or live OFF/UPCitemdb, with picture) → personalized, diversified recommendations → Analytics (PCA "you vs themes", stats) and History on the phone. Verification is in `docs/MVP_VERIFICATION.md`.
+
 ## Available artifacts
 
 - A phased product plan in `TODO.md`, transcribed and normalized from `meditations/sept_3.pdf`.

@@ -35,7 +35,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S7c.1: slike proizvoda (OFF CC BY-SA, 97,4 % kataloga; telefon učitava direktno).
   - [x] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije. (41 test, lint 0; vizuelna provera i izmene po želji korisnika slede.)
   - [x] S7e: pristupačnost i provera na telefonu. (Kontrast ≥ 5,5:1, automatska provera oznaka/48 dp, font 200 %, svetla/tamna tema.)
-- [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
+- [x] S8: end-to-end provera na telefonu (`docs/MVP_VERIFICATION.md`); izveštaj se piše iznova posle CNN-a i vektorske baze (D-040/D-041).
 
 ## T-010: mock MVP i nacrt izveštaja (S2–S3 odloženi, D-026)
 
@@ -140,4 +140,4 @@ Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.
 - [ ] Implementirati PCA i dogovorenu vizuelnu analitiku; proveriti metod i performanse u notebook-u.
 - [x] Dogovoriti i implementirati doteran UI; proveriti čitljivost, pristupačnost, sve ishode i upotrebljivost na telefonu. (T-011/S7c–S7e; ručni TalkBack prolaz ostaje za korisničko testiranje.)
 - [ ] Za CNN/TFLite, embedding, pretragu, klasterizaciju, personalizaciju, PCA, MMR i svaku dodatnu AI/statističku komponentu pripremiti izvršiv notebook, stvarne metrike, grafikone/tabele i vezu sa izveštajem.
-- [ ] Proveriti ponovljivost eksperimenata i saglasnost notebook metoda sa aplikacionom implementacijom.
+- [x] Proveriti ponovljivost eksperimenata i saglasnost notebook metoda sa aplikacionom implementacijom. (S8: notebook-ovi 00–03 ponovljeni; Java↔Python parity testovi.)

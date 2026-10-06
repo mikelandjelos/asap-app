@@ -10,10 +10,7 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S7a is done and committed. Await acceptance, then S7b.
-  - **S7b scope:** add Material Components; grocery-green light/dark theme; single Activity with `BottomNavigationView` (Scan, Product, Map, History) and fragments; move the scanner flow; English strings. UI decisions are recorded in D-038.
-  - **Phone tests:** run the backend with `--asap.bundle.dir=data/processed/bundle` plus `adb reverse tcp:8080 tcp:8080`.
-  - Report work is deferred. Commit at the end of every subtask.
+- **Next action:** The MVP (T-011 S1–S8) is complete and verified (`docs/MVP_VERIFICATION.md`). The user wants to "seriously discuss" features the realized app lacks (expected to be easily expandable). Hold that discussion first, then, per D-040/D-041: CNN/TFLite scanner → vector DB + larger catalog → new report (user instructions) → testing/demo. Report work stays deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.
 
