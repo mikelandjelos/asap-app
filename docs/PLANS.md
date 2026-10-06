@@ -597,6 +597,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - No code, downloads or provider calls.
 - **S1 accepted** 2026-10-06 with amendments (D-028): English app text, vector DB after the MVP.
 - **S1a (explicit user instruction “correct all the serbian text before you continue”):** translate `strings.xml`, the I1 fixture JSON, Android test literals and I1 contract examples to English; update label references in report/status. Verification: 32/32 Android tests, 0 lint issues, debug APK; 23/23 backend tests. Report rebuilt. Presentation (deferred) still quotes the old label.
+- **S2:** Approved 2026-10-06 (“I agree with everything else”); complete, awaiting acceptance.
+  - **Probes:** terms rechecked; 26 probe calls run (`ml/probes/run_probes.py`); `notebooks/00_source_probes.ipynb` executed clean with results in `notebooks/results/00_source_probes/`.
+  - **Catalog:** OFF, OBF and OPFF exports downloaded and checksummed; `ml/asap_ml/catalog.py` built a 10,000-product catalog plus manifest. The first selection run produced 25k junk strata; this was fixed with taxonomy, script and meta-tag filters.
+  - **Records:** D-029, the evaluation S2 section and design §2/§3 updated; T-009 closed.
+  - **Report facts for the end:** the router-merge completeness table, provider latencies and catalog stats.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

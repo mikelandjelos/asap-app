@@ -17,7 +17,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 
 - [x] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija. (`docs/AI_MVP_DESIGN.md`, D-027; prihvaćeno 2026-10-06 uz D-028.)
 - [x] S1a: tekst aplikacije i fixture podaci prevedeni na engleski (D-028); 32 Android testa, lint 0, 23 backend testa.
-- [ ] S2: ograničene T-009/S2 probe (i spojena popunjenost više izvora preko rutera) i izbor prioriteta API-ja i offline skupa podataka.
+- [x] S2: ograničene probe (26 poziva), ruter spajanjem polja daje 100 % naziv/brend/kategorija naspram 58–67 %; izabran redosled izvora i offline katalog od 10.000 proizvoda (D-029, notebook 00).
 - [ ] S3: notebook 01 — skup podataka, embedding i top-N pretraga.
 - [ ] S4: notebook 02 — klasterizacija i PCA.
 - [ ] S5: notebook 03 — personalizacija i MMR.
@@ -59,8 +59,8 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [x] Definisati granice MVP-a i plan implementacije po iteracijama.
 - [x] Postaviti početne projekte za mobilnu aplikaciju i backend.
 - [x] Definisati modele proizvoda, korisničke interakcije i preporuke. (T-008 je prihvaćen i zatvoren: model proizvoda, interakcija, istorije i preporuka, AI granica i dva kanonska dijagrama.)
-- [ ] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda. (T-009/S1 prihvaćen 2026-10-06; probe se izvode u T-011/S2, uz moguće kombinovanje više izvora preko adaptera i rutera. Nije pozvan nijedan proizvodni API.)
-- [ ] Izabrati rezervni izvor ili skup podataka za razvoj bez zavisnosti od eksternog API-ja.
+- [x] Pronaći i proceniti API-je za podatke o proizvodima na osnovu barkoda. (T-009 zatvoren kroz T-011/S2, D-029.)
+- [x] Izabrati rezervni izvor ili skup podataka za razvoj bez zavisnosti od eksternog API-ja. (OFF/OBF/OPFF izvoz, 10.000 proizvoda, D-029.)
 - [ ] Definisati način čuvanja metapodataka i vektorskih reprezentacija proizvoda.
 - [ ] Dokumentovati slučajeve upotrebe i tok podataka od skeniranja do preporuke.
 

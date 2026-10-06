@@ -1,0 +1,48 @@
+{
+  "run_rows": 26,
+  "calls_per_provider": {
+    "open_food_facts": 13,
+    "upcitemdb": 13
+  },
+  "completeness": {
+    "open_food_facts": {
+      "name": 0.5833,
+      "brand": 0.5833,
+      "category": 0.5833,
+      "description": 0.0833,
+      "known_rate": 0.5833
+    },
+    "upcitemdb": {
+      "name": 0.6667,
+      "brand": 0.6667,
+      "category": 0.5833,
+      "description": 0.5833,
+      "known_rate": 0.6667
+    },
+    "router_merge": {
+      "name": 1.0,
+      "brand": 1.0,
+      "category": 1.0,
+      "description": 0.6667,
+      "known_rate": 1.0
+    }
+  },
+  "latency_ms": {
+    "open_food_facts": {
+      "count": 13.0,
+      "mean": 157.0,
+      "50%": 153.0,
+      "max": 201.0
+    },
+    "upcitemdb": {
+      "count": 13.0,
+      "mean": 523.0,
+      "50%": 523.0,
+      "max": 555.0
+    }
+  },
+  "control_U01": {
+    "open_food_facts": "KNOWN",
+    "upcitemdb": "KNOWN"
+  }
+}

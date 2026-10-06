@@ -157,3 +157,36 @@ Do not average away a gate failure. S3 will compare mandatory gates first, then 
 - Can a general-source candidate provide field-level provenance, or only provider-level provenance added by ASAP?
 - Are Serbian or regional products discoverable with usable names/categories, and in which language?
 - Is Barcode Lookup's paid-only, deletion-bound model justifiable for the academic MVP after comparison with accessible candidates?
+
+## S2 results and selection (T-011/S2, 2026-10-06)
+
+Terms were rechecked before the run and found unchanged:
+- **OFF:** v3, 15 product reads/min/IP, identifying User-Agent required, exports recommended for bulk use. The probe used production because staging data does not represent real coverage; 13 reads is far below the limit.
+- **UPCitemdb:** no-signup trial at 100 requests/day; still no explicit caching terms.
+
+Run (`ml/probes/run_probes.py`): 13 + 13 sequential calls, ≥ 11 s apart, no retries, no redirects followed, presence flags and SHA-256 only. Evidence: `notebooks/00_source_probes.ipynb` and `notebooks/results/00_source_probes/`.
+
+| Of 12 corpus products | OFF | UPCitemdb | Router merge |
+| --- | --- | --- | --- |
+| Found (`KNOWN`) | 7 | 8 | **12** |
+| Name / brand / category | 58 / 58 / 58 % | 67 / 67 / 58 % | **100 / 100 / 100 %** |
+| Description | 8 % | 58 % | 67 % |
+| Median latency (desktop) | 153 ms | 524 ms | — |
+
+**Coverage:**
+- The providers are complementary. OFF covers food and beverages, including the regional product P04. UPCitemdb covers personal care, hardware, media and cosmetics, but not P03–P05.
+- With `product_type=all`, OFF did not find the non-food items.
+
+**Identity:**
+- OFF preserves EAN-8 and UPC-E values and returns UPC-A zero-padded to 13 digits.
+- UPCitemdb returns both the EAN-13 and UPC-A forms, but **rejects UPC-E** (`400 INVALID_UPC`). The router must expand UPC-E to UPC-A before calling it.
+- The not-found control U01 exists in both databases. Not-found handling is evidenced instead by OFF 404s for P07–P11 and UPCitemdb empty `OK` responses for P03–P05.
+
+**Selection (D-029):** the router queries sources in this order:
+1. the local catalog;
+2. Open Food Facts v3 (`product_type=all`), with results cacheable under ODbL;
+3. UPCitemdb trial, transient only and quota-guarded.
+
+Barcode Lookup is not used. The offline catalog comes from the official OFF, Open Beauty Facts and Open Pet Food Facts CSV exports (`data/catalog_manifest.json`).
+
+T-009 is closed by this selection.

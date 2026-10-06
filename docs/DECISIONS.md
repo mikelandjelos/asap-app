@@ -240,3 +240,10 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - All Android app text and the controlled fixture data are in English. The user asked to correct existing Serbian text first and to continue in English. The formal report and presentation remain Serbian Latin (course deliverables); the report quotes the English UI label.
   - A real database with vector search is wanted after the MVP: PostgreSQL + pgvector or Qdrant, to be chosen then. The MVP keeps in-memory exact search behind a retrieval interface so the swap stays local.
 - **Effect on I1:** the wire schema is unchanged; only fixture strings and the placeholder label text changed. September physical evidence was recorded with the earlier Serbian label.
+
+## D-029 — Provider priority and offline catalog source (T-011/S2)
+
+- **Date:** 2026-10-06
+- **Decision:** The product router queries the local catalog first, then Open Food Facts v3 (`product_type=all`, cacheable with ODbL attribution), then UPCitemdb trial (transient, quota-guarded, UPC-E expanded to UPC-A). Barcode Lookup is not used. The offline recommendation catalog consists of 10,000 products from the official OFF, Open Beauty Facts and Open Pet Food Facts CSV exports, selected by `ml/asap_ml/catalog.py` (seed 20261006).
+- **Evidence:** In the 12-product probe, field-level merge reached 100 % name/brand/category coverage, against 58–67 % for either provider alone. Details are in `PRODUCT_DATA_API_EVALUATION.md` (S2 results) and `notebooks/00_source_probes.ipynb`.
+- **Constraints:** Raw exports and processed bundles are git-ignored and reproducible; `data/catalog_manifest.json` records checksums and config. The attribution "Contains data from Open Food Facts, available under the Open Database License" must appear in the app.

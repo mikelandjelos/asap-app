@@ -1,0 +1,125 @@
+{
+  "attribution": "Contains data from Open Food Facts, available under the Open Database License (ODbL 1.0).",
+  "exports": {
+    "en.openfoodfacts.org.products.csv.gz": {
+      "url_base": "https://static.openfoodfacts.org/data/",
+      "sha256": "f72687ee8bc6522054fe69dbfda6b91902c16af1ec2e043cde27bc6c29ad8176"
+    },
+    "en.openbeautyfacts.org.products.csv.gz": {
+      "url_base": "https://static.openbeautyfacts.org/data/",
+      "sha256": "d527f033d2549b86424db0ef1e87b785f92f53901036afd0c0a24bd629a766a5"
+    },
+    "en.openpetfoodfacts.org.products.csv.gz": {
+      "url_base": "https://static.openpetfoodfacts.org/data/",
+      "sha256": "3078cc0150204ccb6a227c8d7806ee9130d95b1e344016d8d81844e6930870b1"
+    }
+  },
+  "downloaded_utc": "2026-10-06T11:22:45Z",
+  "config": {
+    "seed": 20261006,
+    "region": [
+      "en:bosnia-and-herzegovina",
+      "en:bulgaria",
+      "en:croatia",
+      "en:hungary",
+      "en:montenegro",
+      "en:north-macedonia",
+      "en:romania",
+      "en:serbia",
+      "en:slovenia"
+    ],
+    "quotas": {
+      "open_food_facts": 8000,
+      "open_beauty_facts": 1200,
+      "open_pet_food_facts": 800
+    },
+    "strata_kept": {
+      "open_food_facts": 30,
+      "open_beauty_facts": 12,
+      "open_pet_food_facts": 8
+    },
+    "filters": "valid public GTIN, Latin-script name, en: taxonomy categories, English main category",
+    "per_stratum_pool": 3000
+  },
+  "stats": {
+    "open_food_facts": {
+      "eligible_unique": 1381729,
+      "eligible_rows": 1381751,
+      "strata_total": 9851,
+      "strata_kept": {
+        "en:plant-based-foods-and-beverages": 1136,
+        "en:snacks": 869,
+        "en:dairies": 585,
+        "en:beverages-and-beverages-preparations": 491,
+        "en:condiments": 487,
+        "en:meats-and-their-products": 480,
+        "en:beverages": 432,
+        "en:meals": 370,
+        "en:seafood": 354,
+        "en:desserts": 309,
+        "en:breakfasts": 267,
+        "en:dietary-supplements": 253,
+        "en:frozen-foods": 208,
+        "en:farming-products": 177,
+        "en:sweeteners": 160,
+        "en:sandwiches": 134,
+        "en:canned-foods": 131,
+        "en:salted-snacks": 125,
+        "en:baby-foods": 115,
+        "en:meat-alternatives": 110,
+        "en:cooking-helpers": 110,
+        "en:fish-and-meat-and-eggs": 99,
+        "en:spreads": 92,
+        "en:baking-decorations": 81,
+        "en:food-additives": 80,
+        "en:fats": 79,
+        "en:cocoa-and-its-products": 74,
+        "en:dried-products": 66,
+        "en:sweet-pies": 63,
+        "en:crepes-and-galettes": 63
+      },
+      "selected": 8000,
+      "region_selected": 6282
+    },
+    "open_beauty_facts": {
+      "eligible_unique": 11356,
+      "eligible_rows": 11356,
+      "strata_total": 739,
+      "strata_kept": {
+        "en:hygiene": 216,
+        "en:cosmetic-products": 198,
+        "en:hair": 166,
+        "en:face": 106,
+        "en:body": 100,
+        "en:suncare": 80,
+        "en:shampoos": 72,
+        "en:makeup": 68,
+        "en:toothpaste": 54,
+        "en:accessories": 52,
+        "en:perfumes": 46,
+        "en:lip-balms": 42
+      },
+      "selected": 1200,
+      "region_selected": 97
+    },
+    "open_pet_food_facts": {
+      "eligible_unique": 2842,
+      "eligible_rows": 2842,
+      "strata_total": 116,
+      "strata_kept": {
+        "en:pet-food": 347,
+        "en:dog-and-cat-food": 330,
+        "en:dog-food": 33,
+        "en:snacks": 28,
+        "en:cat-food": 23,
+        "en:meats-and-their-products": 19,
+        "en:plant-based-foods-and-beverages": 10,
+        "en:seafood": 10
+      },
+      "selected": 800,
+      "region_selected": 102
+    }
+  },
+  "total": 10000,
+  "catalog_sha256": "f627b147b885aa9773faff3efc0fbeae26482079724359ecc289ca3b1e336487"
+}

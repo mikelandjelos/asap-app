@@ -46,3 +46,10 @@ local.properties
 
 # Maven build output
 backend/target/
+
+# T-011 ML workspace
+.venv/
+data/raw/
+data/processed/
+.ipynb_checkpoints/
+__pycache__/

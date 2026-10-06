@@ -1,6 +1,6 @@
 # AI/statistical notebook verification contract
 
-Status: Required by D-025 (2026-10-06); no experiments executed and no model/algorithm selected by this document.
+Status: Required by D-025 (2026-10-06). Executed so far: `00_source_probes` (T-011/S2, provider statistics only). No AI-model experiment has run yet, and no model/algorithm selected by this document.
 
 Every AI/statistical component must have reproducible notebook evidence before its performance is described as verified in the report. Cover existing candidate ideas and any component added later. A component may share a notebook with related stages if its tests and results are separately identifiable.
 

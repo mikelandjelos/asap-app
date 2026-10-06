@@ -170,6 +170,22 @@ curl --fail-with-body \
 
 The expected response is a `KNOWN` fixture product and two `RESULTS` items with `mode: DETERMINISTIC_FIXTURE` and `placeholder: true`. This is integration scaffolding, not an AI recommendation. The canonical editable data remains `docs/fixtures/i1-products.json`; Maven packages that file directly.
 
+## ML workspace (T-011)
+
+Python 3.13 with packages pinned in `ml/requirements.txt`, installed in a git-ignored `.venv`:
+
+```sh
+python3 -m venv .venv && .venv/bin/pip install -r ml/requirements.txt
+# Raw exports (git-ignored): download the three CSVs named in data/catalog_manifest.json into data/raw/,
+# then record checksums and the download time:
+(cd data/raw && sha256sum *.gz > sha256.txt && date -u +%FT%TZ > download_utc.txt)
+.venv/bin/python -m ml.asap_ml.catalog            # -> data/processed/catalog.jsonl + manifest
+.venv/bin/python ml/build_nb00.py                 # regenerate notebook source
+.venv/bin/jupyter nbconvert --to notebook --execute --inplace notebooks/00_source_probes.ipynb
+```
+
+Provider probes (`ml/probes/run_probes.py`) make live calls. Rerun them only with explicit approval.
+
 ## Documentation synchronization guide
 
 | Change | Also update |

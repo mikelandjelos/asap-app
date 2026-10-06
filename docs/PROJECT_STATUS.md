@@ -14,6 +14,11 @@ T-010/S1 is accepted as a working draft; T-010/S2–S3 are deferred (D-026). T-0
 
 The report now includes the repository link and current scope/notebook requirements; see `DOCUMENTATION_AUDIT.md` for the latest build evidence. The presentation remains an explicitly deferred earlier snapshot under `presentation/README.md`; diagrams require an approved design extension. Earlier page counts and test records below describe their dated stage, not newly measured results.
 
+T-011/S2 (complete, awaiting acceptance):
+- Provider priority and the offline catalog are selected (D-029). `data/processed/catalog.jsonl` holds 10,000 products; it is git-ignored and reproducible from `data/catalog_manifest.json`.
+- The first executed notebook is `notebooks/00_source_probes.ipynb`.
+- The Python ML workspace is `ml/`, with a pinned `ml/requirements.txt` and a local `.venv`.
+
 ## Available artifacts
 
 - A phased product plan in `TODO.md`, transcribed and normalized from `meditations/sept_3.pdf`.
