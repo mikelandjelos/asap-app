@@ -363,3 +363,9 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - **Map:** 60 theme bubbles (size = theme size), a "You" marker, the last scanned product and the history as dots.
   - **History:** device-only JSON (newest 50, 90 days, clear action); the newest 20 events are sent. Local display fields stay on the device.
 - **Rationale:** easiest to demo and discover; matches the v2 contract exactly (no extra backend computation); keeps the DOMAIN_MODEL privacy boundary.
+
+## D-039 — "Analytics" tab replaces "Map"; PCA is its main chart
+
+- **Date:** 2026-10-06
+- **Decision (user):** The third bottom tab is **Analytics**, with a chart icon. The PCA "you vs themes" map (D-033) is its main chart. Further personal-analytics charts sit below it, which brings the end-phase personal analytics dashboard (D-033) into S7d. The exact secondary charts are agreed before S7d.
+- **Supersedes:** the "Map" tab naming in D-038.

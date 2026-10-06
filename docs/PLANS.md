@@ -659,7 +659,7 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 | S7a | Data layer: strict v2 Retrofit client + validator; device history store (app-private JSON, newest 50, 90-day max age, clear); `PRODUCT_VIEWED` recorded after a known product is shown; newest 20 sent | unit tests (client, validator, store ordering/limits/expiry), lint |
 | S7b | Material 3 shell: Material Components, light/dark theme, single Activity + bottom navigation (Scan, Product, Map, History), scanner flow moved over, English strings | build, lint, tests, phone launch |
 | S7c | Product screen: product card (theme chip, source/attribution), results list with mode label, tap a result to open it, all states (loading/empty/unknown/unavailable/error + retry) | tests for UI models, phone check of each state |
-| S7d | Map ("you vs themes", custom Canvas view) + History screen (list, clear, privacy notice) | phone check, screenshots |
+| S7d | **Analytics** tab (chart icon, D-039): PCA "you vs themes" as the main chart plus further personal analytics, and the History screen (list, clear, privacy notice) | phone check, screenshots |
 | S7e | Accessibility and end-to-end verification on the phone: TalkBack labels, 48 dp targets, contrast, 200 % font, dark mode | checklist + screenshots; Android/backend test counts |
 
   The UI decisions (visual style, navigation, results layout, map content) are asked of the user before S7b. S7a needs none of them.

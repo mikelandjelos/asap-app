@@ -32,7 +32,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S7a: v2 klijent sa striktnom validacijom, lokalna istorija (50/90 dana/brisanje), slanje najnovijih 20 događaja. (41 test, lint 0.)
   - [x] S7b: Material 3 okvir, donja navigacija, tema. (34 testa, lint 0; zelena tema svetla/tamna.)
   - [ ] S7c: ekran proizvoda i rezultata sa svim stanjima.
-  - [ ] S7d: mapa „ti naspram tema“ i ekran istorije.
+  - [ ] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije.
   - [ ] S7e: pristupačnost i provera na telefonu.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
 
@@ -120,7 +120,7 @@ Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.
 ## Završna faza pre izveštaja — D-033
 
 - [ ] Postaviti backend na jeftin server posle MVP-a (npr. DigitalOcean/Hetzner, ~2–4 GB RAM), HTTPS, release build aplikacije sa produkcionim URL-om; razmotriti int8 kvantizaciju modela radi manje memorije (zahteva parity proveru).
-- [ ] Dashboard lične analitike pored istorije i PCA prikaza (sadržaj i metrike dogovoriti; radi se na kraju MVP-a).
+- [ ] Dashboard lične analitike — premešten u S7d kao ekran „Analytics“ (D-039); proširenja na kraju MVP-a.
 - [ ] Doraditi PCA prikaz „ti naspram tema“ (centroid korisnika među centroidima 60 tema); detalje prodiskutovati pre S7.
 
 ## Obavezne dodatne MVP provere — D-025
