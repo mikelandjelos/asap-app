@@ -378,4 +378,4 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   2. Implement the CNN/TFLite barcode scanner replacement **before** the report, because deep learning for barcode reading is a stated project component.
   3. Discard the current report draft and write a new report from scratch, following instructions the user will give.
   4. Only after the report: thorough user-perspective testing, demo preparation, presentation, deployment, and post-MVP work. Post-MVP work includes the refit pipeline, designed with Airflow-style orchestration.
-- **Supersedes:** D-026/D-040 ordering details where they conflict, the T-010/S1 draft as the basis of the final report, and the plan to finish the presentation before testing.
+- **Supersedes:** D-026 ordering details where they conflict, the T-010/S1 draft as the basis of the final report, and the plan to finish the presentation before testing.
