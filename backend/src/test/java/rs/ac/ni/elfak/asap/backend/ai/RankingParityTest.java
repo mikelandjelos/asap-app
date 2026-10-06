@@ -81,9 +81,9 @@ class RankingParityTest {
             float[] typeVector = encoder.encode(c.typeText());
             assertEquals(c.cluster(), PersonalRanker.nearestCluster(bundle.clusterCentroids(), typeVector), c.typeText());
             assertArrayEquals(c.xy(), engine.mapPosition(typeVector), fx.tolerances().xyAbs() * 10);
-            double[] scores = retriever.relevance(encoder.encode(c.fullText()), c.fullText());
-            int[] candidates = HybridRetriever.candidates(scores, Set.of(), bundle.manifest().params().candidatePool());
-            int[] top = PersonalRanker.mmr(candidates, scores, bundle.embeddings(), bundle.manifest().params().mmrLambda(), 10);
+            assertEquals(c.variantKey(), ProductText.variantKey(c.product().name(), c.product().brand()));
+            int[] top = engine.recommendUncatalogued(encoder.encode(c.fullText()), c.fullText(), c.variantKey(), List.of())
+                    .items().stream().mapToInt(RecommendationEngine.Ranked::index).toArray();
             assertTrue(overlap(c.mmrTop(), top) >= 9, "top-10 overlap for " + c.fullText());
         }
     }
@@ -157,7 +157,12 @@ class RankingParityTest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record NewProductCase(String fullText, String typeText, int cluster, double[] xy, int[] mmrTop) {
+    record NewProductCase(NewProduct product, String fullText, String typeText, String variantKey, int cluster, double[] xy,
+            int[] mmrTop) {
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    record NewProduct(String name, String brand) {
     }
 
     record AssignmentCase(int index, int cluster, double[] xy) {

@@ -58,6 +58,17 @@ def candidates(scores, exclude, pool):
     return order[:pool][np.isfinite(s[order[:pool]])]
 
 
+def collapsed(scores, exclude, keys, query_key, pool, variant_pool):
+    seen, out = {query_key}, []
+    for i in candidates(scores, exclude, variant_pool):
+        if keys[i] not in seen:
+            seen.add(keys[i])
+            out.append(int(i))
+            if len(out) == pool:
+                break
+    return out
+
+
 def mmr(cand, scores, E, lam, n):
     cand = list(cand)
     sim = E[cand] @ E[cand].T
@@ -91,6 +102,7 @@ def main(bundle_dir):
     E, TE, C = mats["embeddings.f32"], mats["type_embeddings.f32"], mats["cluster_centroids.f32"]
     mean, comps = mats["pca_mean.f32"], mats["pca_components.f32"]
     prm = man["params"]
+    keys = [c["variantKey"] for c in cat]
     fx = json.loads((b / "fixtures/parity.json").read_text())
     tol = fx["tolerances"]
     checks["catalog_rows"] = len(cat) == man["products"] == len(E) and [c["index"] for c in cat] == list(range(len(cat)))
@@ -119,7 +131,7 @@ def main(bundle_dir):
     for case in fx["retrieval"]:
         q = case["queryIndex"]
         r = relevance(E[q], rows[q])
-        cand = candidates(r, {q}, prm["candidate_pool"])
+        cand = collapsed(r, {q}, keys, keys[q], prm["candidate_pool"], prm["variant_pool"])
         ok &= same_ranking(cand, case["candidates"], r, tol["scoreAbs"]) and np.allclose(r[case["candidates"]], case["scores"], atol=tol["scoreAbs"])
         ok &= same_ranking(mmr(case["candidates"], r, E, prm["mmr_lambda"], prm["results"]), case["mmrTop"], r, tol["scoreAbs"])
     checks["retrieval_and_mmr_parity"] = bool(ok)
@@ -138,7 +150,7 @@ def main(bundle_dir):
                 cents.append(v / np.linalg.norm(v))
             p = max(cents, key=lambda v: float(v @ E[q]))
             s = (1 - prm["beta"]) * r + prm["beta"] * (E @ p)
-        cand = candidates(s, {q, *h}, prm["candidate_pool"])
+        cand = collapsed(s, {q, *h}, keys, keys[q], prm["candidate_pool"], prm["variant_pool"])
         ok &= ready == u["readiness"] and same_ranking(cand, u["candidates"], s, tol["scoreAbs"])
         ok &= same_ranking(mmr(u["candidates"], s, E, prm["mmr_lambda"], prm["results"]), u["mmrTop"], s, tol["scoreAbs"])
         if h:

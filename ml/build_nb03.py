@@ -44,9 +44,12 @@ nb.cells = [
          "pd.Series({'tune_users': len(tune), 'test_users': len(test), 'test_out_of_interest_share': np.mean([u['outside'] for u in test]),\n"
          "           'mean_interests': np.mean([len(u['interests']) for u in test]), 'eligible_top_categories': len(tops)})"),
     code("for u in tune + test: u['rel'] = relevance(u['q'])  # cached hybrid relevance per user query\n"
+         "COLLAPSE = True  # S6c.1: one result per (name, brand) variant group; the query's own variants removed\n"
+         "keys = np.array([K.variant_key(p) for p in cat])\n"
          "def rank(u, method, beta=0.0, H=5.0):\n    if method == 'generic' or K.readiness(u['hist']) == 'COLD_START': s = u['rel']\n"
          "    else:\n        p = K.centroid_profile(E, u['hist'], H) if method == 'centroid' else K.multi_interest_profile(E, u['hist'], H, clusters, E[u['q']])\n"
-         "        s = K.personalized_scores(u['rel'], E, p, beta)\n    return s, K.candidates(s, {u['q'], *u['hist']})\n"
+         "        s = K.personalized_scores(u['rel'], E, p, beta)\n"
+         "    ex = {u['q'], *u['hist']}\n    return s, (K.collapsed_candidates(s, ex, keys, keys[u['q']]) if COLLAPSE else K.candidates(s, ex))\n"
          "def score_users(users, method, beta=0.0, H=5.0):\n    return np.array([K.graded_ndcg(rank(u, method, beta, H)[1], u['gains']) for u in users])"),
     md("## 2. Tuning β and half-life H (tuning users only)"),
     code("betas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]; Hs = [3.0, 5.0, 10.0, np.inf]\ngrid = []\n"
@@ -91,6 +94,14 @@ nb.cells = [
          "msw[['cluster_coverage@10', 'leaf_coverage@10']].plot(ax=ax[1], marker='o', title='Coverage of 10 results'); ax[1].axvline(LAM, ls='--', c='grey')\n"
          "plt.tight_layout(); plt.savefig(OUT / 'mmr_tradeoff.png', dpi=150); plt.show(); print('λ* =', LAM); msw.round(4)"),
     code("mmr_test = pd.DataFrame({'relevance_only (λ=1)': mmr_eval(test, 1.0), f'mmr (λ={LAM})': mmr_eval(test, LAM)}).T; mmr_test.round(4)"),
+    md("## 5b. Variant collapse (S6c.1)\nSame normalized name + brand = package/size variants (4.1 % of the catalog). "
+       "Compare the final MMR top-10 on test users without and with the collapse: share of lists that contain variants of each "
+       "other or of the query, and graded nDCG@10."),
+    code("def variant_stats(collapse):\n    global COLLAPSE\n    COLLAPSE = collapse; dup, nd = [], []\n"
+         "    for u in test:\n        s, c = rank(u, CHOSEN, BETA, H); top = K.mmr(c, s, E, LAM); ks = list(keys[top])\n"
+         "        dup.append(len(set(ks)) < len(ks) or keys[u['q']] in ks); nd.append(K.graded_ndcg(top, u['gains']))\n"
+         "    COLLAPSE = True\n    return {'lists_with_variants': float(np.mean(dup)), 'ndcg@10': float(np.mean(nd))}\n"
+         "variants = pd.DataFrame({'without_collapse': variant_stats(False), 'with_collapse': variant_stats(True)}).T; variants.round(4)"),
     md("## 6. MMR edge cases"),
     code("u = test[0]; s, c = rank(u, CHOSEN, BETA, H)\nE2 = np.vstack([E, E[c[0]]]); s2 = np.append(s, s[c[0]] - 1e-6); c2 = np.insert(c, 1, len(E))  # exact duplicate of the top item\n"
          "edge = {'lambda1_equals_relevance_order': bool(np.array_equal(K.mmr(c, s, E, 1.0), c[:10])),\n"
@@ -100,7 +111,7 @@ nb.cells = [
          "        'no_repeats': len(set(K.mmr(c, s, E, LAM))) == 10}; edge"),
     md("## 7. Runtime of one personalized request (desktop CPU, catalog 10k)"),
     code("u = test[1]\ndef full_request():\n    r = relevance(u['q']); p = K.multi_interest_profile(E, u['hist'], H, clusters, E[u['q']]) if CHOSEN == 'multi_interest' else K.centroid_profile(E, u['hist'], H)\n"
-         "    s = K.personalized_scores(r, E, p, BETA); return K.mmr(K.candidates(s, {u['q'], *u['hist']}), s, E, LAM)\n"
+         "    s = K.personalized_scores(r, E, p, BETA); return K.mmr(K.collapsed_candidates(s, {u['q'], *u['hist']}, keys, keys[u['q']]), s, E, LAM)\n"
          "rt = {'full_request': R.timed(full_request, 100), 'mmr_only': R.timed(lambda: K.mmr(c, s, E, LAM), 200)}; rt"),
     md("## 8. Export"),
     code("summary = {'env': env, 'users': {'tune': len(tune), 'test': len(test)}, 'chosen': {'method': CHOSEN, 'beta': BETA, 'half_life': H, 'mmr_lambda': LAM,\n"
@@ -108,7 +119,7 @@ nb.cells = [
          "  'tuning_best': {m: {c: (None if not np.isfinite(v) else round(float(v), 4)) for c, v in r.items()} for m, r in best.iterrows()}, 'generic_tune_ndcg@10': round(float(generic_tune), 4),\n"
          "  'test': pers.to_dict(orient='index'), 'test_diffs_vs_generic': diffs, 'cold_start': cold.to_dict(orient='records'),\n"
          "  'mmr_sweep_tune': {str(l): {c: round(float(v), 4) for c, v in r.items()} for l, r in msw.iterrows()},\n"
-         "  'mmr_test': {i: {c: round(float(v), 4) for c, v in r.items()} for i, r in mmr_test.iterrows()}, 'mmr_edge_cases': edge, 'runtime_ms': rt}\n"
+         "  'mmr_test': {i: {c: round(float(v), 4) for c, v in r.items()} for i, r in mmr_test.iterrows()}, 'mmr_edge_cases': edge, 'runtime_ms': rt,\n  'variant_collapse': {i: {c: round(float(v), 4) for c, v in r.items()} for i, r in variants.iterrows()}}\n"
          "(OUT / 'summary.json').write_text(json.dumps(summary, indent=2, default=lambda o: None if isinstance(o, float) and not np.isfinite(o) else str(o)))\n"
          "grid.to_csv(OUT / 'personalization_grid.csv', index=False); msw.round(4).to_csv(OUT / 'mmr_sweep.csv'); pers.to_csv(OUT / 'personalization_test.csv')\n"
          "print(json.dumps({k: summary[k] for k in ('chosen', 'test_diffs_vs_generic')}, indent=1))"),

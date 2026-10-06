@@ -79,3 +79,25 @@ def graded_ndcg(ranked, grades, k=10):
     ideal = np.sort(grades[grades > 0])[::-1][:k].astype(float)
     idcg = ((2 ** ideal - 1) / np.log2(np.arange(2, len(ideal) + 2))).sum()
     return float(dcg / idcg) if idcg else 0.0
+
+
+VARIANT_POOL = 200  # candidates inspected before collapsing variants down to the MMR pool
+
+
+def variant_key(product):
+    """Normalized (name, brand): products sharing it are package/size variants of one item (S6c.1)."""
+    import re
+    norm = lambda s: re.sub(r"\s+", " ", (s or "").lower()).strip()  # noqa: E731
+    return norm(product["name"]) + "␟" + norm(product.get("brand"))
+
+
+def collapsed_candidates(scores, exclude, keys, query_key, pool=50):
+    """Top candidates with one item per variant key (best score wins) and the query's own variants removed."""
+    seen, out = {query_key}, []
+    for i in candidates(scores, exclude, VARIANT_POOL):
+        if keys[i] not in seen:
+            seen.add(keys[i])
+            out.append(i)
+            if len(out) == pool:
+                break
+    return np.array(out, dtype=int)

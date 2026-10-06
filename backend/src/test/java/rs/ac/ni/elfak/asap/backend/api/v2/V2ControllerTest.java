@@ -76,7 +76,8 @@ class V2ControllerTest {
         assertThat(body.at("/recommendations/status").asString()).isEqualTo("RESULTS");
         assertThat(body.at("/recommendations/mode").asString()).isEqualTo("GENERIC_SEMANTIC");
         assertThat(body.at("/recommendations/historyState").asString()).isEqualTo("COLD_START");
-        assertThat(body.at("/recommendations/diversification/lambda").asDouble()).isEqualTo(0.6);
+        assertThat(body.at("/recommendations/diversification/lambda").asDouble())
+                .isEqualTo(engine.bundle().manifest().params().mmrLambda());
         JsonNode items = body.at("/recommendations/items");
         assertThat(items).hasSize(10);
         Set<String> ids = new HashSet<>();

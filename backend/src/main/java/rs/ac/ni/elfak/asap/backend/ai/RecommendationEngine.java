@@ -27,6 +27,7 @@ public final class RecommendationEngine {
     private final HybridRetriever retriever;
     private final Params params;
     private final int[] clusters;
+    private final String[] variantKeys;
     private final Map<String, Integer> byBarcode = new HashMap<>();
     private final Map<String, Integer> byId = new HashMap<>();
 
@@ -36,8 +37,10 @@ public final class RecommendationEngine {
         this.params = bundle.manifest().params();
         List<CatalogEntry> catalog = bundle.catalog();
         this.clusters = new int[catalog.size()];
+        this.variantKeys = new String[catalog.size()];
         for (CatalogEntry entry : catalog) {
             clusters[entry.index()] = entry.cluster();
+            variantKeys[entry.index()] = entry.variantKey();
             byBarcode.put(key(entry.barcode().value(), entry.barcode().format()), entry.index());
             byId.put(entry.id(), entry.index());
         }
@@ -72,7 +75,16 @@ public final class RecommendationEngine {
         return rank(queryIndex, bundle.embeddings().row(queryIndex), relevance, history);
     }
 
+    /** Pipeline for a product outside the catalog, given its encoded vector, full text and variant key. */
+    public Result recommendUncatalogued(float[] queryVector, String fullText, String variantKey, List<Integer> history) {
+        return rank(-1, variantKey, queryVector, retriever.relevance(queryVector, fullText), history);
+    }
+
     private Result rank(int queryIndex, float[] queryVector, double[] relevance, List<Integer> history) {
+        return rank(queryIndex, variantKeys[queryIndex], queryVector, relevance, history);
+    }
+
+    private Result rank(int queryIndex, String queryKey, float[] queryVector, double[] relevance, List<Integer> history) {
         boolean personal = PersonalRanker.sufficient(history, params.minDistinctHistory());
         double[] scores = relevance;
         if (personal) {
@@ -83,7 +95,7 @@ public final class RecommendationEngine {
         if (queryIndex >= 0) {
             exclude.add(queryIndex);
         }
-        int[] candidates = HybridRetriever.candidates(scores, exclude, params.candidatePool());
+        int[] candidates = collapseVariants(HybridRetriever.candidates(scores, exclude, params.variantPool()), queryKey);
         int[] top = PersonalRanker.mmr(candidates, scores, bundle.embeddings(), params.mmrLambda(), params.results());
         List<Ranked> items = new ArrayList<>(top.length);
         for (int index : top) {
@@ -92,6 +104,24 @@ public final class RecommendationEngine {
         double[] you = history.isEmpty() ? null : mapPosition(PersonalRanker.youVector(bundle.typeEmbeddings(), history));
         return new Result(personal ? Mode.PERSONALIZED_HISTORY : Mode.GENERIC_SEMANTIC,
                 personal ? HistoryState.APPLIED : HistoryState.COLD_START, List.copyOf(items), you);
+    }
+
+    /** One candidate per (name, brand) variant group, best score first; the query's own variants are dropped (S6c.1). */
+    private int[] collapseVariants(int[] ranked, String queryKey) {
+        Set<String> seen = new HashSet<>();
+        if (queryKey != null) {
+            seen.add(queryKey);
+        }
+        List<Integer> out = new ArrayList<>(params.candidatePool());
+        for (int index : ranked) {
+            if (seen.add(variantKeys[index])) {
+                out.add(index);
+                if (out.size() == params.candidatePool()) {
+                    break;
+                }
+            }
+        }
+        return out.stream().mapToInt(Integer::intValue).toArray();
     }
 
     public double[] catalogMapPosition(int index) {

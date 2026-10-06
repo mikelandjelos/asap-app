@@ -35,7 +35,7 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
   - `status`: `RESULTS`, `EMPTY` or `NOT_APPLICABLE`. `NOT_APPLICABLE` is returned when the product is unknown; it has no `mode` and `historyState` is `NOT_USED`.
   - `mode`: `GENERIC_SEMANTIC` (`historyState: COLD_START`; fewer than 3 distinct catalogued products in history) or `PERSONALIZED_HISTORY` (`APPLIED`).
   - `pipelineVersion` is the bundle version. `diversification` is `{method: "MMR", lambda}`.
-  - `items` holds up to 10 results; the query and history products are never included. Each item has:
+  - `items` holds up to 10 results; the query and history products are never included, and neither are variants sharing the query's or another result's normalized name + brand (S6c.1). Each item has:
     - `rank` (1-based);
     - `product {id, barcode, name, brand, category}` and `theme`;
     - `evidence {score, scoreType, modelVersion}`, where `scoreType` is `HYBRID_RELEVANCE` or `PERSONALIZED_HYBRID_RELEVANCE`. The score is raw, comparable only within one response, and is not a percentage (DOMAIN_MODEL rule).

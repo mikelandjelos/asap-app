@@ -10,10 +10,9 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S6c is done and committed (`docs/V2_CONTRACT.md`). Await acceptance; then the user decides between S6c.1 and S6d.
-  - **S6c.1:** collapse same name+brand variants; update `ml/asap_ml/ranking.py`, rerun notebook 03, re-export the bundle and port to Java.
-  - **S6d:** router with live OFF/UPCitemdb.
-  - **Phone:** the user will see changes only after the full UI (S7); no interim phone build.
+- **Next action:** T-011/S6c.1 is done and committed (D-036). Await acceptance, then explicit approval of S6d.
+  - **S6d scope:** product source router with OFF v3 and quota-guarded, non-cached UPCitemdb adapters (UPC-E → UPC-A) and field-level merge with provenance. Uncatalogued products go through `RecommendationEngine.recommendUncatalogued`. Tests use simulated HTTP responses, plus one manual live check.
+  - **Also pending before S7:** a human pass on the 60 theme labels.
   - Report work is deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.

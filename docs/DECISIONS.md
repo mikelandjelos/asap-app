@@ -324,3 +324,17 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Decision:** The backend runs the e5-small encoder in-process with `com.microsoft.onnxruntime:onnxruntime` 1.30.0 and `ai.djl.huggingface:tokenizers` 0.38.0. Char-TF-IDF, hybrid scoring and top-k are plain Java ports of the Python reference.
 - **Evidence:** `BundleParityTest` matches every fixture: TF-IDF within 1e-6 including Unicode edge cases, embedding cosine ≥ 0.999, and identical top-50 rankings and scores within 1e-4. Desktop timings: encode 9.2 ms; hybrid top-50 over 10k products 5.8 ms; startup indexing 4.8 s.
 - **Consequences:** The JAR grows to ~101 MB because of the bundled natives. No Python sidecar is needed (the design fallback in §4 is not used). Parity tests skip, with an explicit reason, when the git-ignored bundle is absent.
+
+## D-036 — Collapse same name+brand variants; MMR λ re-tuned to 0.7 (T-011/S6c.1)
+
+- **Date:** 2026-10-06
+- **Decision:**
+  - Before MMR, keep one candidate per normalized (name, brand) variant group (best score, among the top 200) and drop the query's own variants.
+  - Re-running the pre-declared λ rule then selects **λ = 0.7**, which supersedes D-032's λ = 0.6.
+  - Bundle versions hash the parameters and notebook summaries as well as the matrices.
+- **Evidence:**
+  - In `notebooks/03_personalization_mmr.ipynb` (section 5b), test top-10 lists with variants fall from 5.2 % to 0 %, at a cost of −0.0015 nDCG@10.
+  - MMR at λ = 0.7 costs −1.3 % nDCG for +13 % ILD.
+  - Personalization is unchanged: +0.0072 nDCG@10 vs generic (CI 0.0017–0.0124).
+  - Bundle `20261006-ee94fdb0` passes the verifier, and the Java suite passes 46/46.
+- **Rationale:** User-visible duplicates (e.g. 5× the same Carrefour product) were the main quality defect found in the S6c smoke test. Different brands with the same name stay, because they are genuine alternatives.

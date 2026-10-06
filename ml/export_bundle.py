@@ -60,18 +60,22 @@ def main(out_root=P / "bundle"):
     params = {"alpha": nb["01"]["hybrid"]["alpha"]["no_category"], "beta": ch["beta"], "mmr_lambda": ch["mmr_lambda"],
               "profile": ch["method"], "half_life": None if ch["half_life"] in (None, "inf") or ch["half_life"] == float("inf") else ch["half_life"],
               "history_window": ch["history_window"], "min_distinct_history": ch["min_distinct_history"],
-              "candidate_pool": ch["candidate_pool"], "results": ch["results"], "k": nb["02"]["k"]}
-    assert params == {"alpha": 0.9, "beta": 0.4, "mmr_lambda": 0.6, "profile": "multi_interest", "half_life": None,
-                      "history_window": 20, "min_distinct_history": 3, "candidate_pool": 50, "results": 10, "k": 60}, params
+              "candidate_pool": ch["candidate_pool"], "results": ch["results"], "k": nb["02"]["k"],
+              "variant_collapse": True, "variant_pool": K.VARIANT_POOL}
+    assert "variant_collapse" in nb["03"], "notebook 03 must include the S6c.1 variant-collapse evaluation"
+    assert params["profile"] == "multi_interest" and params["half_life"] is None, params
 
     full_texts = [R.product_text(p) for p in cat]
+    keys = [K.variant_key(p) for p in cat]
     type_texts = [R.product_text(p, "type") for p in cat]
     vec = TfidfVectorizer(**TFIDF_PARAMS).fit(full_texts)
     T = vec.transform(full_texts).tocsr()
     model_dir = P / "models/e5-small"
     hf_id, rev, prefix = R.MODELS["e5-small"]
 
-    version = time.strftime("%Y%m%d") + "-" + hashlib.sha256(E.tobytes() + centroids.tobytes()).hexdigest()[:8]
+    content = E.tobytes() + centroids.tobytes() + json.dumps(params, sort_keys=True).encode() + "".join(
+        sha(RES / d / "summary.json") for d in ("01_data_embeddings_retrieval", "02_clustering_pca", "03_personalization_mmr")).encode()
+    version = time.strftime("%Y%m%d") + "-" + hashlib.sha256(content).hexdigest()[:8]
     out = Path(out_root) / version
     if out.exists():
         shutil.rmtree(out)
@@ -86,7 +90,8 @@ def main(out_root=P / "bundle"):
                 "brand": p["brand"] or None, "category": p["category"] or None, "description": p["description"] or None,
                 "tags": [R.tag_label(t) for t in p["categories"]],
                 "provenance": {"type": "FALLBACK_DATASET", "source": p["source"]},
-                "fullText": full_texts[i], "typeText": type_texts[i], "cluster": int(clusters[i])}, ensure_ascii=False) + "\n")
+                "fullText": full_texts[i], "typeText": type_texts[i], "cluster": int(clusters[i]),
+                "variantKey": keys[i]}, ensure_ascii=False) + "\n")
     write_f32(out / "embeddings.f32", E)
     write_f32(out / "type_embeddings.f32", TE)
     write_f32(out / "cluster_centroids.f32", centroids)
@@ -122,7 +127,7 @@ def main(out_root=P / "bundle"):
     retrieval_cases = []
     for q in sample[:10]:
         r = relevance(E[q], T[q])
-        cand = K.candidates(r, {q}, params["candidate_pool"])
+        cand = K.collapsed_candidates(r, {q}, keys, keys[q], params["candidate_pool"])
         retrieval_cases.append({"queryIndex": q, "candidates": cand.tolist(), "scores": [round(float(x), 6) for x in r[cand]],
                                 "mmrTop": K.mmr(cand, r, E, params["mmr_lambda"], params["results"]).tolist()})
     users = []
@@ -139,7 +144,7 @@ def main(out_root=P / "bundle"):
             s = K.personalized_scores(r, E, p, params["beta"])
         else:
             s = r
-        cand = K.candidates(s, {q, *hist}, params["candidate_pool"])
+        cand = K.collapsed_candidates(s, {q, *hist}, keys, keys[q], params["candidate_pool"])
         you = R.normalize(TE[hist].mean(0, keepdims=True))[0] if hist else None
         users.append({"historyIndices": hist, "queryIndex": q, "readiness": ready,
                       "mode": "PERSONALIZED_HISTORY" if ready == "SUFFICIENT" else "GENERIC_SEMANTIC",
@@ -151,8 +156,8 @@ def main(out_root=P / "bundle"):
         ft, tt = R.product_text(np_), R.product_text(np_, "type")
         qv, tv = enc.encode([ft])[0], enc.encode([tt])[0]
         r = relevance(qv, vec.transform([ft]).tocsr())
-        cand = K.candidates(r, set(), params["candidate_pool"])
-        new_cases.append({"product": np_, "fullText": ft, "typeText": tt, "cluster": int(S.assign(tv[None], centroids)[0]),
+        cand = K.collapsed_candidates(r, set(), keys, K.variant_key(np_), params["candidate_pool"])
+        new_cases.append({"product": np_, "fullText": ft, "typeText": tt, "variantKey": K.variant_key(np_), "cluster": int(S.assign(tv[None], centroids)[0]),
                           "xy": [round(float(x), 6) for x in S.pca_project(tv, pca["mean"], pca["components"], 2)[0]],
                           "mmrTop": K.mmr(cand, r, E, params["mmr_lambda"], params["results"]).tolist()})
     assign_cases = [{"index": i, "cluster": int(clusters[i]), "xy": [round(float(x), 6) for x in S.pca_project(TE[i], pca["mean"], pca["components"], 2)[0]]}
@@ -161,7 +166,7 @@ def main(out_root=P / "bundle"):
     fixtures = {"tolerances": {"embeddingCosineMin": 0.999, "tfidfAbs": 1e-6, "scoreAbs": 1e-4, "xyAbs": 1e-4},
                 "notes": "Indices refer to catalog.jsonl 'index'. Ranked lists must match exactly unless two scores differ by < scoreAbs.",
                 "embedding": embed_cases, "tfidf": tfidf_cases, "retrieval": retrieval_cases, "users": users,
-                "newProducts": new_cases, "assignment": assign_cases}
+                "newProducts": new_cases, "variantKeyNote": "name + U+241F + brand, each lowercased and whitespace-collapsed", "assignment": assign_cases}
     (out / "fixtures/parity.json").write_text(json.dumps(fixtures, ensure_ascii=False))
 
     files = sorted(p for p in out.rglob("*") if p.is_file())

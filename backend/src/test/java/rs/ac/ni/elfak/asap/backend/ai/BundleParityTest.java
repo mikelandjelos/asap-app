@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.AfterAll;
@@ -78,10 +80,13 @@ class BundleParityTest {
 
     @Test
     void hybridRetrievalMatchesPython() {
-        int pool = bundle.manifest().params().candidatePool();
+        var params = bundle.manifest().params();
         for (RetrievalCase c : fx.retrieval()) {
             double[] scores = retriever.relevance(c.queryIndex());
-            int[] got = HybridRetriever.candidates(scores, Set.of(c.queryIndex()), pool);
+            // fixtures hold variant-collapsed candidates (S6c.1): one per variantKey, query's own variants removed
+            Set<String> seen = new HashSet<>(Set.of(bundle.catalog().get(c.queryIndex()).variantKey()));
+            int[] got = Arrays.stream(HybridRetriever.candidates(scores, Set.of(c.queryIndex()), params.variantPool()))
+                    .filter(i -> seen.add(bundle.catalog().get(i).variantKey())).limit(params.candidatePool()).toArray();
             assertSameRanking(c.candidates(), got, scores);
             for (int i = 0; i < c.candidates().length; i++) {
                 assertEquals(c.scores()[i], scores[c.candidates()[i]], fx.tolerances().scoreAbs());
@@ -98,8 +103,8 @@ class BundleParityTest {
             assertEquals(c.typeText(), ProductText.type(p.name(), p.category(), p.categories()));
             double[] scores = retriever.relevance(encoder.encode(full), full);
             int[] top = HybridRetriever.candidates(scores, Set.of(), 10);
-            assertTrue(Set.of(java.util.Arrays.stream(top).boxed().toArray()).containsAll(
-                    java.util.Arrays.stream(c.mmrTop()).limit(1).boxed().toList()), "best match retrieved for: " + full);
+            assertTrue(Set.of(Arrays.stream(top).boxed().toArray()).containsAll(
+                    Arrays.stream(c.mmrTop()).limit(1).boxed().toList()), "best match retrieved for: " + full);
         }
     }
 

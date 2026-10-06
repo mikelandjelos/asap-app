@@ -2,9 +2,14 @@ package rs.ac.ni.elfak.asap.backend.ai;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 /** Embedding/TF-IDF text rules, identical to {@code ml/asap_ml/retrieval.py#product_text}. */
 public final class ProductText {
+
+    private static final Pattern WHITESPACE =
+            Pattern.compile("\\s+", Pattern.UNICODE_CHARACTER_CLASS);
 
     private ProductText() {
     }
@@ -28,6 +33,15 @@ public final class ProductText {
         add(parts, category);
         add(parts, joinLabels(categoryTags));
         return parts.isEmpty() ? name : String.join(" | ", parts);
+    }
+
+    /** Normalized (name, brand) grouping package/size variants; same rule as {@code ranking.variant_key}. */
+    public static String variantKey(String name, String brand) {
+        return normalize(name) + "\u241f" + normalize(brand);
+    }
+
+    private static String normalize(String s) {
+        return s == null ? "" : WHITESPACE.matcher(s.toLowerCase(Locale.ROOT)).replaceAll(" ").strip();
     }
 
     /** {@code en:plant-based-foods} becomes {@code plant based foods}. */

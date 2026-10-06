@@ -635,6 +635,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Tests:** 46/46 (+5 ranking parity, +8 v2 HTTP, +1 no-bundle 404).
   - **Smoke test:** packaged-JAR startup 5.4 s, about 9 ms per request over HTTP.
   - **Issue found:** same name+brand variants flood results; S6c.1 is proposed.
+- **S6c:** accepted 2026-10-06 (“do as per you recommended”); S6c.1 approved in the same message.
+- **S6c.1:** complete, awaiting acceptance.
+  - **Changes:** `ranking.variant_key/collapsed_candidates`; notebook 03 re-executed with a new before/after section; exporter/verifier/Java updated (`variantKey` exported per product; `ProductText.variantKey` and `recommendUncatalogued` for S6d).
+  - **Versioning bug fixed:** bundle versions now hash the params and notebook summaries, since the first re-export kept the old version id. New bundle `20261006-ee94fdb0`.
+  - **Verification:** verifier 10/10; Java 46/46. The smoke query now returns 10 distinct products.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

@@ -38,7 +38,8 @@ public final class BundleModel {
             @JsonProperty("min_distinct_history") int minDistinctHistory,
             @JsonProperty("candidate_pool") int candidatePool,
             int results,
-            int k) {
+            int k,
+            @JsonProperty("variant_pool") int variantPool) {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -58,7 +59,8 @@ public final class BundleModel {
             ProvenanceEntry provenance,
             String fullText,
             String typeText,
-            int cluster) {
+            int cluster,
+            String variantKey) {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

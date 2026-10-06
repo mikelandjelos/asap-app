@@ -181,7 +181,11 @@ New `POST /api/v2/scan-queries`; v1/I1 stays frozen. The request adds an optiona
 
 **Ranking and API (S6c):** `PersonalRanker` (readiness, multi-interest profile, MMR, cluster, PCA, "you"), `RecommendationEngine` and the conditional `AiConfiguration`/`V2Controller` implement [V2_CONTRACT.md](V2_CONTRACT.md). A personalized recommendation takes 7.7 ms in-process and about 9 ms over HTTP.
 
-**Known issue (found in the S6c smoke test):** variants with the same normalized name and the same brand (412 products, 4.1 %) can fill a result list, e.g. 5× Carrefour "Petits pains grilles". The proposed fix is to collapse the same (name, brand) among candidates and exclude the query's own (name, brand). It needs notebook re-verification (S6c.1).
+**Variant collapse (S6c.1, D-036):** same normalized name + brand variants (412 products, 4.1 %) used to fill result lists, e.g. 5× Carrefour "Petits pains grilles".
+- **Rule:** inspect the top 200, keep one candidate per (name, brand) at its best score, drop the query's own variants, then pool 50 → MMR.
+- **Effect (notebook 03):** test lists containing variants fall from 5.2 % to 0 %, at a cost of −0.0015 nDCG@10.
+- **MMR re-tuned:** with the same pre-declared rule MMR now selects λ = 0.7, costing −1.3 % nDCG for +13 % ILD.
+- **Open:** theme auto-labels remain visibly imperfect in results and need the human pass before S7.
 
 `GET /api/v2/catalog-map` returns the cluster-coloured catalog sample and cluster labels. The artifact bundle is versioned, and the backend refuses to start on a checksum mismatch.
 
