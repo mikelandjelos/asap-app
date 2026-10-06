@@ -104,6 +104,8 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 
 ## Posle MVP-a — D-028
 
+Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.
+
 - [ ] PCA prikaz „ti naspram drugih korisnika (prijatelja)“ — zahteva naloge i društvene podatke (D-033).
 - [ ] Praćenje drifta i ponovno fitovanje: kako katalog raste, meriti drift (npr. objašnjena varijansa novih proizvoda u postojećoj PCA bazi, udaljenost do centroida, pokrivenost TF-IDF rečnika) i po pragu ponovo fitovati PCA, klastere i TF-IDF, uz verzionisanje artefakata i notebook proveru.
 - [ ] (Stretch) Konsolidator podataka: pozadinski proces koji izvorne zapise (API-ji, izvozi, scraper) spaja u jedinstveni „zlatni zapis“ po proizvodu (razrešavanje entiteta, GTIN aliasi, rešavanje konflikata po pouzdanosti i svežini izvora, poreklo po polju), sa eventualnom konzistentnošću; zahteva bazu podataka.
