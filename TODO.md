@@ -98,6 +98,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 
 ## Posle MVP-a — D-028
 
+- [ ] (Stretch) AI web scraper u backend-u koji postepeno prikuplja podatke o proizvodima i obogaćuje katalog; zahteva poštovanje robots.txt/uslova korišćenja, licenci i ograničenja brzine, uz evidentirano poreklo podataka. Uz vektorsku bazu i pretragu ovo je napredni stretch cilj.
 - [ ] Uvesti pravu bazu podataka sa vektorskom pretragom (PostgreSQL + pgvector ili Qdrant) iza interfejsa pretrage; uporediti sa in-memory osnovom.
 
 ## Obavezne dodatne MVP provere — D-025
