@@ -668,6 +668,15 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Code:** `V2ApiModels`, `V2ApiService`, `V2ResponseValidator`, `V2Client` and `ApiClientFactory.createV2`; `history/HistoryStore`. API 23-safe (no `java.time`/`List.of`).
   - **Tests:** 41/41 (+9: request serialization, validator accept/reject cases, client failure classes, store order/window/limits/expiry/clear/corrupt file). Lint 0.
   - **Visible change:** none on the phone yet (UI in S7b–c).
+- **S7a:** accepted 2026-10-06 (“good, you can continue”); S7b approved in the same message.
+- **S7b:** complete in code, awaiting acceptance.
+  - **Dependency:** Material Components 1.14.0.
+  - **Theme and shell:** grocery-green Material 3 light/dark palette (`values[-night]/colors.xml`); single Activity with toolbar + `BottomNavigationView` (Scan, Product, Map, History) and kept-alive fragments; edge-to-edge insets.
+  - **Scan screen:** scan card and the 5 most recent distinct products (tap to reopen).
+  - **Session:** `ScanSession` (v2 successor of the v1 coordinator: cancellation, stale-drop, history recorded only for KNOWN) held in `SessionViewModel`.
+  - **Product screen:** state summary (full card and list in S7c). Map/History are placeholders until S7d.
+  - **Removed:** v1-only UI classes `ScanQueryCoordinator` and `I1OutcomeUiModel`, with their tests; v1 strings replaced by English UI strings.
+  - **Verification:** tests 34/34 (+5 `ScanSessionTest`, −7 removed v1 UI tests); lint 0 after fixing 4 findings; debug APK 9.2 MB installed on the phone. The visual check is pending because the phone was locked.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

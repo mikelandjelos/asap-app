@@ -32,7 +32,7 @@ public class HistoryStoreTest {
         return new HistoryStore(file, () -> now, () -> "e" + (nextId++));
     }
 
-    static V2ApiModels.ProductData product(String id) {
+    public static V2ApiModels.ProductData product(String id) {
         V2ApiModels.ProductData p = new V2ApiModels.ProductData();
         p.id = id;
         p.barcode = new I1ApiModels.BarcodeData("3017620422003", "EAN_13");

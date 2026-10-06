@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.ASAP" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:fontFamily">sans</item>
+    <style name="Theme.ASAP" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/asap_primary</item>
+        <item name="colorOnPrimary">@color/asap_on_primary</item>
+        <item name="colorPrimaryContainer">@color/asap_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/asap_on_primary_container</item>
+        <item name="colorSecondary">@color/asap_secondary</item>
+        <item name="colorOnSecondary">@color/asap_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/asap_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/asap_on_secondary_container</item>
+        <item name="android:colorBackground">@color/asap_background</item>
+        <item name="colorOnBackground">@color/asap_on_background</item>
+        <item name="colorSurface">@color/asap_surface</item>
+        <item name="colorOnSurface">@color/asap_on_surface</item>
+        <item name="colorSurfaceVariant">@color/asap_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/asap_on_surface_variant</item>
+        <item name="colorOutline">@color/asap_outline</item>
+        <item name="colorError">@color/asap_error</item>
+        <item name="colorOnError">@color/asap_on_error</item>
     </style>
 </resources>

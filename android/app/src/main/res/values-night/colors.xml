@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="asap_primary">#8FD8A4</color>
+    <color name="asap_on_primary">#00391B</color>
+    <color name="asap_primary_container">#055229</color>
+    <color name="asap_on_primary_container">#C9EDD2</color>
+    <color name="asap_secondary">#FFB68A</color>
+    <color name="asap_on_secondary">#542100</color>
+    <color name="asap_secondary_container">#783300</color>
+    <color name="asap_on_secondary_container">#FFE0C9</color>
+    <color name="asap_background">#0F1510</color>
+    <color name="asap_on_background">#DFE4DC</color>
+    <color name="asap_surface">#171D18</color>
+    <color name="asap_on_surface">#DFE4DC</color>
+    <color name="asap_surface_variant">#414942</color>
+    <color name="asap_on_surface_variant">#C1C9C0</color>
+    <color name="asap_outline">#8B938A</color>
+    <color name="asap_error">#F2B8B5</color>
+    <color name="asap_on_error">#601410</color>
+</resources>

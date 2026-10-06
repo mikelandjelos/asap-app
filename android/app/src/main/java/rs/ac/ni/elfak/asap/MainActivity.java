@@ -1,223 +1,127 @@
 package rs.ac.ni.elfak.asap;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
+import rs.ac.ni.elfak.asap.ui.PlaceholderFragment;
+import rs.ac.ni.elfak.asap.ui.ProductFragment;
+import rs.ac.ni.elfak.asap.ui.ScanFragment;
+import rs.ac.ni.elfak.asap.ui.SessionViewModel;
 
-import rs.ac.ni.elfak.asap.network.ApiClientFactory;
-import rs.ac.ni.elfak.asap.network.I1ApiModels;
-import rs.ac.ni.elfak.asap.network.ScanQueryClient;
-
+/** Single-Activity shell with bottom navigation (D-038); screens are fragments sharing one {@link ScanSession}. */
 public final class MainActivity extends AppCompatActivity {
 
-    private Button scanButton;
-    private TextView statusText;
-    private TextView resultText;
-    private View outcomeContent;
-    private TextView productStatusText;
-    private TextView productDetailsText;
-    private TextView recommendationStatusText;
-    private TextView placeholderText;
-    private TextView recommendationsText;
+    /** Scanner outcome shown on the Scan screen when no request is made. */
+    public interface ScanStatusListener {
+        void onScanStatus(int messageRes);
+    }
+
     private GmsBarcodeScanner scanner;
-    private ScanQueryCoordinator queryCoordinator;
+    private ScanSession session;
+    private BottomNavigationView nav;
+    private ScanStatusListener scanStatusListener;
+    private final ScanSession.Listener autoOpenProduct = state -> {
+        if (state.phase == ScanSession.Phase.LOADING && nav != null && nav.getSelectedItemId() != R.id.nav_product) {
+            nav.setSelectedItemId(R.id.nav_product);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        session = new ViewModelProvider(this).get(SessionViewModel.class).session();
 
-        scanButton = findViewById(R.id.scan_button);
-        statusText = findViewById(R.id.status_text);
-        resultText = findViewById(R.id.result_text);
-        outcomeContent = findViewById(R.id.outcome_content);
-        productStatusText = findViewById(R.id.product_status_text);
-        productDetailsText = findViewById(R.id.product_details_text);
-        recommendationStatusText = findViewById(R.id.recommendation_status_text);
-        placeholderText = findViewById(R.id.placeholder_text);
-        recommendationsText = findViewById(R.id.recommendations_text);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(bars.left, bars.top, bars.right, 0);
+            return insets;
+        });
 
-        GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder()
-                .setBarcodeFormats(
-                        Barcode.FORMAT_EAN_13,
-                        Barcode.FORMAT_EAN_8,
-                        Barcode.FORMAT_UPC_A,
-                        Barcode.FORMAT_UPC_E)
+        scanner = GmsBarcodeScanning.getClient(this, new GmsBarcodeScannerOptions.Builder()
+                .setBarcodeFormats(Barcode.FORMAT_EAN_13, Barcode.FORMAT_EAN_8, Barcode.FORMAT_UPC_A, Barcode.FORMAT_UPC_E)
                 .enableAutoZoom()
-                .build();
-        scanner = GmsBarcodeScanning.getClient(this, options);
-        queryCoordinator = new ScanQueryCoordinator(
-                ApiClientFactory.createDefault(),
-                this::runOnUiThread,
-                new QueryView());
+                .build());
 
-        scanButton.setOnClickListener(view -> startScan());
-    }
-
-    private void startScan() {
-        queryCoordinator.onScanStarted();
-        hideOutcome();
-        setScanning(true);
-
-        scanner.startScan()
-                .addOnSuccessListener(barcode -> {
-                    setScanning(false);
-                    queryCoordinator.onScanSucceeded(
-                            barcode.getRawValue(),
-                            barcode.getDisplayValue(),
-                            barcode.getFormat());
-                })
-                .addOnCanceledListener(() -> {
-                    setScanning(false);
-                    statusText.setText(R.string.scan_cancelled);
-                })
-                .addOnFailureListener(exception -> {
-                    setScanning(false);
-                    if (ScannerFailureClassifier.isModuleUnavailable(exception)) {
-                        statusText.setText(R.string.scan_module_unavailable);
-                    } else {
-                        statusText.setText(R.string.scan_failed);
-                    }
-                });
-    }
-
-    private void setScanning(boolean scanning) {
-        scanButton.setEnabled(!scanning);
-        if (scanning) {
-            statusText.setText(R.string.scan_in_progress);
+        nav = findViewById(R.id.bottom_nav);
+        nav.setOnItemSelectedListener(item -> {
+            show(item.getItemId());
+            return true;
+        });
+        if (savedInstanceState == null) {
+            show(R.id.nav_scan);
         }
     }
 
     @Override
-    protected void onDestroy() {
-        queryCoordinator.close();
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+        session.addListener(autoOpenProduct);
     }
 
-    private void hideOutcome() {
-        outcomeContent.setVisibility(View.GONE);
+    @Override
+    protected void onStop() {
+        session.removeListener(autoOpenProduct);
+        super.onStop();
     }
 
-    private void renderOutcome(I1ApiModels.ScanQueryResponse response) {
-        I1OutcomeUiModel model = I1OutcomeUiModel.fromValidatedResponse(response);
-        outcomeContent.setVisibility(View.VISIBLE);
-
-        switch (model.productState) {
-            case KNOWN:
-                productStatusText.setText(R.string.product_known);
-                productDetailsText.setText(getString(
-                        R.string.product_details_format,
-                        model.product.name,
-                        model.product.brand,
-                        model.product.category,
-                        model.product.description,
-                        model.product.barcode.value,
-                        model.product.barcode.format,
-                        model.product.provenance.source));
-                productDetailsText.setVisibility(View.VISIBLE);
-                break;
-            case UNKNOWN:
-                productStatusText.setText(R.string.product_unknown);
-                productDetailsText.setVisibility(View.GONE);
-                break;
-            case UNAVAILABLE:
-                productStatusText.setText(R.string.product_unavailable);
-                productDetailsText.setVisibility(View.GONE);
-                break;
-        }
-
-        switch (model.recommendationState) {
-            case RESULTS:
-                recommendationStatusText.setText(R.string.recommendations_results);
-                StringBuilder renderedItems = new StringBuilder();
-                for (I1ApiModels.RecommendationItem item : model.items) {
-                    if (renderedItems.length() > 0) {
-                        renderedItems.append('\n');
-                    }
-                    renderedItems.append(getString(
-                            R.string.recommendation_item_format,
-                            item.rank,
-                            item.product.name,
-                            item.product.brand,
-                            item.product.category));
-                }
-                recommendationsText.setText(renderedItems.toString());
-                recommendationsText.setVisibility(View.VISIBLE);
-                break;
-            case EMPTY:
-                recommendationStatusText.setText(R.string.recommendations_empty);
-                recommendationsText.setVisibility(View.GONE);
-                break;
-            case UNAVAILABLE:
-                recommendationStatusText.setText(R.string.recommendations_unavailable);
-                recommendationsText.setVisibility(View.GONE);
-                break;
-            case NOT_APPLICABLE:
-                recommendationStatusText.setText(R.string.recommendations_not_applicable);
-                recommendationsText.setVisibility(View.GONE);
-                break;
-        }
-
-        placeholderText.setVisibility(model.placeholder ? View.VISIBLE : View.GONE);
+    public ScanSession session() {
+        return session;
     }
 
-    private final class QueryView implements ScanQueryCoordinator.View {
+    public void setScanStatusListener(ScanStatusListener listener) {
+        scanStatusListener = listener;
+    }
 
-        @Override
-        public void showEmptyBarcode() {
-            hideOutcome();
-            statusText.setText(R.string.scan_empty);
-            resultText.setText(R.string.scan_no_value);
+    public void startScan() {
+        status(R.string.scan_in_progress);
+        scanner.startScan()
+                .addOnSuccessListener(barcode -> {
+                    status(0);
+                    session.onScanned(barcode.getRawValue(), barcode.getDisplayValue(), barcode.getFormat());
+                })
+                .addOnCanceledListener(() -> status(R.string.scan_cancelled))
+                .addOnFailureListener(e -> status(ScannerFailureClassifier.isModuleUnavailable(e)
+                        ? R.string.scan_module_unavailable : R.string.scan_failed));
+    }
+
+    private void status(int messageRes) {
+        if (scanStatusListener != null) {
+            scanStatusListener.onScanStatus(messageRes);
         }
+    }
 
-        @Override
-        public void showUnsupportedBarcode(String value) {
-            hideOutcome();
-            statusText.setText(R.string.scan_unsupported);
-            resultText.setText(value);
-        }
-
-        @Override
-        public void showLoading(String value) {
-            hideOutcome();
-            statusText.setText(R.string.api_loading);
-            resultText.setText(value);
-        }
-
-        @Override
-        public void showResponse(String value, I1ApiModels.ScanQueryResponse response) {
-            statusText.setText(R.string.api_response_received);
-            resultText.setText(value);
-            renderOutcome(response);
-        }
-
-        @Override
-        public void showFailure(String value, ScanQueryClient.Failure failure) {
-            hideOutcome();
-            switch (failure.kind()) {
-                case TRANSPORT:
-                    statusText.setText(R.string.api_transport_failure);
-                    break;
-                case HTTP:
-                    statusText.setText(getString(
-                            R.string.api_http_failure,
-                            failure.httpStatus() == null ? 0 : failure.httpStatus()));
-                    break;
-                case INVALID_RESPONSE:
-                default:
-                    statusText.setText(R.string.api_invalid_response);
-                    break;
+    /** Shows the tab's fragment, creating it once and keeping the others alive but hidden. */
+    private void show(int itemId) {
+        FragmentManager fm = getSupportFragmentManager();
+        String tag = "tab_" + itemId;
+        var tx = fm.beginTransaction().setReorderingAllowed(true);
+        for (Fragment f : fm.getFragments()) {
+            if (!tag.equals(f.getTag())) {
+                tx.hide(f);
             }
-            resultText.setText(value);
         }
+        Fragment target = fm.findFragmentByTag(tag);
+        if (target == null) {
+            target = itemId == R.id.nav_scan ? new ScanFragment()
+                    : itemId == R.id.nav_product ? new ProductFragment()
+                    : new PlaceholderFragment();
+            tx.add(R.id.content, target, tag);
+        } else {
+            tx.show(target);
+        }
+        tx.commit();
     }
-
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fresh grocery green (D-038). Contrast of text pairs checked against WCAG AA (>= 4.5:1). -->
+<resources>
+    <color name="asap_primary">#1F6B3A</color>
+    <color name="asap_on_primary">#FFFFFF</color>
+    <color name="asap_primary_container">#C9EDD2</color>
+    <color name="asap_on_primary_container">#062611</color>
+    <color name="asap_secondary">#9A4A12</color>
+    <color name="asap_on_secondary">#FFFFFF</color>
+    <color name="asap_secondary_container">#FFE0C9</color>
+    <color name="asap_on_secondary_container">#331300</color>
+    <color name="asap_background">#F6F9F4</color>
+    <color name="asap_on_background">#171D18</color>
+    <color name="asap_surface">#FFFFFF</color>
+    <color name="asap_on_surface">#171D18</color>
+    <color name="asap_surface_variant">#E3EAE2</color>
+    <color name="asap_on_surface_variant">#414942</color>
+    <color name="asap_outline">#717971</color>
+    <color name="asap_error">#B3261E</color>
+    <color name="asap_on_error">#FFFFFF</color>
+</resources>
