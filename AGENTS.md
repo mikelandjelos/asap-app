@@ -74,3 +74,4 @@ Before reporting the subtask complete, in the same change as the implementation:
 
 Run checks proportional to the change. Documentation changes must at least validate links/paths manually and compile affected LaTeX documents when their sources or assets change. Build commands are documented in `docs/WORKFLOW.md`.
 - App UI text, fixture data and code are English (D-028).
+- Report/presentation work is deferred to the very end (user, 2026-10-06); do not edit or rebuild them during T-011 subtasks — log report-relevant facts in PLANS/handoff instead.
