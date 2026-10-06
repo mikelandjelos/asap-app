@@ -75,6 +75,12 @@ Several sources are combined behind one interface so the best available record i
 ## 6. Clustering
 
 - **Method (recommended):** spherical k-means (k-means on L2-normalized embeddings). k is swept (*initial* 10–60) and chosen using cosine silhouette, Davies–Bouldin, stability (ARI across 10 seeds/bootstraps) and NMI/ARI against top-level OFF categories as an external check. HDBSCAN on PCA-reduced vectors is the comparator.
+- **S4 result (notebook 02, D-031):** clustering runs on a **product-type space**: e5 embedding of the English OFF taxonomy text (`product_text(..., 'type')`). It does not use the retrieval embedding.
+  - On the full-text embedding, clusters split by language/country (median top-level purity 0.23).
+  - The type space at **k = 60** gives silhouette 0.28 (vs 0.05), Davies–Bouldin 2.2 (vs 4.5), NMI 0.72 and median purity 0.78.
+  - Seed stability is moderate (ARI 0.62). The original pre-declared rule (stability ≥ 0.7 first) would have picked the language clusters; the user approved a revised, documented rule.
+  - HDBSCAN marks 31 % of products as noise, so it is rejected because every product needs a theme.
+  - An uncatalogued product needs one extra encoding of its type text, or its name if it has no category; nearest-centroid assignment then takes ~7 µs.
 - **Labels:** each cluster gets a short human-readable label from its most frequent categories and c-TF-IDF terms, reviewed manually.
 - **Runtime roles:**
   1. A **theme chip** on the product and each recommendation.
@@ -95,6 +101,9 @@ Several sources are combined behind one interface so the best available record i
 ## 8. PCA
 
 - **Visual analytics (runtime):** PCA(2) is fitted offline on centered catalog embeddings; its mean and components ship in the bundle. The backend projects the query, recommendations and history, and the app draws a **product map**: a catalog sample coloured by cluster, plus the scanned product, recommendations and history. It is drawn in a custom Android `View`/Canvas with no chart library.
+- **S4 result:** reduction is **not adopted**. d = 128 keeps only 0.74 top-10 overlap, though nDCG@10 drops just 0.004; 169 dimensions are needed for 80 % of the variance. Production keeps the full 384-d retrieval vectors.
+  - The map uses PCA(2) of the type space: PC1 + PC2 = 10.8 % of variance, with a readable sweets/drinks → dairy/grains → meat/pet-food gradient but heavy overlap. It is an orientation aid only.
+  - Exported: `pca.npz`, plus `map_sample.json` with 25 products per cluster.
 - **Dimensionality study (notebook 02):** explained-variance curve, then recall@10 overlap and nDCG@10 at d ∈ {16, 32, 64, 128} vs full. Production keeps full vectors unless some d keeps overlap ≥ 0.95 with nDCG@10 loss ≤ 0.01.
 
 ## 9. MMR diversification

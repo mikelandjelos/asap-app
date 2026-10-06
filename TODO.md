@@ -19,7 +19,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [x] S1a: tekst aplikacije i fixture podaci prevedeni na engleski (D-028); 32 Android testa, lint 0, 23 backend testa.
 - [x] S2: ograničene probe (26 poziva), ruter spajanjem polja daje 100 % naziv/brend/kategorija naspram 58–67 %; izabran redosled izvora i offline katalog od 10.000 proizvoda (D-029, notebook 00).
 - [x] S3: notebook 01 — skup podataka, embedding i top-N pretraga. (e5-small > MiniLM; hibrid 0,9·e5 + 0,1·TF-IDF značajno bolji od oba; ONNX paritet 0,9999999; D-030.)
-- [ ] S4: notebook 02 — klasterizacija i PCA.
+- [x] S4: notebook 02 — klasterizacija i PCA. (Prostor tipa proizvoda, k = 60, čistoća 0,78; PCA redukcija nije usvojena; mapa PCA(2); D-031.)
 - [ ] S5: notebook 03 — personalizacija i MMR.
 - [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
 - [ ] S7: Android istorija i doteran UI.
@@ -70,7 +70,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [x] Izabrati model za generisanje semantičkih vektorskih reprezentacija. (T-011/S2–S3)
 - [x] Implementirati generisanje i čuvanje embedding vektora. (T-011/S2–S3)
 - [ ] Implementirati top-N semantičku pretragu kosinusnom sličnošću.
-- [ ] Definisati i implementirati obaveznu klasterizaciju (cilj, podaci, algoritam, uloga u aplikaciji i evaluacija se tek odobravaju).
+- [ ] Definisati i implementirati obaveznu klasterizaciju. (Definisano i provereno u notebook-u 02, D-031; integracija u S6.)
 - [ ] Implementirati i notebook eksperimentima proveriti obaveznu MMR diversifikaciju rezultata.
 - [ ] Definisati i testirati korisnički profil kao centroid istorije interakcija.
 - [ ] Izmeriti kvalitet i odziv PoC-a pre integracije u sistem.

@@ -264,3 +264,21 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - S6 adds a Java char-TF-IDF analyzer, with the vocabulary and idf exported from Python, and a parity test.
   - The ONNX model is 470 MB fp32; quantization can be evaluated later if size matters.
   - Category agreement remains a proxy; human judgements are a recommended addition before the final report.
+
+## D-031 — Clustering in product-type space; revised k rule; no PCA reduction (T-011/S4)
+
+- **Date:** 2026-10-06
+- **Decision:**
+  - Spherical k-means (`n_init` = 20, seed 20261006) runs on e5 embeddings of the English OFF taxonomy text, with **k = 60**. It does not use the full-text retrieval embedding.
+  - The revised selection rule picks k ∈ [20, 60] by the best average rank of silhouette, Davies–Bouldin, NMI vs top-level categories and stability.
+  - PCA(2) of this space drives the product map. Retrieval keeps full 384-d vectors (no PCA reduction).
+- **Rationale and process:**
+  - The pre-declared rule (stability ≥ 0.7 first) selected full-text k = 15, whose clusters grouped products by language/country (median purity 0.23).
+  - The user chose the product-type option for user experience (“yeah”, 2026-10-06), after seeing both results.
+  - The original rule's choice is kept in `notebooks/02_clustering_pca.ipynb`.
+- **Evidence (k = 60):** silhouette 0.279, Davies–Bouldin 2.20, NMI(top) 0.724, median purity 0.78, seed ARI 0.618. HDBSCAN marks 31 % of products as noise.
+- **Limitations:**
+  - Stability is moderate, so a fixed versioned clustering is shipped.
+  - Agreement with categories is partly by construction.
+  - The auto-labels need a human pass.
+  - k sits at the edge of the searched range.

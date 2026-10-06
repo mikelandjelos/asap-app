@@ -22,6 +22,8 @@ def tag_label(tag):
 
 def product_text(p, variant="full"):
     """`full` is the production text; `no_category` excludes every category/label field (leak-free eval)."""
+    if variant == "type":  # product-type text: English OFF taxonomy only (used for clustering/map)
+        return " | ".join(x for x in [p.get("category", ""), ", ".join(tag_label(t) for t in p.get("categories", []))] if x) or p["name"]
     parts = [p["name"], p.get("brand", "")]
     if variant == "full":
         parts += [p.get("category", ""), ", ".join(tag_label(t) for t in p.get("categories", [])),

@@ -607,6 +607,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Gate failure:** the provisional gate "embedding beats TF-IDF" failed for e5 alone. A hybrid tuned on disjoint queries passes with significance (D-030).
   - **Issues fixed during the run:** `optimum` was incompatible with transformers 5.x, so export is now done with `torch.onnx` (wrapper module).
   - **Report facts for the end:** the leak-free methodology, the results table with CIs, the α sweep, ONNX parity and the latency table.
+- **S3:** accepted 2026-10-06 (“I accept S3”).
+- **S4:** Approved 2026-10-06 (“continue with S4”); complete, awaiting acceptance.
+  - **Run:** `ml/asap_ml/structure.py` added; `notebooks/02_clustering_pca.ipynb` executed clean with results in `notebooks/results/02_clustering_pca/`.
+  - **Rule revision:** the first run gave language clusters. A representation comparison (full / type / debiased) followed, and the user approved a revised selection rule (“yeah”, D-031) on UX grounds.
+  - **Report facts for the end:** the representation table, k sweep, rule revision, themes, PCA variance and reduction tables, and the map.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 
