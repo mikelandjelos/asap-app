@@ -3,10 +3,19 @@ package rs.ac.ni.elfak.asap.backend.ai;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Clock;
+import java.time.Duration;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import rs.ac.ni.elfak.asap.backend.sources.JavaHttpFetcher;
+import rs.ac.ni.elfak.asap.backend.sources.OpenFactsSource;
+import rs.ac.ni.elfak.asap.backend.sources.ProductRouter;
+import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.HttpFetcher;
+import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.ProductSource;
+import rs.ac.ni.elfak.asap.backend.sources.UpcItemDbSource;
 
 /**
  * AI pipeline beans, created only when {@code asap.bundle.dir} points at a bundle directory or at a bundle root
@@ -35,5 +44,26 @@ public class AiConfiguration {
     @Bean
     RecommendationEngine recommendationEngine(RuntimeBundle bundle, HybridRetriever retriever) {
         return new RecommendationEngine(bundle, retriever);
+    }
+
+    @Bean
+    HttpFetcher httpFetcher(@Value("${asap.sources.user-agent:ASAP/0.1 (https://github.com/mikelandjelos/asap-app)}") String userAgent) {
+        return new JavaHttpFetcher(userAgent);
+    }
+
+    /** Live product sources (D-029). Disable with {@code asap.sources.enabled=false}: only the catalog resolves. */
+    @Bean
+    ProductRouter productRouter(
+            HttpFetcher http,
+            @Value("${asap.sources.enabled:true}") boolean enabled,
+            @Value("${asap.sources.off.base-url:https://world.openfoodfacts.org}") String offUrl,
+            @Value("${asap.sources.upcitemdb.base-url:https://api.upcitemdb.com}") String upcUrl,
+            @Value("${asap.sources.upcitemdb.daily-quota:90}") int upcQuota,
+            @Value("${asap.sources.upcitemdb.min-spacing:11s}") Duration upcSpacing) {
+        List<ProductSource> sources = enabled
+                ? List.of(new OpenFactsSource(http, offUrl),
+                        new UpcItemDbSource(http, upcUrl, upcQuota, upcSpacing, Clock.systemUTC()))
+                : List.of();
+        return new ProductRouter(sources, Duration.ofSeconds(3), Duration.ofMillis(1500), Clock.systemUTC());
     }
 }

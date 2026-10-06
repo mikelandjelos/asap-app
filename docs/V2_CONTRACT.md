@@ -30,7 +30,10 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
 
 - `product.status`:
   - `KNOWN`: `data` holds the normalized product with `provenance`, `theme {id, label}` (type cluster, D-031) and `mapPosition {x, y}` (PCA(2), D-033).
-  - `UNKNOWN`: not in the catalog. S6d adds live providers.
+  - Products outside the catalog are resolved by the router (S6d, D-037): Open Food Facts v3 then UPCitemdb, field-level merge.
+    - `KNOWN` external products get `id: "gtin:<value>"`, `provenance {type: EXTERNAL_PROVIDER, source: "open_food_facts[+upcitemdb]"}`, `fieldSources {field: source}`, a theme and a map position (from their type text), and recommendations. If UPCitemdb contributed, `attribution` adds a UPCitemdb notice.
+  - `UNKNOWN`: every reachable source reports not found, or the code is a restricted in-store code (never sent out).
+  - `UNAVAILABLE`: nothing was found and at least one source failed (transport, 5xx/HTML, rate limit, local quota/spacing, open circuit). The product is not declared unknown.
 - `recommendations`:
   - `status`: `RESULTS`, `EMPTY` or `NOT_APPLICABLE`. `NOT_APPLICABLE` is returned when the product is unknown; it has no `mode` and `historyState` is `NOT_USED`.
   - `mode`: `GENERIC_SEMANTIC` (`historyState: COLD_START`; fewer than 3 distinct catalogued products in history) or `PERSONALIZED_HISTORY` (`APPLIED`).
@@ -42,13 +45,22 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
 - `you`: present when history contains catalogued products. `{historyUsed, mapPosition}` is the user's type-space centroid for the "you vs themes" map.
 - `attribution`: the ODbL notice. Clients must display it.
 
+**Router configuration:**
+- `asap.sources.enabled` (default `true`);
+- `asap.sources.off.base-url` and `asap.sources.upcitemdb.base-url`;
+- `asap.sources.upcitemdb.daily-quota` (default 90, below the provider's 100);
+- `asap.sources.upcitemdb.min-spacing` (default 11s);
+- `asap.sources.user-agent`.
+
+Fixed limits: 3 s total budget and 1.5 s per source. OFF results are cached (found 24 h, not found 1 h); UPCitemdb results are never cached. A source's circuit opens for 60 s after 3 consecutive failures.
+
 ## `GET /api/v2/catalog-map`
 
 `{pipelineVersion, attribution, themes[{id, label, size, x, y}], points[{id, theme, x, y}]}`: the 60 theme centroids and a 1,500-product sample (25 per theme) in PCA(2) coordinates.
 
 ## Verification
 
-`V2ControllerTest` (8 HTTP tests) covers:
+`V2ControllerTest` (10 HTTP tests, with a scripted fetcher and no network) covers:
 - generic results;
 - personalized results with the "you" map position;
 - cold start with repeats;
@@ -56,6 +68,11 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
 - every history error class plus an unknown field;
 - barcode rules;
 - the catalog map;
-- v1 coexistence.
+- v1 coexistence;
+- router resolution of an external product, and unavailable providers.
+
+`SourcesTest` (6) covers UPC-E expansion, restricted codes, OFF/UPCitemdb mapping and failure classes, quota/spacing, early stop, caching, field merge with provenance, and the circuit breaker.
+
+Live check (2026-10-06): Braun via UPCitemdb in 1.16 s (OFF miss first), Nutella via OFF in 0.17 s (0.07 s cached), Mlinci via OFF in 0.24 s (sparse: no category), Coke UPC-E via OFF in 0.13 s.
 
 `RankingParityTest` matches the Python fixtures for users, MMR, clusters and map positions. Packaged-JAR smoke test: 5.4 s startup and about 9 ms per request over HTTP on the desktop.

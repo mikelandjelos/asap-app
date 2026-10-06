@@ -36,6 +36,10 @@ Several sources are combined behind one interface so the best available record i
 - **UPC-E:** expand UPC-E to UPC-A before calling UPCitemdb, which rejects UPC-E (S2 evidence).
 - **Identity:** lookup may try GTIN aliases (UPC-A ↔ zero-prefixed EAN-13), but the scanned value/format stays the product identity (DOMAIN_MODEL rule).
 - **Domain revision required (applied in S6):** single `provenance` becomes a non-empty source list plus per-field provenance, and licence attribution is shown in the UI. This revises the T-008/S1 provenance object.
+- **S6d implementation (D-037):** `backend/.../sources/` (`OpenFactsSource`, `UpcItemDbSource`, `ProductRouter`, `JavaHttpFetcher`), wired into v2.
+  - Live findings: providers resolve real products in 0.13–1.2 s.
+  - Sparse records (e.g. no category) yield weak recommendations.
+  - Wrong theme auto-labels are now very visible ("Mashed vegetables" for Nutella), so the label pass is mandatory before S7.
 - **S2 evidence:** the bounded probes record per-provider and merged field completeness, so the "best quality" claim is measured rather than assumed. Final provider priority is selected from that evidence.
 
 ## 3. Offline dataset

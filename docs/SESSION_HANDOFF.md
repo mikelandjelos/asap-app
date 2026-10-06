@@ -10,9 +10,9 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S6c.1 is done and committed (D-036). Await acceptance, then explicit approval of S6d.
-  - **S6d scope:** product source router with OFF v3 and quota-guarded, non-cached UPCitemdb adapters (UPC-E → UPC-A) and field-level merge with provenance. Uncatalogued products go through `RecommendationEngine.recommendUncatalogued`. Tests use simulated HTTP responses, plus one manual live check.
-  - **Also pending before S7:** a human pass on the 60 theme labels.
+- **Next action:** T-011/S6 (a–d) is done and committed. Await S6d acceptance, then:
+  1. **Theme label pass:** propose labels for 60 themes from `cluster_themes.csv` terms/categories; the user confirms; rebuild the bundle.
+  2. **S7 plan:** Android v2 client, local history (JSON file), Material 3 single-Activity UI (Scan / Product / Map "you vs themes" / History), attribution, accessibility checks on the phone.
   - Report work is deferred. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rs.ac.ni.elfak.asap.backend.ai.BundleModel.CatalogEntry;
 import rs.ac.ni.elfak.asap.backend.ai.BundleModel.Theme;
+import rs.ac.ni.elfak.asap.backend.ai.OnnxTextEncoder;
 import rs.ac.ni.elfak.asap.backend.ai.PersonalRanker;
+import rs.ac.ni.elfak.asap.backend.ai.ProductText;
 import rs.ac.ni.elfak.asap.backend.ai.RecommendationEngine;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.BarcodeData;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.Provenance;
@@ -35,6 +37,8 @@ import rs.ac.ni.elfak.asap.backend.api.v2.V2Contract.ThemePoint;
 import rs.ac.ni.elfak.asap.backend.api.v2.V2Contract.ThemeRef;
 import rs.ac.ni.elfak.asap.backend.api.v2.V2Contract.You;
 import rs.ac.ni.elfak.asap.backend.barcode.BarcodeRules;
+import rs.ac.ni.elfak.asap.backend.sources.ProductRouter;
+import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.SourceRecord;
 
 /** AI-backed v2 scan query and catalog map (docs/V2_CONTRACT.md). Registered only when a bundle is configured. */
 @RestController
@@ -42,14 +46,20 @@ import rs.ac.ni.elfak.asap.backend.barcode.BarcodeRules;
 @ConditionalOnProperty(name = "asap.bundle.dir")
 public class V2Controller {
 
+    private static final String UPC_ATTRIBUTION = " Some product data from UPCitemdb.";
+
     private final RecommendationEngine engine;
+    private final ProductRouter router;
+    private final OnnxTextEncoder encoder;
     private final Map<Integer, Theme> themes;
     private final String modelVersion;
     private final String pipelineVersion;
     private final String attribution;
 
-    public V2Controller(RecommendationEngine engine) {
+    public V2Controller(RecommendationEngine engine, ProductRouter router, OnnxTextEncoder encoder) {
         this.engine = engine;
+        this.router = router;
+        this.encoder = encoder;
         var bundle = engine.bundle();
         this.themes = bundle.themes().stream().collect(Collectors.toMap(Theme::cluster, Function.identity()));
         this.modelVersion = bundle.manifest().model().id() + "@" + bundle.manifest().model().revision().substring(0, 7);
@@ -63,14 +73,36 @@ public class V2Controller {
         List<String> historyIds = HistoryValidator.validatedProductIds(request.history());
         List<Integer> history = engine.historyIndices(historyIds);
         var entry = engine.findByBarcode(barcode.value(), barcode.format().name());
-        if (entry.isEmpty()) {
-            You you = history.isEmpty() ? null : new You(history.size(), point(engine.mapPosition(
-                    PersonalRanker.youVector(engine.bundle().typeEmbeddings(), history))));
-            return new ScanQueryResponse(new ProductResponse("UNKNOWN", null),
-                    new RecommendationResponse("NOT_APPLICABLE", null, "NOT_USED", pipelineVersion, null, null), you, attribution);
+        ProductData productData;
+        RecommendationEngine.Result result;
+        String responseAttribution = attribution;
+        if (entry.isPresent()) {
+            CatalogEntry product = entry.get();
+            productData = productData(product);
+            result = engine.recommend(product.index(), history);
+        } else {
+            ProductRouter.Resolution resolution = router.resolve(barcode);
+            if (resolution.status() != ProductRouter.Status.KNOWN) {
+                You you = history.isEmpty() ? null : new You(history.size(), point(engine.mapPosition(
+                        PersonalRanker.youVector(engine.bundle().typeEmbeddings(), history))));
+                return new ScanQueryResponse(new ProductResponse(resolution.status().name(), null),
+                        new RecommendationResponse("NOT_APPLICABLE", null, "NOT_USED", pipelineVersion, null, null), you, attribution);
+            }
+            SourceRecord r = resolution.merged();
+            String fullText = ProductText.full(r.name(), r.brand(), r.category(), r.categoryTags(), r.labels(), r.description());
+            float[] typeVector = encoder.encode(ProductText.type(r.name(), r.category(), r.categoryTags()));
+            int cluster = PersonalRanker.nearestCluster(engine.bundle().clusterCentroids(), typeVector);
+            productData = new ProductData("gtin:" + barcode.value(), new BarcodeData(barcode.value(), barcode.format().name()),
+                    r.name(), r.brand(), r.category(), r.description(),
+                    r.categoryTags().stream().map(ProductText::tagLabel).toList(),
+                    new Provenance("EXTERNAL_PROVIDER", r.source()), resolution.fieldSources(), theme(cluster),
+                    point(engine.mapPosition(typeVector)));
+            result = engine.recommendUncatalogued(encoder.encode(fullText), fullText,
+                    ProductText.variantKey(r.name(), r.brand()), history);
+            if (resolution.sources().contains("upcitemdb")) {
+                responseAttribution = attribution + UPC_ATTRIBUTION;
+            }
         }
-        CatalogEntry product = entry.get();
-        RecommendationEngine.Result result = engine.recommend(product.index(), history);
         String scoreType = result.mode() == RecommendationEngine.Mode.PERSONALIZED_HISTORY
                 ? "PERSONALIZED_HYBRID_RELEVANCE" : "HYBRID_RELEVANCE";
         List<RecommendationItem> items = new ArrayList<>();
@@ -83,11 +115,11 @@ public class V2Controller {
         }
         String status = items.isEmpty() ? "EMPTY" : "RESULTS";
         return new ScanQueryResponse(
-                new ProductResponse("KNOWN", productData(product)),
+                new ProductResponse("KNOWN", productData),
                 new RecommendationResponse(status, result.mode().name(), result.historyState().name(), pipelineVersion,
                         new Diversification("MMR", engine.bundle().manifest().params().mmrLambda()), items),
                 result.you() == null ? null : new You(history.size(), point(result.you())),
-                attribution);
+                responseAttribution);
     }
 
     @GetMapping(path = "/catalog-map", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -100,7 +132,7 @@ public class V2Controller {
 
     private ProductData productData(CatalogEntry p) {
         return new ProductData(p.id(), barcode(p), p.name(), p.brand(), p.category(), p.description(), p.tags(),
-                new Provenance(p.provenance().type(), p.provenance().source()), theme(p.cluster()),
+                new Provenance(p.provenance().type(), p.provenance().source()), null, theme(p.cluster()),
                 point(engine.catalogMapPosition(p.index())));
     }
 

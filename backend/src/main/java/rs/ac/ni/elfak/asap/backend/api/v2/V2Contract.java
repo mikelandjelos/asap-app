@@ -3,6 +3,7 @@ package rs.ac.ni.elfak.asap.backend.api.v2;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.BarcodeData;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.BarcodeInput;
 import rs.ac.ni.elfak.asap.backend.api.ApiContract.Provenance;
@@ -40,6 +41,7 @@ public final class V2Contract {
             String description,
             List<String> tags,
             Provenance provenance,
+            Map<String, String> fieldSources,
             ThemeRef theme,
             MapPoint mapPosition) {
     }

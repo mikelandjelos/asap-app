@@ -640,6 +640,12 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Changes:** `ranking.variant_key/collapsed_candidates`; notebook 03 re-executed with a new before/after section; exporter/verifier/Java updated (`variantKey` exported per product; `ProductText.variantKey` and `recommendUncatalogued` for S6d).
   - **Versioning bug fixed:** bundle versions now hash the params and notebook summaries, since the first re-export kept the old version id. New bundle `20261006-ee94fdb0`.
   - **Verification:** verifier 10/10; Java 46/46. The smoke query now returns 10 distinct products.
+- **S6c.1:** accepted 2026-10-06 (“yes, go on, great”); S6d approved in the same message.
+- **S6d:** complete, awaiting acceptance.
+  - **Code:** `sources` package (types, OFF, UPCitemdb, router, fetcher), AI configuration properties, and the v2 uncatalogued path (`gtin:` ids, `fieldSources`, UPC attribution).
+  - **Tests:** 54/54 (+6 source/router unit, +2 HTTP with a scripted fetcher; the tests never use the network).
+  - **Live check:** about 5 OFF and 2 UPCitemdb calls; results in V2_CONTRACT.
+  - **Fix:** UPCitemdb spacing is now configurable (tests use 0 s).
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

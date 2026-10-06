@@ -21,13 +21,13 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
 - [x] S3: notebook 01 — skup podataka, embedding i top-N pretraga. (e5-small > MiniLM; hibrid 0,9·e5 + 0,1·TF-IDF značajno bolji od oba; ONNX paritet 0,9999999; D-030.)
 - [x] S4: notebook 02 — klasterizacija i PCA. (Prostor tipa proizvoda, k = 60, čistoća 0,78; PCA redukcija nije usvojena; mapa PCA(2); D-031.)
 - [x] S5: notebook 03 — personalizacija i MMR. (Višeinteresni profil, β = 0,4, +0,007 nDCG@10 značajno; MMR λ = 0,6: −4,9 % nDCG, +21 % raznovrsnost; D-032.)
-- [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
+- [x] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
   - [x] S6a: verzionisani paket artefakata + parity fiksture; nezavisna provera prolazi (D-034).
   - [x] S6b: Java učitavanje paketa, ONNX enkoder, char TF-IDF, hibridna pretraga, parity testovi. (32/32 testova; D-035.)
   - [x] S6c: Java profil, MMR, klasteri/PCA; v2 ugovor i endpoint; v1 ostaje. (46/46 testova; `docs/V2_CONTRACT.md`.)
   - [x] S6c.1: sažimanje duplikata istog naziva i brenda u rezultatima (4,1 % kataloga); provera u notebook-u 03 i nove parity fiksture. (5,2 % → 0 % lista sa varijantama; MMR λ = 0,7; D-036.)
   - [ ] Ručno pregledati i ispraviti nazive 60 tema pre S7 (automatske oznake su delom pogrešne).
-  - [ ] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima.
+  - [x] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima. (54/54 testova; živa provera 4 stvarna proizvoda; D-037.)
 - [ ] S7: Android istorija i doteran UI.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
 
@@ -86,7 +86,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 
 - [x] Implementirati kameru i skeniranje barkoda na mobilnom uređaju.
 - [x] Povezati barkod sa kontrolisanim metapodacima proizvoda preko backend API-ja i fizički potvrditi I1 tok.
-- [ ] Integrisati semantičku pretragu i preporuke.
+- [x] Integrisati semantičku pretragu i preporuke. (Backend v2, T-011/S6; Android u S7.)
 - [ ] Implementirati osnovni UI za proizvod, slične proizvode i personalizovane preporuke.
 - [ ] Dodati obradu grešaka, praznih rezultata i nedostupnosti eksternih servisa. (I1 stanja skenera, veze i domenskih ishoda su implementirana i relevantni fizički slučajevi potvrđeni; budući stvarni provider mora proširiti ovu proveru.)
 - [ ] Dodati automatske testove za ključne tokove.

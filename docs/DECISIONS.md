@@ -338,3 +338,17 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - Personalization is unchanged: +0.0072 nDCG@10 vs generic (CI 0.0017–0.0124).
   - Bundle `20261006-ee94fdb0` passes the verifier, and the Java suite passes 46/46.
 - **Rationale:** User-visible duplicates (e.g. 5× the same Carrefour product) were the main quality defect found in the S6c smoke test. Different brands with the same name stay, because they are genuine alternatives.
+
+## D-037 — Live product source router in the backend (T-011/S6d)
+
+- **Date:** 2026-10-06
+- **Decision:** Products missing from the catalog are resolved by `ProductRouter` and then ranked like catalogued products.
+  - **Order and budget:** OFF v3 (`product_type=all`) first, then UPCitemdb trial. Total budget 3 s, 1.5 s per source; the router stops once name, brand and category are known.
+  - **Merge:** field-level, first non-blank value in source order; the longest description wins. `fieldSources` provenance is exposed in v2.
+  - **Caching and limits:** OFF results are cached in memory (24 h found / 1 h not found). UPCitemdb is never cached and runs under a local daily quota of 90 with 11 s minimum spacing; UPC-E is expanded to UPC-A.
+  - **Failure handling:** restricted codes are never sent out. A source's circuit opens for 60 s after 3 failures. Source failures yield `UNAVAILABLE`, never `UNKNOWN`.
+- **Evidence:** `SourcesTest` and `V2ControllerTest` (no network) pass. A live check resolved Braun (UPCitemdb, 1.16 s), Nutella (OFF, 0.17 s; 0.07 s cached), Mlinci (OFF, 0.24 s) and Coke UPC-E (OFF, 0.13 s).
+- **Limitations:**
+  - The cache is in-memory only; persistence belongs to the post-MVP database/consolidator.
+  - Externally resolved products are not in the catalog, so they do not contribute to history profiles.
+  - Sparse provider records give weak recommendations.

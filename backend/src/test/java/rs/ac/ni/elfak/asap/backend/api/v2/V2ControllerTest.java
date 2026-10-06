@@ -16,15 +16,21 @@ import org.junit.jupiter.api.condition.EnabledIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import rs.ac.ni.elfak.asap.backend.ai.BundleModel.CatalogEntry;
 import rs.ac.ni.elfak.asap.backend.ai.RecommendationEngine;
+import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.HttpFetcher;
+import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.Response;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 @EnabledIf("rs.ac.ni.elfak.asap.backend.ai.BundleParityTest#bundleAvailable")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
-        properties = "asap.bundle.dir=${asap.bundle.root:../data/processed/bundle}")
+        properties = {"asap.bundle.dir=${asap.bundle.root:../data/processed/bundle}",
+                "asap.sources.upcitemdb.min-spacing=0s"})
 class V2ControllerTest {
 
     private static final String QUERY = "/api/v2/scan-queries";
@@ -39,6 +45,56 @@ class V2ControllerTest {
     private RecommendationEngine engine;
 
     private final HttpClient http = HttpClient.newHttpClient();
+
+    /** External barcodes used with the scripted fetcher; checked to be outside the catalog. */
+    static final String OFF_ONLY = "3859999999997";
+    static final String DOWN = "3859999999980";
+
+    /** Replaces the real HTTP fetcher: these tests never call external providers. */
+    @TestConfiguration
+    static class ScriptedSources {
+        @Bean
+        @Primary
+        HttpFetcher scriptedFetcher() {
+            return (url, timeout) -> {
+                if (url.contains(DOWN)) {
+                    throw new java.io.IOException("connection refused");
+                }
+                if (url.contains("/api/v3/product/" + OFF_ONLY)) {
+                    return new Response(200, "application/json", """
+                            {"product":{"product_name":"Test mlinci","brands":"Podravka",
+                             "categories_tags":["en:cereals-and-potatoes","en:pastas"],"generic_name":"Baked pasta sheets"}}""");
+                }
+                return url.contains("upcitemdb") || url.contains("/prod/trial/")
+                        ? new Response(200, "application/json", "{\"code\":\"OK\",\"items\":[]}")
+                        : new Response(404, "application/json", "{\"status\":\"failure\"}");
+            };
+        }
+    }
+
+    @Test
+    void productOutsideTheCatalogResolvesThroughTheRouterAndGetsRecommendations() throws Exception {
+        assertThat(engine.findByBarcode(OFF_ONLY, "EAN_13")).isEmpty();
+        JsonNode body = objectMapper.readTree(post(QUERY, """
+                {"barcode":{"value":"%s","format":"EAN_13"}}""".formatted(OFF_ONLY)).body());
+        assertThat(body.at("/product/status").asString()).isEqualTo("KNOWN");
+        assertThat(body.at("/product/data/id").asString()).isEqualTo("gtin:" + OFF_ONLY);
+        assertThat(body.at("/product/data/name").asString()).isEqualTo("Test mlinci");
+        assertThat(body.at("/product/data/provenance/type").asString()).isEqualTo("EXTERNAL_PROVIDER");
+        assertThat(body.at("/product/data/fieldSources/name").asString()).isEqualTo("open_food_facts");
+        assertThat(body.at("/product/data/theme/label").asString()).isNotBlank();
+        assertThat(body.at("/recommendations/status").asString()).isEqualTo("RESULTS");
+        assertThat(body.at("/recommendations/items")).hasSize(10);
+    }
+
+    @Test
+    void unreachableProvidersMakeTheProductUnavailableNotUnknown() throws Exception {
+        assertThat(engine.findByBarcode(DOWN, "EAN_13")).isEmpty();
+        JsonNode body = objectMapper.readTree(post(QUERY, """
+                {"barcode":{"value":"%s","format":"EAN_13"}}""".formatted(DOWN)).body());
+        assertThat(body.at("/product/status").asString()).isEqualTo("UNAVAILABLE");
+        assertThat(body.at("/recommendations/status").asString()).isEqualTo("NOT_APPLICABLE");
+    }
 
     private CatalogEntry product(int index) {
         return engine.bundle().catalog().get(index);
