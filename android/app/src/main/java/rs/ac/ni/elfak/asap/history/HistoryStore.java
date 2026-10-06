@@ -45,6 +45,9 @@ public final class HistoryStore {
         public int themeId;
         public double x;
         public double y;
+        /** "catalog", "open_food_facts", "upcitemdb", ... (display only). */
+        public String source;
+        public String imageUrl;
     }
 
     public interface Clock {
@@ -111,6 +114,9 @@ public final class HistoryStore {
         e.themeId = product.theme.id;
         e.x = product.mapPosition.x;
         e.y = product.mapPosition.y;
+        e.source = product.provenance == null ? null
+                : "EXTERNAL_PROVIDER".equals(product.provenance.type) ? product.provenance.source : "catalog";
+        e.imageUrl = product.imageUrl;
         List<Entry> next = new ArrayList<>();
         next.add(e);
         next.addAll(entries);

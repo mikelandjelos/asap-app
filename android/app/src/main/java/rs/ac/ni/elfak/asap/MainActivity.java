@@ -16,7 +16,8 @@ import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
-import rs.ac.ni.elfak.asap.ui.PlaceholderFragment;
+import rs.ac.ni.elfak.asap.ui.AnalyticsFragment;
+import rs.ac.ni.elfak.asap.ui.HistoryFragment;
 import rs.ac.ni.elfak.asap.ui.ProductFragment;
 import rs.ac.ni.elfak.asap.ui.ScanFragment;
 import rs.ac.ni.elfak.asap.ui.SessionViewModel;
@@ -124,7 +125,8 @@ public final class MainActivity extends AppCompatActivity {
         if (target == null) {
             target = itemId == R.id.nav_scan ? new ScanFragment()
                     : itemId == R.id.nav_product ? new ProductFragment()
-                    : new PlaceholderFragment();
+                    : itemId == R.id.nav_analytics ? new AnalyticsFragment()
+                    : new HistoryFragment();
             tx.add(R.id.content, target, tag);
         } else {
             tx.show(target);

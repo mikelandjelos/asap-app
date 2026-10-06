@@ -704,6 +704,17 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Catalog images:** `ml/asap_ml/images.py` extracts the small front-image URLs from the exports into a separate `images.json` (9,744/10,000 = 97.4 %), so the catalog and notebooks are unchanged. Bundle `20261006-1f6d112c` (images included in the version hash); verifier 10/10.
   - **Backend:** `imageUrl` on the product and on result summaries; OFF live lookups map `image_front_small_url`; an HTTPS OFF-family host allow-list; image attribution. Tests 55/55.
   - **Android:** `imageUrl` on the models; the validator rejects disallowed image URLs; `ImageLoader` (OkHttp + 8 MB LRU, no new dependency, stale-view guard, 512 KB cap); a 180 dp product image and 56 dp result thumbnails on white rounded tiles with a placeholder. Tests 38/38, lint 0.
+- **S7d:** approved 2026-10-06 (“let's see how it looks, and then see if it needs changing” / “go”); implemented, awaiting the phone review.
+  - **Analytics tab** (chart icon, D-039):
+    1. "You vs product themes" PCA chart (`ThemeMapView`): 60 bubbles sized by theme, the 8 largest labelled, tap to select and name, history dots, latest-scan ring, ★ you. The exact server "you" is used when available, otherwise the mean of history points, marked as an estimate.
+    2. Personalization status (progress to 3 distinct products).
+    3. Top 5 themes.
+    4. 14-day activity bars (`DailyBarsView`).
+    5. Data-source mix.
+    - All values come from the pure `AnalyticsModel`, computed on the device from local history.
+  - **History tab:** privacy notice, "Clear history" with confirmation, newest-first list with picture, brand, relative time and theme; tap to reopen.
+  - **History entries** now also store source and image URL (display only).
+  - **Verification:** tests 41/41 (+3 `AnalyticsModelTest`), lint 0 after fixing 4 findings (plurals, no allocation in `onDraw`).
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

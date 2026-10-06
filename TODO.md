@@ -33,7 +33,7 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S7b: Material 3 okvir, donja navigacija, tema. (34 testa, lint 0; zelena tema svetla/tamna.)
   - [x] S7c: ekran proizvoda i rezultata sa svim stanjima. (38 testova, lint 0; vizuelna provera na telefonu sledi.)
   - [x] S7c.1: slike proizvoda (OFF CC BY-SA, 97,4 % kataloga; telefon učitava direktno).
-  - [ ] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije.
+  - [x] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije. (41 test, lint 0; vizuelna provera i izmene po želji korisnika slede.)
   - [ ] S7e: pristupačnost i provera na telefonu.
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
 

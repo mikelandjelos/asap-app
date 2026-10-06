@@ -3,7 +3,7 @@
     <string name="app_name">ASAP</string>
     <string name="nav_scan">Scan</string>
     <string name="nav_product">Product</string>
-    <string name="nav_map">Map</string>
+    <string name="nav_analytics">Analytics</string>
     <string name="nav_history">History</string>
 
     <string name="scan_title">Scan a product</string>
@@ -47,5 +47,53 @@
     <string name="results_empty_subtitle">We found no close alternatives for this product.</string>
     <string name="result_description">Rank %1$d: %2$s, %3$s. Double tap to open.</string>
 
-    <string name="coming_soon">This screen is built in the next step.</string>
+    <string name="analytics_map_title">You vs product themes</string>
+    <string name="analytics_map_subtitle">Each bubble is one of 60 product themes, placed by similarity (PCA). Tap a bubble to name it.</string>
+    <string name="analytics_map_legend">★ you · ◯ latest scan · • your history · bubble size = theme size</string>
+    <string name="analytics_map_you_estimate">★ shows an estimate until your next scan.</string>
+    <plurals name="analytics_map_selected">
+        <item quantity="one">%1$s · %2$d product</item>
+        <item quantity="other">%1$s · %2$d products</item>
+    </plurals>
+    <string name="analytics_map_unavailable">The theme map could not be loaded. Check your connection.</string>
+    <plurals name="analytics_map_description">
+        <item quantity="one">Map of 60 product themes. You have %1$d scan; your top theme is %2$s.</item>
+        <item quantity="other">Map of 60 product themes. You have %1$d scans; your top theme is %2$s.</item>
+    </plurals>
+    <string name="analytics_map_description_empty">Map of 60 product themes. Scan products to place yourself on it.</string>
+    <string name="analytics_personal_ready">Personal picks are on</string>
+    <plurals name="analytics_personal_ready_message">
+        <item quantity="one">Recommendations use your %1$d recent product.</item>
+        <item quantity="other">Recommendations use your %1$d recent products.</item>
+    </plurals>
+    <string name="analytics_personal_pending">Almost personal</string>
+    <plurals name="analytics_personal_pending_message">
+        <item quantity="one">Scan %1$d more different product to get picks made for you.</item>
+        <item quantity="other">Scan %1$d more different products to get picks made for you.</item>
+    </plurals>
+    <string name="analytics_themes_title">Your top themes</string>
+    <string name="analytics_sources_title">Where your product data comes from</string>
+    <string name="analytics_none">No scans yet.</string>
+    <string name="analytics_bar">%1$s · %2$d</string>
+    <plurals name="analytics_activity_title">
+        <item quantity="one">Last 14 days · %1$d scan</item>
+        <item quantity="other">Last 14 days · %1$d scans</item>
+    </plurals>
+    <string name="analytics_activity_start">14 days ago</string>
+    <string name="analytics_activity_end">Today</string>
+    <string name="analytics_activity_description">Scans per day over the last 14 days: %1$s.</string>
+
+    <string name="history_privacy_title">Stored only on this phone</string>
+    <string name="history_privacy">Your last 50 viewed products (up to 90 days) stay on this device. The newest 20 are sent with each scan only to personalize results; the server keeps nothing.</string>
+    <string name="history_clear">Clear history</string>
+    <string name="history_clear_confirm_title">Clear your history?</string>
+    <string name="history_clear_confirm_message">Recent products, analytics and personal picks will start from scratch.</string>
+    <string name="history_clear_confirm">Clear</string>
+    <string name="cancel">Cancel</string>
+    <plurals name="history_title">
+        <item quantity="one">%1$d viewed product</item>
+        <item quantity="other">%1$d viewed products</item>
+    </plurals>
+    <string name="history_empty">Products you view will be listed here.</string>
+    <string name="history_item_description">%1$s, %2$s, viewed %3$s. Double tap to open.</string>
 </resources>
