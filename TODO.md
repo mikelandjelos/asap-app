@@ -28,13 +28,13 @@ Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji 
   - [x] S6c.1: sažimanje duplikata istog naziva i brenda u rezultatima (4,1 % kataloga); provera u notebook-u 03 i nove parity fiksture. (5,2 % → 0 % lista sa varijantama; MMR λ = 0,7; D-036.)
   - [x] Ručno pregledati i ispraviti nazive 60 tema pre S7. (Predlog u `ml/theme_labels.json`, paket `20261006-07904a7f`; korisnik može izmeniti pojedinačne nazive.)
   - [x] S6d: ruter izvora (OFF, UPCitemdb) sa keširanjem; testovi sa simuliranim odgovorima. (54/54 testova; živa provera 4 stvarna proizvoda; D-037.)
-- [ ] S7: Android istorija i doteran UI. (Odluke o UI-u: D-038.)
+- [x] S7: Android istorija i doteran UI. (Odluke o UI-u: D-038, D-039, D-042.)
   - [x] S7a: v2 klijent sa striktnom validacijom, lokalna istorija (50/90 dana/brisanje), slanje najnovijih 20 događaja. (41 test, lint 0.)
   - [x] S7b: Material 3 okvir, donja navigacija, tema. (34 testa, lint 0; zelena tema svetla/tamna.)
   - [x] S7c: ekran proizvoda i rezultata sa svim stanjima. (38 testova, lint 0; vizuelna provera na telefonu sledi.)
   - [x] S7c.1: slike proizvoda (OFF CC BY-SA, 97,4 % kataloga; telefon učitava direktno).
   - [x] S7d: ekran „Analytics“ (ikona grafikona): PCA „ti naspram tema“ kao glavni grafikon + dodatna lična analitika (D-039), i ekran istorije. (41 test, lint 0; vizuelna provera i izmene po želji korisnika slede.)
-  - [ ] S7e: pristupačnost i provera na telefonu.
+  - [x] S7e: pristupačnost i provera na telefonu. (Kontrast ≥ 5,5:1, automatska provera oznaka/48 dp, font 200 %, svetla/tamna tema.)
 - [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
 
 ## T-010: mock MVP i nacrt izveštaja (S2–S3 odloženi, D-026)
@@ -93,7 +93,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [x] Implementirati kameru i skeniranje barkoda na mobilnom uređaju.
 - [x] Povezati barkod sa kontrolisanim metapodacima proizvoda preko backend API-ja i fizički potvrditi I1 tok.
 - [x] Integrisati semantičku pretragu i preporuke. (Backend v2, T-011/S6; Android u S7.)
-- [ ] Implementirati osnovni UI za proizvod, slične proizvode i personalizovane preporuke.
+- [x] Implementirati osnovni UI za proizvod, slične proizvode i personalizovane preporuke. (T-011/S7.)
 - [ ] Dodati obradu grešaka, praznih rezultata i nedostupnosti eksternih servisa. (I1 stanja skenera, veze i domenskih ishoda su implementirana i relevantni fizički slučajevi potvrđeni; budući stvarni provider mora proširiti ovu proveru.)
 - [ ] Dodati automatske testove za ključne tokove.
 - [ ] Predstaviti radnu verziju nastavniku i drugim timovima; zabeležiti datum i komentare u izveštaju.
@@ -131,13 +131,13 @@ Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.
 - [ ] Dashboard lične analitike — premešten u S7d kao ekran „Analytics“ (D-039); proširenja na kraju MVP-a.
 - [ ] Doraditi PCA prikaz „ti naspram tema“ (centroid korisnika među centroidima 60 tema); detalje prodiskutovati pre S7.
 
-## Kandidat — 2D vizuelizacija (posle odluke korisnika)
+## Kandidat — 2D vizuelizacija (posle MVP-a, odluka korisnika)
 
-- [ ] Notebook evaluacija: PCA, t-SNE i UMAP nad 60 centroida tema (smeštanje novih tačaka interpolacijom k najbližih tema) i UMAP `transform`. Metrike: trustworthiness/continuity, očuvanje k-NN, stabilnost između seed-ova i refit-ova (Procrustes), greška smeštanja novih tačaka i vreme izvršavanja.
+- [ ] (Posle MVP-a) Notebook evaluacija: PCA, t-SNE i UMAP nad 60 centroida tema (smeštanje novih tačaka interpolacijom k najbližih tema) i UMAP `transform`. Metrike: trustworthiness/continuity, očuvanje k-NN, stabilnost između seed-ova i refit-ova (Procrustes), greška smeštanja novih tačaka i vreme izvršavanja.
 
 ## Obavezne dodatne MVP provere — D-025
 
 - [ ] Implementirati PCA i dogovorenu vizuelnu analitiku; proveriti metod i performanse u notebook-u.
-- [ ] Dogovoriti i implementirati doteran UI; proveriti čitljivost, pristupačnost, sve ishode i upotrebljivost na telefonu.
+- [x] Dogovoriti i implementirati doteran UI; proveriti čitljivost, pristupačnost, sve ishode i upotrebljivost na telefonu. (T-011/S7c–S7e; ručni TalkBack prolaz ostaje za korisničko testiranje.)
 - [ ] Za CNN/TFLite, embedding, pretragu, klasterizaciju, personalizaciju, PCA, MMR i svaku dodatnu AI/statističku komponentu pripremiti izvršiv notebook, stvarne metrike, grafikone/tabele i vezu sa izveštajem.
 - [ ] Proveriti ponovljivost eksperimenata i saglasnost notebook metoda sa aplikacionom implementacijom.

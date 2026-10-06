@@ -718,6 +718,15 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - **S7d review (user):** "everything is pretty cool", but the PCA chart was too crowded.
   - **Fix: focus mode.** Only the user's top themes are drawn as bubbles, the other themes are faint dots, the view zooms to the user's themes, scans and ★, the top 3 themes are labelled with full names, and a "Show all 60 themes" switch keeps the old view. Checked on the phone.
   - **Alternative raised:** t-SNE. Analysed in theory; a notebook evaluation is proposed in TODO.
+- **S7d:** accepted 2026-10-06 (“yeah”); the t-SNE/UMAP evaluation moved to post-MVP.
+- **S7e (accessibility and phone verification):** complete, awaiting acceptance.
+  - **Contrast** (computed WCAG from `colors.xml`): every text pair ≥ 4.5:1. Worst 6.5:1 in light and 5.5:1 in dark; body text 13–17:1.
+  - **Automated device audit:** uiautomator dump of all 4 tabs plus a loaded product. Zero clickable elements without a label or under 48 dp; the one flag was a card clipped at the screen edge (false positive).
+  - **Screenshots:** dark, light (system night mode toggled and restored) and 200 % font scale (set and restored to 1.0). No clipping or overlap.
+  - **Fixed:** Analytics showed a different "recent products" count than the Product screen; it now uses the server's `you.historyUsed`.
+  - **Headings and labels:** accessibility headings on every section title; content descriptions on results, history, chart and activity bars.
+  - **Not done:** a live TalkBack walkthrough (manual; part of the post-report user testing).
+  - **Totals:** Android 41/41, lint 0; backend 55/55.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

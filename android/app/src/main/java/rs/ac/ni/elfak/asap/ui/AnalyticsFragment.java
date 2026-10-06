@@ -154,8 +154,10 @@ public final class AnalyticsFragment extends Fragment {
         personalProgress.setProgressCompat(Math.min(m.distinctProducts, AnalyticsModel.PERSONALIZE_AFTER), true);
         if (m.personalized()) {
             personalTitle.setText(R.string.analytics_personal_ready);
-            personalMessage.setText(getResources().getQuantityString(R.plurals.analytics_personal_ready_message,
-                    Math.min(m.scans, 20), Math.min(m.scans, 20)));
+            // Same number the Product screen shows: what the server actually used (catalogued products, newest 20).
+            int used = state.response != null && state.response.you != null ? state.response.you.historyUsed
+                    : Math.min(m.scans, 20);
+            personalMessage.setText(getResources().getQuantityString(R.plurals.analytics_personal_ready_message, used, used));
         } else {
             personalTitle.setText(R.string.analytics_personal_pending);
             personalMessage.setText(getResources().getQuantityString(R.plurals.analytics_personal_pending_message, missing, missing));
