@@ -110,6 +110,7 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 
 ## Završna faza pre izveštaja — D-033
 
+- [ ] Postaviti backend na jeftin server posle MVP-a (npr. DigitalOcean/Hetzner, ~2–4 GB RAM), HTTPS, release build aplikacije sa produkcionim URL-om; razmotriti int8 kvantizaciju modela radi manje memorije (zahteva parity proveru).
 - [ ] Dashboard lične analitike pored istorije i PCA prikaza (sadržaj i metrike dogovoriti; radi se na kraju MVP-a).
 - [ ] Doraditi PCA prikaz „ti naspram tema“ (centroid korisnika među centroidima 60 tema); detalje prodiskutovati pre S7.
 
