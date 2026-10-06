@@ -298,3 +298,12 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Limitations:**
   - Users and relevance are synthetic and category-derived, so the effect size is modest and not evidence of real-user satisfaction.
   - Multi-interest grouping and interest definitions are correlated.
+
+## D-033 — PCA "you vs themes" view in the MVP; friends view and analytics dashboard later
+
+- **Date:** 2026-10-06
+- **Decision (user):**
+  - The MVP map shows the user's profile centroid against the product-theme centroids (PCA(2), type space). Details are to be discussed before S7.
+  - "You vs other users (friends)" is deferred to after the MVP, because it needs accounts and social data.
+  - A personal-analytics dashboard, next to the history and PCA view, is built in the end phase of the MVP, before the report; its contents are still to be agreed.
+- **Consequence:** S6a exports projected theme centroids and labels. The profile for the map uses type-space embeddings so that it shares the space of the clusters and the PCA.

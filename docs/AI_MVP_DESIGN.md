@@ -109,6 +109,11 @@ Several sources are combined behind one interface so the best available record i
 - **S4 result:** reduction is **not adopted**. d = 128 keeps only 0.74 top-10 overlap, though nDCG@10 drops just 0.004; 169 dimensions are needed for 80 % of the variance. Production keeps the full 384-d retrieval vectors.
   - The map uses PCA(2) of the type space: PC1 + PC2 = 10.8 % of variance, with a readable sweets/drinks → dairy/grains → meat/pet-food gradient but heavy overlap. It is an orientation aid only.
   - Exported: `pca.npz`, plus `map_sample.json` with 25 products per cluster.
+- **Map view requirement (user, 2026-10-06, D-033), to be discussed further before S7:**
+  - **MVP view, "You vs product themes":** your profile centroid sits among the 60 theme centroids in PCA(2).
+  - **Consistent space:** the profile is computed in the same type space as the clusters/PCA (mean of the history items' type embeddings), not the retrieval space.
+  - **S6a export:** the bundle includes projected theme centroids and their labels.
+  - **Deferred:** "You vs other users (friends)" needs accounts and social data.
 - **Dimensionality study (notebook 02):** explained-variance curve, then recall@10 overlap and nDCG@10 at d ∈ {16, 32, 64, 128} vs full. Production keeps full vectors unless some d keeps overlap ≥ 0.95 with nDCG@10 loss ≤ 0.01.
 
 ## 9. MMR diversification
@@ -156,7 +161,7 @@ New `POST /api/v2/scan-queries`; v1/I1 stays frozen. The request adds an optiona
 ## 12. UI direction (built in S7)
 
 - **Library:** Material Components for Android (Material 3, XML themes). This is a new dependency, justified as the standard Android Views design system. The seed palette derives from the project diagram colours (#164D7D primary, #A51003 accent), with light and dark themes.
-- **Structure:** one Activity with a `BottomNavigationView` and fragments: **Skeniraj** (scan CTA plus recent items), **Proizvod** (product card, source/licence chips; "Za tebe"/"Slični proizvodi" list with mode label, theme chip and a diversity note), **Mapa** (PCA canvas with legend), **Istorija** (list, clear history, privacy notice).
+- **Structure:** one Activity with a `BottomNavigationView` and fragments: **Skeniraj** (scan CTA plus recent items), **Proizvod** (product card, source/licence chips; "Za tebe"/"Slični proizvodi" list with mode label, theme chip and a diversity note), **Mapa** (PCA: you vs theme centroids, D-033), **Istorija** (list, clear history, privacy notice).
 - **States:** loading, empty, unknown, unavailable and error with retry on every screen. All app text is in **English** (D-028); the formal report and presentation stay Serbian.
 - **Acceptance checklist:**
   - TalkBack labels on all controls and points of interest;

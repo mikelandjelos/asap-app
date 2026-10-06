@@ -98,10 +98,16 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 
 ## Posle MVP-a — D-028
 
+- [ ] PCA prikaz „ti naspram drugih korisnika (prijatelja)“ — zahteva naloge i društvene podatke (D-033).
 - [ ] Praćenje drifta i ponovno fitovanje: kako katalog raste, meriti drift (npr. objašnjena varijansa novih proizvoda u postojećoj PCA bazi, udaljenost do centroida, pokrivenost TF-IDF rečnika) i po pragu ponovo fitovati PCA, klastere i TF-IDF, uz verzionisanje artefakata i notebook proveru.
 - [ ] (Stretch) Konsolidator podataka: pozadinski proces koji izvorne zapise (API-ji, izvozi, scraper) spaja u jedinstveni „zlatni zapis“ po proizvodu (razrešavanje entiteta, GTIN aliasi, rešavanje konflikata po pouzdanosti i svežini izvora, poreklo po polju), sa eventualnom konzistentnošću; zahteva bazu podataka.
 - [ ] (Stretch) AI web scraper u backend-u koji postepeno prikuplja podatke o proizvodima i obogaćuje katalog; zahteva poštovanje robots.txt/uslova korišćenja, licenci i ograničenja brzine, uz evidentirano poreklo podataka. Uz vektorsku bazu i pretragu ovo je napredni stretch cilj.
 - [ ] Uvesti pravu bazu podataka sa vektorskom pretragom (PostgreSQL + pgvector ili Qdrant) iza interfejsa pretrage; uporediti sa in-memory osnovom.
+
+## Završna faza pre izveštaja — D-033
+
+- [ ] Dashboard lične analitike pored istorije i PCA prikaza (sadržaj i metrike dogovoriti; radi se na kraju MVP-a).
+- [ ] Doraditi PCA prikaz „ti naspram tema“ (centroid korisnika među centroidima 60 tema); detalje prodiskutovati pre S7.
 
 ## Obavezne dodatne MVP provere — D-025
 
