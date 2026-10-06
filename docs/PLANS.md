@@ -684,6 +684,12 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
     - Diagnosis: `curl` took 0.8–1.0 s, a Java client 1.0–4.8 s; IPv6 was ruled out (IPv4-only DNS).
     - Fix: configurable timeouts (8 s per source, 12 s total, 4 s connect). The failing barcode now resolves to an honest `UNKNOWN` in 2.0 s.
   - **Pending:** dark-mode status-bar icon contrast, to fix in S7c.
+- **Order after the MVP (user, 2026-10-06, D-040):**
+  1. Finish S7c–S7e and S8.
+  2. CNN/TFLite scanner replacement, before the report, because deep learning for barcodes is a promised component.
+  3. A new report written from scratch, following the user's instructions.
+  4. Then: user-perspective testing, demo preparation, presentation, deployment, and the post-MVP refit pipeline (Airflow-style orchestration, `POST_MVP_ARCHITECTURE.md`).
+- **S7c:** approved 2026-10-06 (“let's go legend!”). The S7d Analytics content proposal (PCA main chart, top themes, personalization status, 14-day activity, data sources) still needs explicit confirmation before S7d.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

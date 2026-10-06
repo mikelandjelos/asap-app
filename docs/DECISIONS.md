@@ -369,3 +369,13 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Date:** 2026-10-06
 - **Decision (user):** The third bottom tab is **Analytics**, with a chart icon. The PCA "you vs themes" map (D-033) is its main chart. Further personal-analytics charts sit below it, which brings the end-phase personal analytics dashboard (D-033) into S7d. The exact secondary charts are agreed before S7d.
 - **Supersedes:** the "Map" tab naming in D-038.
+
+## D-040 — Delivery order: MVP → CNN scanner → new report → testing and demo
+
+- **Date:** 2026-10-06
+- **Decision (user):**
+  1. Finish the MVP (S7c–S7e, S8).
+  2. Implement the CNN/TFLite barcode scanner replacement **before** the report, because deep learning for barcode reading is a stated project component.
+  3. Discard the current report draft and write a new report from scratch, following instructions the user will give.
+  4. Only after the report: thorough user-perspective testing, demo preparation, presentation, deployment, and post-MVP work. Post-MVP work includes the refit pipeline, designed with Airflow-style orchestration.
+- **Supersedes:** D-026/D-040 ordering details where they conflict, the T-010/S1 draft as the basis of the final report, and the plan to finish the presentation before testing.

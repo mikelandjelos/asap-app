@@ -107,6 +107,12 @@ Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveš
 - [ ] Dopuniti prezentaciju arhitekturom, demonstracijom, rezultatima i naučenim lekcijama.
 - [ ] Proveriti završni kriterijum: operativna MVP aplikacija, demonstrabilan PoC, kompletan izveštaj i kompletna prezentacija.
 
+## Redosled posle MVP-a — D-040
+
+1. CNN/TFLite zamena skenera (duboko učenje za barkodove) — pre izveštaja.
+2. Novi izveštaj od nule (postojeći se odbacuje; korisnik daje uputstvo).
+3. Posle izveštaja: temeljno testiranje iz ugla korisnika, priprema demonstracije, prezentacija, postavljanje na server, refit pipeline (Airflow ili sličan orkestrator) i ostale post-MVP stavke.
+
 ## Posle MVP-a — D-028
 
 Arhitektura je opisana u `docs/POST_MVP_ARCHITECTURE.md`.

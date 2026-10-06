@@ -57,6 +57,11 @@ The consolidator makes the catalog grow, and that growth causes drift. A separat
 - out-of-vocabulary n-gram rate;
 - score distribution shift.
 
+**Orchestration (user idea, 2026-10-06):** run the refit pipeline as a workflow DAG in **Apache Airflow** or a comparable orchestrator (e.g. Prefect or Dagster):
+- **Tasks:** `snapshot_catalog → embed_new → refit_tfidf → recluster_and_relabel_review → refit_pca_procrustes → rerun_notebooks_01_03 → export_bundle → verify_bundle + java_parity → canary_swap → monitor`.
+- **Triggers:** drift sensors or a schedule.
+- **Safety:** retries, artifact lineage, and a manual approval gate before the swap (theme labels are reviewed by a human).
+
 **Process:** a signal crosses a threshold; the notebooks run on the new snapshot; the export produces a new bundle version; parity and contract tests run; the new bundle is swapped in atomically, with the previous version kept for rollback. The bundle versioning (D-034, D-036) already supports this.
 
 ## 4. Also post-MVP
