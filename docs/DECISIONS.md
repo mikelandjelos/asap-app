@@ -203,3 +203,10 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Evidence contract:** `CURRENT_REQUIREMENTS.md` consolidates current scope; `NOTEBOOK_VALIDATION.md` records the component matrix, reproducibility, datasets/splits, correctness/quality/timing distinctions and report linkage. Detailed methods/metrics/thresholds remain subject to approved planning; no experiment is claimed complete.
 - **Supersedes:** All prior optional PCA/MMR language, including D-024's last scope sentence. The CNN/TFLite scanner is still developed last, after the working PoC/MVP; replace only scanner-related components. Presentation finalization remains deferred.
 - **Authorization:** Audit and synchronize documentation, preserve earlier uncommitted work, add the repository link at the beginning of the report, verify, commit with a short one-line message, and push to the configured origin/current branch. This does not accept pending S1 results or authorize subsequent implementation.
+
+## D-026 — Full AI MVP first; report rewrite and T-010 remainder deferred
+
+- **Date:** 2026-10-06
+- **Decision:** The user accepted T-010/S1 as a working draft and approved the revised T-011 AI MVP delivery plan. Finishing the full MVP is the top priority. T-010/S2 (mock demo) and T-010/S3 (submission package) are deferred; the report will be substantially rewritten after the MVP using real results, followed by the presentation.
+- **Expansion:** If the MVP, report and slides finish with time remaining, the work may be extended and polished further under new approved plans.
+- **Authorization:** Plan approval only. Each T-011 subtask, including S1, requires separate explicit approval. T-009/S1 acceptance remains pending user review.

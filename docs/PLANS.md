@@ -566,7 +566,7 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - Synchronize README/documentation hub, TODO, status, plan, handoff, and the affected scope/decision records to distinguish this deadline milestone from the full MVP. Correct the stale AGENTS claim that no application code exists.
 - **Verification:** Compile the report twice, inspect changed pages and Serbian glyphs, validate marker/register correspondence and documentation links, run `git diff --check`.
 - **Acceptance:** A readable complete report draft and PDF, no generic empty section, and an actionable list of remaining evidence. Existing code and T-009 work preserved.
-- **Status:** Complete, awaiting acceptance (2026-10-06). Documentation-only execution, no runtime changes. The user explicitly deferred presentation work until the end; existing presentation changes were preserved without further editing or rebuilding it.
+- **Status:** Accepted as a working draft on 2026-10-06 (D-026); to be rewritten after the MVP. Documentation-only execution, no runtime changes. The user explicitly deferred presentation work until the end; existing presentation changes were preserved without further editing or rebuilding it.
 - **Evidence:** All five Serbian sections populated, with six visible conditional draft blocks R01–R06 and a cover notice; `docs/REPORT_COMPLETION.md` maps each to missing work/evidence and a truthful submission alternative. Both report engines compile repeatedly to 17 pages; final logs have no warnings, missing glyphs or overfull/underfull boxes. Cover and pages 13, 14, 16 and 17 visually inspected; all marker blocks are readable and unclipped. PDF copied to `report/report.pdf`. Marker correspondence, local paths and `git diff --check` verified. Runtime test counts remain dated September evidence, not new test runs. README, scope, D-023, TODO, status, hub, handoff and stale AGENTS statement reconciled.
 
 ### T-010/S2 — Package the smallest reproducible mock demo
@@ -576,7 +576,7 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - Build/test Android and backend, smoke-test the HTTP flow, and document what was reverified versus inherited physical evidence. A fresh phone check requires a connected authorized device; do not claim it if unavailable.
 - **Affected docs:** README, workflow, demo instructions/assets, TODO, status, plan, handoff, report and presentation where results change.
 - **Acceptance:** Repeatable known/unknown/empty/unavailable scenarios, usable build artifacts, test results, and no live-provider dependency.
-- **Status:** Proposed; requires accepted S1 and separate S2 approval.
+- **Status:** Deferred until after the T-011 MVP (D-026).
 
 ### T-010/S3 — Prepare the submission package
 
@@ -584,4 +584,21 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
 - Synchronize the Serbian presentation, README, TODO/status/handoff and defense backlog. Describe full AI features as pending until implemented.
 - Rebuild and inspect final PDFs, verify documented commands/paths, and present deliverables plus any course-required evidence still missing.
 - **Acceptance:** Consistent repository and formal deliverables, clear implemented/simulated/deferred scope, and no unmarked hypothetical results. Request task acceptance; do not start the defense backlog automatically.
-- **Status:** Proposed; requires accepted S2 and separate S3 approval.
+- **Status:** Deferred until after the T-011 MVP (D-026).
+
+## T-011 — AI MVP delivery (revised plan, D-026)
+
+- **Status:** Plan approved 2026-10-06 (“I accept the revised plan for now”). No subtask approved yet. T-010/S1 accepted as a draft; T-010/S2–S3 deferred until after the MVP (D-026). T-009/S1 acceptance pending; its S2 is folded into T-011/S2.
+- **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
+
+| Subtask | Scope | Acceptance evidence |
+| --- | --- | --- |
+| S1 | Design decisions, docs only: offline dataset (Open Food Facts subset candidate), embedding model, vector storage, roles of clustering/PCA/MMR, history/profile method, notebook decomposition and metrics, UI direction. | Each open choice from `CURRENT_REQUIREMENTS.md` with recommendation, alternatives, rationale; notebook-component matrix; updated PlantUML sources/renders; TODO/PLANS/DECISIONS/handoff synchronized; report build if changed. No code, downloads or provider calls. |
+| S2 | Data source: bounded T-009/S2 read-only probes (≤26 calls), then select primary API and offline dataset. | Observation rows, selection decision, license notes. |
+| S3 | Notebook 01: dataset preparation, embeddings, top-N retrieval quality and latency. | Clean run-all, exported tables/plots, result summary. |
+| S4 | Notebook 02: clustering and PCA with plots. | As S3. |
+| S5 | Notebook 03: history personalization vs generic baseline; MMR parameter sweep. | As S3. |
+| S6 | Backend semantic/clustering/MMR pipeline behind a v2 API contract; notebook parity checks. | Contract, tests, parity evidence. |
+| S7 | Android local history and polished Java/XML UI. | Tests, lint, phone screenshots/checks. |
+| S8 | End-to-end phone verification; report updated with real results. | Device evidence, rebuilt report. |
+| Later | CNN/TFLite scanner replacement with notebook; presentation last. | Per `NOTEBOOK_VALIDATION.md`. |

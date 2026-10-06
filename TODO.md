@@ -5,17 +5,30 @@ Radni cilj je operativan AI MVP. Plan je izveden iz beleški `meditations/sept_3
 ## Najnoviji zahtev i predaja sesije — D-024
 
 - [x] Evidentirati novi obim i pripremiti predaju drugom agentu; bez promene aplikacije.
-- [ ] Predložiti sažet revidirani plan sa obaveznom klasterizacijom, personalizacijom, PCA, MMR, doteranim UI-em i notebook dokazima; tražiti odobrenje pre implementacije.
+- [x] Predložiti sažet revidirani plan sa obaveznom klasterizacijom, personalizacijom, PCA, MMR, doteranim UI-em i notebook dokazima; tražiti odobrenje pre implementacije. (T-011 plan odobren 2026-10-06, D-026.)
 - [ ] Posle završenog PoC/MVP-a zameniti samo skenerski deo: CNN treniran na dokumentovanom skupu EAN/UPC slika, TFLite na telefonu i ZXing/drugi dekoder ili posebno odobren end-to-end pristup. Google Code Scanner ostaje privremeno.
 - [ ] U revidiranom dizajnu dopuniti kanonske dijagrame klasterizacijom i kasnijom zamenom skenera. Prezentaciju ostaviti za kraj.
 
-Sada se radi samo predaja sesije. T-009/S1 i T-010/S1 i dalje čekaju prihvatanje; njihovi S2 koraci nisu odobreni. Detalji su u `docs/SESSION_HANDOFF.md`.
+T-010/S1 je prihvaćen kao nacrt; T-009/S1 čeka prihvatanje. Detalji su u `docs/SESSION_HANDOFF.md`.
 
-## Prioritet za rok — T-010: mock MVP i nacrt završnog izveštaja
+## Prioritet — T-011: AI MVP (D-026)
+
+Plan je odobren 2026-10-06; svaki podzadatak zahteva posebno odobrenje. Detalji u `docs/PLANS.md`. Izveštaj se temeljno prerađuje posle MVP-a, zatim prezentacija.
+
+- [ ] S1: projektne odluke (skup podataka, embedding model, skladište, uloge klasterizacije/PCA/MMR, profil istorije, notebook matrica, UI pravac) — samo dokumentacija.
+- [ ] S2: ograničene T-009/S2 probe i izbor API-ja i offline skupa podataka.
+- [ ] S3: notebook 01 — skup podataka, embedding i top-N pretraga.
+- [ ] S4: notebook 02 — klasterizacija i PCA.
+- [ ] S5: notebook 03 — personalizacija i MMR.
+- [ ] S6: backend pipeline i v2 API ugovor sa proverom saglasnosti sa notebook-ovima.
+- [ ] S7: Android istorija i doteran UI.
+- [ ] S8: end-to-end provera na telefonu i izveštaj sa stvarnim rezultatima.
+
+## T-010: mock MVP i nacrt izveštaja (S2–S3 odloženi, D-026)
 
 Korisnik je 2026-10-06 odobrio plan T-010 i S1 za ubrzanu pripremu nacrta izveštaja; realizacija narednih koraka i dalje zahteva posebno odobrenje. T-009 je pauziran, bez zatvaranja ili gubitka postojećeg rada. Puni AI MVP ostaje cilj nakon ovog ograničenog odstupanja. Prezentacija se završava tek na kraju. Markeri i dokazi vode se u `docs/REPORT_COMPLETION.md`.
 
-- [x] T-010/S1: napisati celovit srpski nacrt izveštaja sa vidljivim markerima i spiskom nedostajućih dokaza. (17 strana, oba LaTeX engine-a proverena; čeka prihvatanje korisnika, nije konačna predaja.)
+- [x] T-010/S1: napisati celovit srpski nacrt izveštaja sa vidljivim markerima i spiskom nedostajućih dokaza. (Prihvaćen kao radni nacrt 2026-10-06; biće prerađen posle MVP-a.)
 - [ ] T-010/S2: pripremiti minimalan ponovljiv mock demo na postojećem Android/backend toku.
 - [ ] T-010/S3: uskladiti izveštaj, prezentaciju i README sa proverenim demo stanjem i pripremiti predaju.
 
