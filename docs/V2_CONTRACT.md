@@ -42,6 +42,7 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
     - `rank` (1-based);
     - `product {id, barcode, name, brand, category}` and `theme`;
     - `evidence {score, scoreType, modelVersion}`, where `scoreType` is `HYBRID_RELEVANCE` or `PERSONALIZED_HYBRID_RELEVANCE`. The score is raw, comparable only within one response, and is not a percentage (DOMAIN_MODEL rule).
+- `imageUrl` (optional) on `product.data` and on each item's `product`: a small front image, served only from HTTPS Open Food Facts-family image servers. Catalog images come from the exports (97.4 % of the catalog); live lookups use OFF's `image_front_small_url`. UPCitemdb images are never used (third-party rights). When any image is present, `attribution` adds "Images: Open Food Facts contributors (CC BY-SA)." Clients load images directly from those servers (S7c.1).
 - `you`: present when history contains catalogued products. `{historyUsed, mapPosition}` is the user's type-space centroid for the "you vs themes" map.
 - `attribution`: the ODbL notice. Clients must display it.
 

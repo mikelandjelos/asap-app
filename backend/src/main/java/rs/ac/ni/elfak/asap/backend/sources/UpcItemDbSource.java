@@ -119,7 +119,8 @@ public final class UpcItemDbSource implements ProductSource {
                 category = SourceTypes.blankToNull(category.substring(category.lastIndexOf('>') + 1));
             }
             return new Found(new SourceRecord(id(), title, SourceTypes.blankToNull(item.path("brand").asString(null)),
-                    category, null, null, SourceTypes.blankToNull(item.path("description").asString(null))));
+                    category, null, null, SourceTypes.blankToNull(item.path("description").asString(null)),
+                    null)); // UPCitemdb images are third-party (retailer) content without granted rights: not used
         } catch (RuntimeException e) {
             return new Unavailable("malformed");
         }

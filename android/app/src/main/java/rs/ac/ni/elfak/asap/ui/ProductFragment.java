@@ -25,6 +25,7 @@ public final class ProductFragment extends Fragment {
     private TextView stateTitle;
     private TextView stateMessage;
     private View retry;
+    private ImageView image;
     private TextView name;
     private TextView details;
     private Chip theme;
@@ -49,6 +50,7 @@ public final class ProductFragment extends Fragment {
         stateTitle = view.findViewById(R.id.state_title);
         stateMessage = view.findViewById(R.id.state_message);
         retry = view.findViewById(R.id.state_retry);
+        image = view.findViewById(R.id.product_image);
         name = view.findViewById(R.id.product_name);
         details = view.findViewById(R.id.product_details);
         theme = view.findViewById(R.id.product_theme);
@@ -131,6 +133,7 @@ public final class ProductFragment extends Fragment {
 
     private void renderProduct(ProductUiModel m) {
         name.setText(m.name);
+        ImageLoader.get().load(m.imageUrl, image, R.drawable.ic_image_placeholder);
         showOrHide(details, m.details);
         showOrHide(description, m.description);
         theme.setText(m.theme);
@@ -157,6 +160,7 @@ public final class ProductFragment extends Fragment {
             View item = inflater.inflate(R.layout.item_result, resultsList, false);
             ((TextView) item.findViewById(R.id.result_rank)).setText(String.valueOf(row.rank));
             ((TextView) item.findViewById(R.id.result_title)).setText(row.title);
+            ImageLoader.get().load(row.imageUrl, item.findViewById(R.id.result_image), R.drawable.ic_image_placeholder);
             showOrHide(item.findViewById(R.id.result_subtitle), row.subtitle);
             ((TextView) item.findViewById(R.id.result_theme)).setText(row.theme);
             item.setContentDescription(getString(R.string.result_description, row.rank, row.title, row.theme));

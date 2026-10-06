@@ -36,7 +36,8 @@ public final class SourceTypes {
             String category,
             List<String> categoryTags,
             String labels,
-            String description) {
+            String description,
+            String imageUrl) {
 
         public SourceRecord {
             categoryTags = categoryTags == null ? List.of() : List.copyOf(categoryTags);
@@ -54,6 +55,22 @@ public final class SourceTypes {
 
     /** Transport failure, 5xx, unexpected body, rate limit, quota or open circuit; never treated as "unknown". */
     public record Unavailable(String reason) implements Lookup {
+    }
+
+    private static final List<String> IMAGE_HOSTS = List.of("https://images.openfoodfacts.org/",
+            "https://images.openbeautyfacts.org/", "https://images.openpetfoodfacts.org/", "https://static.openfoodfacts.org/");
+
+    /** Only HTTPS images from the Open Food Facts family (CC BY-SA) are passed to clients. */
+    public static String allowedImage(String url) {
+        if (url == null) {
+            return null;
+        }
+        for (String host : IMAGE_HOSTS) {
+            if (url.startsWith(host)) {
+                return url;
+            }
+        }
+        return null;
     }
 
     static String blankToNull(String value) {

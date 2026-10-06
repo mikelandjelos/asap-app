@@ -386,3 +386,9 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Decision (user):** The vector database moves from post-MVP (D-028) to **before the report**, because it is the final stage of the NLP/semantic-search feature, just as the CNN/TFLite scanner is the final stage of the vision feature. It holds a substantially larger catalog than the current 10k products. The catalog's source (a larger slice of the official OFF exports, scrapers or other) and the database product (pgvector or Qdrant) are chosen in that stage's plan.
 - **Order (amends D-040):** MVP → CNN/TFLite scanner → vector DB + larger catalog → new report → testing, demo and the rest.
 - **Constraint:** the larger catalog changes the evaluated artifacts. Notebooks 01–03 must be re-run on it, and the in-memory exact search stays as the parity reference for the database's approximate (ANN) search.
+
+## D-042 — Product pictures from Open Food Facts, loaded directly by the phone
+
+- **Date:** 2026-10-06
+- **Decision (user: "direct pictures"):** Product and recommendation images use Open Food Facts-family front images (CC BY-SA), credited in the attribution. The phone fetches them directly from the OFF image servers over HTTPS. Both the backend and the app allow-list those hosts. UPCitemdb images are not used.
+- **Trade-off:** direct loading exposes the device's IP address to the OFF image servers; a backend image proxy would avoid that at the cost of server bandwidth. It is acceptable for the MVP and can be revisited at deployment.

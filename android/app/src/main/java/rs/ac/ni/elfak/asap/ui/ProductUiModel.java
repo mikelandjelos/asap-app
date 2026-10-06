@@ -22,14 +22,17 @@ public final class ProductUiModel {
         public final String theme;
         public final String barcodeValue;
         public final String barcodeFormat;
+        public final String imageUrl;
 
-        Row(int rank, String title, String subtitle, String theme, String barcodeValue, String barcodeFormat) {
+        Row(int rank, String title, String subtitle, String theme, String barcodeValue, String barcodeFormat,
+                String imageUrl) {
             this.rank = rank;
             this.title = title;
             this.subtitle = subtitle;
             this.theme = theme;
             this.barcodeValue = barcodeValue;
             this.barcodeFormat = barcodeFormat;
+            this.imageUrl = imageUrl;
         }
     }
 
@@ -46,10 +49,11 @@ public final class ProductUiModel {
     public final int historyUsed;
     public final List<Row> rows;
     public final String attribution;
+    public final String imageUrl;
 
     private ProductUiModel(Screen screen, String barcode, boolean retry, Integer httpStatus, String name, String details,
             String description, String theme, String source, ResultsKind resultsKind, int historyUsed, List<Row> rows,
-            String attribution) {
+            String attribution, String imageUrl) {
         this.screen = screen;
         this.barcode = barcode;
         this.retry = retry;
@@ -63,11 +67,12 @@ public final class ProductUiModel {
         this.historyUsed = historyUsed;
         this.rows = rows;
         this.attribution = attribution;
+        this.imageUrl = imageUrl;
     }
 
     private static ProductUiModel simple(Screen screen, String barcode, boolean retry, Integer status) {
         return new ProductUiModel(screen, barcode, retry, status, null, null, null, null, null, null, 0,
-                Collections.<Row>emptyList(), null);
+                Collections.<Row>emptyList(), null, null);
     }
 
     public static ProductUiModel from(ScanSession.State state) {
@@ -107,14 +112,14 @@ public final class ProductUiModel {
             for (V2ApiModels.Item item : r.recommendations.items) {
                 V2ApiModels.Summary s = item.product;
                 rows.add(new Row(item.rank, s.name, join(s.brand, s.category), item.theme.label,
-                        s.barcode == null ? null : s.barcode.value, s.barcode == null ? null : s.barcode.format));
+                        s.barcode == null ? null : s.barcode.value, s.barcode == null ? null : s.barcode.format, s.imageUrl));
             }
         }
         ResultsKind kind = rows.isEmpty() ? ResultsKind.EMPTY
                 : "PERSONALIZED_HISTORY".equals(r.recommendations.mode) ? ResultsKind.PERSONAL : ResultsKind.SIMILAR;
         return new ProductUiModel(Screen.PRODUCT, barcode, false, null, p.name, join(p.brand, p.category), p.description,
                 p.theme.label, sourceLabel(p.provenance), kind, r.you == null ? 0 : r.you.historyUsed,
-                Collections.unmodifiableList(rows), r.attribution);
+                Collections.unmodifiableList(rows), r.attribution, p.imageUrl);
     }
 
     /** Human-readable data origin: catalog vs live provider(s). */

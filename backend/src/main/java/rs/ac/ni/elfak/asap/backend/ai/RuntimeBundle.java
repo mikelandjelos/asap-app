@@ -36,6 +36,7 @@ public final class RuntimeBundle {
     private final TfidfSpec tfidf;
     private final List<Theme> themes;
     private final List<BundleModel.MapPoint> mapSample;
+    private final Map<String, String> images;
 
     private RuntimeBundle(Path dir) throws IOException {
         this.dir = dir;
@@ -50,6 +51,7 @@ public final class RuntimeBundle {
         this.tfidf = JSON.readValue(dir.resolve("tfidf.json").toFile(), TfidfSpec.class);
         this.themes = JSON.readValue(dir.resolve("themes.json").toFile(), new TypeReference<List<Theme>>() { });
         this.mapSample = JSON.readValue(dir.resolve("map_sample.json").toFile(), new TypeReference<List<BundleModel.MapPoint>>() { });
+        this.images = Map.copyOf(JSON.readValue(dir.resolve("images.json").toFile(), new TypeReference<Map<String, String>>() { }));
         validate();
     }
 
@@ -151,5 +153,10 @@ public final class RuntimeBundle {
 
     public List<BundleModel.MapPoint> mapSample() {
         return mapSample;
+    }
+
+    /** Front-image URL of a catalog product (Open Food Facts family, CC BY-SA), or {@code null}. */
+    public String imageUrl(String productId) {
+        return images.get(productId);
     }
 }

@@ -61,6 +61,10 @@ public class V2ClientTest {
         assertFalse(V2ResponseValidator.isUsable(parse(KNOWN.replace("\"id\":\"off:2\"", "\"id\":\"off:1\"")))); // self
         assertFalse(V2ResponseValidator.isUsable(parse(KNOWN.replace(",\"attribution\":\"Contains data from Open Food Facts\"", ""))));
         assertFalse(V2ResponseValidator.isUsable(parse(KNOWN.replace("\"historyUsed\":5", "\"historyUsed\":0"))));
+        String withImage = KNOWN.replace("\"name\":\"Cream\"", "\"name\":\"Cream\",\"imageUrl\":"
+                + "\"https://images.openfoodfacts.org/images/products/1/front.200.jpg\"");
+        assertTrue(V2ResponseValidator.isUsable(parse(withImage)));
+        assertFalse(V2ResponseValidator.isUsable(parse(withImage.replace("https://images.openfoodfacts.org", "http://x.example"))));
     }
 
     @Test

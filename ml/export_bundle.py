@@ -73,7 +73,7 @@ def main(out_root=P / "bundle"):
     model_dir = P / "models/e5-small"
     hf_id, rev, prefix = R.MODELS["e5-small"]
 
-    content = E.tobytes() + centroids.tobytes() + json.dumps(params, sort_keys=True).encode() + sha(ROOT / "ml/theme_labels.json").encode() + "".join(
+    content = E.tobytes() + centroids.tobytes() + json.dumps(params, sort_keys=True).encode() + sha(ROOT / "ml/theme_labels.json").encode() + sha(P / "images.json").encode() + "".join(
         sha(RES / d / "summary.json") for d in ("01_data_embeddings_retrieval", "02_clustering_pca", "03_personalization_mmr")).encode()
     version = time.strftime("%Y%m%d") + "-" + hashlib.sha256(content).hexdigest()[:8]
     out = Path(out_root) / version
@@ -109,6 +109,7 @@ def main(out_root=P / "bundle"):
                                                       x=round(float(theme_xy[t["cluster"], 0]), 6), y=round(float(theme_xy[t["cluster"], 1]), 6))
                                                 for t in themes], ensure_ascii=False, indent=1))
     shutil.copy(P / "map_sample.json", out / "map_sample.json")
+    shutil.copy(P / "images.json", out / "images.json")  # S7c.1: ml/asap_ml/images.py, OFF-family CC BY-SA
     for f in ("model.onnx", "tokenizer.json"):
         shutil.copy(model_dir / f, out / "model" / f)
 

@@ -700,6 +700,10 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - Product pictures: answered, proposed as S7c.1, awaiting approval.
   - Vector DB before the report: recorded as D-041.
   - Larger catalog in the vector DB: recorded as D-041.
+- **S7c.1 (pictures):** approved 2026-10-06 (“do the s7c.1, direct pictures”); implemented, awaiting the phone visual check.
+  - **Catalog images:** `ml/asap_ml/images.py` extracts the small front-image URLs from the exports into a separate `images.json` (9,744/10,000 = 97.4 %), so the catalog and notebooks are unchanged. Bundle `20261006-1f6d112c` (images included in the version hash); verifier 10/10.
+  - **Backend:** `imageUrl` on the product and on result summaries; OFF live lookups map `image_front_small_url`; an HTTPS OFF-family host allow-list; image attribution. Tests 55/55.
+  - **Android:** `imageUrl` on the models; the validator rejects disallowed image URLs; `ImageLoader` (OkHttp + 8 MB LRU, no new dependency, stale-view guard, 512 KB cap); a 180 dp product image and 56 dp result thumbnails on white rounded tiles with a placeholder. Tests 38/38, lint 0.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

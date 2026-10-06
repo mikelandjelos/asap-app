@@ -84,6 +84,17 @@ class SourcesTest {
     }
 
     @Test
+    void onlyHttpsOpenFactsImagesArePassedOn() {
+        String withImage = "{\"product\":{\"product_name\":\"X\",\"image_front_small_url\":"
+                + "\"https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.200.jpg\"}}";
+        Found f = (Found) new OpenFactsSource(new FakeHttp(u -> json(200, withImage)), "x").lookup(NUTELLA, T);
+        assertThat(f.record().imageUrl()).startsWith("https://images.openfoodfacts.org/");
+        Found other = (Found) new OpenFactsSource(new FakeHttp(u -> json(200, withImage.replace(
+                "https://images.openfoodfacts.org", "http://evil.example"))), "x").lookup(NUTELLA, T);
+        assertThat(other.record().imageUrl()).isNull();
+    }
+
+    @Test
     void upcItemDbExpandsUpcEMapsCategoryPathAndGuardsItsQuota() {
         FakeHttp http = new FakeHttp(u -> json(200, """
                 {"code":"OK","items":[{"title":"Braun refill","brand":"Braun","category":"Health & Beauty > Shaving > Refills",

@@ -9,6 +9,22 @@ public final class V2ApiModels {
     private V2ApiModels() {
     }
 
+    private static final String[] IMAGE_HOSTS = {"https://images.openfoodfacts.org/",
+        "https://images.openbeautyfacts.org/", "https://images.openpetfoodfacts.org/", "https://static.openfoodfacts.org/"};
+
+    /** Product images may only be HTTPS URLs on the Open Food Facts family image servers (CC BY-SA). */
+    public static boolean isAllowedImage(String url) {
+        if (url == null) {
+            return false;
+        }
+        for (String host : IMAGE_HOSTS) {
+            if (url.startsWith(host)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static final class ScanQueryRequest {
         public I1ApiModels.BarcodeData barcode;
         public List<HistoryEvent> history;
@@ -60,6 +76,7 @@ public final class V2ApiModels {
         public Map<String, String> fieldSources;
         public ThemeRef theme;
         public MapPoint mapPosition;
+        public String imageUrl;
     }
 
     public static final class ThemeRef {
@@ -99,6 +116,7 @@ public final class V2ApiModels {
         public String name;
         public String brand;
         public String category;
+        public String imageUrl;
     }
 
     public static final class Evidence {

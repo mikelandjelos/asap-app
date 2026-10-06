@@ -145,6 +145,11 @@ class V2ControllerTest {
         }
         assertThat(ids).hasSize(10).doesNotContain(p.id());
         assertThat(body.at("/you").isMissingNode()).isTrue();
+        String image = body.at("/product/data/imageUrl").asString("");
+        assertThat(image.isEmpty() || image.startsWith("https://images.open")).isTrue();
+        boolean anyImage = !image.isEmpty() || body.at("/recommendations/items").toString().contains("\"imageUrl\"");
+        assertThat(anyImage).isTrue(); // 97 % of catalog products have a picture
+        assertThat(body.at("/attribution").asString()).contains("Images: Open Food Facts contributors (CC BY-SA)");
         assertThat(body.at("/attribution").asString()).contains("Open Food Facts");
     }
 

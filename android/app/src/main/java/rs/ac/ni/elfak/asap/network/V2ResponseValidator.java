@@ -32,7 +32,7 @@ final class V2ResponseValidator {
     private static boolean validProduct(V2ApiModels.ProductData p) {
         return p != null && nonBlank(p.id) && p.barcode != null && nonBlank(p.barcode.value) && nonBlank(p.barcode.format)
                 && nonBlank(p.name) && p.provenance != null && nonBlank(p.provenance.type) && nonBlank(p.provenance.source)
-                && p.theme != null && nonBlank(p.theme.label) && finite(p.mapPosition);
+                && p.theme != null && nonBlank(p.theme.label) && finite(p.mapPosition) && optionalImage(p.imageUrl);
     }
 
     private static boolean validRecommendations(V2ApiModels.RecommendationOutcome rec, String productId) {
@@ -54,7 +54,8 @@ final class V2ResponseValidator {
             if (item == null || item.rank != i + 1 || item.product == null || !nonBlank(item.product.id)
                     || !nonBlank(item.product.name) || item.product.id.equals(productId) || !ids.add(item.product.id)
                     || item.theme == null || !nonBlank(item.theme.label) || item.evidence == null
-                    || !Double.isFinite(item.evidence.score) || !nonBlank(item.evidence.scoreType)) {
+                    || !Double.isFinite(item.evidence.score) || !nonBlank(item.evidence.scoreType)
+                    || !optionalImage(item.product.imageUrl)) {
                 return false;
             }
         }
@@ -71,6 +72,10 @@ final class V2ResponseValidator {
             }
         }
         return true;
+    }
+
+    private static boolean optionalImage(String url) {
+        return url == null || V2ApiModels.isAllowedImage(url);
     }
 
     private static boolean finite(V2ApiModels.MapPoint p) {

@@ -20,7 +20,7 @@ import tools.jackson.databind.json.JsonMapper;
 /** Open Food Facts family, API v3 with {@code product_type=all}; results are ODbL-cacheable (D-029). */
 public final class OpenFactsSource implements ProductSource {
 
-    static final String FIELDS = "code,product_name,product_name_en,generic_name,generic_name_en,brands,categories_tags,labels_tags";
+    static final String FIELDS = "code,product_name,product_name_en,generic_name,generic_name_en,brands,categories_tags,labels_tags,image_front_small_url";
     private static final ObjectMapper JSON = JsonMapper.builder().build();
 
     private final HttpFetcher http;
@@ -88,7 +88,8 @@ public final class OpenFactsSource implements ProductSource {
             return new Found(new SourceRecord(id(), name,
                     SourceTypes.blankToNull(brands == null ? null : brands.split(",")[0]), category, deepest,
                     SourceTypes.blankToNull(String.join(", ", labels)),
-                    SourceTypes.blankToNull(first(text(product, "generic_name"), text(product, "generic_name_en")))));
+                    SourceTypes.blankToNull(first(text(product, "generic_name"), text(product, "generic_name_en"))),
+                    SourceTypes.allowedImage(text(product, "image_front_small_url"))));
         } catch (RuntimeException e) {
             return new Unavailable("malformed");
         }

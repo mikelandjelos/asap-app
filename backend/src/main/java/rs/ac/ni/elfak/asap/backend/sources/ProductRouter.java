@@ -130,6 +130,7 @@ public final class ProductRouter {
         String brand = pick(records, "brand", SourceRecord::brand, fieldSources);
         String category = pick(records, "category", SourceRecord::category, fieldSources);
         String labels = pick(records, "labels", SourceRecord::labels, fieldSources);
+        String imageUrl = pick(records, "imageUrl", SourceRecord::imageUrl, fieldSources);
         List<String> tags = List.of();
         for (SourceRecord r : records) {
             if (!r.categoryTags().isEmpty()) {
@@ -146,7 +147,7 @@ public final class ProductRouter {
             }
         }
         List<String> used = records.stream().map(SourceRecord::source).filter(fieldSources::containsValue).distinct().toList();
-        return new Resolution(Status.KNOWN, new SourceRecord(String.join("+", used), name, brand, category, tags, labels, description),
+        return new Resolution(Status.KNOWN, new SourceRecord(String.join("+", used), name, brand, category, tags, labels, description, imageUrl),
                 Map.copyOf(fieldSources), used);
     }
 

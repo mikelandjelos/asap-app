@@ -43,7 +43,8 @@ public final class V2Contract {
             Provenance provenance,
             Map<String, String> fieldSources,
             ThemeRef theme,
-            MapPoint mapPosition) {
+            MapPoint mapPosition,
+            String imageUrl) {
     }
 
     public record ThemeRef(int id, String label) {
@@ -67,7 +68,8 @@ public final class V2Contract {
     public record RecommendationItem(int rank, ProductSummary product, ThemeRef theme, Evidence evidence) {
     }
 
-    public record ProductSummary(String id, BarcodeData barcode, String name, String brand, String category) {
+    public record ProductSummary(String id, BarcodeData barcode, String name, String brand, String category,
+            String imageUrl) {
     }
 
     public record Evidence(double score, String scoreType, String modelVersion) {

@@ -47,6 +47,7 @@ import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.SourceRecord;
 public class V2Controller {
 
     private static final String UPC_ATTRIBUTION = " Some product data from UPCitemdb.";
+    private static final String IMAGE_ATTRIBUTION = " Images: Open Food Facts contributors (CC BY-SA).";
 
     private final RecommendationEngine engine;
     private final ProductRouter router;
@@ -96,7 +97,7 @@ public class V2Controller {
                     r.name(), r.brand(), r.category(), r.description(),
                     r.categoryTags().stream().map(ProductText::tagLabel).toList(),
                     new Provenance("EXTERNAL_PROVIDER", r.source()), resolution.fieldSources(), theme(cluster),
-                    point(engine.mapPosition(typeVector)));
+                    point(engine.mapPosition(typeVector)), r.imageUrl());
             result = engine.recommendUncatalogued(encoder.encode(fullText), fullText,
                     ProductText.variantKey(r.name(), r.brand()), history);
             if (resolution.sources().contains("upcitemdb")) {
@@ -110,10 +111,14 @@ public class V2Controller {
             RecommendationEngine.Ranked ranked = result.items().get(i);
             CatalogEntry item = engine.bundle().catalog().get(ranked.index());
             items.add(new RecommendationItem(i + 1,
-                    new ProductSummary(item.id(), barcode(item), item.name(), item.brand(), item.category()),
+                    new ProductSummary(item.id(), barcode(item), item.name(), item.brand(), item.category(),
+                            engine.bundle().imageUrl(item.id())),
                     theme(item.cluster()), new Evidence(round(ranked.score()), scoreType, modelVersion)));
         }
         String status = items.isEmpty() ? "EMPTY" : "RESULTS";
+        if (productData.imageUrl() != null || items.stream().anyMatch(i -> i.product().imageUrl() != null)) {
+            responseAttribution = responseAttribution + IMAGE_ATTRIBUTION;
+        }
         return new ScanQueryResponse(
                 new ProductResponse("KNOWN", productData),
                 new RecommendationResponse(status, result.mode().name(), result.historyState().name(), pipelineVersion,
@@ -133,7 +138,7 @@ public class V2Controller {
     private ProductData productData(CatalogEntry p) {
         return new ProductData(p.id(), barcode(p), p.name(), p.brand(), p.category(), p.description(), p.tags(),
                 new Provenance(p.provenance().type(), p.provenance().source()), null, theme(p.cluster()),
-                point(engine.catalogMapPosition(p.index())));
+                point(engine.catalogMapPosition(p.index())), engine.bundle().imageUrl(p.id()));
     }
 
     private static BarcodeData barcode(CatalogEntry p) {
