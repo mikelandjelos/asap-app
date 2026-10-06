@@ -175,13 +175,16 @@ The expected response is a `KNOWN` fixture product and two `RESULTS` items with 
 Python 3.13 with packages pinned in `ml/requirements.txt`, installed in a git-ignored `.venv`:
 
 ```sh
-python3 -m venv .venv && .venv/bin/pip install -r ml/requirements.txt
+python3 -m venv .venv && .venv/bin/pip install -r ml/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 # Raw exports (git-ignored): download the three CSVs named in data/catalog_manifest.json into data/raw/,
 # then record checksums and the download time:
 (cd data/raw && sha256sum *.gz > sha256.txt && date -u +%FT%TZ > download_utc.txt)
 .venv/bin/python -m ml.asap_ml.catalog            # -> data/processed/catalog.jsonl + manifest
 .venv/bin/python ml/build_nb00.py                 # regenerate notebook source
 .venv/bin/jupyter nbconvert --to notebook --execute --inplace notebooks/00_source_probes.ipynb
+.venv/bin/python ml/build_nb01.py                 # downloads pinned e5-small/MiniLM revisions (~0.5 GB each)
+.venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=3600 \
+  notebooks/01_data_embeddings_retrieval.ipynb    # ~10 min CPU; writes data/processed/{embeddings_e5-small.npy,models/e5-small/}
 ```
 
 Provider probes (`ml/probes/run_probes.py`) make live calls. Rerun them only with explicit approval.

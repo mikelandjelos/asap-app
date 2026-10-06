@@ -16,7 +16,8 @@ The report now includes the repository link and current scope/notebook requireme
 
 T-011/S2 (complete, awaiting acceptance):
 - Provider priority and the offline catalog are selected (D-029). `data/processed/catalog.jsonl` holds 10,000 products; it is git-ignored and reproducible from `data/catalog_manifest.json`.
-- The first executed notebook is `notebooks/00_source_probes.ipynb`.
+- Executed notebooks: `00_source_probes` (S2, accepted) and `01_data_embeddings_retrieval` (S3, awaiting acceptance).
+- S3 adopted hybrid retrieval: e5-small plus char TF-IDF (D-030). Catalog embeddings and the ONNX model are in git-ignored `data/processed/` and reproducible from the notebook.
 - The Python ML workspace is `ml/`, with a pinned `ml/requirements.txt` and a local `.venv`.
 
 ## Available artifacts

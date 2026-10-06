@@ -602,6 +602,11 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Catalog:** OFF, OBF and OPFF exports downloaded and checksummed; `ml/asap_ml/catalog.py` built a 10,000-product catalog plus manifest. The first selection run produced 25k junk strata; this was fixed with taxonomy, script and meta-tag filters.
   - **Records:** D-029, the evaluation S2 section and design §2/§3 updated; T-009 closed.
   - **Report facts for the end:** the router-merge completeness table, provider latencies and catalog stats.
+- **S3:** Approved 2026-10-06 (“yes, continue”); complete, awaiting acceptance.
+  - **Run:** ML stack pinned in `ml/requirements.txt`; model licences checked (MIT/Apache-2.0) and revisions pinned. Shared code is in `ml/asap_ml/retrieval.py`. `notebooks/01_data_embeddings_retrieval.ipynb` was executed clean with results in `notebooks/results/01_data_embeddings_retrieval/`.
+  - **Gate failure:** the provisional gate "embedding beats TF-IDF" failed for e5 alone. A hybrid tuned on disjoint queries passes with significance (D-030).
+  - **Issues fixed during the run:** `optimum` was incompatible with transformers 5.x, so export is now done with `torch.onnx` (wrapper module).
+  - **Report facts for the end:** the leak-free methodology, the results table with CIs, the α sweep, ONNX parity and the latency table.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

@@ -58,6 +58,10 @@ Several sources are combined behind one interface so the best available record i
 - **Compared in notebook 01:** TF-IDF + cosine (lexical baseline), `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (384-d, Apache-2.0). The winner by nDCG@10 and latency is selected. Licences and versions are re-verified at download.
 - **Serving:** export to ONNX and run inside the Java backend with ONNX Runtime Java and the DJL HuggingFace tokenizer. This keeps the accepted single modular-monolith topology. **Parity gate:** Java vs Python embedding cosine ≥ 0.999 on a fixed sample.
 - **Alternative:** a Python sidecar (FastAPI) is faster to build but adds a second service and deployment. Use it only if the ONNX/Java route fails its parity gate.
+- **S3 result (notebook 01, D-030):** e5-small beat MiniLM on the leak-free benchmark (nDCG@10 0.288 vs 0.206). It only **tied** character TF-IDF (0.291), so the "beats TF-IDF" gate failed for e5 alone.
+  - A tuned **hybrid** `0.9·cos_e5 + 0.1·cos_tfidf_char` scored 0.307. It significantly beats both, by +0.018 and +0.016 (paired-bootstrap 95 % CIs exclude 0), and is the adopted retrieval method.
+  - ONNX parity is effectively exact (min cosine 0.9999999 on 500 texts). The ONNX file is 470 MB (fp32).
+  - Latency: single uncatalogued-product encoding takes 15 ms (ONNX) / 20 ms (torch) median. Exact top-50 search takes 0.19 ms at 10k and 9 ms at 100k products.
 - Catalog vectors are precomputed offline. Only an uncatalogued scanned product is embedded online.
 
 ## 5. Vector storage and retrieval
@@ -65,6 +69,7 @@ Several sources are combined behind one interface so the best available record i
 - **Recommended:** in-memory float32 matrix of L2-normalized vectors loaded from the artifact bundle, with exact brute-force cosine (dot product) search. At ≤ 10k × 384 this is ~15 MB and requires no extra service.
 - **Rejected for MVP:** pgvector, Qdrant, FAISS/ANN. These add services or native dependencies without need at this scale.
 - **Post-MVP (user-requested, D-028):** move catalog and vectors into a real database with vector search (candidates: PostgreSQL + pgvector, Qdrant). The in-memory search stays as the notebook-verified baseline and parity reference; a retrieval interface introduced in S6 keeps the swap local.
+- **Hybrid scoring (D-030):** relevance `cos_e5` is replaced by `r(x) = 0.9·cos_e5 + 0.1·cos_tfidf_char` (sklearn `char_wb` 3–5-grams, sublinear TF, fitted on the catalog). S6 must reimplement this analyzer in Java from the exported vocabulary/idf and pass a parity test. §7–§9 use `r(x)` wherever they use `cos(q,x)`.
 - **Rules:** exclude the query product, deduplicate by barcode and by normalized name+brand, and break ties by product ID.
 
 ## 6. Clustering

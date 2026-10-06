@@ -247,3 +247,20 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
 - **Decision:** The product router queries the local catalog first, then Open Food Facts v3 (`product_type=all`, cacheable with ODbL attribution), then UPCitemdb trial (transient, quota-guarded, UPC-E expanded to UPC-A). Barcode Lookup is not used. The offline recommendation catalog consists of 10,000 products from the official OFF, Open Beauty Facts and Open Pet Food Facts CSV exports, selected by `ml/asap_ml/catalog.py` (seed 20261006).
 - **Evidence:** In the 12-product probe, field-level merge reached 100 % name/brand/category coverage, against 58–67 % for either provider alone. Details are in `PRODUCT_DATA_API_EVALUATION.md` (S2 results) and `notebooks/00_source_probes.ipynb`.
 - **Constraints:** Raw exports and processed bundles are git-ignored and reproducible; `data/catalog_manifest.json` records checksums and config. The attribution "Contains data from Open Food Facts, available under the Open Database License" must appear in the app.
+
+## D-030 — Hybrid retrieval: e5-small + character TF-IDF (T-011/S3)
+
+- **Date:** 2026-10-06
+- **Status:** Proposed with the S3 results; accepted when the user accepts S3.
+- **Decision:**
+  - The embedding model is `intfloat/multilingual-e5-small` at revision `614241f…`, served through the ONNX path verified for parity.
+  - Retrieval relevance is `r(x) = 0.9·cos_e5 + 0.1·cos_tfidf_char` (char_wb 3–5-grams, sublinear TF, catalog-fitted). It replaces pure embedding cosine in the design.
+  - Production text is the `full` variant. α was tuned on leak-free text, because category words make full-text tuning degenerate (α = 0).
+- **Evidence:** On 500 leak-free test queries (`notebooks/01_data_embeddings_retrieval.ipynb`, α tuned on a disjoint 500-query set):
+  - nDCG@10: hybrid 0.307, e5 0.288, char TF-IDF 0.291, MiniLM 0.206.
+  - Hybrid minus e5 is +0.018 (95 % CI 0.012–0.025); hybrid minus TF-IDF is +0.016 (95 % CI 0.008–0.025).
+  - e5 alone failed the provisional "beats TF-IDF" gate.
+- **Consequences:**
+  - S6 adds a Java char-TF-IDF analyzer, with the vocabulary and idf exported from Python, and a parity test.
+  - The ONNX model is 470 MB fp32; quantization can be evaluated later if size matters.
+  - Category agreement remains a proxy; human judgements are a recommended addition before the final report.
