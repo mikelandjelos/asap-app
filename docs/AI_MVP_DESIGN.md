@@ -156,6 +156,18 @@ New `POST /api/v2/scan-queries`; v1/I1 stays frozen. The request adds an optiona
 - MMR λ and the pipeline version;
 - 2-D map coordinates for the query, items and history.
 
+**Runtime bundle (S6a, D-034).** `ml/export_bundle.py` writes `data/processed/bundle/<version>/` (git-ignored; `CURRENT` names the active version, currently `20261006-d7293828`, 526 MB):
+- `manifest.json`: parameters, model id/revision/pooling, text rules, matrix shapes, source notebook-summary hashes and per-file SHA-256;
+- `catalog.jsonl`: products with `fullText`, `typeText` and `cluster`;
+- raw little-endian float32 matrices: `embeddings.f32` (10000×384), `type_embeddings.f32`, `cluster_centroids.f32` (60×384), `pca_mean.f32`, `pca_components.f32` (2×384);
+- `tfidf.json`: 69,747-term vocabulary with idf and analyzer params;
+- `themes.json`: labels, terms and projected x/y of the 60 theme centroids;
+- `map_sample.json`;
+- `model/`: `model.onnx` and `tokenizer.json`;
+- `fixtures/parity.json`: expected outputs for embeddings, TF-IDF (including Unicode edge cases), retrieval + MMR, 8 users (cold start, a repeated product, sufficient history, "you" map position), 3 uncatalogued products and cluster/PCA assignment, with tolerances.
+
+`ml/verify_bundle.py` re-checks a bundle from its own files only. It includes a sklearn-free char-TF-IDF reference implementation, which is the blueprint for the Java port.
+
 `GET /api/v2/catalog-map` returns the cluster-coloured catalog sample and cluster labels. The artifact bundle is versioned, and the backend refuses to start on a checksum mismatch.
 
 ## 12. UI direction (built in S7)

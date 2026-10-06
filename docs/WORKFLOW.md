@@ -187,6 +187,13 @@ python3 -m venv .venv && .venv/bin/pip install -r ml/requirements.txt --extra-in
   notebooks/01_data_embeddings_retrieval.ipynb    # ~10 min CPU; writes data/processed/{embeddings_e5-small.npy,models/e5-small/}
 ```
 
+Runtime bundle for the backend (after notebooks 01–03 have run):
+
+```sh
+.venv/bin/python ml/export_bundle.py   # -> data/processed/bundle/<version>/ + CURRENT
+.venv/bin/python ml/verify_bundle.py   # independent checks; exit code 0 = all pass
+```
+
 Provider probes (`ml/probes/run_probes.py`) make live calls. Rerun them only with explicit approval.
 
 ## Documentation synchronization guide

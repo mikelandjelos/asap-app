@@ -10,12 +10,10 @@ Read `AGENTS.md` and its startup files, then `CURRENT_REQUIREMENTS.md`, `NOTEBOO
 - **Notebook gate:** every AI/statistical component needs reproducible correctness/quality/performance evidence, including CNN/TFLite, embeddings, retrieval, clustering, history/profile aggregation, PCA, MMR and later additions. Preserve real tables/plots and connect report claims to exact runs. No such experiments have run yet.
 - **Scanner last:** finish the PoC/MVP with Google Code Scanner, then replace only scanner-related parts with a CNN trained on a documented EAN/UPC dataset and deployed via TFLite. ZXing/another decoder or learned end-to-end decoding is still a choice to evaluate. Preserve downstream barcode/API/product/recommendation flow.
 - **Presentation last:** finalization remains deferred. Existing deck and diagrams are earlier snapshots, explicitly inventoried in the audit; they are not current complete-scope specifications.
-- **Next action:** T-011/S5 is done and committed: notebook 03 executed (D-032). Await S5 acceptance, then explicit approval of T-011/S6 (backend v2 pipeline in Java).
-  - **Router:** OFF + UPCitemdb adapters.
-  - **Retrieval:** ONNX e5 via ONNX Runtime Java + DJL tokenizers, Java char-TF-IDF with exported vocabulary, hybrid r(x).
-  - **Ranking:** clusters/PCA assignment, multi-interest profile, MMR; versioned artifact bundle export from `ml/`.
-  - **Verification:** parity tests against the notebooks and the v2 contract.
-  - S6 is large and should be planned as sub-steps. Report work is deferred. Commit at the end of every subtask.
+- **Next action:** T-011/S6a is done and committed: verified runtime bundle (D-034, `AI_MVP_DESIGN.md` §11). Await acceptance, then explicit approval of S6b.
+  - **S6b scope:** Java bundle loader, ONNX Runtime Java + DJL HuggingFace tokenizers encoder, char-TF-IDF port of `ml/verify_bundle.py`, hybrid retrieval, and JUnit parity tests against `fixtures/parity.json`.
+  - **Dependency choices:** decide them in the S6b plan.
+  - **Deferred:** report work. Commit at the end of every subtask.
 - **User preferences:** fast, minimal useful increments; concise responses and targeted inspection; docs always synchronized; explicit approval for every subtask; short, clear one-line commits.
 - **Current authorization:** documentation reconciliation, verification, commit and push of the accumulated handoff work only. Committing work does not accept pending tasks. Check `git status`/`git log` and remote state for actual publication outcome rather than inferring it from this pre-commit document.
 

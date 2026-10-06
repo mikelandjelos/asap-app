@@ -618,6 +618,10 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Bug fixed during the run:** bootstrap index sizing for subgroup CIs.
   - **User note recorded:** post-MVP drift monitoring and refit of PCA, clusters and TF-IDF (TODO).
   - **Report facts for the end:** the synthetic-user protocol, personalization table with CIs, cold-start table, MMR trade-off and runtime.
+- **S6 split** into S6a–S6d, each approved separately (proposed 2026-10-06).
+- **S6a:** Approved 2026-10-06 (“cool, let's go”); complete, awaiting acceptance.
+  - **Export:** `ml/export_bundle.py` exports bundle `20261006-d7293828` (12 files, 526 MB), asserting the notebook hashes and parameters.
+  - **Verification:** `ml/verify_bundle.py` passes all 10 checks from bundle files only, with a pure-Python TF-IDF max error of 5e-9.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

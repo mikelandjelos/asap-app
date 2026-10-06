@@ -307,3 +307,13 @@ Latest scope authority: D-024/D-025 supersede earlier exclusions of clustering, 
   - "You vs other users (friends)" is deferred to after the MVP, because it needs accounts and social data.
   - A personal-analytics dashboard, next to the history and PCA view, is built in the end phase of the MVP, before the report; its contents are still to be agreed.
 - **Consequence:** S6a exports projected theme centroids and labels. The profile for the map uses type-space embeddings so that it shares the space of the clusters and the PCA.
+
+## D-034 — Versioned runtime bundle with parity fixtures (T-011/S6a)
+
+- **Date:** 2026-10-06
+- **Decision:**
+  - The backend loads one immutable, versioned bundle exported by `ml/export_bundle.py`: a JSON manifest with SHA-256 per file, catalog JSONL, raw little-endian float32 matrices, TF-IDF vocabulary/idf, themes, the map sample and the ONNX model + tokenizer.
+  - Java correctness is defined by `fixtures/parity.json` and its tolerances: embedding cosine ≥ 0.999, TF-IDF 1e-6, scores 1e-4, x/y 1e-4.
+  - The backend must refuse to start on a checksum mismatch. A refit (drift task) produces a new bundle version.
+- **Rationale:** simple formats every language reads without extra libraries, an explicit link between the notebook evidence and runtime artifacts, and reproducible parity testing.
+- **Note:** the bundle is git-ignored (the model alone is 470 MB). Regenerate it with the WORKFLOW commands.
