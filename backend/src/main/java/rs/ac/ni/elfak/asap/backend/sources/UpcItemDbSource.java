@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayDeque;
 import rs.ac.ni.elfak.asap.backend.barcode.Barcode;
 import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.Found;
 import rs.ac.ni.elfak.asap.backend.sources.SourceTypes.HttpFetcher;
@@ -19,8 +20,9 @@ import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 
 /**
- * UPCitemdb free trial lookup: transient only (never cached), local daily quota and minimum spacing so the
- * provider limit is never hit; UPC-E is expanded to UPC-A because the provider rejects UPC-E (S2 evidence).
+ * UPCitemdb free trial lookup: transient only (never cached), with a local daily quota and a rolling burst window
+ * kept below the provider's documented limits (100/day, 6 lookups/minute); UPC-E is expanded to UPC-A because the
+ * provider rejects UPC-E (S2 evidence).
  */
 public final class UpcItemDbSource implements ProductSource {
 
@@ -29,17 +31,19 @@ public final class UpcItemDbSource implements ProductSource {
     private final HttpFetcher http;
     private final String baseUrl;
     private final int dailyQuota;
-    private final Duration minSpacing;
+    private final int burst;
+    private final Duration window;
     private final Clock clock;
+    private final ArrayDeque<Instant> recent = new ArrayDeque<>();
     private LocalDate day;
     private int used;
-    private Instant lastCall = Instant.EPOCH;
 
-    public UpcItemDbSource(HttpFetcher http, String baseUrl, int dailyQuota, Duration minSpacing, Clock clock) {
+    public UpcItemDbSource(HttpFetcher http, String baseUrl, int dailyQuota, int burst, Duration window, Clock clock) {
         this.http = http;
         this.baseUrl = baseUrl;
         this.dailyQuota = dailyQuota;
-        this.minSpacing = minSpacing;
+        this.burst = burst;
+        this.window = window;
         this.clock = clock;
     }
 
@@ -60,11 +64,14 @@ public final class UpcItemDbSource implements ProductSource {
             day = today;
             used = 0;
         }
-        if (used >= dailyQuota || now.isBefore(lastCall.plus(minSpacing))) {
+        while (!recent.isEmpty() && !recent.peekFirst().isAfter(now.minus(window))) {
+            recent.pollFirst();
+        }
+        if (used >= dailyQuota || recent.size() >= burst) {
             return false;
         }
         used++;
-        lastCall = now;
+        recent.addLast(now);
         return true;
     }
 

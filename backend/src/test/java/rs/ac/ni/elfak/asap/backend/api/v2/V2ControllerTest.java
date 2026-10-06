@@ -30,7 +30,7 @@ import tools.jackson.databind.ObjectMapper;
 @EnabledIf("rs.ac.ni.elfak.asap.backend.ai.BundleParityTest#bundleAvailable")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
         properties = {"asap.bundle.dir=${asap.bundle.root:../data/processed/bundle}",
-                "asap.sources.upcitemdb.min-spacing=0s"})
+                "asap.sources.upcitemdb.burst=1000"})
 class V2ControllerTest {
 
     private static final String QUERY = "/api/v2/scan-queries";

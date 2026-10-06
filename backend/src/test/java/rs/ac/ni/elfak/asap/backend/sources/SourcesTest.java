@@ -89,25 +89,25 @@ class SourcesTest {
                 {"code":"OK","items":[{"title":"Braun refill","brand":"Braun","category":"Health & Beauty > Shaving > Refills",
                  "description":"Cleaning fluid"}]}"""));
         Clock clock = Clock.fixed(Instant.parse("2026-10-06T12:00:00Z"), ZoneOffset.UTC);
-        UpcItemDbSource upc = new UpcItemDbSource(http, "https://upc", 2, Duration.ofSeconds(11), clock);
+        UpcItemDbSource upc = new UpcItemDbSource(http, "https://upc", 10, 1, Duration.ofMinutes(1), clock);
         Found f = (Found) upc.lookup(new Barcode("04963406", Barcode.Format.UPC_E), T);
         assertThat(http.urls.get(0)).endsWith("upc=049000006346");
         assertThat(f.record().category()).isEqualTo("Refills");
-        assertThat(upc.lookup(NUTELLA, T)).isInstanceOf(Unavailable.class); // spacing guard: no second call
+        assertThat(upc.lookup(NUTELLA, T)).isInstanceOf(Unavailable.class); // burst window full: no second call
         assertThat(http.urls).hasSize(1);
 
-        assertThat(new UpcItemDbSource(new FakeHttp(u -> json(200, "{\"code\":\"OK\",\"items\":[]}")), "x", 5, Duration.ZERO, clock)
+        assertThat(new UpcItemDbSource(new FakeHttp(u -> json(200, "{\"code\":\"OK\",\"items\":[]}")), "x", 5, 5, Duration.ofMinutes(1), clock)
                 .lookup(NUTELLA, T)).isInstanceOf(NotFound.class);
-        assertThat(new UpcItemDbSource(new FakeHttp(u -> json(400, "{\"code\":\"INVALID_UPC\"}")), "x", 5, Duration.ZERO, clock)
+        assertThat(new UpcItemDbSource(new FakeHttp(u -> json(400, "{\"code\":\"INVALID_UPC\"}")), "x", 5, 5, Duration.ofMinutes(1), clock)
                 .lookup(NUTELLA, T)).isInstanceOf(NotFound.class);
-        assertThat(new UpcItemDbSource(new FakeHttp(u -> new Response(502, "text/html", "<html>")), "x", 5, Duration.ZERO, clock)
+        assertThat(new UpcItemDbSource(new FakeHttp(u -> new Response(502, "text/html", "<html>")), "x", 5, 5, Duration.ofMinutes(1), clock)
                 .lookup(NUTELLA, T)).isInstanceOf(Unavailable.class);
     }
 
     private static ProductRouter router(FakeHttp http) {
         Clock clock = Clock.systemUTC();
         return new ProductRouter(List.of(new OpenFactsSource(http, "https://off"),
-                new UpcItemDbSource(http, "https://upc", 50, Duration.ZERO, clock)), Duration.ofSeconds(3), T, clock);
+                new UpcItemDbSource(http, "https://upc", 50, 50, Duration.ofMinutes(1), clock)), Duration.ofSeconds(3), T, clock);
     }
 
     @Test

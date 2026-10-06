@@ -677,6 +677,10 @@ D-024 supersedes this plan's original MVP assumptions. Its mock package remains 
   - **Product screen:** state summary (full card and list in S7c). Map/History are placeholders until S7d.
   - **Removed:** v1-only UI classes `ScanQueryCoordinator` and `I1OutcomeUiModel`, with their tests; v1 strings replaced by English UI strings.
   - **Verification:** tests 34/34 (+5 `ScanSessionTest`, −7 removed v1 UI tests); lint 0 after fixing 4 findings; debug APK 9.2 MB installed on the phone. The visual check is pending because the phone was locked.
+- **S7b phone check (2026-10-06):** "Quattro Plazma" resolved in dark mode with theme "Biscuits & crackers" and 10 results.
+  - **Bug reported by the user:** every later scan showed "temporarily unavailable". Cause: UPCitemdb's 11 s spacing guard. Fix: a 5/min rolling burst window.
+  - **Test-run OOM:** the backend test JVM was OOM-killed while the phone-test backend held a second copy of the model; it was rerun with the backend stopped and passed 54/54.
+  - **Pending:** dark-mode status-bar icon contrast, to fix in S7c.
 - **Commit rule (user, 2026-10-06):** commit at the end of every subtask before proceeding.
 - **Rule:** One explicitly approved subtask at a time; each updates affected docs atomically. Optional expansion/polish only after MVP, report and slides are done.
 

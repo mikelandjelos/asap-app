@@ -49,7 +49,7 @@ Errors: RFC 9457 `application/problem+json` with `errors[{field, code}]`, as in 
 - `asap.sources.enabled` (default `true`);
 - `asap.sources.off.base-url` and `asap.sources.upcitemdb.base-url`;
 - `asap.sources.upcitemdb.daily-quota` (default 90, below the provider's 100);
-- `asap.sources.upcitemdb.min-spacing` (default 11s);
+- `asap.sources.upcitemdb.burst` (default 5 lookups per rolling minute, below the provider's documented 6/min; replaced the original 11 s fixed spacing, which made quick consecutive scans `UNAVAILABLE`);
 - `asap.sources.user-agent`.
 
 Fixed limits: 3 s total budget and 1.5 s per source. OFF results are cached (found 24 h, not found 1 h); UPCitemdb results are never cached. A source's circuit opens for 60 s after 3 consecutive failures.
